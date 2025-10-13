@@ -1,0 +1,24 @@
+CREATE TABLE sessions (
+    id INTEGER NOT NULL PRIMARY KEY,
+    userid INTEGER,
+    token TEXT,
+    acknowledged INTEGER,
+    actionpriority INTEGER,
+    sessionstart TEXT, -- SQLite stores datetime as TEXT
+    sessionend TEXT,
+    sessionrecorded INTEGER,
+    sessionrecordurl TEXT,
+    sessiondescription TEXT,
+    sessionusername TEXT,
+    sessionemail TEXT,
+    sessionfirstname TEXT,
+    sessionlastname TEXT,
+    sessionfullname TEXT,
+    sessioncomplete INTEGER,
+    twofactorkey TEXT,
+    twofactorkeysmsdestination TEXT,
+    twofactorkeyemaildestination TEXT,
+    twofactorprovider TEXT,
+    twofactorprovidertoken TEXT,
+    twofactorproviderauthstring TEXT
+);

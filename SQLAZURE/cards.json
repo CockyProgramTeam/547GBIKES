@@ -1,0 +1,52 @@
+[
+  {
+    "cardid": 1,
+    "uid": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+    "cardtype": "Visa",
+    "cardvendor": "Chase",
+    "cardlast4": "4242",
+    "cardexpdate": "2026-08-31",
+    "billingzip": "29201",
+    "isactive": true
+  },
+  {
+    "cardid": 2,
+    "uid": "b2c3d4e5-f6a7-8901-bcde-2345678901bc",
+    "cardtype": "MasterCard",
+    "cardvendor": "Bank of America",
+    "cardlast4": "5555",
+    "cardexpdate": "2027-03-31",
+    "billingzip": "29601",
+    "isactive": true
+  },
+  {
+    "cardid": 3,
+    "uid": "c3d4e5f6-a7b8-9012-cdef-3456789012cd",
+    "cardtype": "Amex",
+    "cardvendor": "American Express",
+    "cardlast4": "3782",
+    "cardexpdate": "2025-12-31",
+    "billingzip": "29401",
+    "isactive": true
+  },
+  {
+    "cardid": 4,
+    "uid": "d4e5f6a7-b8c9-0123-def0-4567890123de",
+    "cardtype": "Discover",
+    "cardvendor": "Capital One",
+    "cardlast4": "6011",
+    "cardexpdate": "2026-06-30",
+    "billingzip": "29063",
+    "isactive": true
+  },
+  {
+    "cardid": 5,
+    "uid": "e5f6a7b8-c9d0-1234-ef01-5678901234ef",
+    "cardtype": "Visa",
+    "cardvendor": "Wells Fargo",
+    "cardlast4": "4111",
+    "cardexpdate": "2027-01-31",
+    "billingzip": "29607",
+    "isactive": true
+  }
+]

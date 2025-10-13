@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Data Source=./SQLDATA/dirtbike.db" Microsoft.EntityFrameworkCore.Sqlite -o Models --context-dir Data --no-build

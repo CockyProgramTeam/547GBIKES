@@ -1,0 +1,555 @@
+[
+  {
+    "ContainingType": "Enterprise.Controllers.ApilogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapApilogEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Apilog/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Apilog, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Apilog"
+    ],
+    "EndpointName": "GetAllApilogs"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ApilogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapApilogEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Apilog/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Apilog",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      }
+    ],
+    "Tags": [
+      "Apilog"
+    ],
+    "EndpointName": "CreateApilog"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ApilogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapApilogEndpoints\u003Eb__0_1",
+    "RelativePath": "api/Apilog/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Apilog, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Apilog"
+    ],
+    "EndpointName": "GetApilogById"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ApilogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapApilogEndpoints\u003Eb__0_2",
+    "RelativePath": "api/Apilog/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Apilog",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 202
+      }
+    ],
+    "Tags": [
+      "Apilog"
+    ],
+    "EndpointName": "UpdateApilog"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ApilogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapApilogEndpoints\u003Eb__0_4",
+    "RelativePath": "api/Apilog/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Apilog"
+    ],
+    "EndpointName": "DeleteApilog"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParksEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParksEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Parks/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Park, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Park"
+    ],
+    "EndpointName": "GetAllParkss"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParksEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParksEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Parks/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Park",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      }
+    ],
+    "Tags": [
+      "Park"
+    ],
+    "EndpointName": "CreateParks"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParksEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParksEndpoints\u003Eb__0_1",
+    "RelativePath": "api/Parks/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Park, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Park"
+    ],
+    "EndpointName": "GetParksById"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParksEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParksEndpoints\u003Eb__0_2",
+    "RelativePath": "api/Parks/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Park",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 202
+      }
+    ],
+    "Tags": [
+      "Park"
+    ],
+    "EndpointName": "UpdateParks"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParksEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParksEndpoints\u003Eb__0_4",
+    "RelativePath": "api/Parks/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Park"
+    ],
+    "EndpointName": "DeleteParks"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.TemplateEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapTemplateEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Template/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Template, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Template"
+    ],
+    "EndpointName": "GetAllTemplates"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.TemplateEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapTemplateEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Template/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Template",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      }
+    ],
+    "Tags": [
+      "Template"
+    ],
+    "EndpointName": "CreateTemplate"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.TemplateEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapTemplateEndpoints\u003Eb__0_1",
+    "RelativePath": "api/Template/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Template, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Template"
+    ],
+    "EndpointName": "GetTemplateById"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.TemplateEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapTemplateEndpoints\u003Eb__0_2",
+    "RelativePath": "api/Template/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Template",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 202
+      }
+    ],
+    "Tags": [
+      "Template"
+    ],
+    "EndpointName": "UpdateTemplate"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.TemplateEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapTemplateEndpoints\u003Eb__0_4",
+    "RelativePath": "api/Template/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Template"
+    ],
+    "EndpointName": "DeleteTemplate"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.UserlogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUserlogEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Userlog/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Userlog, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Userlog"
+    ],
+    "EndpointName": "GetAllUserlogs"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.UserlogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUserlogEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Userlog/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Userlog",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      }
+    ],
+    "Tags": [
+      "Userlog"
+    ],
+    "EndpointName": "CreateUserlog"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.UserlogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUserlogEndpoints\u003Eb__0_1",
+    "RelativePath": "api/Userlog/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Userlog, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Userlog"
+    ],
+    "EndpointName": "GetUserlogById"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.UserlogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUserlogEndpoints\u003Eb__0_2",
+    "RelativePath": "api/Userlog/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Userlog",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 202
+      }
+    ],
+    "Tags": [
+      "Userlog"
+    ],
+    "EndpointName": "UpdateUserlog"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.UserlogEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapUserlogEndpoints\u003Eb__0_4",
+    "RelativePath": "api/Userlog/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Userlog"
+    ],
+    "EndpointName": "DeleteUserlog"
+  },
+  {
+    "ContainingType": "somecontrollers.Controllers.WeatherForecastController",
+    "Method": "Get",
+    "RelativePath": "WeatherForecast",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[weathertest.WeatherForecast, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetWeatherForecast"
+  }
+]

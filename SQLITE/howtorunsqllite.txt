@@ -1,0 +1,7 @@
+go to sqllite directory...from the nuget package manager..run the command below
+
+ .\sqlite3.exe ..\SQLDATA\dir
+
+Run SQL commands as necessary....
+
+YES I AM AWARE SQLLITE IS SPELLED WRONG... its for your protection....

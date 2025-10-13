@@ -1,0 +1,11 @@
+CREATE TABLE Customer (
+    CustomerID INT PRIMARY KEY IDENTITY(1,1),
+    UID UNIQUEIDENTIFIER NOT NULL,
+    FullName NVARCHAR(100),
+    Email NVARCHAR(100),
+    Phone NVARCHAR(20),
+    BillingAddress NVARCHAR(255),
+    Login NVARCHAR(50) NOT NULL,
+    PasswordHash NVARCHAR(255) NOT NULL,
+    UserStatus NVARCHAR(20) DEFAULT 'active'
+);

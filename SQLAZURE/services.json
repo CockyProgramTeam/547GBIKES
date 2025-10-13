@@ -1,0 +1,68 @@
+[
+  {
+    "serviceid": 1,
+    "parkid": 1,
+    "servicetype": "Day Pass",
+    "servicename": "Adult Day Pass",
+    "description": "Full-day access to park trails and amenities",
+    "price": 6.00,
+    "startdate": "2025-03-01",
+    "enddate": "2025-11-30",
+    "isactive": true
+  },
+  {
+    "serviceid": 2,
+    "parkid": 1,
+    "servicetype": "Half Day Pass",
+    "servicename": "Morning Half Day Pass",
+    "description": "Access from 8 AM to 12 PM",
+    "price": 3.50,
+    "startdate": "2025-03-01",
+    "enddate": "2025-11-30",
+    "isactive": true
+  },
+  {
+    "serviceid": 3,
+    "parkid": 1,
+    "servicetype": "Helmet Rental",
+    "servicename": "Standard Helmet Rental",
+    "description": "Protective helmet for trail riding",
+    "price": 2.00,
+    "startdate": "2025-01-01",
+    "enddate": "2025-12-31",
+    "isactive": true
+  },
+  {
+    "serviceid": 4,
+    "parkid": 1,
+    "servicetype": "Bike Rental - Premium",
+    "servicename": "Premium Mountain Bike",
+    "description": "High-performance bike for advanced riders",
+    "price": 15.00,
+    "startdate": "2025-04-01",
+    "enddate": "2025-10-31",
+    "isactive": true
+  },
+  {
+    "serviceid": 5,
+    "parkid": 1,
+    "servicetype": "Bike Rental - Basic",
+    "servicename": "Basic Trail Bike",
+    "description": "Entry-level bike for casual riders",
+    "price": 8.00,
+    "startdate": "2025-04-01",
+    "enddate": "2025-10-31",
+    "isactive": true
+  },
+  {
+    "serviceid": 6,
+    "parkid": 1,
+    "servicetype": "Campsite - Interior",
+    "servicename": "Interior Campsite",
+    "description": "Secluded campsite within forested area",
+    "price": 20.00,
+    "startdate": "2025-05-01",
+    "enddate": "2025-09-30",
+    "isactive": true
+  }
+]

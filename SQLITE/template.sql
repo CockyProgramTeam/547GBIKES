@@ -1,0 +1,4 @@
+CREATE TABLE Template (
+    TemplateID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Description TEXT
+);

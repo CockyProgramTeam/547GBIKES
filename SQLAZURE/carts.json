@@ -1,0 +1,57 @@
+[
+  {
+    "cartid": 101,
+    "uid": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+    "parkid": 1,
+    "itemtype": "Day Pass",
+    "itemdescription": "Adult Day Pass for Paris Mountain",
+    "quantity": 2,
+    "unitprice": 6.00,
+    "dateadded": "2025-10-08T09:15:00",
+    "ischeckedout": false
+  },
+  {
+    "cartid": 102,
+    "uid": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+    "parkid": 1,
+    "itemtype": "Helmet Rental",
+    "itemdescription": "Standard Helmet Rental",
+    "quantity": 2,
+    "unitprice": 2.00,
+    "dateadded": "2025-10-08T09:20:00",
+    "ischeckedout": false
+  },
+  {
+    "cartid": 103,
+    "uid": "b2c3d4e5-f6a7-8901-bcde-2345678901bc",
+    "parkid": 2,
+    "itemtype": "Bike Rental - Basic",
+    "itemdescription": "Basic Trail Bike",
+    "quantity": 1,
+    "unitprice": 8.00,
+    "dateadded": "2025-10-08T10:05:00",
+    "ischeckedout": true
+  },
+  {
+    "cartid": 104,
+    "uid": "c3d4e5f6-a7b8-9012-cdef-3456789012cd",
+    "parkid": 3,
+    "itemtype": "Day Pass",
+    "itemdescription": "Adult Day Pass for Issaqueena Trails",
+    "quantity": 2,
+    "unitprice": 0.00,
+    "dateadded": "2025-10-08T11:25:00",
+    "ischeckedout": true
+  },
+  {
+    "cartid": 105,
+    "uid": "c3d4e5f6-a7b8-9012-cdef-3456789012cd",
+    "parkid": 3,
+    "itemtype": "Bike Rental - Premium",
+    "itemdescription": "Premium Mountain Bike",
+    "quantity": 2,
+    "unitprice": 15.00,
+    "dateadded": "2025-10-08T11:30:00",
+    "ischeckedout": true
+  }
+]

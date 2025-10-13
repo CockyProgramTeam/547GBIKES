@@ -1,0 +1,57 @@
+[
+  {
+    "sessionid": 1,
+    "uid": "a1b2c3d4-e5f6-7890-abcd-1234567890ab",
+    "sessionstart": "2025-10-08T09:15:00",
+    "sessionend": "2025-10-08T09:45:00",
+    "cartid1": 101,
+    "cartid2": 102,
+    "cartid3": null,
+    "cartid4": null,
+    "cartid5": null
+  },
+  {
+    "sessionid": 2,
+    "uid": "b2c3d4e5-f6a7-8901-bcde-2345678901bc",
+    "sessionstart": "2025-10-08T10:00:00",
+    "sessionend": "2025-10-08T10:30:00",
+    "cartid1": 103,
+    "cartid2": null,
+    "cartid3": null,
+    "cartid4": null,
+    "cartid5": null
+  },
+  {
+    "sessionid": 3,
+    "uid": "c3d4e5f6-a7b8-9012-cdef-3456789012cd",
+    "sessionstart": "2025-10-08T11:20:00",
+    "sessionend": "2025-10-08T11:50:00",
+    "cartid1": 104,
+    "cartid2": 105,
+    "cartid3": 106,
+    "cartid4": null,
+    "cartid5": null
+  },
+  {
+    "sessionid": 4,
+    "uid": "d4e5f6a7-b8c9-0123-def0-4567890123de",
+    "sessionstart": "2025-10-08T13:00:00",
+    "sessionend": "2025-10-08T13:40:00",
+    "cartid1": 107,
+    "cartid2": 108,
+    "cartid3": 109,
+    "cartid4": 110,
+    "cartid5": null
+  },
+  {
+    "sessionid": 5,
+    "uid": "e5f6a7b8-c9d0-1234-ef01-5678901234ef",
+    "sessionstart": "2025-10-08T14:15:00",
+    "sessionend": "2025-10-08T14:45:00",
+    "cartid1": 111,
+    "cartid2": 112,
+    "cartid3": 113,
+    "cartid4": 114,
+    "cartid5": 115
+  }
+]

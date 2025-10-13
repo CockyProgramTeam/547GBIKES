@@ -1,0 +1,17 @@
+CREATE TABLE SalesSession (
+    SalesSessionID INT PRIMARY KEY IDENTITY(1,1),
+    UID UNIQUEIDENTIFIER NOT NULL,
+    SessionStart DATETIME NOT NULL,
+    SessionEnd DATETIME,
+    CartID1 INT,
+    CartID2 INT,
+    CartID3 INT,
+    CartID4 INT,
+    CartID5 INT
+    -- FOREIGN KEY (UID) REFERENCES Customers(UID)
+    -- FOREIGN KEY (CartID1) REFERENCES Cart(CartID)
+    -- FOREIGN KEY (CartID2) REFERENCES Cart(CartID)
+    -- FOREIGN KEY (CartID3) REFERENCES Cart(CartID)
+    -- FOREIGN KEY (CartID4) REFERENCES Cart(CartID)
+    -- FOREIGN KEY (CartID5) REFERENCES Cart(CartID)
+);

@@ -1,0 +1,110 @@
+[
+  {
+    "name": "Paris Mountain State Park",
+    "address": "2401 State Park Rd, Greenville, SC 29609",
+    "phone": "864-244-5565",
+    "region": "Upstate",
+    "trail_length_miles": 15,
+    "difficulty": "Intermediate to Advanced",
+    "latitude": 34.9241,
+    "longitude": -82.3856,
+    "day_pass_price_usd": 6.00,
+    "description": "Popular for its scenic climbs and challenging trails like the Paris Mountain Big Loop"
+  },
+  {
+    "name": "Croft State Park",
+    "address": "450 Croft State Park Rd, Spartanburg, SC 29302",
+    "phone": "864-585-1283",
+    "region": "Upstate",
+    "trail_length_miles": 20,
+    "difficulty": "Intermediate",
+    "latitude": 34.9026,
+    "longitude": -81.8435,
+    "day_pass_price_usd": 3.00,
+    "description": "Over 20 miles of trails through woodlands and around lakes"
+  },
+  {
+    "name": "Issaqueena Trails",
+    "address": "Issaqueena Lake Rd, Clemson, SC 29631",
+    "phone": "Not publicly listed",
+    "region": "Upstate",
+    "trail_length_miles": 12,
+    "difficulty": "Intermediate",
+    "latitude": 34.7286,
+    "longitude": -82.8374,
+    "day_pass_price_usd": 0.00,
+    "description": "Includes Dam Road, Rocky, and Collarbone Trail loops"
+  },
+  {
+    "name": "Sesquicentennial State Park",
+    "address": "9564 Two Notch Rd, Columbia, SC 29223",
+    "phone": "803-788-2706",
+    "region": "Midlands",
+    "trail_length_miles": 6,
+    "difficulty": "Easy to Moderate",
+    "latitude": 34.0746,
+    "longitude": -80.9334,
+    "day_pass_price_usd": 6.00,
+    "description": "Offers a sandy six-mile loop ideal for moderate rides"
+  },
+  {
+    "name": "Poinsett State Park",
+    "address": "6660 Poinsett Park Rd, Wedgefield, SC 29168",
+    "phone": "803-494-8177",
+    "region": "Midlands",
+    "trail_length_miles": 10,
+    "difficulty": "Intermediate",
+    "latitude": 33.7922,
+    "longitude": -80.5416,
+    "day_pass_price_usd": 3.00,
+    "description": "Features the Knot Mountain Biking Trail and a race course loop"
+  },
+  {
+    "name": "Long Cane Horse Trail",
+    "address": "Sumter National Forest, Abbeville, SC 29620",
+    "phone": "Not publicly listed",
+    "region": "Midlands",
+    "trail_length_miles": 31,
+    "difficulty": "Intermediate",
+    "latitude": 34.3782,
+    "longitude": -82.3793,
+    "day_pass_price_usd": 0.00,
+    "description": "A figure-eight loop with over 50 km of intermediate terrain"
+  },
+  {
+    "name": "Hunting Island State Park",
+    "address": "2555 Sea Island Pkwy, Hunting Island, SC 29920",
+    "phone": "843-838-2011",
+    "region": "Lowcountry",
+    "trail_length_miles": 8,
+    "difficulty": "Easy",
+    "latitude": 32.3782,
+    "longitude": -80.4468,
+    "day_pass_price_usd": 8.00,
+    "description": "Easy eight-mile trail along the lagoon and fishing pier"
+  },
+  {
+    "name": "Marrington Plantation Trail",
+    "address": "Marrington Ave, Goose Creek, SC 29445",
+    "phone": "843-794-2120",
+    "region": "Lowcountry",
+    "trail_length_miles": 17,
+    "difficulty": "Intermediate",
+    "latitude": 32.9836,
+    "longitude": -80.0301,
+    "day_pass_price_usd": 0.00,
+    "description": "A 28 km intermediate ride through scenic forest"
+  },
+  {
+    "name": "Biggin Creek Bike Trail",
+    "address": "Near 591 Rembert C. Dennis Blvd, Moncks Corner, SC 29461",
+    "phone": "843-719-7921",
+    "region": "Lowcountry",
+    "trail_length_miles": 5,
+    "difficulty": "Moderate",
+    "latitude": 33.1960,
+    "longitude": -80.0145,
+    "day_pass_price_usd": 0.00,
+    "description": "A shorter loop with moderate elevation"
+  }
+]
