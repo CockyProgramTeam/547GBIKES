@@ -58,8 +58,7 @@ public static class TemplateEndpoints
             {
                 Template[] someTemplate = context.Templates.Where(m => m.TemplateId == id).ToArray();
                 context.Templates.Attach(someTemplate[0]);
-                someTemplate[0].Description = input.Description;
-               
+                if (input.Description != null) someTemplate[0].Description = input.Description;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.TemplateId);

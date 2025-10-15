@@ -36,6 +36,14 @@ app.MapCartEndpoints();
 app.MapParksEndpoints();
 app.MapApilogEndpoints();
 app.MapUserlogEndpoints();
-app.MapTemplateEndpoints();
-
+app.MapCardEndpoints();
+app.MapBookingEndpoints();
+app.MapUserEndpoints();
+app.MapUserprofileEndpoints();
+app.MapUsersessionEndpoints();
+app.MapSessionlogEndpoints();
+app.MapSalesCatalogueEndpoints();
+app.MapPaymentEndpoints();
+app.MapCustomerEndpoints();
+app.MapControllers();
 app.Run();
