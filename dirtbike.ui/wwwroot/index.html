@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="home.css" />
+  <title>Home - Team 1 CertAethon</title>
+</head>
+
+<body onload="checkUserStatus()">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="logo">Team 1</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner">User</span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      </div>
+    </div>
+
+  <!-- User Greeting Banner -->
+  <div class="user-banner" style="text-align: center; padding: 10px;">
+    <h3 id="userGreeting">Welcome, User</h3> <!-- Default message for guests -->
+  </div>
+  
+  <!-- WhiteLabel Branding Image -->  
+  <div align="center" class="homeimagepane"><span align="center"><p align="center"><img src="./images/shamrock2.png" width="100%" height="375px"></p></span></div>
+  
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+       <h2>Welcome to MyLink</h2>
+      <p>Your one-stop solution for certifications, training, and resume building.</p>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="feature">
+        <a href="mycerts.html">
+          <h3>Track Your Certifications!</h3>
+          <p>Stay up-to-date on your certifications. Track progress, manage deadlines, and earn recognition for your skills.</p>
+        </a>
+      </div>
+      
+      <div class="feature">
+        <a href="certcat.html">
+          <h3>Certificate Catalogue</h3>
+          <p>Explore trending certifications that can boost your career. Stay ahead with the latest industry-recognized credentials.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // API Endpoints
+    const usersApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
+    const profilesApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userprofile";
+
+    function checkUserStatus() {
+      var userId = localStorage.getItem("uid");
+      var fullName = localStorage.getItem("fullname");
+      var userRole = localStorage.getItem("role");
+
+      var loginBtn = document.getElementById("loginBtn");
+      var logoutBtn = document.getElementById("logoutBtn");
+
+      if (userId && userId !== "901") {
+        // Logged in
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+        document.getElementById("userGreeting").innerHTML = "Welcome, " + fullName; // Display full name
+
+        if (userRole === "admin") {
+          window.open("adminhome.html", "_self");
+        }
+
+      } else {
+        // Not logged in (guest)
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+        document.getElementById("userGreeting").innerHTML = "Welcome, Guest"; // Display "Guest"
+      }
+    }
+
+    function logoutUser(event) {
+      event.preventDefault();
+      console.log("Logging out user...");
+
+      localStorage.clear();
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("role", "guest");
+
+      console.log("Local storage after logout:", localStorage);
+      clearUserSession();
+      window.location.replace("login.html");
+    }
+
+    function clearUserSession()
+      {
+    sometoken = localStorage.getItem('token');
+    var logoutApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users/logout/";
+    logoutApiUrl = logoutApiUrl + sometoken;
+    $.post(logoutApiUrl)
+        .done(
+            alert("SessionClosed.");
+            return;
+          }
+        })
+        .fail(function(xhr, status, error) {
+          console.error("Error closing session:", xhr.responseText);
+        });
+      }
+    
+    function loginUser(event) {
+      event.preventDefault();
+      console.log("Logging in user...");
+
+      localStorage.clear();
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("role", "guest");
+      localStorage.setItem("isemployee", "0");
+      window.open("login.html", "_self");
+    }
+
+    // Fetch the profile picture using the profiles API.
+    function fetchProfilePicture() {
+      var uid = localStorage.getItem('uid');
+      $.get(profilesApiUrl)
+        .done(function(profiles) {
+          var profile = profiles.find(p => p.userid == uid);
+          if(profile && profile.activepictureurl) {
+            $('.navbar .nav-right img').attr('src', profile.activepictureurl);
+          }
+        })
+        .fail(function(xhr, status, error) {
+          console.error("Error fetching profiles:", xhr.responseText);
+        });
+    }
+
+    // Fetch user data, then get the employeeid 
+    function fetchUser() {
+      var uid = localStorage.getItem('uid');
+      $.get(usersApiUrl)
+        .done(function(users) {
+          var user = users.find(u => u.id == uid);
+          if (!user) {
+            alert("User not found.");
+            return;
+          }
+          // Update navbar with full name from user data.
+          $('#H3UserBanner').text(user.fullname);
+        })
+        .fail(function(xhr, status, error) {
+          console.error("Error fetching user:", xhr.responseText);
+        });
+    }
+
+    // On page load, check uid, fetch user info
+    $(document).ready(function () {
+      var someuid = localStorage.getItem('uid');
+      var somerole = localStorage.getItem('role');
+      console.log('UID:', someuid);
+      if(someuid === '901')
+      {
+      //donothing stay on home page.
+      }
+      else if (somerole === 'superuser') {
+        window.open("adminhome.html", "_self");
+      }
+       else if (someuid && someuid !== '901') {
+        fetchUser();
+        fetchProfilePicture();
+      }
+    });
+  </script>
+</body>
+    <!-- Footer -->
+  <footer class="footer"> &copy; 2025 CertAethon Team 1. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
+
+</html>

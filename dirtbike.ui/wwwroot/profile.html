@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>User Profile – CertAethon Team 1</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    html, body { height:100%; margin:0; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #F2F2F2;
+      display: flex; flex-direction: column;
+    }
+    .navbar {
+      background-color: #1F3D7A;
+      padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .navbar .nav-left a {
+      background-color: #3E5BA8;
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      margin-right: 15px;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background-color .3s;
+    }
+    .navbar .nav-left a:hover { background-color: #2e4a90; }
+    .navbar .nav-right { display: flex; align-items: center; }
+    .navbar .nav-right img {
+      width: 35px; height: 35px; border-radius: 50%;
+      margin-right: 10px; object-fit: cover; cursor: pointer;
+    }
+    .navbar .nav-right span {
+      color: #fff; font-weight: bold; margin-right: 20px;
+    }
+    .navbar .nav-right button {
+      background-color: #f44336; color: #fff;
+      border: none; padding: 6px 12px; border-radius: 4px;
+      cursor: pointer;
+    }
+    .navbar .nav-right button:hover { background-color: #d32f2f; }
+    .profile-card {
+      max-width: 800px; margin: 2rem auto; background: #fff;
+      border-radius: .5rem; overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,.1); display: flex;
+    }
+    .profile-card .left {
+      background: #1F3D7A; padding: 2rem; text-align: center; flex: 1;
+    }
+    .profile-card .left img {
+      width: 120px; height: 120px; object-fit: cover;
+      border-radius: 50%; border: 4px solid #fff;
+    }
+    .profile-card .right {
+      padding: 2rem; flex: 2;
+    }
+    .profile-card .right h3 { margin-top: 0; color: #1F3D7A; }
+    .profile-card .right p { margin-bottom: .5rem; }
+    .profile-card .right p strong { display: inline-block; width: 120px; }
+    .modal-lg-custom { max-width: 800px; width:100%; }
+    .modal-body input.form-control {
+      border-radius: .5rem; padding: .5rem .75rem;
+    }
+    .modal-body { padding: 1.5rem 2rem; }
+    .footer {
+      background-color: #1F3D7A; color: #fff;
+      text-align: center; padding: 10px 0;
+      font-size: 14px; font-weight: bold; margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <a id="homeLink" href="index.html">Home</a>
+      <a id="certLink" href="mycerts.html">My Certifications</a>
+      <a href="certcat.html">Certificate Catalogue</a>
+      <a id="learnLink" href="celearn.html">My Learning</a>
+      <a href="help.html">Customer Care</a>
+    </div>
+    <div class="nav-right">
+      <img
+        id="navbar-pic"
+        src="./images/bluecircle.png"
+        alt="User"
+        onclick="location.href='profile.html'"
+      />
+      <span id="userBanner">User</span>
+      <button id="logoutBtn">Logout</button>
+    </div>
+  </div>
+
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <div class="left">
+      <img id="profile-pic" src="https://via.placeholder.com/120" alt="Profile" />
+    </div>
+    <div class="right">
+      <h3 id="profile-fullname">Loading…</h3>
+      <p><strong>Title:</strong> <span id="profile-title"></span></p>
+      <p><strong>University:</strong> <span id="profile-university"></span></p>
+      <p>
+        <strong>Address:</strong>
+        <span id="profile-address1"></span>,
+        <span id="profile-address2"></span>
+      </p>
+      <p><strong>City:</strong> <span id="profile-city"></span></p>
+      <p><strong>State:</strong> <span id="profile-stateregion"></span></p>
+      <p><strong>Zip Code:</strong> <span id="profile-postalzip"></span></p>
+      <p><strong>Phone Number:</strong> <span id="profile-phone"></span></p>
+      <p><strong>Email:</strong> <span id="profile-email"></span></p>
+
+      <div class="mt-3 d-flex align-items-center gap-2">
+        <button id="btnEditProfile" class="btn btn-primary btn-sm me-2">
+          Update Profile
+        </button>
+        <button id="btnEditPic" class="btn btn-warning btn-sm me-2">
+          Update Picture
+        </button>
+        <a href="changepassword.html" class="btn btn-secondary btn-sm">
+          Change Password
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg-custom">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Profile</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <form id="profileForm">
+          <div class="modal-body">
+            <input type="hidden" id="pf-id" />
+
+            <div class="row gy-2">
+              <div class="col-md-6">
+                <label>Address 1</label>
+                <input type="text" id="pf-address1" class="form-control" />
+
+                <label class="mt-2">City</label>
+                <input type="text" id="pf-city" class="form-control" />
+
+                <label class="mt-2">Postal/Zip</label>
+                <input type="text" id="pf-postalzip" class="form-control" />
+
+                <label class="mt-2">Email</label>
+                <input type="email" id="pf-email" class="form-control" />
+
+                <label class="mt-2">Title</label>
+                <input type="text" id="pf-title" class="form-control" />
+              </div>
+              <div class="col-md-6">
+                <label>Address 2</label>
+                <input type="text" id="pf-address2" class="form-control" />
+
+                <label class="mt-2">State</label>
+                <input type="text" id="pf-stateregion" class="form-control" />
+
+                <label class="mt-2">Phone Number</label>
+                <input type="text" id="pf-phone" class="form-control" />
+
+                <label class="mt-2">University</label>
+                <input type="text" id="pf-university" class="form-control" />
+
+                <label class="mt-2">Pronouns</label>
+                <input type="text" id="pf-pronoun" class="form-control" />
+              </div>
+            </div>
+
+            <!-- hidden profile‐fields -->
+            <input type="hidden" id="pf-activepictureurl" />
+            <input type="hidden" id="pf-country" />
+            <input type="hidden" id="pf-cellphone" />
+            <input type="hidden" id="pf-sms" />
+            <input type="hidden" id="pf-maritalstatus" />
+            <input type="hidden" id="pf-university1" />
+            <input type="hidden" id="pf-university2" />
+            <input type="hidden" id="pf-linkedinurl" />
+            <input type="hidden" id="pf-instagramurl" />
+            <input type="hidden" id="pf-vimeourl" />
+            <input type="hidden" id="pf-facebookurl" />
+            <input type="hidden" id="pf-googleurl" />
+            <input type="hidden" id="pf-userid" />
+            <input type="hidden" id="pf-employeeid" />
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+            <button type="button" id="saveProfileBtn" class="btn btn-primary btn-sm">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Picture Modal -->
+  <div class="modal fade" id="editPicModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload New Picture</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="file" id="picFile" class="form-control" accept="image/*" />
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button id="uploadPicBtn" class="btn btn-success btn-sm">Upload & Update</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">&copy; 2025 CertAethon Team 1. All rights reserved.</footer>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const usersApiUrl   = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
+    const profileApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userprofile";
+    const fileUploadUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/File/upload?fileCategory=projectimages";
+
+    let profileData = null;
+    const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
+    const editPicModal     = new bootstrap.Modal(document.getElementById("editPicModal"));
+
+    (async function init() {
+      const uid = localStorage.getItem("uid");
+      if (!uid || uid === "901") return location.replace("login.html");
+
+      if (localStorage.getItem("role") === "superuser") {
+        const certLink = document.getElementById("certLink");
+        if (certLink) certLink.style.display = "none";
+      }
+
+      document.getElementById("logoutBtn").onclick = () => {
+        localStorage.clear();
+        location.replace("login.html");
+      };
+
+       loadProfile();
+
+      document.getElementById("btnEditProfile").onclick = () => editProfileModal.show();
+      document.getElementById("btnEditPic").onclick     = () => editPicModal.show();
+      document.getElementById("saveProfileBtn").onclick = saveProfileChanges;
+      document.getElementById("uploadPicBtn").onclick   = uploadNewPicture;
+    })();
+
+      function checkUserRole() {
+var userRole = localStorage.getItem("role");
+var isemployee = localStorage.getItem("isemployee");
+var certLink = document.getElementById("certLink");
+var homeLink = document.getElementById("homeLink");
+
+if (userRole === "admin") {
+homeLink.href="adminhome.html";
+certLink.href = "adminmycerts.html";
+certLink.innerText = "Admin Certifications";
+learnLink.href = "celearn.html";
+learnLink.innerText = "My Learn";
+learnLink.style.display = "inline"; // just in case it was hidden
+} else if (userRole === "superuser") {
+homeLink.href="manager.html";
+learnLink.style.display = "none"; 
+} else if(userRole === "registered" && isemployee == 1) {
+homeLink.href="employeehome.html";
+certLink.href = "mycerts.html";
+certLink.innerText = "My Certifications";
+learnLink.href = "celearn.html";
+learnLink.innerText = "My Learn";
+learnLink.style.display = "inline"; // just in case it was hidden
+}
+else{
+certLink.href = "mycerts.html";
+certLink.innerText = "My Certifications";
+learnLink.style.display = "none"; 
+}
+}
+    window.onload = checkUserRole;
+
+    async function loadProfile() {
+      const uid      = localStorage.getItem("uid");
+      const users    = await fetch(usersApiUrl).then(r => r.json());
+      const me       = users.find(u => u.id == uid);
+      const profiles = await fetch(profileApiUrl).then(r => r.json());
+      profileData    = profiles.find(p => p.userid == uid);
+
+      if (!me || !profileData) {
+        return alert("Unable to load your profile.");
+      }
+
+      // render card
+      document.getElementById("userBanner").innerText       = me.fullname;
+      document.getElementById("profile-fullname").innerText = me.fullname;
+      document.getElementById("profile-title").innerText    = profileData.title      || "";
+      document.getElementById("profile-university").innerText = profileData.university || "";
+      document.getElementById("profile-address1").innerText = profileData.address1    || "";
+      document.getElementById("profile-address2").innerText = profileData.address2    || "";
+      document.getElementById("profile-city").innerText     = profileData.city        || "";
+      document.getElementById("profile-stateregion").innerText = profileData.stateregion || "";
+      document.getElementById("profile-postalzip").innerText = profileData.postalzip   || "";
+      document.getElementById("profile-phone").innerText    = profileData.phone       || "";
+      document.getElementById("profile-email").innerText    = profileData.email       || "";
+
+      const picUrl = profileData.activepictureurl || "https://via.placeholder.com/120";
+      document.getElementById("profile-pic").src = picUrl;
+      document.getElementById("navbar-pic").src  = picUrl;
+
+      // prime edit form
+      document.getElementById("pf-id").value                = profileData.id;
+      document.getElementById("pf-address1").value          = profileData.address1    || "";
+      document.getElementById("pf-address2").value          = profileData.address2    || "";
+      document.getElementById("pf-city").value              = profileData.city        || "";
+      document.getElementById("pf-stateregion").value       = profileData.stateregion || "";
+      document.getElementById("pf-postalzip").value         = profileData.postalzip   || "";
+      document.getElementById("pf-email").value             = profileData.email       || "";
+      document.getElementById("pf-university").value        = profileData.university  || "";
+      document.getElementById("pf-title").value             = profileData.title       || "";
+      document.getElementById("pf-pronoun").value           = profileData.pronoun     || "";
+      document.getElementById("pf-activepictureurl").value  = profileData.activepictureurl || "";
+      document.getElementById("pf-country").value           = profileData.country     || "";
+      document.getElementById("pf-cellphone").value         = profileData.cellphone   || "";
+      document.getElementById("pf-sms").value               = profileData.sms         || "";
+      document.getElementById("pf-maritalstatus").value     = profileData.maritalstatus || "";
+      document.getElementById("pf-university1").value       = profileData.university1  || "";
+      document.getElementById("pf-university2").value       = profileData.university2  || "";
+      document.getElementById("pf-linkedinurl").value       = profileData.linkedinurl  || "";
+      document.getElementById("pf-instagramurl").value      = profileData.instagramurl || "";
+      document.getElementById("pf-vimeourl").value          = profileData.vimeourl     || "";
+      document.getElementById("pf-facebookurl").value       = profileData.facebookurl || "";
+      document.getElementById("pf-googleurl").value         = profileData.googleurl   || "";
+      document.getElementById("pf-userid").value            = profileData.userid      || "";
+      document.getElementById("pf-employeeid").value        = profileData.employeeid  || "";
+    }
+
+    async function saveProfileChanges() {
+  // 1) Grab the new form values
+  const newAddress1    = document.getElementById("pf-address1").value.trim();
+  const newAddress2    = document.getElementById("pf-address2").value.trim();
+  const newCity        = document.getElementById("pf-city").value.trim();
+  const newStateRegion = document.getElementById("pf-stateregion").value.trim();
+  const newPostalZip   = document.getElementById("pf-postalzip").value.trim();
+  const newPhone       = document.getElementById("pf-phone").value.trim();
+  const newEmail       = document.getElementById("pf-email").value.trim();
+  const newUniversity  = document.getElementById("pf-university").value.trim();
+  const newPronoun     = document.getElementById("pf-pronoun").value.trim() || null;
+
+  // 2) Build the full object, preserving all other fields
+  const updated = {
+    id:               profileData.id,
+    address1:         newAddress1,
+    address2:         newAddress2,
+    city:             newCity,
+    stateregion:      newStateRegion,
+    country:          profileData.country         ?? null,
+    phone:            newPhone,
+    cellphone:        profileData.cellphone       ?? null,
+    sms:              profileData.sms             ?? null,
+    email:            newEmail,
+    maritalstatus:    profileData.maritalstatus   ?? null,
+    university1:      profileData.university1     ?? null,
+    university2:      profileData.university2     ?? null,
+    linkedinurl:      profileData.linkedinurl     ?? null,
+    instagramurl:     profileData.instagramurl    ?? null,
+    vimeourl:         profileData.vimeourl        ?? null,
+    facebookurl:      profileData.facebookurl     ?? null,
+    googleurl:        profileData.googleurl       ?? null,
+    university:       newUniversity,
+    title:            profileData.title           ?? "",
+    pronoun:          newPronoun,
+    title2:           profileData.title2          ?? null,
+    activepictureurl: profileData.activepictureurl ?? "",
+    userid:           profileData.userid,
+    employeeid:       profileData.employeeid,
+    postalzip:        newPostalZip
+  };
+
+  console.log("PUT /api/Userprofile payload:", updated);
+  // 3) Send it
+  const res = await fetch(`${profileApiUrl}/${updated.id}`, {
+    method:  "PUT",
+    headers: { "Content-Type": "application/json" },
+    body:    JSON.stringify(updated)
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    return alert("Failed to save profile: " + err);
+  }
+
+  // 4) Refresh
+  profileData = updated;
+  editProfileModal.hide();
+  await loadProfile();
+}
+
+    async function uploadNewPicture() {
+      // 1) upload file → get blobUrl
+      const fileInput = document.getElementById("picFile");
+      if (!fileInput.files.length) return alert("Select a file first.");
+      const fd = new FormData();
+      fd.append("file", fileInput.files[0]);
+      const uploadRes = await fetch(fileUploadUrl, { method: "POST", body: fd });
+      const { blobUrl } = await uploadRes.json();
+      if (!blobUrl) return alert("Upload failed: no blobUrl returned");
+
+      const uid = localStorage.getItem("uid");
+      const url = `${usersApiUrl}/${uid}`;
+      console.log("→ Fetching user from:", url);
+      // 2) GET full user
+      const getUserRes = await fetch(url);
+      const raw        = await getUserRes.text();
+      
+      if (!getUserRes.ok) {
+        return alert("Failed to load user for update:\n" + raw);
+      }
+      
+      let parsed;
+      try {
+        parsed = JSON.parse(raw);
+      } catch (e) {
+        console.error("Failed to parse JSON:", e);
+        return alert("Couldn’t parse /api/Users response");
+      }
+      
+      // If the API is (incorrectly) returning an array, unwrap it:
+      let userObj = Array.isArray(parsed) ? parsed[0] : parsed;
+      
+      console.log("→ PUT /api/Users payload:", JSON.stringify(userObj, null, 2));
+      
+      const putUserRes = await fetch(`${usersApiUrl}/${uid}`, {
+        method:  "PUT",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(userObj)
+      });
+      
+      if (!putUserRes.ok) {
+        const err = await putUserRes.text();
+        console.error("PUT /api/Users error:", putUserRes.status, err);
+        return alert("Failed to update user:\n" + err);
+      }
+
+      // 4) build and PUT full profile payload
+      const profilePayload = {
+        id:               profileData.id,
+        address1:         profileData.address1,
+        address2:         profileData.address2,
+        city:             profileData.city,
+        stateregion:      profileData.stateregion,
+        country:          profileData.country,
+        phone:            profileData.phone,
+        cellphone:        profileData.cellphone,
+        sms:              profileData.sms,
+        email:            profileData.email,
+        maritalstatus:    profileData.maritalstatus,
+        university1:      profileData.university1,
+        university2:      profileData.university2,
+        linkedinurl:      profileData.linkedinurl,
+        instagramurl:     profileData.instagramurl,
+        vimeourl:         profileData.vimeourl,
+        facebookurl:      profileData.facebookurl,
+        googleurl:        profileData.googleurl,
+        university:       profileData.university,
+        title:            profileData.title,
+        pronoun:          profileData.pronoun,
+        title2:           profileData.title2,
+        activepictureurl: blobUrl,
+        userid:           profileData.userid,
+        employeeid:       profileData.employeeid,
+        postalzip:        profileData.postalzip
+      };
+
+      let putProfileRes = await fetch(`${profileApiUrl}/${profileData.id}`, {
+        method:  "PUT",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(profilePayload)
+      });
+      if (!putProfileRes.ok) {
+        const err = await putProfileRes.text();
+        console.error("PUT /api/Userprofile error:", putProfileRes.status, err);
+        return alert("Failed to update profile record:\n" + err);
+      }
+
+      // 5) Sync & re-render
+      localStorage.setItem("profileurl", blobUrl);
+      editPicModal.hide();
+      await loadProfile();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CE SuperUserPortal</title>
+    <style>
+            /* --- Overall Page Styles --- */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+    /* --- Navigation Bar --- */
+    .navbar {
+      background-color: #1F3D7A;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar .nav-left {
+      display: flex;
+      align-items: center;
+    }
+.navbar .nav-left a {
+  background-color: #3E5BA8; /* Slightly lighter blue than navbar */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 15px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .nav-left a:hover {
+  background-color: #2e4a90;
+  color: #fff;
+}
+ 
+    .navbar .nav-right {
+      display: flex;
+      align-items: center;
+    }
+    .navbar .nav-right img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+    .navbar .nav-right span {
+      color: white;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+    .navbar .nav-right button {
+      background-color: #f44336;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .navbar .nav-right button:hover {
+      background-color: #d32f2f;
+    }
+    /* Features Section */
+.features {
+    flex-grow: 1;
+    padding: 40px 15px;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.features .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.feature {
+    width: 250px;
+    padding: 20px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.feature:hover {
+    background-color: #1F3D7A;
+    color: white;
+}
+
+.feature a {
+    text-decoration: none;
+    color: black;
+}
+
+.feature a:hover,
+.feature a:visited,
+.feature a:active {
+    color: black;
+}
+
+.feature h3 {
+    font-size: 20px;
+}
+
+.feature p {
+    font-size: 14px;
+}
+
+/* Footer */
+.footer {
+    background-color: #1F3D7A;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: auto;
+}
+    </style>
+ 
+</head>
+<body onload="checkpll()">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-left">
+           <a href="employeehome.html">Employee Home</a>
+           <a href="adminhome.html">Admin Home</a>
+           <a href="adminstuff.html">Admin Stuff</a>
+           <a href="adminmycerts.html">Admin MyCerts</a>
+           <a href="coporatevents.html">Corporate Events</a>
+        </div>
+        <div class="nav-right">
+          <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" width="30px" height="30px"/>
+          <span id="H3UserBanner">User</span>
+          <button id="logoutBtn" onclick="onLogout(event)">Logout</button>
+        </div>
+      </div>
+  
+<div align="center"><img src="https://media.licdn.com/dms/image/v2/D4D12AQHVxVvEWI8SRw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1665749250084?e=2147483647&v=beta&t=iNUHvUqhbqOoruoh5Sg-omt11MVCbTK84aYE8I07ERU" width=100% height=500px></div>
+<div align="center"><h3>MyLink Administration Options</h3></div>
+<div class="features">
+<div class="feature">
+    <a href="./certreports/CertReportByCompany.html">
+      <h3>Certificate Report By Company</h3>
+      <p>View certificates issued across various companies. Analyze trends and insights by organization.</p>
+    </a>
+  </div>
+      <div class="feature">
+    <a href="./certreports/CertReportByBranch.html">
+      <h3>Certificate Report By Branch</h3>
+      <p>Explore certification statistics for each branch. Useful for localized compliance tracking.</p>
+    </a>
+  </div>
+ <div class="feature">
+    <a href="./certreports/CertReportByManager.html">
+      <h3>Certificate Report By Manager</h3>
+      <p>Track certifications supervised by different managers. Helps ensure leadership accountability.</p>
+    </a>
+  </div>
+ 
+  <div class="feature">
+    <a href="./certreports/CertReportByBu.html">
+      <h3 >Certificate Report By Business Unit</h3>
+      <p>Access certification data by Business Unit. Get detailed breakdowns to support team-specific planning.</p>
+    </a>
+  </div>
+<div class="feature">
+  <a href="./certreports/CertReportByRegion.html">
+    <h3>Certificate Report By Region</h3>
+    <p>Analyze certifications across different geographical regions. Useful for identifying regional trends and training needs.</p>
+  </a>
+</div>
+<div class="feature">
+  <a href="./certreports/SessionReportByUserId.html">
+    <h3>Active Session Report By UserID</h3>
+    <p>Review Current LoggedIn Users</p>
+  </a>
+</div>
+<div class="feature">
+    <a href="./certreports/BatchReportByType.html">
+    <h3>Batch Report By Type</h3>
+    <p>Review Status of Automation Tasks</p>
+  </a>
+</div>
+</div>
+    <div class="jtools">
+    <h3 align="center">Secure Campus Utility</h3>
+    <p align="center">This utility works securely on campus. Click a feature below to access the appropriate tool or portal.</p>
+    </div>
+    <div class="features">
+      <div class="feature">
+        <button onclick="myOpenCall()">Public Internet Tools</button>
+      </div>
+      
+      <div class="feature">
+        <button onclick="mylocalCall()">DomainSecure Campus Manager</button>
+      </div>
+      
+      <div class="feature">
+        <button onclick="myAzureCall()">Bulk Upload to Azure</button>
+      </div>
+      
+      <div class="feature">
+        <button onclick="myCertsDownloadCall()">Download Certificates to Workstation</button>
+      </div>
+      </div>
+        <script>
+        function myOpenCall() {
+           //alert('CallingOpenPublicManagerfunction');
+           let someuid = 1;
+           let someemployee = 0;
+           let somerole = 'admin';
+           someuid = localStorage.getItem('uid');
+           someemployee = localStorage.getItem('isemployee');
+           somerole = localStorage.getItem('role');
+            
+           if (someuid === '901') 
+           {
+           window.location.href = 'loginerror.html';
+           }
+           else if (somerole != 'superuser')
+           {
+           alert('This is a Superuser Website for Employees Only with a Domain Login. You do not have permissions for this site! Please Contact Your Manager if you think this is an error.');
+           //window.open("home.html", "_self");
+           }
+           else
+           {
+           alert("Calling Manager App"); 
+           window.open("http://manager2.590team1.info/index.aspx","_blank");
+           }
+        } 
+           
+       function mylocalCall() 
+           {
+           //alert('CallingOpenPublicManagerfunction');
+           let someuid = 1;
+           let someemployee = 0;
+           let somerole = 'admin';
+           someuid = localStorage.getItem('uid');
+           someemployee = localStorage.getItem('isemployee');
+           somerole = localStorage.getItem('role');
+               
+           if (someuid === '901') 
+           {
+           window.location.href = 'loginerror.html';
+           }
+           else if (somerole != 'superuser')
+           {
+           alert('This is a Superuser Website for Employees Only with a Domain Login. You do not have permissions for this site! Please Contact Your Manager if you think this is an error.');
+           //window.open("home.html", "_self");
+           }
+           else
+           {
+           alert("Calling Local Manager App - Domain Authentication Required"); 
+           window.open("http://manager.590team1.info","_blank");
+           }
+           }
+
+            function checkpll()
+               {
+               const someuid = localStorage.getItem('uid');
+               if (someuid === '901') 
+               {
+               window.location.href = 'loginerror.html';
+               }
+               }
+       
+          function myAzureCall() 
+          {
+          const someuid = localStorage.getItem('uid');
+          
+           if (someuid === '901') 
+           {
+           window.location.href = 'loginerror.html';
+           }
+           else
+           {
+           //alert("Calling Manager App"); 
+           window.open("https://home.590team1.info/managerupload.html","_self");
+           }
+        }
+         
+       
+       function myCertsDownloadCall() {
+          const someuid = localStorage.getItem('uid');
+          
+           if (someuid === '901') 
+           {
+           window.location.href = 'loginerror.html';
+           }
+           else
+           {
+           //alert("Calling Manager App"); 
+           window.open("https://home.590team1.info/downloadcertstocsv2.html","_self");
+              
+           }
+          
+       }
+    
+       
+       function onLogout(event) {
+      event.preventDefault();
+      console.log("Logging out user...");
+
+      localStorage.clear();
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("role", "guest");
+
+      console.log("Local storage after logout:", localStorage);
+      window.location.replace("login.html");
+    }
+
+function openmanager()
+{
+window.open("index.html", "_blank");
+}
+    </script>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 CertAethon Team 1.
+    <br>
+    All rights reserved.
+  </footer>
+</body>
+</html>
