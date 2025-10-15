@@ -52,17 +52,18 @@ public static class ParksEndpoints
             {
                 Park[] someParks = context.Parks.Where(m => m.ParkId == id).ToArray();
                 context.Parks.Attach(someParks[0]);
-                someParks[0].Description = input.Description;
-                someParks[0].DayPassPriceUsd = input.DayPassPriceUsd;
-                someParks[0].Longitude = input.Longitude;
-                someParks[0].Latitude = input.Latitude;
-                someParks[0].Difficulty = input.Difficulty;
-                someParks[0].TrailLengthMiles = input.TrailLengthMiles;
-                someParks[0].Name = input.Name;
-                someParks[0].Region = input.Region;
-                someParks[0].Phone = input.Phone;
-                someParks[0].Address = input.Address;
-     
+                if (input.Description != null) someParks[0].Description = input.Description;
+                if (input.DayPassPriceUsd != null) someParks[0].DayPassPriceUsd = input.DayPassPriceUsd;
+                if (input.Longitude != null) someParks[0].Longitude = input.Longitude;
+                if (input.Latitude != null) someParks[0].Latitude = input.Latitude;
+                if (input.Difficulty != null) someParks[0].Difficulty = input.Difficulty;
+                if (input.TrailLengthMiles != null) someParks[0].TrailLengthMiles = input.TrailLengthMiles;
+                if (input.Name != null) someParks[0].Name = input.Name;
+                if (input.Region != null) someParks[0].Region = input.Region;
+                if (input.Phone != null) someParks[0].Phone = input.Phone;
+                if (input.Address != null) someParks[0].Address = input.Address;
+                if (input.Trailmapurl != null) someParks[0].Trailmapurl = input.Trailmapurl;
+                if (input.Parklogourl != null) someParks[0].Parklogourl = input.Parklogourl;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "TEST", "TEST");
                 return TypedResults.Accepted("Updated ID:" + input.ParkId);

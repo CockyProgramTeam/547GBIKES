@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "4Tb8H93DdkU=",
+  "dgSpecHash": "igi3j9ZT4/E=",
   "success": true,
-  "projectFilePath": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\mountainproject\\dirtbike.api\\dirtbike.api.csproj",
+  "projectFilePath": "X:\\G547\\mountainproject\\dirtbike.api\\dirtbike.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stritzj\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\stritzj\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.6\\microsoft.aspnetcore.openapi.9.0.6.nupkg.sha512",

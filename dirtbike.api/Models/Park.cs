@@ -19,11 +19,15 @@ public partial class Park
 
     public string? Difficulty { get; set; }
 
-    public double? Latitude { get; set; }
+    public string? Latitude { get; set; }
 
-    public double? Longitude { get; set; }
+    public string? Longitude { get; set; }
 
     public string? Description { get; set; }
 
     public double? DayPassPriceUsd { get; set; }
+
+    public string? Trailmapurl { get; set; }
+
+    public string? Parklogourl { get; set; }
 }
