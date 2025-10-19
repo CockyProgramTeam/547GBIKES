@@ -1,0 +1,18 @@
+//CAMPUS
+dotnet publish -c Release -o /opt/ga/rc1/bin    //Campus
+service garc1 restart
+//BARNWELL
+dotnet publish -c Release -o /opt/ga/rc2/bin  //Barnwell
+service garc2 restart
+//GOOGLE
+dotnet publish -c Release -o /opt/ga/rc3/bin   //Google
+service garc3 restart
+//AMAZON
+dotnet publish -c Release -o /opt/ga/rc4/bin //Amazon
+service garc4 restart
+
+
+//BIKES
+
+dotnet publish -c Release -o /opt/ga/547bikes/bin  
+
