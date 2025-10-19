@@ -82,4 +82,6 @@ public partial class User
     public string? Twofactorprovidertoken { get; set; }
 
     public string? Twofactorproviderauthstring { get; set; }
+
+    public string? Uidstring { get; set; }
 }

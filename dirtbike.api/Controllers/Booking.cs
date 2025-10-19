@@ -51,6 +51,22 @@ public static class BookingEndpoints
         .WithName("GetBookingById")
         .WithOpenApi();
 
+        group.MapGet("/userid/{id}", (string userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Bookings.Where(m => m.Uid == userid).ToList();
+            }
+        })
+        .WithName("GetBookingByUserId")
+        .WithOpenApi();
+
+
+
+
+
+
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Booking input) =>
         {
@@ -58,7 +74,18 @@ public static class BookingEndpoints
             {
                 Booking[] someBooking = context.Bookings.Where(m => m.BookingId == id).ToArray();
                 context.Bookings.Attach(someBooking[0]);
+                if (input.Uid != null) someBooking[0].Uid = input.Uid;
+                if (input.BillingTelephoneNumber != null) someBooking[0].BillingTelephoneNumber = input.BillingTelephoneNumber;
+                if (input.CreditCardType != null) someBooking[0].CreditCardType = input.CreditCardType;
+                if (input.CreditCardLast4 != null) someBooking[0].CreditCardLast4 = input.CreditCardLast4;
+                if (input.CreditCardExpDate != null) someBooking[0].CreditCardExpDate = input.CreditCardExpDate;
+                if (input.QuantityAdults != null) someBooking[0].QuantityAdults = input.QuantityAdults;
+                if (input.QuantityChildren != null) someBooking[0].QuantityChildren = input.QuantityChildren;
                 if (input.CustomerBillingName != null) someBooking[0].CustomerBillingName = input.CustomerBillingName;
+                if (input.TotalAmount != null) someBooking[0].TotalAmount = input.TotalAmount;
+                if (input.TransactionId != null) someBooking[0].TransactionId = input.TransactionId;
+                if (input.ParkId != null) someBooking[0].ParkId = input.ParkId;
+                if (input.ParkName != null) someBooking[0].ParkName = input.ParkName;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.BookingId);

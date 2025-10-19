@@ -48,4 +48,6 @@ public partial class Usersession
     public string? Twofactorprovidertoken { get; set; }
 
     public string? Twofactorproviderauthstring { get; set; }
+
+    public string? Useridasstring { get; set; }
 }

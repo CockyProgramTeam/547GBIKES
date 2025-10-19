@@ -45,5 +45,7 @@ app.MapSessionlogEndpoints();
 app.MapSalesCatalogueEndpoints();
 app.MapPaymentEndpoints();
 app.MapCustomerEndpoints();
+app.MapEmployeeEndpoints();
+app.MapCompanyEndpoints();
 app.MapControllers();
 app.Run();

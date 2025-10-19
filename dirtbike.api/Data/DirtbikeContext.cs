@@ -24,9 +24,15 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
+    public virtual DbSet<Company> Companies { get; set; }
+
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<Employee> Employees { get; set; }
+
     public virtual DbSet<Park> Parks { get; set; }
+
+    public virtual DbSet<ParkReview> ParkReviews { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
 
@@ -98,6 +104,13 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Uid).HasColumnName("UID");
         });
 
+        modelBuilder.Entity<Company>(entity =>
+        {
+            entity.ToTable("Company");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.ToTable("Customer");
@@ -107,10 +120,55 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.UserStatus).HasDefaultValue("active");
         });
 
+        modelBuilder.Entity<Employee>(entity =>
+        {
+            entity.ToTable("Employee");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<Park>(entity =>
         {
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.Columns)
+                .HasColumnType("currentcampsites int")
+                .HasColumnName("columns");
+            entity.Property(e => e.Currentvisitors)
+                .HasColumnType("INT")
+                .HasColumnName("currentvisitors");
+            entity.Property(e => e.Currentvisitorsadults)
+                .HasColumnType("INT")
+                .HasColumnName("currentvisitorsadults");
+            entity.Property(e => e.Currentvisitorschildren)
+                .HasColumnType("INT")
+                .HasColumnName("currentvisitorschildren");
             entity.Property(e => e.DayPassPriceUsd).HasColumnName("DayPassPriceUSD");
+            entity.Property(e => e.Latitude).HasColumnName("latitude");
+            entity.Property(e => e.Longitude).HasColumnName("longitude");
+            entity.Property(e => e.Maxcampsites)
+                .HasColumnType("INT")
+                .HasColumnName("maxcampsites");
+            entity.Property(e => e.Maxvisitors)
+                .HasColumnType("INT")
+                .HasColumnName("maxvisitors");
+            entity.Property(e => e.Parklogourl).HasColumnType("string");
+            entity.Property(e => e.State).HasColumnName("state");
+            entity.Property(e => e.Trailmapurl)
+                .HasColumnType("string")
+                .HasColumnName("trailmapurl");
+        });
+
+        modelBuilder.Entity<ParkReview>(entity =>
+        {
+            entity.Property(e => e.DateApproved).HasColumnName("dateApproved");
+            entity.Property(e => e.DateDenied).HasColumnName("dateDenied");
+            entity.Property(e => e.DatePosted).HasColumnName("datePosted");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.ParkId).HasColumnName("parkId");
+            entity.Property(e => e.ReasonDescription).HasColumnName("reasonDescription");
+            entity.Property(e => e.ReviewManagerId).HasColumnName("reviewManagerId");
+            entity.Property(e => e.Stars).HasColumnName("stars");
+            entity.Property(e => e.UserId).HasColumnName("userId");
         });
 
         modelBuilder.Entity<Payment>(entity =>
@@ -208,6 +266,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");
             entity.Property(e => e.Twofactorproviderauthstring).HasColumnName("twofactorproviderauthstring");
             entity.Property(e => e.Twofactorprovidertoken).HasColumnName("twofactorprovidertoken");
+            entity.Property(e => e.Uidstring).HasColumnName("uidstring");
             entity.Property(e => e.Userid).HasColumnName("userid");
             entity.Property(e => e.Username).HasColumnName("username");
             entity.Property(e => e.Usertwofactorenabled).HasColumnName("usertwofactorenabled");

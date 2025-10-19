@@ -76,4 +76,6 @@ public partial class Userprofile
     public string? Defaultinstanceid { get; set; }
 
     public string? Defaultshardid { get; set; }
+
+    public string? Useridasstring { get; set; }
 }

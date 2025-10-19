@@ -22,4 +22,6 @@ public partial class Payment
     public string? PaymentDate { get; set; }
 
     public string? TransactionId { get; set; }
+
+    public string? Useridasstring { get; set; }
 }

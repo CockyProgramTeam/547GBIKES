@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZXiBiZ1nlEU=",
+  "dgSpecHash": "APgV2UXIFLM=",
   "success": true,
-  "projectFilePath": "X:\\G547\\mountainproject\\dirtbike.api\\dirtbike.api.csproj",
+  "projectFilePath": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\mountainproject\\dirtbike.api\\dirtbike.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stritzj\\.nuget\\packages\\humanizer\\2.14.1\\humanizer.2.14.1.nupkg.sha512",
     "C:\\Users\\stritzj\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

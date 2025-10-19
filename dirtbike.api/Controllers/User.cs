@@ -45,11 +45,25 @@ public static class UserEndpoints
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
-                return context.Users.Where(m => m.Userid == id).ToList();
+                return context.Users.Where(m => m.Id == id).ToList();
             }
         })
         .WithName("GetUserById")
         .WithOpenApi();
+
+        group.MapGet("/userid/{Uidstring}", (string userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Users.Where(m => m.Uidstring == userid).ToList();
+            }
+        })
+        .WithName("GetUserByUserId")
+        .WithOpenApi();
+
+
+
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, User input) =>

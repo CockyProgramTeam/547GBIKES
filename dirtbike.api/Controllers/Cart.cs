@@ -58,16 +58,16 @@ public static class CartEndpoints
             {
                 Cart[] someCart = context.Carts.Where(m => m.CartId == id).ToArray();
                 context.Carts.Attach(someCart[0]);
-                someCart[0].ItemDescription = input.ItemDescription;
-                someCart[0].Uid = input.Uid;
-                someCart[0].ParkId = input.ParkId;
-                someCart[0].ItemType = input.ItemType;
-                someCart[0].Quantity = input.Quantity;
-                someCart[0].UnitPrice = input.UnitPrice;
-                someCart[0].TotalPrice = input.TotalPrice;
-                someCart[0].DateAdded = input.DateAdded;
-                someCart[0].IsCheckedOut = input.IsCheckedOut;
-             
+              if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
+              if (input.Uid != null) someCart[0].Uid = input.Uid;
+              if (input.ParkId != null) someCart[0].ParkId = input.ParkId;
+              if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
+              if (input.Quantity != null) someCart[0].Quantity = input.Quantity;
+              if (input.UnitPrice != null) someCart[0].UnitPrice = input.UnitPrice;
+              if (input.TotalPrice != null) someCart[0].TotalPrice = input.TotalPrice;
+              if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
+              if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
+           
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.CartId);

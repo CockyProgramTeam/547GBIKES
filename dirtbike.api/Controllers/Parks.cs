@@ -64,6 +64,13 @@ public static class ParksEndpoints
                 if (input.Address != null) someParks[0].Address = input.Address;
                 if (input.Trailmapurl != null) someParks[0].Trailmapurl = input.Trailmapurl;
                 if (input.Parklogourl != null) someParks[0].Parklogourl = input.Parklogourl;
+                if (input.Maxvisitors != null) someParks[0].Maxvisitors = input.Maxvisitors;
+                if (input.Currentvisitors != null) someParks[0].Currentvisitors = input.Currentvisitors;
+                if (input.Currentvisitorschildren != null) someParks[0].Currentvisitorschildren = input.Currentvisitorschildren;
+                if (input.Currentvisitorsadults != null) someParks[0].Currentvisitorsadults = input.Currentvisitorsadults;
+                if (input.Maxcampsites != null) someParks[0].Maxcampsites = input.Maxcampsites;
+                if (input.Columns != null) someParks[0].Columns = input.Columns;
+                if (input.State != null) someParks[0].State = input.State;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "TEST", "TEST");
                 return TypedResults.Accepted("Updated ID:" + input.ParkId);
