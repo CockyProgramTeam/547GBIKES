@@ -1,24 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="home.css" />
-  <title>Mountain Heaven</title>
+<html lang="en">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="adminhome.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<script src="./js/bikes.js"></script>
+<title>MyLink25 - Your Outdoor Adventure Source</title>
 </head>
 
-<body onload="checkUserStatus()">
+<body onload="setuser(); checkpll(); checkUserStatus(); displayProfilePicture(); writelocation();">
     <!-- Navigation Bar -->
     <div class="navbar">
       <div class="nav-left">
-        <div class="logo">Mountain Heaven</div>
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
+    </div> 
+              <div class="logo">MyLinkv25</div>
       </div>
       <div class="nav-right">
         <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
         <span id="H3UserBanner">User</span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
       </div>
     </div>
 
@@ -28,13 +40,13 @@
   </div>
   
   <!-- WhiteLabel Branding Image -->  
-  <div align="center" class="homeimagepane"><span align="center"><p align="center"><img src="./images/shamrock2.png" width="100%" height="375px"></p></span></div>
+  <div align="center" class="homeimagepane"><span align="center"><p align="center"><img src="./images/gauley.jpg" width="100%" height="375px"></p></span></div>
   
   <!-- Hero Section -->
   <section class="hero">
     <div class="hero-content">
        <h2>Welcome to MyLink</h2>
-      <p>Your one-stop solution for certifications, training, and resume building.</p>
+      <p>Your one-stop solution for Camping, Biking, Outdoor Recreation, and More!.</p>
     </div>
   </section>
 
@@ -42,16 +54,23 @@
   <section class="features">
     <div class="container">
       <div class="feature">
-        <a href="mycerts.html">
-          <h3>Track Your Certifications!</h3>
-          <p>Stay up-to-date on your certifications. Track progress, manage deadlines, and earn recognition for your skills.</p>
+        <a href="mybookings5.html">
+          <h3>Check your Reservations!</h3>
+          <p>Stay up-to-date on your recent Reservations.</p>
         </a>
       </div>
       
       <div class="feature">
-        <a href="certcat.html">
-          <h3>Certificate Catalogue</h3>
-          <p>Explore trending certifications that can boost your career. Stay ahead with the latest industry-recognized credentials.</p>
+        <a href="parks5.html">
+          <h3>Review Parks!</h3>
+          <p>Explore Mountain Biking Opportunities on the East Coast in the Carolinas, West Virginia, Delaware and Maryland.</p>
+        </a>
+      </div>
+    
+    <div class="feature">
+        <a href="parksreview5.html">
+          <h3>User Reviews!</h3>
+          <p>Explore recent customer feedback.</p>
         </a>
       </div>
     </div>
@@ -60,6 +79,15 @@
   <!-- JavaScript -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
+  
+  	function setuser()
+    {
+  	alert("setting user for trial usage");
+    localStorage.setItem("uid", "1");
+    localStorage.setItem("fullname", "Park Guest");
+    localStorage.setItem("email", "parkguest@547bikes.info");
+    localStorage.setItem("role", "registered");
+    }
     // API Endpoints
     const usersApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
     const profilesApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userprofile";
@@ -86,6 +114,8 @@
         // Not logged in (guest)
         loginBtn.style.display = "inline-block";
         logoutBtn.style.display = "none";
+        localStorage.setItem("uid", "901");
+        localStorage.setItem("fullname", "Park Guest");
         document.getElementById("userGreeting").innerHTML = "Welcome, Guest"; // Display "Guest"
       }
     }
@@ -96,7 +126,7 @@
 
       localStorage.clear();
       localStorage.setItem("uid", "901");
-      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("fullname", "ParkGuest");
       localStorage.setItem("role", "guest");
 
       console.log("Local storage after logout:", localStorage);
@@ -126,7 +156,7 @@
 
       localStorage.clear();
       localStorage.setItem("uid", "901");
-      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("fullname", "ParkUser");
       localStorage.setItem("role", "guest");
       localStorage.setItem("isemployee", "0");
       window.open("login.html", "_self");
@@ -185,6 +215,6 @@
   </script>
 </body>
     <!-- Footer -->
-  <footer class="footer"> &copy; 2025 Mountain Heaven. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
+  <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 
 </html>

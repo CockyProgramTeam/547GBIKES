@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<link rel="stylesheet" href="adminhome.css" />
+<script src="./js/bikes.js"></script>
+  <title>Park Bookings</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body onload="checkUserStatus()">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png" width="100%" height="350px"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
+    </div> 
+              <div class="logo">&nbsp&nbspMyLinkv25 - MyReservations</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner">User</span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
+    </div>
+  <div class="container py-5">
+  <div align=center><img src="./images/rafting.jpg" width="100%" height="250px"></div>
+  <div class="table-responsive">
+      <table class="table table-striped table-bordered align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>BookingId</th>
+            <th>UserId</th>
+            <th>CartId</th>
+            <th>Park Name</th>
+            <th>Booking Start</th>
+            <th>Booking End</th>
+            <th>Adults</th>
+            <th>Children</th>
+            <th>Total ($)</th>
+            <th>Transaction ID</th>
+            <th>Booking Type</th>
+            <th>Booking Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="bookings-table-body"></tbody>
+      </table>
+    </div>
+  </div>
+<BR><BR><BR><BR><HR><HR>
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        url: "https://gridactions3b.547bikes.info/api/Booking",
+        method: "GET",
+        success: function (bookings) {
+          const tableBody = $("#bookings-table-body");
+
+          bookings.forEach(function (booking) {
+            // Fetch park details for each booking
+            $.ajax({
+              url: `https://gridactions3b.547bikes.info/api/Park/${booking.parkId}`,
+              method: "GET",
+              success: function (park) {
+                const row = `
+                  <tr>
+  					<td>${booking.bookingId}</td>
+					<td>${booking.uid}</td>
+                    <td>${booking.cartid}</td>
+                    <td>${booking.parkName}</td>
+                    <td>${booking.bookingDateStart || 'N/A'}</td>
+                    <td>${booking.bookingDateEnd || 'N/A'}</td>
+                    <td>${booking.quantityAdults}</td>
+                    <td>${booking.quantityChildren}</td>
+                    <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
+                    <td>${booking.transactionId}</td>
+                    <td>${booking.reservationtype}</td>
+                    <td>${booking.reservationstatus}</td>
+                     <td>
+      <button class="btn btn-info btn-sm" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">
+        Review Cart
+      </button><BR>
+        <button style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 4px;" class="btn btn-info btn-sm" onclick="window.location.href='cartcancel.html?cartid=${booking.cartid}'">
+        Cancel
+      </button>
+    </td>
+                  </tr>
+                `;
+                tableBody.append(row);
+              },
+              error: function () {
+                const row = `
+                  <tr>
+                    <td>${booking.bookingId}</td>
+                    <td>${booking.uid}</td>
+                    <td>${booking.cartid}</td>
+                    <td>${booking.parkName}</td>
+                    <td>${booking.bookingDateStart || 'N/A'}</td>
+                    <td>${booking.bookingDateEnd || 'N/A'}</td>
+                    <td>${booking.quantityAdults}</td>
+                    <td>${booking.quantityChildren}</td>
+                    <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
+                    <td>${booking.transactionId}</td>
+                    <td>${booking.reservationtype}</td>
+                    <td>${booking.reservationstatus}</td>
+                     <td>
+      <button class="btn btn-info btn-sm" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">
+        Review Cart
+      </button><BR>
+       <button style="background-color: red; color: white; border: none; padding: 10px 20px; border-radius: 4px;" class="btn btn-info btn-sm" onclick="window.location.href='cartcancel.html?cartid=${booking.cartid}'">
+        Cancel
+      </button>
+    </td>
+                  </tr>
+                `;
+                tableBody.append(row);
+              }
+            });
+          });
+        },
+        error: function (xhr, status, error) {
+          $("#bookings-table-body").html(`<tr><td colspan="7" class="text-danger">Error loading bookings: ${error}</td></tr>`);
+        }
+      });
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="footer text-center mt-5">
+    &copy; Cocky Consulting 2025. <br> All rights reserved.<br>
+    <a href="sitemap.html" class="sitelink">SiteMap</a>
+  </footer>
+</body>
+</html>

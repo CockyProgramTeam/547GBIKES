@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<script src="./js/bikes.js"></script>
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  
   <title>Your Cart</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
@@ -24,10 +32,34 @@
     }
   </style>
 </head>
-<body>
+  
+
+<body onload="checkUserStatus()">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
+    </div> 
+              <div class="logo">MyLinkv25</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner">User</span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
+    </div>
+
   <div class="container py-5">
-    <h1 class="mb-4 text-center">Your Cart</h1>
-    <div id="cart-items" class="row g-4 mb-4"></div>
+      <div id="cart-items" class="row g-4 mb-4"></div>
     <div class="text-center">
       <button id="checkout-btn" class="btn btn-primary btn-lg w-100">Checkout</button>
     </div>
@@ -48,13 +80,13 @@
         return;
       }
 
-      $.get("http://localhost:6100/api/Parks", function (parks) {
+      $.get("https://gridactions3b.547bikes.info/api/Parks", function (parks) {
         const parkMap = {};
         parks.forEach(p => parkMap[p.parkId] = p);
 
-        $.get("http://localhost:6100/api/Cart", function (cart) {
-          const userItems = cart.filter(item => item.uid === uid);
-
+        $.get("https://gridactions3b.547bikes.info/api/Cart", function (cart) {
+          //const userItems = cart.filter(item => item.uid === uid);
+		  const userItems = cart.filter(item => item.uid === uid && item.isCheckedOut !== 1);
           if (userItems.length === 0) {
             $("#cart-items").html(`<div class="alert alert-info">No bookings found for UID ${uid}.</div>`);
             return;
@@ -111,7 +143,7 @@
             }
 
             const query = selectedCartIds.map(id => `cartId=${encodeURIComponent(id)}`).join("&");
-            window.location.href = `payment.html?${query}`;
+            window.location.href = `payments8.html?${query}`;
           });
         }).fail(function (xhr, status, error) {
           console.error("❌ Error loading cart:", status, error);
@@ -122,6 +154,16 @@
         $("#cart-items").html(`<div class="alert alert-danger">Error loading park names: ${error}</div>`);
       });
     });
+  
+  function checkpll()
+               {
+               const someuid = localStorage.getItem('uid');
+               if (someuid === '901') 
+               {
+               window.location.href = 'loginerror.html';
+               }
+               }
   </script>
 </body>
+<footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>

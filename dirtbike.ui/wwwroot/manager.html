@@ -1,7 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CE SuperUserPortal</title>
+<meta charset="UTF-8">
+  <title>CE SuperUserPortal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  
     <style>
             /* --- Overall Page Styles --- */
     html, body {
@@ -140,15 +147,26 @@
  
 </head>
 <body onload="checkpll()">
-    <!-- Navigation Bar -->
+<!-- Navigation Bar -->
     <div class="navbar">
-        <div class="nav-left">
-           <a href="employeehome.html">Employee Home</a>
-           <a href="adminhome.html">Admin Home</a>
-           <a href="adminstuff.html">Admin Stuff</a>
-           <a href="adminmycerts.html">Admin MyCerts</a>
-           <a href="coporatevents.html">Corporate Events</a>
-        </div>
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
+    </div> 
+              <div class="logo">&nbsp&nbspMyLinkv25- Superuser&nbsp&nbsp&nbsp</div>
+        <!-- Navigation Bar -->
+            <a href="adminhome.html">Admin Home</a>
+        <a href="employeemaint.html">Employee Maintenance</a>
+           <a href="parkmaint.html">Park Maintenance</a>
+           <a href="salescatalogue5.html">ParkSales Catalogue</a>
+            <a href="usermaint.html">User Maintenance</a>
+         </div>
         <div class="nav-right">
           <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" width="30px" height="30px"/>
           <span id="H3UserBanner">User</span>
@@ -156,7 +174,7 @@
         </div>
       </div>
   
-<div align="center"><img src="https://media.licdn.com/dms/image/v2/D4D12AQHVxVvEWI8SRw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1665749250084?e=2147483647&v=beta&t=iNUHvUqhbqOoruoh5Sg-omt11MVCbTK84aYE8I07ERU" width=100% height=500px></div>
+<div align="center"><img src="./images/people.jpg" width=100% height=350px></div>
 <div align="center"><h3>MyLink Administration Options</h3></div>
 <div class="features">
 <div class="feature">
@@ -178,30 +196,6 @@
     </a>
   </div>
  
-  <div class="feature">
-    <a href="./certreports/CertReportByBu.html">
-      <h3 >Certificate Report By Business Unit</h3>
-      <p>Access certification data by Business Unit. Get detailed breakdowns to support team-specific planning.</p>
-    </a>
-  </div>
-<div class="feature">
-  <a href="./certreports/CertReportByRegion.html">
-    <h3>Certificate Report By Region</h3>
-    <p>Analyze certifications across different geographical regions. Useful for identifying regional trends and training needs.</p>
-  </a>
-</div>
-<div class="feature">
-  <a href="./certreports/SessionReportByUserId.html">
-    <h3>Active Session Report By UserID</h3>
-    <p>Review Current LoggedIn Users</p>
-  </a>
-</div>
-<div class="feature">
-    <a href="./certreports/BatchReportByType.html">
-    <h3>Batch Report By Type</h3>
-    <p>Review Status of Automation Tasks</p>
-  </a>
-</div>
 </div>
     <div class="jtools">
     <h3 align="center">Secure Campus Utility</h3>
@@ -338,7 +332,7 @@ window.open("index.html", "_blank");
     </script>
   <!-- Footer -->
   <footer class="footer">
-    &copy; 2025 CertAethon Team 1.
+    &copy; 2025 Cocky Consulting.
     <br>
     All rights reserved.
   </footer>

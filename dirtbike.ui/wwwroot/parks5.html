@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
   <title>Mountain Bike Parks</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Bootstrap CSS -->
@@ -9,24 +14,66 @@
   <!-- jQuery -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 </head>
-<body>
-  <div class="container py-5">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); writelocation();">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+             </div>
+    </div> 
+              <div class="logo">&nbsp&nbspMyLinkv25 - Review Parks</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner">User</span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
+    </div>
+
+<div class="container py-5">
     <h1 class="mb-4 text-center">Mountain Bike Parks</h1>
-    <div id="parks-container" class="row g-4"></div>
+<div class="mb-3">
+  <label for="state-filter" class="form-label">Filter by State:</label>
+  <select id="state-filter" class="form-select">
+    <option value="all">All States</option>
+  </select>
+</div>
+
+<div id="parks-container" class="row g-4"></div>
   </div>
 
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-       $(document).ready(function () {
-      $.ajax({
-        url: "http://localhost:6100/api/Parks",
-        method: "GET",
-        success: function (parks) {
-          console.log("✅ Parks data retrieved:", parks); // Log data to console
-          const container = $("#parks-container");
-          parks.forEach(function (park) {
+  $(document).ready(function () {
+    $.ajax({
+      url: "https://gridactions3b.547bikes.info/api/Parks",
+      method: "GET",
+      success: function (parks) {
+        console.log("✅ Parks data retrieved:", parks);
+
+        const container = $("#parks-container");
+        const stateFilter = $("#state-filter");
+
+        // Extract unique states
+        const uniqueStates = [...new Set(parks.map(p => p.state))].sort();
+        uniqueStates.forEach(state => {
+          stateFilter.append(`<option value="${state}">${state}</option>`);
+        });
+
+        // Function to render parks
+        function renderParks(filteredParks) {
+          container.empty();
+          filteredParks.forEach(function (park) {
             const trailMapLink = park.trailmapurl
               ? `<a href="${park.trailmapurl}" class="btn btn-primary btn-sm mt-2" target="_blank">Trail Map</a>`
               : `<span class="text-muted">No trail map available</span>`;
@@ -39,6 +86,7 @@
                   <div class="card-body">
                     <h5 class="card-title">${park.name}</h5>
                     <p class="card-text"><strong>Region:</strong> ${park.region}</p>
+                    <p class="card-text"><strong>State:</strong> ${park.state}</p>
                     <p class="card-text"><strong>Address:</strong> ${park.address}</p>
                     <p class="card-text"><strong>Phone:</strong> ${park.phone}</p>
                     <p class="card-text"><strong>Trail Length:</strong> ${park.trailLengthMiles} miles</p>
@@ -46,22 +94,40 @@
                     <p class="card-text"><strong>Day Pass:</strong> $${typeof park.dayPassPriceUsd === "number" ? park.dayPassPriceUsd.toFixed(2) : "N/A"}</p>
                     <p class="card-text"><strong>Description:</strong> ${park.description}</p>
                     <p class="card-text"><strong>GPS:</strong> ${park.latitude}, ${park.longitude}</p>
-                    ${trailMapLink}<BR>
-                    <a href="book5.html?parkId=${park.parkId}" class="btn btn-success btn-sm mt-2 ms-2">Book This Park</a><BR>
-                    <a href="${mapsLink}" class="btn btn-outline-secondary btn-sm mt-2 ms-2" target="_blank">Open in Google Maps</a>
+                    <p class="card-text"><strong>CapacityMax:</strong> ${park.maxvisitors}, <strong>&nbsp&nbspCapacityCurrent:</strong>${park.currentvisitors}</p>
+                    ${trailMapLink}<br>
+                    <a href="book5.html?parkId=${park.parkId}" class="btn btn-success btn-sm mt-2 ms-2">Book This Park</a><br>
+                    <a href="${mapsLink}" class="btn btn-outline-secondary btn-sm mt-2 ms-2" target="_blank">Open in Google Maps</a><br>
+                    <a href="reviews5.html?parkId=${park.parkId}" class="btn btn-outline-secondary btn-sm mt-2 ms-2" target="_blank">See Reviews Of This Park</a>
                   </div>
                 </div>
               </div>
             `;
             container.append(card);
           });
-        },
-        error: function (xhr, status, error) {
-          console.error("❌ Error fetching parks:", status, error);
-          $("#parks-container").html(`<div class="alert alert-danger">Error loading parks: ${error}</div>`);
         }
-      });
+
+        // Initial render
+        renderParks(parks);
+
+        // Filter on dropdown change
+        stateFilter.on("change", function () {
+          const selectedState = $(this).val();
+          const filtered = selectedState === "all"
+            ? parks
+            : parks.filter(p => p.state === selectedState);
+          renderParks(filtered);
+        });
+      },
+      error: function (xhr, status, error) {
+        console.error("❌ Error fetching parks:", status, error);
+        $("#parks-container").html(`<div class="alert alert-danger">Error loading parks: ${error}</div>`);
+      }
     });
+  });
   </script>
 </body>
+   <!-- Footer -->
+  <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
+
 </html>
