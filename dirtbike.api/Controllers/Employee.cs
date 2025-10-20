@@ -69,9 +69,49 @@ public static class EmployeeEndpoints
         {
             using (var context = new DirtbikeContext())
             {
-                Employee[] someEmployee = context.Employees.Where(m => m.Id == id).ToArray();
-                context.Employees.Attach(someEmployee[0]);
-                if (input.FullName != null) someEmployee[0].FullName = input.FullName;
+                Employee[] someEmployees = context.Employees.Where(m => m.Id == id).ToArray();
+                context.Employees.Attach(someEmployees[0]);
+               if (input.EmployeeId != null) someEmployees[0].EmployeeId = input.EmployeeId;
+			   if (input.EmployeeTenure != null) someEmployees[0].EmployeeTenure = input.EmployeeTenure;
+				if (input.EmployeeStartDate != null) someEmployees[0].EmployeeStartDate = input.EmployeeStartDate;
+				if (input.EmployeeReturnDate != null) someEmployees[0].EmployeeReturnDate = input.EmployeeReturnDate;
+				if (input.HrId != null) someEmployees[0].HrId = input.HrId;
+				if (input.HrSystemConString != null) someEmployees[0].HrSystemConString = input.HrSystemConString;
+				if (input.FullName != null) someEmployees[0].FullName = input.FullName;
+				if (input.UserId != null) someEmployees[0].UserId = input.UserId;
+				if (input.UserProfileId != null) someEmployees[0].UserProfileId = input.UserProfileId;
+				if (input.ManagerId != null) someEmployees[0].ManagerId = input.ManagerId;
+				if (input.RegionId != null) someEmployees[0].RegionId = input.RegionId;
+				if (input.BuId != null) someEmployees[0].BuId = input.BuId;
+				if (input.StoreId != null) someEmployees[0].StoreId = input.StoreId;
+				if (input.CompanyId != null) someEmployees[0].CompanyId = input.CompanyId;
+				if (input.EmployeeIdAsInt != null) someEmployees[0].EmployeeIdAsInt = input.EmployeeIdAsInt;
+				if (input.EmployeeEmail != null) someEmployees[0].EmployeeEmail = input.EmployeeEmail;
+				if (input.Employee1 != null) someEmployees[0].Employee1 = input.Employee1;
+				if (input.PlainPassword != null) someEmployees[0].PlainPassword = input.PlainPassword;
+				if (input.HashedPassword != null) someEmployees[0].HashedPassword = input.HashedPassword;
+				if (input.PasswordType != null) someEmployees[0].PasswordType = input.PasswordType;
+				if (input.Token != null) someEmployees[0].Token = input.Token;
+				if (input.TokenProvider != null) someEmployees[0].TokenProvider = input.TokenProvider;
+				if (input.ResetToken != null) someEmployees[0].ResetToken = input.ResetToken;
+				if (input.TokenExpiration != null) someEmployees[0].TokenExpiration = input.TokenExpiration;
+				if (input.Role != null) someEmployees[0].Role = input.Role;
+				if (input.Btn != null) someEmployees[0].Btn = input.Btn;
+				if (input.NcrId != null) someEmployees[0].NcrId = input.NcrId;
+				if (input.AlohaId != null) someEmployees[0].AlohaId = input.AlohaId;
+				if (input.OracleId != null) someEmployees[0].OracleId = input.OracleId;
+				if (input.AzureId != null) someEmployees[0].AzureId = input.AzureId;
+				if (input.ProfileUrl != null) someEmployees[0].ProfileUrl = input.ProfileUrl;
+				if (input.IsCertified != null) someEmployees[0].IsCertified = input.IsCertified;
+				if (input.GroupId1 != null) someEmployees[0].GroupId1 = input.GroupId1;
+				if (input.GroupId2 != null) someEmployees[0].GroupId2 = input.GroupId2;
+				if (input.GroupId3 != null) someEmployees[0].GroupId3 = input.GroupId3;
+				if (input.GroupId4 != null) someEmployees[0].GroupId4 = input.GroupId4;
+				if (input.GroupId5 != null) someEmployees[0].GroupId5 = input.GroupId5;
+				if (input.FirstName != null) someEmployees[0].FirstName = input.FirstName;
+				if (input.LastName != null) someEmployees[0].LastName = input.LastName;
+				if (input.UserName != null) someEmployees[0].UserName = input.UserName;
+
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.EmployeeId);

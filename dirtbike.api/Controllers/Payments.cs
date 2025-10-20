@@ -50,6 +50,22 @@ public static class PaymentsEndpoints
         })
         .WithName("GetPaymentsById")
         .WithOpenApi();
+    
+            //[HttpGet]
+        group.MapGet("/user/{Userid}", (string Userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Payments.Where(m => m.Useridasstring == Userid).ToList();
+            }
+        })
+        .WithName("GetPaymentsByUserId")
+        .WithOpenApi();
+    
+    
+    
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Payment input) =>

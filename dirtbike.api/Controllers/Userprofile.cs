@@ -50,6 +50,21 @@ public static class UserprofileEndpoints
         })
         .WithName("GetUserprofileById")
         .WithOpenApi();
+    
+            //[HttpGet]
+        group.MapGet("/user/{Useridastring}", (string Userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETUSERWITHID", 1, "Test", "Test"); 
+                return context.Userprofiles.Where(m => m.Useridasstring == Userid).ToList();
+            }
+        })
+        .WithName("GetUserprofileByUserId")
+        .WithOpenApi();
+    
+    
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Userprofile input) =>

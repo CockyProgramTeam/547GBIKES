@@ -1,4 +1,4 @@
-﻿using System;
+/*using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
@@ -15,13 +15,13 @@ using Microsoft.Extensions.WebEncoders.Testing;
 namespace Enterprise.Controllers;
 
 
-public static class UserlogEndpoints
+public static class TestBookingEndpoints
 {
     
-    public static void MapUserlogEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapTestBookingEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Userlog").WithTags(nameof(Userlog));
-        Enterpriseservices.Globals.ControllerAPIName = "UserlogAPI";
+        var group = routes.MapGroup("/api/Booking").WithTags(nameof(Booking));
+        Enterpriseservices.Globals.ControllerAPIName = "BookingAPI";
         Enterpriseservices.Globals.ControllerAPINumber = "001";
         
         //[HttpGet]
@@ -32,11 +32,11 @@ public static class UserlogEndpoints
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET", 1, "Test", "Test");
-                return context.Userlogs.ToList();
+                return context.Bookings.ToList();
             }
             
         })
-        .WithName("GetAllUserlogs")
+        .WithName("GetAllTestBookings")
         .WithOpenApi();
 
         //[HttpGet]
@@ -44,79 +44,82 @@ public static class UserlogEndpoints
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
-                return context.Userlogs.Where(m => m.Id == id).ToList();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHBookingID", 1, "Test", "Test"); 
+                return context.Bookings.Where(m => m.BookingId == id).ToList();
             }
         })
-        .WithName("GetUserlogById")
+        .WithName("GetTestBookingById")
         .WithOpenApi();
     
-          //[HttpGet]
-        group.MapGet("/user/{Username}", (string Uid) =>
-        {
-            using (var context = new DirtbikeContext())
-            {
-                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
-                return context.Userlogs.Where(m => m.Username == Uid).ToList();
-            }
-        })
-        .WithName("GetUserlogByUserId")
+           //[HttpGet]
+       
+        group.MapGet("/user/{uid}", async (string uid) =>
+		{
+    		using (var context = new DirtbikeContext())
+    		{
+            Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHUSERID", 1, "Test", "Test"); 
+        	var bookings = await context.Bookings.Where(m => m.Uid == uid).ToListAsync();
+        	if (bookings.Count == 0) return Results.NotFound();
+            return Results.Ok(bookings);
+    		}
+		})       
+        .WithName("GetTestBookingByUserId")
         .WithOpenApi();
+    
     
     
     
 
         //[HttpPut]
-        group.MapPut("/{id}", async (int id, Userlog input) =>
+        group.MapPut("/{id}", async (int id, Booking input) =>
         {
             using (var context = new DirtbikeContext())
             {
-                Userlog[] someUserlog = context.Userlogs.Where(m => m.Id == id).ToArray();
-                context.Userlogs.Attach(someUserlog[0]);
-                someUserlog[0].Username = input.Username;
-               
+                Booking[] someBooking = context.Bookings.Where(m => m.BookingId == id).ToArray();
+                context.Bookings.Attach(someBooking[0]);
+                if (input.CustomerBillingName != null) someBooking[0].CustomerBillingName = input.CustomerBillingName;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
-                return TypedResults.Accepted("Updated ID:" + input.Id);
+                return TypedResults.Accepted("Updated ID:" + input.BookingId);
             }
 
 
         })
-        .WithName("UpdateUserlog")
+        .WithName("UpdateTestBooking")
         .WithOpenApi();
 
-        group.MapPost("/", async (Userlog input) =>
+        group.MapPost("/", async (Booking input) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Random rnd = new Random();
                 int dice = rnd.Next(1000, 10000000);
                 //input.Id = dice;
-                context.Userlogs.Add(input);
+                context.Bookings.Add(input);
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "NEWRECORD", 1, "TEST", "TEST");
-                return TypedResults.Created("Created ID:" + input.Id);
+                return TypedResults.Created("Created ID:" + input.BookingId);
             }
 
         })
-        .WithName("CreateUserlog")
+        .WithName("CreateTestBooking")
         .WithOpenApi();
 
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())
             {
-                //context.Userlogs.Add(std);
-                Userlog[] someUserlogs = context.Userlogs.Where(m => m.Id == id).ToArray();
-                context.Userlogs.Attach(someUserlogs[0]);
-                context.Userlogs.Remove(someUserlogs[0]);
+                //context.Bookings.Add(std);
+                Booking[] someBookings = context.Bookings.Where(m => m.BookingId == id).ToArray();
+                context.Bookings.Attach(someBookings[0]);
+                context.Bookings.Remove(someBookings[0]);
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "DELETEWITHID",1, "TEST", "TEST");
                 await context.SaveChangesAsync();
             }
 
         })
-        .WithName("DeleteUserlog")
+        .WithName("DeleteTestBooking")
         .WithOpenApi();
     }
 }
-
+*/

@@ -39,6 +39,23 @@ public static class BookingEndpoints
         .WithName("GetAllBookings")
         .WithOpenApi();
 
+    
+          //[HttpGet]
+        group.MapGet("/park/{parkId}", (int parkId) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Bookings.Where(m => m.ParkId == parkId).ToList();
+            }
+        })
+        .WithName("GetBookingByParkId")
+        .WithOpenApi();
+    
+    
+    
+    
+    
         //[HttpGet]
         group.MapGet("/{id}", (int id) =>
         {
@@ -51,22 +68,6 @@ public static class BookingEndpoints
         .WithName("GetBookingById")
         .WithOpenApi();
 
-        group.MapGet("/userid/{id}", (string userid) =>
-        {
-            using (var context = new DirtbikeContext())
-            {
-                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
-                return context.Bookings.Where(m => m.Uid == userid).ToList();
-            }
-        })
-        .WithName("GetBookingByUserId")
-        .WithOpenApi();
-
-
-
-
-
-
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Booking input) =>
         {
@@ -74,18 +75,25 @@ public static class BookingEndpoints
             {
                 Booking[] someBooking = context.Bookings.Where(m => m.BookingId == id).ToArray();
                 context.Bookings.Attach(someBooking[0]);
-                if (input.Uid != null) someBooking[0].Uid = input.Uid;
-                if (input.BillingTelephoneNumber != null) someBooking[0].BillingTelephoneNumber = input.BillingTelephoneNumber;
-                if (input.CreditCardType != null) someBooking[0].CreditCardType = input.CreditCardType;
-                if (input.CreditCardLast4 != null) someBooking[0].CreditCardLast4 = input.CreditCardLast4;
-                if (input.CreditCardExpDate != null) someBooking[0].CreditCardExpDate = input.CreditCardExpDate;
-                if (input.QuantityAdults != null) someBooking[0].QuantityAdults = input.QuantityAdults;
-                if (input.QuantityChildren != null) someBooking[0].QuantityChildren = input.QuantityChildren;
-                if (input.CustomerBillingName != null) someBooking[0].CustomerBillingName = input.CustomerBillingName;
-                if (input.TotalAmount != null) someBooking[0].TotalAmount = input.TotalAmount;
-                if (input.TransactionId != null) someBooking[0].TransactionId = input.TransactionId;
-                if (input.ParkId != null) someBooking[0].ParkId = input.ParkId;
-                if (input.ParkName != null) someBooking[0].ParkName = input.ParkName;
+        //SPECIFIC FIELDS WE WANT TO UPDATE -> ALL FIELDS FOR THIS ENDPOINT 
+		if (input.CustomerBillingName != null) someBooking[0].CustomerBillingName = input.CustomerBillingName;
+		if (input.BookingId != null) someBooking[0].BookingId = input.BookingId;
+		if (input.Uid != null) someBooking[0].Uid = input.Uid;
+		if (input.BillingTelephoneNumber != null) someBooking[0].BillingTelephoneNumber = input.BillingTelephoneNumber;
+		if (input.CreditCardType != null) someBooking[0].CreditCardType = input.CreditCardType;
+		if (input.CreditCardLast4 != null) someBooking[0].CreditCardLast4 = input.CreditCardLast4;
+		if (input.CreditCardExpDate != null) someBooking[0].CreditCardExpDate = input.CreditCardExpDate;
+		if (input.QuantityAdults != null) someBooking[0].QuantityAdults = input.QuantityAdults;
+		if (input.QuantityChildren != null) someBooking[0].QuantityChildren = input.QuantityChildren;
+		if (input.TotalAmount != null) someBooking[0].TotalAmount = input.TotalAmount;
+		if (input.TransactionId != null) someBooking[0].TransactionId = input.TransactionId;
+		if (input.ParkId != null) someBooking[0].ParkId = input.ParkId;
+		if (input.ParkName != null) someBooking[0].ParkName = input.ParkName;
+		if (input.Cartid != null) someBooking[0].Cartid = input.Cartid;
+		if (input.Reservationtype != null) someBooking[0].Reservationtype = input.Reservationtype;
+		if (input.Reservationstatus != null) someBooking[0].Reservationstatus = input.Reservationstatus;
+		if (input.Reversetransactionid != null) someBooking[0].Reversetransactionid = input.Reversetransactionid;
+
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.BookingId);
@@ -113,6 +121,25 @@ public static class BookingEndpoints
         .WithName("CreateBooking")
         .WithOpenApi();
 
+    
+            group.MapPost("/park/{parkId}", async (int parkId, Booking input) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Random rnd = new Random();
+                int dice = rnd.Next(1000, 10000000);
+                //input.Id = dice;
+                context.Bookings.Add(input);
+                await context.SaveChangesAsync();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "NEWRECORD", 1, "TEST", "TEST");
+                return TypedResults.Created("Created ID:" + input.BookingId);
+            }
+
+        })
+        .WithName("CreateBookingWithParkId")
+        .WithOpenApi();
+            
+    
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())

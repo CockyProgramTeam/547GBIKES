@@ -64,13 +64,14 @@ public static class ParksEndpoints
                 if (input.Address != null) someParks[0].Address = input.Address;
                 if (input.Trailmapurl != null) someParks[0].Trailmapurl = input.Trailmapurl;
                 if (input.Parklogourl != null) someParks[0].Parklogourl = input.Parklogourl;
-                if (input.Maxvisitors != null) someParks[0].Maxvisitors = input.Maxvisitors;
-                if (input.Currentvisitors != null) someParks[0].Currentvisitors = input.Currentvisitors;
-                if (input.Currentvisitorschildren != null) someParks[0].Currentvisitorschildren = input.Currentvisitorschildren;
-                if (input.Currentvisitorsadults != null) someParks[0].Currentvisitorsadults = input.Currentvisitorsadults;
-                if (input.Maxcampsites != null) someParks[0].Maxcampsites = input.Maxcampsites;
-                if (input.Columns != null) someParks[0].Columns = input.Columns;
                 if (input.State != null) someParks[0].State = input.State;
+            	if (input.Maxvisitors != null) someParks[0].Maxvisitors = input.Maxvisitors;
+				if (input.Currentvisitors != null) someParks[0].Currentvisitors = input.Currentvisitors;
+				if (input.Currentvisitorschildren != null) someParks[0].Currentvisitorschildren = input.Currentvisitorschildren;
+				if (input.Currentvisitorsadults != null) someParks[0].Currentvisitorsadults = input.Currentvisitorsadults;
+				if (input.Maxcampsites != null) someParks[0].Maxcampsites = input.Maxcampsites;
+				if (input.Columns != null) someParks[0].Columns = input.Columns;
+				if (input.State != null) someParks[0].State = input.State;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "TEST", "TEST");
                 return TypedResults.Accepted("Updated ID:" + input.ParkId);
@@ -80,6 +81,42 @@ public static class ParksEndpoints
         })
         .WithName("UpdateParks")
         .WithOpenApi();
+    
+    
+           //[HttpPut]
+        group.MapPut("/guests/{Limit}", async (int park, int Limit) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Park[] someParks = context.Parks.Where(m => m.ParkId == park).ToArray();
+                context.Parks.Attach(someParks[0]);
+                if (Limit != null) someParks[0].Maxvisitors = Limit;
+				await context.SaveChangesAsync();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "SETLIMITS", 1, "TEST", "TEST");
+                return TypedResults.Accepted("Updated ParkID: " + park);
+            }
+        })
+        .WithName("SetParkLimits")
+        .WithOpenApi();
+        
+           //[HttpPut]
+        group.MapPut("/guests/{Removesomeguests}", async (int park, int Removesomeguests) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Park[] someParks = context.Parks.Where(m => m.ParkId == park).ToArray();
+                context.Parks.Attach(someParks[0]);
+             	if (Removesomeguests != null) someParks[0].Currentvisitors = someParks[0].Currentvisitors - Removesomeguests;
+            	await context.SaveChangesAsync();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "REMOVEGUESTS", 1, "TEST", "TEST");
+                return TypedResults.Accepted("Updated ParkID: " + park);
+            }
+        })
+        .WithName("RemoveSomeParkGuests")
+        .WithOpenApi();
+     
+    
+    
 
         group.MapPost("/", async (Park input) =>
         {

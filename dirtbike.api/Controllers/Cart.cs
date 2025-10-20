@@ -50,6 +50,18 @@ public static class CartEndpoints
         })
         .WithName("GetCartById")
         .WithOpenApi();
+    
+        group.MapGet("/user/{uid}", (string uid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Carts.Where(m => m.Uid == uid).ToList();
+            }
+        })
+        .WithName("GetCartByUser")
+        .WithOpenApi();
+        
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Cart input) =>
@@ -58,25 +70,68 @@ public static class CartEndpoints
             {
                 Cart[] someCart = context.Carts.Where(m => m.CartId == id).ToArray();
                 context.Carts.Attach(someCart[0]);
-              if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
-              if (input.Uid != null) someCart[0].Uid = input.Uid;
-              if (input.ParkId != null) someCart[0].ParkId = input.ParkId;
-              if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
-              if (input.Quantity != null) someCart[0].Quantity = input.Quantity;
-              if (input.UnitPrice != null) someCart[0].UnitPrice = input.UnitPrice;
-              if (input.TotalPrice != null) someCart[0].TotalPrice = input.TotalPrice;
-              if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
-              if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
-           
+if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
+if (input.Uid != null) someCart[0].Uid = input.Uid;
+if (input.ParkId != null) someCart[0].ParkId = input.ParkId;
+if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
+if (input.Quantity != null) someCart[0].Quantity = input.Quantity;
+if (input.UnitPrice != null) someCart[0].UnitPrice = input.UnitPrice;
+if (input.TotalPrice != null) someCart[0].TotalPrice = input.TotalPrice;
+if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
+if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
+
+             
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.CartId);
             }
-
-
         })
         .WithName("UpdateCart")
         .WithOpenApi();
+    
+  
+            //[HttpPut]
+        group.MapPut("/mark/{cartId}", async (int cartId, int bookingId) =>    
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Cart[] someCart = context.Carts.Where(m => m.CartId == cartId).ToArray();
+                context.Carts.Attach(someCart[0]);
+				someCart[0].IsCheckedOut = 2;
+	            await context.SaveChangesAsync();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
+                return TypedResults.Accepted("Updated CartID: " + cartId);
+            }
+        })
+        .WithName("UpdateCartWithTempItems")
+        .WithOpenApi();
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
         group.MapPost("/", async (Cart input) =>
         {
@@ -94,7 +149,31 @@ public static class CartEndpoints
         })
         .WithName("CreateCart")
         .WithOpenApi();
+    
+    
+    group.MapPost("/newparent/", async (int cartId, int parkId, string bookingInfo) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Random rnd = new Random();
+                int dice = rnd.Next(1000, 10000000);
+                //input.Id = dice;
+            	Cart input = new Cart();
+                context.Carts.Add(input);
+                input.CartId = cartId;
+                input.ParkId = parkId;
+                input.Bookinginfo = bookingInfo;
+                await context.SaveChangesAsync();
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "NEWRECORDWITHPARAMS", 1, "TEST", "TEST");
+                return TypedResults.Created("Created ID:" + input.CartId);
+            }
 
+        })
+        .WithName("CreateCartTempItemFromVariables")
+        .WithOpenApi();
+    
+ 
+    
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())

@@ -50,6 +50,22 @@ public static class UsersessionEndpoints
         })
         .WithName("GetUsersessionById")
         .WithOpenApi();
+    
+            //[HttpGet]
+        group.MapGet("/user/{Useridasstring}", (string Uid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Usersessions.Where(m => m.Useridasstring == Uid).ToList();
+            }
+        })
+        .WithName("GetUsersessionByUserId")
+        .WithOpenApi();
+    
+    
+    
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Usersession input) =>

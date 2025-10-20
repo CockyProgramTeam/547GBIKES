@@ -50,6 +50,22 @@ public static class CardEndpoints
         })
         .WithName("GetCardById")
         .WithOpenApi();
+    
+    
+        //[HttpGet]
+        group.MapGet("/user/{Uid}", (string Userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHUSERID", 1, "Test", "Test"); 
+                return context.Cards.Where(m => m.Uid == Userid).ToList();
+            }
+        })
+        .WithName("GetCardByUserId")
+        .WithOpenApi();
+    
+    
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Card input) =>
@@ -59,6 +75,14 @@ public static class CardEndpoints
                 Card[] someCard = context.Cards.Where(m => m.CardId == id).ToArray();
                 context.Cards.Attach(someCard[0]);
                 if (input.CardType != null) someCard[0].CardType = input.CardType;
+				if (input.CardVendor != null) someCard[0].CardVendor = input.CardVendor;
+				if (input.CardLast4 != null) someCard[0].CardLast4 = input.CardLast4;
+				if (input.CardExpDate != null) someCard[0].CardExpDate = input.CardExpDate;
+				if (input.BillingZip != null) someCard[0].BillingZip = input.BillingZip;
+				if (input.IsActive != null) someCard[0].IsActive = input.IsActive;
+				if (input.Cardbtn != null) someCard[0].Cardbtn = input.Cardbtn;
+				if (input.Fullname != null) someCard[0].Fullname = input.Fullname;
+
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.CardId);
