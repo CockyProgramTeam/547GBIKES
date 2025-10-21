@@ -20,4 +20,8 @@ public partial class Card
     public string? BillingZip { get; set; }
 
     public int? IsActive { get; set; }
+
+    public string? Cardbtn { get; set; }
+
+    public string? Fullname { get; set; }
 }

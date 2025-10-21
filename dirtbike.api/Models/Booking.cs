@@ -30,4 +30,12 @@ public partial class Booking
     public int? ParkId { get; set; }
 
     public string? ParkName { get; set; }
+
+    public string? Cartid { get; set; }
+
+    public string? Reservationtype { get; set; }
+
+    public string? Reservationstatus { get; set; }
+
+    public string? Reversetransactionid { get; set; }
 }

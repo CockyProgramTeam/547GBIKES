@@ -24,4 +24,8 @@ public partial class Cart
     public string? DateAdded { get; set; }
 
     public int? IsCheckedOut { get; set; }
+
+    public string? Paymentid { get; set; }
+
+    public string? Bookinginfo { get; set; }
 }
