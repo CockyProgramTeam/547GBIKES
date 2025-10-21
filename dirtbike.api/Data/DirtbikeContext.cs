@@ -24,6 +24,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Cart> Carts { get; set; }
 
+    public virtual DbSet<Cartitem> Cartitems { get; set; }
+
     public virtual DbSet<Company> Companies { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
@@ -77,6 +79,9 @@ public partial class DirtbikeContext : DbContext
 
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.Reservationstatus).HasColumnName("reservationstatus");
+            entity.Property(e => e.Reservationtype).HasColumnName("reservationtype");
+            entity.Property(e => e.Reversetransactionid).HasColumnName("reversetransactionid");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.Uid).HasColumnName("UID");
         });
@@ -88,6 +93,8 @@ public partial class DirtbikeContext : DbContext
             entity.HasIndex(e => new { e.CardLast4, e.CardExpDate }, "IX_Card_CardLast4_CardExpDate").IsUnique();
 
             entity.Property(e => e.CardId).HasColumnName("CardID");
+            entity.Property(e => e.Cardbtn).HasColumnName("cardbtn");
+            entity.Property(e => e.Fullname).HasColumnName("fullname");
             entity.Property(e => e.IsActive).HasDefaultValue(1);
             entity.Property(e => e.Uid).HasColumnName("UID");
         });
@@ -97,11 +104,31 @@ public partial class DirtbikeContext : DbContext
             entity.ToTable("Cart");
 
             entity.Property(e => e.CartId).HasColumnName("CartID");
+            entity.Property(e => e.Bookinginfo).HasColumnName("bookinginfo");
             entity.Property(e => e.DateAdded).HasDefaultValueSql("datetime('now')");
             entity.Property(e => e.IsCheckedOut).HasDefaultValue(0);
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.Paymentid).HasColumnName("paymentid");
             entity.Property(e => e.TotalPrice).HasComputedColumnSql();
             entity.Property(e => e.Uid).HasColumnName("UID");
+        });
+
+        modelBuilder.Entity<Cartitem>(entity =>
+        {
+            entity.ToTable("CARTITEM");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Cartid).HasColumnName("cartid");
+            entity.Property(e => e.Cartitemdate)
+                .HasColumnType("DATETIME")
+                .HasColumnName("cartitemdate");
+            entity.Property(e => e.Itemdescription).HasColumnName("itemdescription");
+            entity.Property(e => e.Itemextendedprice).HasColumnName("itemextendedprice");
+            entity.Property(e => e.Itemqty).HasColumnName("itemqty");
+            entity.Property(e => e.Itemtotals).HasColumnName("itemtotals");
+            entity.Property(e => e.Itemvendor).HasColumnName("itemvendor");
+            entity.Property(e => e.Productid).HasColumnName("productid");
+            entity.Property(e => e.Salescatid).HasColumnName("salescatid");
         });
 
         modelBuilder.Entity<Company>(entity =>
