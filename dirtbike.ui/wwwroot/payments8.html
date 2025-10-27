@@ -18,29 +18,31 @@
     }
   </style>
 </head>
-<body onload="checkUserStatus(); displayProfilePicture(); writelocation();">
-    <!-- Navigation Bar -->
-    <div class="navbar">
-      <div class="nav-left">
-            <div class="dropdown">
-                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
-                  <div class="dropdown-content">
-                  <a href="index.html">Site Home</a>
-                  <a href="cart5.html">MyCart</a>
-                  <a href="mybookings5.html">MyReservations</a>
-                  <a href="manager.html">Manager Utilities</a>
-             </div>
-    </div> 
-              <div class="logo">&nbsp&nbspMyLinkv25 - Review Parks</div>
-      </div>
-      <div class="nav-right">
-        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
-        <span id="H3UserBanner">User</span>
-        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
-        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?id=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
-      </div>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary()">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cart5.html">MyCart</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Review Parks</div>
     </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 <div class="container mt-5">
   <h2 class="mb-4">Your Cart Summary</h2>
   <table class="table table-bordered table-striped">
@@ -51,8 +53,7 @@
       <th>ParkID</th>
       <th>Item</th>
       <th>Description</th>
-      <th>Quantity</th>
-      <th>Unit Price</th>
+      <th>TotalItems</th>
       <th>Total Price</th>
       </tr>
     </thead>
@@ -111,12 +112,11 @@
         <td>${item.parkId || 11}</td>
         <td>${item.itemType || "Day Pass"}</td>
         <td>${item.itemDescription || "No description"}</td>
-        <td>${quantity}</td>
-        <td>$${unitPrice.toFixed(2)}</td>
-        <td>$${totalPrice.toFixed(2)}</td>
+        <td>${item.totalcartitems}</td>
+        <td>$${item.transactiontotal}</td>
       `;
       tbody.appendChild(row);
-      total += totalPrice;
+      total += item.transactiontotal;
     });
 
     if (total === 0) {

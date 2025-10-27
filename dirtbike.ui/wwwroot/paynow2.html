@@ -16,29 +16,30 @@
     }
   </style>
 </head>
-<body onload="checkUserStatus()">
-    <!-- Navigation Bar -->
-    <div class="navbar">
-      <div class="nav-left">
-            <div class="dropdown">
-                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
-                  <div class="dropdown-content">
-                  <a href="index.html">Site Home</a>
-                  <a href="cart5.html">MyCart</a>
-                  <a href="mybookings5.html">MyReservations</a>
-                  <a href="manager.html">Manager Utilities</a>
-            </div>
-    </div> 
-              <div class="logo">MyLinkv25</div>
-      </div>
-      <div class="nav-right">
-        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
-        <span id="H3UserBanner">User</span>
-        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
-        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
-      </div>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cart5.html">MyCart</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Review Parks</div>
     </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 
   <div class="container mt-5">
     <h2>Choose a Credit Card</h2>
@@ -178,7 +179,9 @@
   const uid = urlParams.get("uid") || "1";
   const amount = urlParams.get("amount") || "0.00";
   const cartIds = urlParams.get("cartIds")?.split(",") || [];
-
+  const cartDetails = cartIds.map(id => parseInt(id));
+  
+ 
   document.getElementById("card-uid").value = uid;
 
   async function fetchCards(uid) {
@@ -234,81 +237,97 @@
   }
 
   async function simulatePayment(card) {
-    const transactionId = generateTransactionId();
-    const paymentData = {
-      paymentId: 0,
-      bookingId: 0,
-      paymentMethod: "Credit Card",
-      cardType: card.cardType,
-      cardLast4: card.cardLast4,
-      cardExpDate: card.cardExpDate,
-      amountPaid: parseFloat(amount),
-      paymentDate: new Date().toISOString(),
-      transactionId: transactionId
-    };
+  const transactionId = generateTransactionId();
 
-    try {
-      await fetch(paymentApi, {
-        method: "POST",
+  const paymentData = {
+    paymentId: 0,
+    bookingId: 0,
+    paymentMethod: "Credit Card",
+    cardType: card.cardType,
+    cardLast4: card.cardLast4,
+    cardExpDate: card.cardExpDate,
+    amountPaid: parseFloat(amount),
+    paymentDate: new Date().toISOString(),
+    transactionId: transactionId
+  };
+
+  try {
+    // Submit payment
+    await fetch(paymentApi, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(paymentData)
+    });
+
+    // Clean and parse cart IDs
+    const rawCartIds = urlParams.get("cartIds")?.split(",") || [];
+    const cartIds = rawCartIds.map(id => id.split(":")[0].trim());
+    const cartDetails = cartIds.map(id => parseInt(id)).filter(id => !isNaN(id));
+
+    // Fetch cart data
+    const cartDataArray = await fetchCartDetails(cartDetails);
+
+    for (const cartId of cartDetails) {
+      const updateUrl = `${cartApi}/${cartId}`;
+      const cartData = cartDataArray.find(c => c.cartId === cartId);
+
+      // Update cart
+      const updatedItem = {
+        cartId: cartId,
+        isCheckedOut: 1,
+        paymentid: transactionId,
+        totalcartitems: cartDetails.length
+      };
+
+      await fetch(updateUrl, {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(paymentData)
+        body: JSON.stringify(updatedItem)
       });
 
-      for (const cartId of cartIds) {
-        const updateUrl = `${cartApi}/${cartId}`;
-        const updatedItem = {
-          cartId: parseInt(cartId),
-          isCheckedOut: 1,
-          Paymentid: transactionId
-        };
+      // Create booking
+      const bookingData = {
+        uid: uid,
+        billingTelephoneNumber: card.cardbtn || "000-000-0000",
+        creditCardType: card.cardType,
+        creditCardLast4: card.cardLast4,
+        creditCardExpDate: card.cardExpDate,
+        quantityAdults: 1,
+        quantityChildren: 0,
+        customerBillingName: card.fullname?.trim() || "Unknown",
+        totalAmount: parseFloat(amount),
+        transactionId: transactionId,
+        parkId: cartData?.parkId || 999,
+        parkName: cartData?.parkName || "Unknown Park",
+        cartid: cartId.toString(),
+        reservationtype: "Biking",
+        reservationstatus: "Active",
+        cartDetailsJson: JSON.stringify(cartDetails),
+        totalcartitems: cartDetails.length
+      };
 
-        await fetch(updateUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedItem)
-        });
-
- 		const bookingData = {
-   			uid: uid,
-  			billingTelephoneNumber: card.cardbtn || "000-000-0000",
-  			creditCardType: card.cardType,
-  			creditCardLast4: card.cardLast4,
-  			creditCardExpDate: card.cardExpDate,
-  			quantityAdults: 1,
-  			quantityChildren: 0,
-  			customerBillingName: card.fullname && card.fullname.trim() !== "" ? card.fullname : "Unknown",
-  			totalAmount: parseFloat(amount),
-  			transactionId: transactionId,
-  			parkId: card.parkId || 999,
-  			parkName: card.parkName || "Unknown Park",
-  			cartid: cartId.toString(),
-            reservationtype: "Biking",
-        	reservationstatus: "Active"
-		};
-
-        console.log("booking call", bookingData);
-        await fetch(bookingApi, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(bookingData)
-        });
-      }
-
-      alert("Transaction complete!");
-
-      document.getElementById("payment-status").innerHTML = `
-        <p class="fw-bold text-success">✅ Payment of $${amount} processed using card ending in ${card.cardLast4}.</p>
-        <p>Transaction ID: <strong>${transactionId}</strong></p>
-        <p>Cart IDs: ${cartIds.join(", ")}</p>
-        <p>User ID: ${uid}</p>
-      `;
-    } catch (err) {
-      console.error("Error submitting payment or updating cart:", err);
-      document.getElementById("payment-status").innerHTML = `
-        <p class="text-danger">❌ Payment failed. Please try again.</p>
-      `;
+      await fetch(bookingApi, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bookingData)
+      });
     }
+
+    // Show confirmation
+    alert("Transaction complete!");
+    document.getElementById("payment-status").innerHTML = `
+      <p class="fw-bold text-success">✅ Payment of $${amount} processed using card ending in ${card.cardLast4}.</p>
+      <p>Transaction ID: <strong>${transactionId}</strong></p>
+      <p>Cart IDs: ${cartDetails.join(", ")}</p>
+      <p>User ID: ${uid}</p>
+    `;
+  } catch (err) {
+    console.error("❌ Error submitting payment or updating cart:", err);
+    document.getElementById("payment-status").innerHTML = `
+      <p class="text-danger">❌ Payment failed. Please try again.</p>
+    `;
   }
+}
 
   document.getElementById("add-card-form").addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -402,6 +421,13 @@ document.getElementById("update-card-form").addEventListener("submit", async fun
     alert("Failed to update card. Please try again.");
   }
 });
+  
+async function fetchCartDetails(ids) {
+  const promises = ids.map(id =>
+    fetch(`${cartApi}/${id}`).then(res => res.json())
+  );
+  return Promise.all(promises);
+}
 
 </script>
 
