@@ -38,4 +38,14 @@ public partial class Booking
     public string? Reservationstatus { get; set; }
 
     public string? Reversetransactionid { get; set; }
+
+    public double? Cancellationrefund { get; set; }
+
+    public string? CartDetailsJson { get; set; }
+
+    public int? Totalcartitems { get; set; }
+
+    public string? Reference { get; set; }
+
+    public string? SubReference { get; set; }
 }

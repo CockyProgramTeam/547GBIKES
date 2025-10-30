@@ -22,4 +22,12 @@ public partial class SalesCatalogue
     public DateOnly? EndDate { get; set; }
 
     public int? IsActive { get; set; }
+
+    public string? SiteId { get; set; }
+
+    public byte[]? National { get; set; }
+
+    public int? State { get; set; }
+
+    public int? Global { get; set; }
 }

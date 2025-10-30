@@ -44,4 +44,42 @@ public partial class Park
     public int? Columns { get; set; }
 
     public string? State { get; set; }
+
+    public string? Pic1url { get; set; }
+
+    public string? Pic2url { get; set; }
+
+    public string? Pic3url { get; set; }
+
+    public string? Pic4url { get; set; }
+
+    public string? Pic5url { get; set; }
+
+    public string? Pic6url { get; set; }
+
+    public string? Pic7url { get; set; }
+
+    public string? Pic8url { get; set; }
+
+    public string? Pic9url { get; set; }
+
+    public string? Isnationalpark { get; set; }
+
+    public string? Isstatepark { get; set; }
+
+    public string? Hqbranchid { get; set; }
+
+    public int? Mountainbikes { get; set; }
+
+    public int? Camping { get; set; }
+
+    public int? Rafting { get; set; }
+
+    public int? Canoeing { get; set; }
+
+    public int? Frisbee { get; set; }
+
+    public int? Iscanadian { get; set; }
+
+    public int? Ismexican { get; set; }
 }

@@ -24,4 +24,10 @@ public partial class Cartitem
     public int? Salescatid { get; set; }
 
     public string? Productid { get; set; }
+
+    public string? Shopid { get; set; }
+
+    public string? Parkid { get; set; }
+
+    public double? Subtotal { get; set; }
 }

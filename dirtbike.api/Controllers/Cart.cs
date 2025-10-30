@@ -70,19 +70,23 @@ public static class CartEndpoints
             {
                 Cart[] someCart = context.Carts.Where(m => m.CartId == id).ToArray();
                 context.Carts.Attach(someCart[0]);
-if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
-if (input.Uid != null) someCart[0].Uid = input.Uid;
-if (input.ParkId != null) someCart[0].ParkId = input.ParkId;
-if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
-if (input.Quantity != null) someCart[0].Quantity = input.Quantity;
-if (input.UnitPrice != null) someCart[0].UnitPrice = input.UnitPrice;
-if (input.TotalPrice != null) someCart[0].TotalPrice = input.TotalPrice;
-if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
-if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
-
-             
+			if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
+			if (input.Uid != null) someCart[0].Uid = input.Uid;
+			someCart[0].ParkId = input.ParkId;
+			if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
+			someCart[0].Quantity = input.Quantity;
+			someCart[0].UnitPrice = input.UnitPrice;
+			 someCart[0].TotalPrice = input.TotalPrice;
+			 if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
+			 if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
+			 someCart[0].Totalcartitems = input.Totalcartitems;
+			 if (input.Paymentid != null) someCart[0].Paymentid = input.Paymentid;
+			 if (input.Bookinginfo != null) someCart[0].Bookinginfo = input.Bookinginfo;
+                 	 someCart[0].Johnstotals = input.Johnstotals;
+    			 someCart[0].Transactiontotal = input.Transactiontotal;
+    			 if(input.Parkname !=null) someCart[0].Parkname = input.Parkname;
                 await context.SaveChangesAsync();
-                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.CartId);
             }
         })

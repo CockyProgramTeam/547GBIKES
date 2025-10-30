@@ -77,7 +77,7 @@ public static class BookingEndpoints
                 context.Bookings.Attach(someBooking[0]);
         //SPECIFIC FIELDS WE WANT TO UPDATE -> ALL FIELDS FOR THIS ENDPOINT 
 		if (input.CustomerBillingName != null) someBooking[0].CustomerBillingName = input.CustomerBillingName;
-		if (input.BookingId != null) someBooking[0].BookingId = input.BookingId;
+		someBooking[0].BookingId = input.BookingId;
 		if (input.Uid != null) someBooking[0].Uid = input.Uid;
 		if (input.BillingTelephoneNumber != null) someBooking[0].BillingTelephoneNumber = input.BillingTelephoneNumber;
 		if (input.CreditCardType != null) someBooking[0].CreditCardType = input.CreditCardType;
@@ -93,7 +93,7 @@ public static class BookingEndpoints
 		if (input.Reservationtype != null) someBooking[0].Reservationtype = input.Reservationtype;
 		if (input.Reservationstatus != null) someBooking[0].Reservationstatus = input.Reservationstatus;
 		if (input.Reversetransactionid != null) someBooking[0].Reversetransactionid = input.Reversetransactionid;
-
+		if (input.Cancellationrefund != null) someBooking[0].Cancellationrefund = input.Cancellationrefund;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.BookingId);

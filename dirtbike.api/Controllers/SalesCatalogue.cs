@@ -50,6 +50,23 @@ public static class SalesCatalogueEndpoints
         })
         .WithName("GetSalesCatalogueById")
         .WithOpenApi();
+    
+    
+           //[HttpGet]
+        group.MapGet("/park/{ParkId}", (int ParkId) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHPARKID", 1, "Test", "Test"); 
+                return context.SalesCatalogues.Where(m => m.ParkId == ParkId).ToList();
+            }
+        })
+        .WithName("GetSalesCatalogueByParkId")
+        .WithOpenApi();
+    
+    
+    
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, SalesCatalogue input) =>
