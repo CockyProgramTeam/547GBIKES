@@ -25,18 +25,20 @@
     }
   </style>
 </head>
-<body onload="initializeCartPage();">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); initializeCartPage();loadCartSummary();">
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="nav-left">
       <div class="dropdown">
-        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
-        <div class="dropdown-content">
-          <a href="index.html">Site Home</a>
-          <a href="cart5.html">MyCart</a>
-          <a href="mybookings5.html">MyReservations</a>
-          <a href="manager.html">Manager Utilities</a>
-        </div>
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
       </div> 
       <div class="logo">&nbsp;&nbsp;MyLinkv25 - Review Parks</div>
     </div>
@@ -57,8 +59,8 @@
 
     <h4 class="mb-3">Cart Items</h4>
     <div class="row fw-bold border-bottom pb-2 mb-2">
-      <div class="col-md-2">Date</div>
-      <div class="col-md-2">Vendor</div>
+      <div class="col-md-2">ResStart</div>
+      <div class="col-md-2">ResEnd</div>
       <div class="col-md-3">Description</div>
       <div class="col-md-1">Qty</div>
       <div class="col-md-2">Price</div>
@@ -121,7 +123,9 @@
             <p><strong>Payment ID:</strong> ${cart.paymentid || "N/A"}</p>
             <p><strong>Total Items:</strong> ${cart.totalcartitems}</p>
             <p><strong>Total Price:</strong> ${cart.transactiontotal}</p>
-            <p><strong>Date Added:</strong> ${cart.dateAdded ? new Date(cart.dateAdded).toLocaleDateString() : "N/A"}</p>
+            <p><strong>Trans Date:</strong> ${cart.dateAdded ? new Date(cart.dateAdded).toLocaleDateString() : "N/A"}</p>
+            <p><strong>ResStart:&nbsp</strong> ${cart.resStart.split('T')[0]}</p>
+            <p><strong>ResEnd:&nbsp&nbsp&nbsp</strong> ${cart.resEnd.split('T')[0]}</p>
           </div>
         </div>
       `;
@@ -148,8 +152,8 @@
         const row = document.createElement("div");
         row.className = "row mb-2";
         row.innerHTML = `
-          <div class="col-md-2">${item.cartitemdate ? new Date(item.cartitemdate).toLocaleDateString() : "N/A"}</div>
-          <div class="col-md-2">${item.itemvendor || "N/A"}</div>
+          <div class="col-md-2">${item.resStart.split('T')[0]}</div>
+          <div class="col-md-2">${item.resEnd.split('T')[0]}</div>
           <div class="col-md-3">${item.itemdescription || "N/A"}</div>
           <div class="col-md-1">${item.itemqty ?? 0}</div>
           <div class="col-md-2">$${typeof item.itemextendedprice === "number" ? item.itemextendedprice.toFixed(2) : "0.00"}</div>
@@ -163,7 +167,9 @@
       await loadCartSummary();
       await loadCartItems();
       await updateCartTotals(cartId);
+      await updateCartTotals(cartId);
     }
   </script>
 </body>
+<footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>
