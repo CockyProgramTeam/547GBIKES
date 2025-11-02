@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MyLinkV25 - User Profile</title>
-<script src="./js/bikes.js"></script>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
 
   <!-- Bootstrap 5 CSS -->
   <link
@@ -76,65 +78,109 @@
       text-align: center; padding: 10px 0;
       font-size: 14px; font-weight: bold; margin-top: auto;
     }
+  #userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: yellow;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+}
+
+#cancelBtn
+{
+width: 400px;
+}
+
+#splash
+{
+font-size: 12pt;
+}
+  
+#userdetails
+{
+  max-width: 100%;
+  max-height: 150px; /* You can adjust this height as needed */
+  overflow: auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f8f9fa; /* Optional: light Bootstrap-like background */
+  font-family: monospace; /* Optional: for JSON-style readability */
+  font-size: 8px;
+  margin-left: 30px;
+  align: left;
+}
   </style>
 </head>
-<body>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadProfile(); LoadProfileDetails();">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+             </div>
+    </div> 
+              <div class="logo">&nbsp&nbspMyLinkv25 - Profile Manager</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner"></span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
+    </div>
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 
-  <!-- Navbar -->
-  <div class="navbar">
-    <div class="nav-left">
-      <a id="homeLink" href="index.html">Home</a>
-      <a id="certLink" href="mycerts.html">My Certifications</a>
-      <a href="certcat.html">Certificate Catalogue</a>
-      <a id="learnLink" href="celearn.html">My Learning</a>
-      <a href="help.html">Customer Care</a>
-    </div>
-    <div class="nav-right">
-      <img
-        id="navbar-pic"
-        src="./images/bluecircle.png"
-        alt="User"
-        onclick="location.href='profile.html'"
-      />
-      <span id="userBanner">User</span>
-      <button id="logoutBtn">Logout</button>
-    </div>
-  </div>
+
 
   <!-- Profile Card -->
   <div class="profile-card">
     <div class="left">
-      <img id="profile-pic" src="./images/bluecircle.png" alt="Profile" />
+      <img id="profile-pic" src="./images/toni2.jpg" alt="Profile" />
     </div>
     <div class="right">
-      <h3 id="profile-fullname">Loading…</h3>
-      <p><strong>Title:</strong> <span id="profile-title"></span></p>
-      <p><strong>University:</strong> <span id="profile-university"></span></p>
+      <h3 id="profile-fullname">Ms. Anna Smith</h3>
+      <p><strong>Title:</strong> <span id="profile-title">CEO</span></p>
+      <p><strong>University:</strong> <span id="profile-university">Harvard</span></p>
       <p>
         <strong>Address:</strong>
-        <span id="profile-address1"></span>,
-        <span id="profile-address2"></span>
+        <span id="profile-address1">100 N. Tryon Street</span>,
+        <span id="profile-address2">Suite 33000</span>
       </p>
-      <p><strong>City:</strong> <span id="profile-city"></span></p>
-      <p><strong>State:</strong> <span id="profile-stateregion"></span></p>
-      <p><strong>Zip Code:</strong> <span id="profile-postalzip"></span></p>
-      <p><strong>Phone Number:</strong> <span id="profile-phone"></span></p>
-      <p><strong>Email:</strong> <span id="profile-email"></span></p>
+      <p><strong>City:</strong>&nbsp<span id="profile-city">Charlotte</span></p>
+      <p><strong>State:</strong> <span id="profile-stateregion">NC</span></p>
+      <p><strong>Zip Code:</strong> <span id="profile-postalzip">28202</span></p>
+      <p><strong>Phone Number:</strong> <span id="profile-phone">904.321.2234</span></p>
+      <p><strong>Email:</strong> <span id="profile-email">Annasmith@547bikes.info</span></p>
 
       <div class="mt-3 d-flex align-items-center gap-2">
-        <button id="btnEditProfile" class="btn btn-primary btn-sm me-2">
-          Update Profile
-        </button>
-        <button id="btnEditPic" class="btn btn-warning btn-sm me-2">
-          Update Picture
-        </button>
+      <button id="btnEditProfile" class="btn btn-primary btn-sm me-2" onclick="openEditProfileModal()">Update Profile</button>
+         <button id="btnEditPic" class="btn btn-warning btn-sm me-2" onclick="openUpdatePictureModal()">Update Picture</button>
         <a href="changepassword.html" class="btn btn-secondary btn-sm">
           Change Password
         </a>
       </div>
     </div>
   </div>
-
+<hr>
+<div>
+<span align="left"><H5 style="margin-left: 100px;">User Details</H5></span>
+<p id="userdetails"></p>
+</div>
+<hr>
   <!-- Edit Profile Modal -->
   <div class="modal fade" id="editProfileModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg-custom">
@@ -200,7 +246,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
-            <button type="button" id="saveProfileBtn" class="btn btn-primary btn-sm">Save Changes</button>
+            <button type="button" id="saveProfileBtn" class="btn btn-primary btn-sm" onclick="SaveProfile();">Save Changes</button>
           </div>
         </form>
       </div>
@@ -230,277 +276,275 @@
 
   <!-- Bootstrap Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const usersApiUrl   = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
-    const profileApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userprofile";
-    const fileUploadUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/File/upload?fileCategory=projectimages";
-
-    let profileData = null;
-    const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
-    const editPicModal     = new bootstrap.Modal(document.getElementById("editPicModal"));
-
-    (async function init() {
-      const uid = localStorage.getItem("uid");
-      if (!uid || uid === "901") return location.replace("login.html");
-
-      if (localStorage.getItem("role") === "superuser") {
-        const certLink = document.getElementById("certLink");
-        if (certLink) certLink.style.display = "none";
+ <script>
+ 
+ async function LoadProfile() {
+      const someuid = localStorage.getItem("uid");
+      if (!someuid) {
+        alert("User ID not found in localStorage.");
+        return;
       }
 
-      document.getElementById("logoutBtn").onclick = () => {
-        localStorage.clear();
-        location.replace("login.html");
-      };
+      try {
+        const response = await fetch(`https://gridactions3b.547bikes.info/api/Userprofile/user/{Useridastring}?Userid=${someuid}`);
+        if (!response.ok) {
+          throw new Error("Failed to fetch profile.");
+        }
 
-       loadProfile();
+        const profilearray = await response.json();
+        const profile = profilearray[0];
+    	console.log(profile); //Log Response
+      
+        // Save all profile fields to localStorage using raw keys
+    Object.entries(profile).forEach(([key, value]) => {
+      localStorage.setItem(key, value ?? "");
+    });
+      
+      
+	
+ 	  document.getElementById("profile-fullname").textContent = profile.fullname || "";
+      document.getElementById("profile-title").textContent = profile.title || "";
+      document.getElementById("profile-university").textContent = profile.university1 || "";
+      document.getElementById("profile-address1").textContent = profile.address1 || "";
+      document.getElementById("profile-address2").textContent = profile.address2 || "";
+      document.getElementById("profile-city").textContent = profile.city || "";
+      document.getElementById("profile-stateregion").textContent = profile.stateregion || "";
+      document.getElementById("profile-postalzip").textContent = profile.postalzip || "";
+      document.getElementById("profile-phone").textContent = profile.phone || "";
+      document.getElementById("profile-email").textContent = profile.email || "";
 
-      document.getElementById("btnEditProfile").onclick = () => editProfileModal.show();
-      document.getElementById("btnEditPic").onclick     = () => editPicModal.show();
-      document.getElementById("saveProfileBtn").onclick = saveProfileChanges;
-      document.getElementById("uploadPicBtn").onclick   = uploadNewPicture;
-    })();
-
-      function checkUserRole() {
-var userRole = localStorage.getItem("role");
-var isemployee = localStorage.getItem("isemployee");
-var certLink = document.getElementById("certLink");
-var homeLink = document.getElementById("homeLink");
-
-if (userRole === "admin") {
-homeLink.href="adminhome.html";
-certLink.href = "adminmycerts.html";
-certLink.innerText = "Admin Certifications";
-learnLink.href = "celearn.html";
-learnLink.innerText = "My Learn";
-learnLink.style.display = "inline"; // just in case it was hidden
-} else if (userRole === "superuser") {
-homeLink.href="manager.html";
-learnLink.style.display = "none"; 
-} else if(userRole === "registered" && isemployee == 1) {
-homeLink.href="employeehome.html";
-certLink.href = "mycerts.html";
-certLink.innerText = "My Certifications";
-learnLink.href = "celearn.html";
-learnLink.innerText = "My Learn";
-learnLink.style.display = "inline"; // just in case it was hidden
-}
-else{
-certLink.href = "mycerts.html";
-certLink.innerText = "My Certifications";
-learnLink.style.display = "none"; 
-}
-}
-    window.onload = checkUserRole;
-
-    async function loadProfile() {
-      const uid      = localStorage.getItem("uid");
-      const users    = await fetch(usersApiUrl).then(r => r.json());
-      const me       = users.find(u => u.id == uid);
-      const profiles = await fetch(profileApiUrl).then(r => r.json());
-      profileData    = profiles.find(p => p.userid == uid);
-
-      if (!me || !profileData) {
-        return alert("Unable to load your profile.");
+     // Optional: update profile picture if available
+      if (profile.activepictureurl && profile.activepictureurl !== "string") {
+        document.getElementById("profile-pic").src = profile.activepictureurl;
       }
 
-      // render card
-      document.getElementById("userBanner").innerText       = me.fullname;
-      document.getElementById("profile-fullname").innerText = me.fullname;
-      document.getElementById("profile-title").innerText    = profileData.title      || "";
-      document.getElementById("profile-university").innerText = profileData.university || "";
-      document.getElementById("profile-address1").innerText = profileData.address1    || "";
-      document.getElementById("profile-address2").innerText = profileData.address2    || "";
-      document.getElementById("profile-city").innerText     = profileData.city        || "";
-      document.getElementById("profile-stateregion").innerText = profileData.stateregion || "";
-      document.getElementById("profile-postalzip").innerText = profileData.postalzip   || "";
-      document.getElementById("profile-phone").innerText    = profileData.phone       || "";
-      document.getElementById("profile-email").innerText    = profileData.email       || "";
-
-      const picUrl = profileData.activepictureurl || "https://via.placeholder.com/120";
-      document.getElementById("profile-pic").src = picUrl;
-      document.getElementById("navbar-pic").src  = picUrl;
-
-      // prime edit form
-      document.getElementById("pf-id").value                = profileData.id;
-      document.getElementById("pf-address1").value          = profileData.address1    || "";
-      document.getElementById("pf-address2").value          = profileData.address2    || "";
-      document.getElementById("pf-city").value              = profileData.city        || "";
-      document.getElementById("pf-stateregion").value       = profileData.stateregion || "";
-      document.getElementById("pf-postalzip").value         = profileData.postalzip   || "";
-      document.getElementById("pf-email").value             = profileData.email       || "";
-      document.getElementById("pf-university").value        = profileData.university  || "";
-      document.getElementById("pf-title").value             = profileData.title       || "";
-      document.getElementById("pf-pronoun").value           = profileData.pronoun     || "";
-      document.getElementById("pf-activepictureurl").value  = profileData.activepictureurl || "";
-      document.getElementById("pf-country").value           = profileData.country     || "";
-      document.getElementById("pf-cellphone").value         = profileData.cellphone   || "";
-      document.getElementById("pf-sms").value               = profileData.sms         || "";
-      document.getElementById("pf-maritalstatus").value     = profileData.maritalstatus || "";
-      document.getElementById("pf-university1").value       = profileData.university1  || "";
-      document.getElementById("pf-university2").value       = profileData.university2  || "";
-      document.getElementById("pf-linkedinurl").value       = profileData.linkedinurl  || "";
-      document.getElementById("pf-instagramurl").value      = profileData.instagramurl || "";
-      document.getElementById("pf-vimeourl").value          = profileData.vimeourl     || "";
-      document.getElementById("pf-facebookurl").value       = profileData.facebookurl || "";
-      document.getElementById("pf-googleurl").value         = profileData.googleurl   || "";
-      document.getElementById("pf-userid").value            = profileData.userid      || "";
-      document.getElementById("pf-employeeid").value        = profileData.employeeid  || "";
+    } catch (error) {
+      console.error("Error loading profile:", error);
+      alert("Unable to load profile data.");
     }
+  }
+ 
+ const profileApiUrl = "https://gridactions3b.547bikes.info/api/Userprofile";
+  const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
+  const editPicModal = new bootstrap.Modal(document.getElementById("editPicModal"));
 
-    async function saveProfileChanges() {
-  // 1) Grab the new form values
-  const newAddress1    = document.getElementById("pf-address1").value.trim();
-  const newAddress2    = document.getElementById("pf-address2").value.trim();
-  const newCity        = document.getElementById("pf-city").value.trim();
-  const newStateRegion = document.getElementById("pf-stateregion").value.trim();
-  const newPostalZip   = document.getElementById("pf-postalzip").value.trim();
-  const newPhone       = document.getElementById("pf-phone").value.trim();
-  const newEmail       = document.getElementById("pf-email").value.trim();
-  const newUniversity  = document.getElementById("pf-university").value.trim();
-  const newPronoun     = document.getElementById("pf-pronoun").value.trim() || null;
+  function openEditProfileModal() {
+  const fields = [
+    "id", "address1", "address2", "city", "stateregion", "country", "phone", "cellphone", "sms",
+    "email", "maritalstatus", "university1", "university2", "linkedinurl", "instagramurl",
+    "vimeourl", "facebookurl", "googleurl", "university", "title", "pronoun", "title2",
+    "activepictureurl", "userid", "employeeid", "postalzip", "companyid", "buid", "managerid",
+    "regionid", "branchid", "fullname", "firstname", "lastname", "defaultinstanceid",
+    "defaultshardid", "useridasstring"
+  ];
 
-  // 2) Build the full object, preserving all other fields
-  const updated = {
-    id:               profileData.id,
-    address1:         newAddress1,
-    address2:         newAddress2,
-    city:             newCity,
-    stateregion:      newStateRegion,
-    country:          profileData.country         ?? null,
-    phone:            newPhone,
-    cellphone:        profileData.cellphone       ?? null,
-    sms:              profileData.sms             ?? null,
-    email:            newEmail,
-    maritalstatus:    profileData.maritalstatus   ?? null,
-    university1:      profileData.university1     ?? null,
-    university2:      profileData.university2     ?? null,
-    linkedinurl:      profileData.linkedinurl     ?? null,
-    instagramurl:     profileData.instagramurl    ?? null,
-    vimeourl:         profileData.vimeourl        ?? null,
-    facebookurl:      profileData.facebookurl     ?? null,
-    googleurl:        profileData.googleurl       ?? null,
-    university:       newUniversity,
-    title:            profileData.title           ?? "",
-    pronoun:          newPronoun,
-    title2:           profileData.title2          ?? null,
-    activepictureurl: profileData.activepictureurl ?? "",
-    userid:           profileData.userid,
-    employeeid:       profileData.employeeid,
-    postalzip:        newPostalZip
-  };
-
-  console.log("PUT /api/Userprofile payload:", updated);
-  // 3) Send it
-  const res = await fetch(`${profileApiUrl}/${updated.id}`, {
-    method:  "PUT",
-    headers: { "Content-Type": "application/json" },
-    body:    JSON.stringify(updated)
+  fields.forEach(field => {
+    const input = document.getElementById(`pf-${field.toLowerCase()}`);
+    if (input) {
+      const value = localStorage.getItem(field);
+      input.value = value ?? "";
+    }
   });
 
-  if (!res.ok) {
-    const err = await res.text();
-    return alert("Failed to save profile: " + err);
-  }
-
-  // 4) Refresh
-  profileData = updated;
-  editProfileModal.hide();
-  await loadProfile();
+  const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
+  editProfileModal.show();
 }
 
-    async function uploadNewPicture() {
-      // 1) upload file → get blobUrl
-      const fileInput = document.getElementById("picFile");
-      if (!fileInput.files.length) return alert("Select a file first.");
-      const fd = new FormData();
-      fd.append("file", fileInput.files[0]);
-      const uploadRes = await fetch(fileUploadUrl, { method: "POST", body: fd });
-      const { blobUrl } = await uploadRes.json();
-      if (!blobUrl) return alert("Upload failed: no blobUrl returned");
 
-      const uid = localStorage.getItem("uid");
-      const url = `${usersApiUrl}/${uid}`;
-      console.log("→ Fetching user from:", url);
-      // 2) GET full user
-      const getUserRes = await fetch(url);
-      const raw        = await getUserRes.text();
-      
-      if (!getUserRes.ok) {
-        return alert("Failed to load user for update:\n" + raw);
-      }
-      
-      let parsed;
-      try {
-        parsed = JSON.parse(raw);
-      } catch (e) {
-        console.error("Failed to parse JSON:", e);
-        return alert("Couldn’t parse /api/Users response");
-      }
-      
-      // If the API is (incorrectly) returning an array, unwrap it:
-      let userObj = Array.isArray(parsed) ? parsed[0] : parsed;
-      
-      console.log("→ PUT /api/Users payload:", JSON.stringify(userObj, null, 2));
-      
-      const putUserRes = await fetch(`${usersApiUrl}/${uid}`, {
-        method:  "PUT",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(userObj)
-      });
-      
-      if (!putUserRes.ok) {
-        const err = await putUserRes.text();
-        console.error("PUT /api/Users error:", putUserRes.status, err);
-        return alert("Failed to update user:\n" + err);
-      }
+  function openUpdatePictureModal() {
+    editPicModal.show();
+  }
+ 
+ 
+function SaveProfile() {
+  const uid = localStorage.getItem("uid");
+  if (!uid) {
+    alert("User ID not found in localStorage.");
+    return;
+  }
 
-      // 4) build and PUT full profile payload
-      const profilePayload = {
-        id:               profileData.id,
-        address1:         profileData.address1,
-        address2:         profileData.address2,
-        city:             profileData.city,
-        stateregion:      profileData.stateregion,
-        country:          profileData.country,
-        phone:            profileData.phone,
-        cellphone:        profileData.cellphone,
-        sms:              profileData.sms,
-        email:            profileData.email,
-        maritalstatus:    profileData.maritalstatus,
-        university1:      profileData.university1,
-        university2:      profileData.university2,
-        linkedinurl:      profileData.linkedinurl,
-        instagramurl:     profileData.instagramurl,
-        vimeourl:         profileData.vimeourl,
-        facebookurl:      profileData.facebookurl,
-        googleurl:        profileData.googleurl,
-        university:       profileData.university,
-        title:            profileData.title,
-        pronoun:          profileData.pronoun,
-        title2:           profileData.title2,
-        activepictureurl: blobUrl,
-        userid:           profileData.userid,
-        employeeid:       profileData.employeeid,
-        postalzip:        profileData.postalzip
-      };
+  const fields = [
+    "id", "address1", "address2", "city", "stateregion", "country", "phone", "cellphone", "sms",
+    "email", "maritalstatus", "university1", "university2", "linkedinurl", "instagramurl",
+    "vimeourl", "facebookurl", "googleurl", "university", "title", "pronoun", "title2",
+    "activepictureurl", "userid", "employeeid", "postalzip", "companyid", "buid", "managerid",
+    "regionid", "branchid", "fullname", "firstname", "lastname", "defaultinstanceid",
+    "defaultshardid", "useridasstring"
+  ];
 
-      let putProfileRes = await fetch(`${profileApiUrl}/${profileData.id}`, {
-        method:  "PUT",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(profilePayload)
-      });
-      if (!putProfileRes.ok) {
-        const err = await putProfileRes.text();
-        console.error("PUT /api/Userprofile error:", putProfileRes.status, err);
-        return alert("Failed to update profile record:\n" + err);
-      }
+  const payload = {};
 
-      // 5) Sync & re-render
-      localStorage.setItem("profileurl", blobUrl);
-      editPicModal.hide();
-      await loadProfile();
+  fields.forEach(field => {
+    const input = document.getElementById(`pf-${field.toLowerCase()}`);
+    if (input) {
+      const value = input.value ?? "";
+      payload[field] = value;
+      localStorage.setItem(field, value); // Save to localStorage
     }
+  });
+
+  fetch(`https://gridactions3b.547bikes.info/api/Userprofile/${uid}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  })
+    .then(res => {
+      if (res.ok) {
+        alert("Profile updated successfully!");
+        LoadProfile(); // Refresh profile card
+        const modal = bootstrap.Modal.getInstance(document.getElementById("editProfileModal"));
+        modal.hide();
+      } else {
+        alert("Failed to update profile.");
+      }
+    })
+    .catch(err => {
+      console.error("Error saving profile:", err);
+      alert("An error occurred while saving.");
+    });
+}
+ 
+ /*
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  const usersApiUrl   = "https://gridactions3b.547bikes.info/api/User";
+  const profileApiUrl = "https://gridactions3b.547bikes.info/api/Userprofile";
+  const fileUploadUrl = "https://gridactions3b.547bikes.info/api/File/upload?fileCategory=projectimages";
+
+  const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
+  const editPicModal = new bootstrap.Modal(document.getElementById("editPicModal"));
+
+  function openEditProfileModal() {
+    fetch(`${profileApiUrl}/current`)
+      .then(res => res.json())
+      .then(profile => {
+        populateEditProfileModal(profile);
+        editProfileModal.show();
+      })
+      .catch(err => console.error("Error loading profile:", err));
+  }
+
+  function openEditPicModal() {
+    editPicModal.show();
+  }
+
+  function populateEditProfileModal(profile) {
+    const fields = [
+      "id", "address1", "address2", "city", "stateregion", "country", "phone", "cellphone", "sms",
+      "email", "maritalstatus", "university1", "university2", "linkedinurl", "instagramurl",
+      "vimeourl", "facebookurl", "googleurl", "university", "title", "pronoun", "title2",
+      "activepictureurl", "userid", "employeeid", "postalzip"
+    ];
+
+    fields.forEach(field => {
+      const input = document.getElementById(`pf-${field.toLowerCase()}`);
+      if (input) input.value = profile[field] || "";
+    });
+  }
+
+  function saveProfileChanges() {
+    const payload = {};
+    document.querySelectorAll("#profileForm input").forEach(input => {
+      const key = input.id.replace("pf-", "");
+      payload[key] = input.value;
+    });
+
+    fetch(`${profileApiUrl}/update`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    })
+      .then(res => {
+        if (res.ok) {
+          editProfileModal.hide();
+          alert("Profile updated successfully!");
+        } else {
+          alert("Failed to update profile.");
+        }
+      })
+      .catch(err => console.error("Error saving profile:", err));
+  }
+
+  function uploadProfilePicture() {
+    const fileInput = document.getElementById("picFile");
+    const file = fileInput.files[0];
+    if (!file) return alert("Please select a file.");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    fetch(fileUploadUrl, {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.url) {
+          return fetch(`${profileApiUrl}/updatePicture`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ pictureUrl: result.url })
+          });
+        } else {
+          throw new Error("Upload failed");
+        }
+      })
+      .then(() => {
+        editPicModal.hide();
+        alert("Profile picture updated!");
+      })
+      .catch(err => console.error("Error uploading picture:", err));
+  }*/
+ function LoadProfileDetails() {
+  const someuid = localStorage.getItem('uid');
+  if (!someuid) {
+    console.error('UID not found in localStorage');
+    return;
+  }
+
+fetch(`https://gridactions3b.547bikes.info/api/Userprofile/user/{Useridastring}?Userid=${someuid}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      const userDetails = document.getElementById('userdetails');
+      if (!userDetails) {
+        console.error('Element with ID "userdetails" not found');
+        return;
+      }
+
+      // Build Bootstrap-styled HTML
+     let html = '<div class="container">';
+      for (const [key, value] of Object.entries(data[0])) {
+        html += `
+          <div class="row mb-1">
+            <div class="col-sm-4 text-muted">${key}</div>
+            <div class="col-sm-8">${value ?? '<em>null</em>'}</div>
+          </div>
+        `;
+      }
+      html += '</div></div>';
+
+      userDetails.innerHTML = html;
+    })
+    .catch(error => {
+      console.error('Error fetching user profile:', error);
+    });
+}
+
   </script>
 </body>
 </html>

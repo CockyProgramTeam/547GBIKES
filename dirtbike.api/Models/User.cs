@@ -84,4 +84,8 @@ public partial class User
     public string? Twofactorproviderauthstring { get; set; }
 
     public string? Uidstring { get; set; }
+
+    public string? Activeprofileurl { get; set; }
+
+    public string? Activepictureurl { get; set; }
 }

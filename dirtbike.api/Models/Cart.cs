@@ -40,4 +40,14 @@ public partial class Cart
     public double? Transactiontotal { get; set; }
 
     public string? Parkname { get; set; }
+
+    public DateTime? ResStart { get; set; }
+
+    public DateTime? ResEnd { get; set; }
+
+    public int? Adults { get; set; }
+
+    public int? Children { get; set; }
+
+    public int? Tentsites { get; set; }
 }

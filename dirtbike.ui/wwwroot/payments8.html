@@ -50,11 +50,16 @@
       <tr>
       <th>CartID</th>
       <th>UserID</th>
+      <th>Park Name</th>
       <th>ParkID</th>
       <th>Item</th>
       <th>Description</th>
       <th>TotalItems</th>
       <th>Total Price</th>
+      <th>Start Date</th>
+      <th>End Date</th>
+      <th>Adults</th>
+      <th>Children</th>
       </tr>
     </thead>
     <tbody id="cart-table-body"></tbody>
@@ -93,44 +98,59 @@
     return items;
   }
 
-  function renderCart(items) {
-    const tbody = document.getElementById("cart-table-body");
-    let total = 0;
+ function renderCart(items) {
+  const tbody = document.getElementById("cart-table-body");
+  let total = 0;
 
-    // Filter items to only those matching cartIds from URL
-    const filteredItems = items.filter(item => cartIds.includes(item.cartId));
+  // Filter items to only those matching cartIds from URL
+  const filteredItems = items.filter(item => cartIds.includes(item.cartId));
 
-    filteredItems.forEach(item => {
-      const unitPrice = parseFloat(item.unitPrice) || 0;
-      const quantity = parseInt(item.quantity) || 0;
-      const totalPrice = parseFloat(item.totalPrice) || unitPrice * quantity;
+  filteredItems.forEach(item => {
+    const unitPrice = parseFloat(item.unitPrice) || 0;
+    const quantity = parseInt(item.quantity) || 0;
+    const totalPrice = parseFloat(item.totalPrice) || unitPrice * quantity;
 
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${item.cartId || "N/A"}</td>
-        <td>${item.uid || uid}</td>
-        <td>${item.parkId || 11}</td>
-        <td>${item.itemType || "Day Pass"}</td>
-        <td>${item.itemDescription || "No description"}</td>
-        <td>${item.totalcartitems}</td>
-        <td>$${item.transactiontotal}</td>
-      `;
-      tbody.appendChild(row);
-      total += item.transactiontotal;
-    });
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${item.cartId || "N/A"}</td>
+      <td>${item.uid || uid}</td>
+      <td>${item.parkname || "N/A"}</td>
+      <td>${item.parkId || 11}</td>
+      <td>${item.itemType || "Day Pass"}</td>
+      <td>${item.itemDescription || "No description"}</td>
+      <td>${item.totalcartitems}</td>
+      <td>$${item.transactiontotal}</td>
+      <td>${item.resStart || "N/A"}</td>
+      <td>${item.resEnd || "N/A"}</td>
+      <td>${item.adults ?? "N/A"}</td>
+      <td>${item.children ?? "N/A"}</td>
+    `;
+    tbody.appendChild(row);
+    total += item.transactiontotal;
+  });
 
-    if (total === 0) {
-      total = 0.01; // Minimum billing for record keeping
-    }
-
-    document.getElementById("total-amount").textContent = `$${total.toFixed(2)}`;
-
-    document.getElementById("pay-button").onclick = () => {
-      if (confirm(`Your total is $${total.toFixed(2)}. Are you ready to proceed?`)) {
-        window.location.href = `paynow2.html?uid=${uid}&amount=${total.toFixed(2)}&cartIds=${cartIds.join(",")}`;
-      }
-    };
+  if (total === 0) {
+    total = 0.01; // Minimum billing for record keeping
   }
+
+  document.getElementById("total-amount").textContent = `$${total.toFixed(2)}`;
+
+  document.getElementById("pay-button").onclick = () => {
+    if (confirm(`Your total is $${total.toFixed(2)}. Are you ready to proceed?`)) {
+      const parkIds = filteredItems.map(item => item.parkId || 11);
+      const parkNames = filteredItems.map(item => encodeURIComponent(item.parkname || "N/A"));
+      const resStarts = filteredItems.map(item => item.resStart || "");
+      const resEnds = filteredItems.map(item => item.resEnd || "");
+      const adults = filteredItems.map(item => item.adults ?? 1);
+      const children = filteredItems.map(item => item.children ?? 0);
+
+      const paymentUrl = `paynow2.html?uid=${uid}&amount=${total.toFixed(2)}&cartIds=${cartIds.join(",")}&parkIds=${parkIds.join(",")}&parkNames=${parkNames.join(",")}&startDate=${resStarts.join(",")}&endDate=${resEnds.join(",")}&adults=${adults.join(",")}&children=${children.join(",")}`;
+
+      window.location.href = paymentUrl;
+    }
+  };
+}
+
 
   fetchCartItems(uid).then(renderCart).catch(err => {
     console.error("Error fetching cart items:", err);

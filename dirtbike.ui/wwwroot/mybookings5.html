@@ -148,10 +148,10 @@
                     <td>${booking.parkId}</td>
                     <td>${booking.cartid}</td>
                     <td>${parkName}</td>
-                    <td>${booking.bookingDateStart || 'N/A'}</td>
-                    <td>${booking.bookingDateEnd || 'N/A'}</td>
-                    <td>${booking.quantityAdults}</td>
-                    <td>${booking.quantityChildren}</td>
+                    <td>${booking.resStart || 'N/A'}</td>
+                    <td>${booking.resEnd || 'N/A'}</td>
+                    <td>${booking.adults}</td>
+                    <td>${booking.children}</td>
                     <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
                     <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
                     <td>${booking.reservationtype}</td>

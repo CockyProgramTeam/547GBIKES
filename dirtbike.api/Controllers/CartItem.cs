@@ -77,6 +77,7 @@ public static class CartitemEndpoints
                 Cartitem[] someCartitem = context.Cartitems.Where(m => m.Id == id).ToArray();
                 context.Cartitems.Attach(someCartitem[0]);
                if (input.Cartid != null) someCartitem[0].Cartid = input.Cartid;
+               if (input.Parkname != null) someCartitem[0].Parkname = input.Parkname;
 				if (input.Cartitemdate != null) someCartitem[0].Cartitemdate = input.Cartitemdate;
 				if (input.Itemvendor != null) someCartitem[0].Itemvendor = input.Itemvendor;
 				if (input.Itemdescription != null) someCartitem[0].Itemdescription = input.Itemdescription;

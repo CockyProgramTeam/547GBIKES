@@ -8,9 +8,34 @@
 <link rel="stylesheet" href="dropmenu.css" />
 <script src="./js/bikes.js"></script>
 <title>MyLink25 - Your Outdoor Adventure Source</title>
+<style>
+#userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: yellow;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+}
+
+#cancelBtn
+{
+width: 400px;
+}
+
+#splash
+{
+font-size: 12pt;
+}
+</style>
 </head>
 
-<body onload="setuser(); checkpll(); checkUserStatus(); displayProfilePicture(); writelocation();">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
     <!-- Navigation Bar -->
     <div class="navbar">
       <div class="nav-left">
@@ -18,26 +43,24 @@
                   <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html">MyCart</a>
+                  <a href="cartreview.html">MyCart</a>
+                  <a href="parks5.html">Book Parks</a>
+                  <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
                   <a href="manager.html">Manager Utilities</a>
             </div>
     </div> 
-              <div class="logo">MyLinkv25</div>
+              <div class="logo">&nbsp&nbspMyLinkv25</div>
       </div>
       <div class="nav-right">
         <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
-        <span id="H3UserBanner">User</span>
+        <span id="H3UserBanner"></span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+        <a href="cartreview.html" id="cartBtn" class="btn secondary-btn">Cart</a>
       </div>
     </div>
-
-  <!-- User Greeting Banner -->
-  <div class="user-banner" style="text-align: center; padding: 10px;">
-    <h3 id="userGreeting">Welcome, User</h3> <!-- Default message for guests -->
-  </div>
+  <div align="center" id="banner" style="height: 60px;"><span id="userGreeting">Welcome Guest</span></div>
   
   <!-- WhiteLabel Branding Image -->  
   <div align="center" class="homeimagepane"><span align="center"><p align="center"><img src="./images/gauley.jpg" width="100%" height="375px"></p></span></div>
@@ -46,7 +69,7 @@
   <section class="hero">
     <div class="hero-content">
        <h2>Welcome to MyLink</h2>
-      <p>Your one-stop solution for Camping, Biking, Outdoor Recreation, and More!.</p>
+      <p id="splash">Your one-stop solution for Camping, Biking, Outdoor Recreation, and More!.</p>
     </div>
   </section>
 
@@ -55,24 +78,30 @@
     <div class="container">
       <div class="feature">
         <a href="mybookings5.html">
-          <h3>Check your Reservations!</h3>
-          <p>Stay up-to-date on your recent Reservations.</p>
+          <h3>Check your Reservations</h3>
+          <p>Stay up-to-date on your recent Reservations!</p>
         </a>
       </div>
       
       <div class="feature">
         <a href="parks5.html">
-          <h3>Review Parks!</h3>
-          <p>Explore Mountain Biking Opportunities on the East Coast in the Carolinas, West Virginia, Delaware and Maryland.</p>
+          <h3>Review Parks</h3>
+          <p>Explore Mountain Biking & Outdoor Opportunities on the East Coast in the Carolinas, West Virginia, Delaware and Maryland.</p>
         </a>
       </div>
     
     <div class="feature">
         <a href="parksreview5.html">
-          <h3>User Reviews!</h3>
-          <p>Explore recent customer feedback.</p>
+          <h3>User Reviews</h3>
+          <p>Explore recent customer feedback on parks and outdoor experiences.</p>
         </a>
       </div>
+        <div class="feature">
+        <a href="parkvisualizations.html">
+          <h3>Park Visualizations</h3>
+          <p>Review US State and National Parks which support bikes, outdoor activities and camping.</p>
+        </a>
+      </div>    
     </div>
   </section>
 
@@ -80,13 +109,22 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
   
-  	function setuser()
+  	function setdemouser()
+    {
+    var someuid = localStorage.getItem("uid");
+    if(!someuid)
     {
   	alert("setting user for trial usage");
     localStorage.setItem("uid", "1");
     localStorage.setItem("fullname", "Park Guest");
     localStorage.setItem("email", "parkguest@547bikes.info");
     localStorage.setItem("role", "registered");
+    localStorage.setItem("activepictureurl", "./images/parkguest.png");    
+    }
+    else
+    {
+    //Do Nothing existing user login.
+    }
     }
     // API Endpoints
     const usersApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
@@ -104,6 +142,7 @@
         // Logged in
         loginBtn.style.display = "none";
         logoutBtn.style.display = "inline-block";
+        document.getElementById("H3UserBanner").innerText = fullName;
         document.getElementById("userGreeting").innerHTML = "Welcome, " + fullName; // Display full name
 
         if (userRole === "admin") {
@@ -116,6 +155,7 @@
         logoutBtn.style.display = "none";
         localStorage.setItem("uid", "901");
         localStorage.setItem("fullname", "Park Guest");
+        localStorage.setItem("activepictureurl", "./images/bluecircle.png");
         document.getElementById("userGreeting").innerHTML = "Welcome, Guest"; // Display "Guest"
       }
     }
@@ -134,21 +174,24 @@
       window.location.replace("login.html");
     }
 
-    function clearUserSession()
-      {
-    sometoken = localStorage.getItem('token');
-    var logoutApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users/logout/";
-    logoutApiUrl = logoutApiUrl + sometoken;
-    $.post(logoutApiUrl)
-        .done(
-            alert("SessionClosed.");
-            return;
-          }
-        })
-        .fail(function(xhr, status, error) {
-          console.error("Error closing session:", xhr.responseText);
-        });
-      }
+    function clearUserSession() {
+  const sometoken = localStorage.getItem('token');
+  if (!sometoken) {
+    console.warn("No token found in localStorage.");
+    return;
+  }
+
+  const logoutApiUrl = `https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users/logout/${sometoken}`;
+
+  $.post(logoutApiUrl)
+    .done(function () {
+      alert("Session closed.");
+    })
+    .fail(function (xhr, status, error) {
+      console.error("Error closing session:", xhr.responseText);
+    });
+}
+
     
     function loginUser(event) {
       event.preventDefault();
@@ -162,39 +205,7 @@
       window.open("login.html", "_self");
     }
 
-    // Fetch the profile picture using the profiles API.
-    function fetchProfilePicture() {
-      var uid = localStorage.getItem('uid');
-      $.get(profilesApiUrl)
-        .done(function(profiles) {
-          var profile = profiles.find(p => p.userid == uid);
-          if(profile && profile.activepictureurl) {
-            $('.navbar .nav-right img').attr('src', profile.activepictureurl);
-          }
-        })
-        .fail(function(xhr, status, error) {
-          console.error("Error fetching profiles:", xhr.responseText);
-        });
-    }
-
-    // Fetch user data, then get the employeeid 
-    function fetchUser() {
-      var uid = localStorage.getItem('uid');
-      $.get(usersApiUrl)
-        .done(function(users) {
-          var user = users.find(u => u.id == uid);
-          if (!user) {
-            alert("User not found.");
-            return;
-          }
-          // Update navbar with full name from user data.
-          $('#H3UserBanner').text(user.fullname);
-        })
-        .fail(function(xhr, status, error) {
-          console.error("Error fetching user:", xhr.responseText);
-        });
-    }
-
+    
     // On page load, check uid, fetch user info
     $(document).ready(function () {
       var someuid = localStorage.getItem('uid');
@@ -208,10 +219,11 @@
         window.open("adminhome.html", "_self");
       }
        else if (someuid && someuid !== '901') {
-        fetchUser();
-        fetchProfilePicture();
+		// donothing - already handled.
       }
     });
+       
+
   </script>
 </body>
     <!-- Footer -->

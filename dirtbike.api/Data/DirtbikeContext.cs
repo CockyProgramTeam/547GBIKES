@@ -36,6 +36,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
+    public virtual DbSet<Learnlog> Learnlogs { get; set; }
+
     public virtual DbSet<Noctech> Noctechs { get; set; }
 
     public virtual DbSet<Park> Parks { get; set; }
@@ -57,6 +59,12 @@ public partial class DirtbikeContext : DbContext
     public virtual DbSet<Template> Templates { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
+
+    public virtual DbSet<Useraction> Useractions { get; set; }
+
+    public virtual DbSet<Usergroup> Usergroups { get; set; }
+
+    public virtual DbSet<Userhelp> Userhelps { get; set; }
 
     public virtual DbSet<Userlog> Userlogs { get; set; }
 
@@ -105,14 +113,29 @@ public partial class DirtbikeContext : DbContext
             entity.ToTable("Booking");
 
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
+            entity.Property(e => e.Adults)
+                .HasColumnType("INT")
+                .HasColumnName("adults");
             entity.Property(e => e.Cancellationrefund)
                 .HasColumnType("float")
                 .HasColumnName("cancellationrefund");
             entity.Property(e => e.CartDetailsJson).HasColumnName("cartDetailsJson");
+            entity.Property(e => e.Children)
+                .HasColumnType("INT")
+                .HasColumnName("children");
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.ResEnd)
+                .HasColumnType("date")
+                .HasColumnName("resEnd");
+            entity.Property(e => e.ResStart)
+                .HasColumnType("date")
+                .HasColumnName("resStart");
             entity.Property(e => e.Reservationstatus).HasColumnName("reservationstatus");
             entity.Property(e => e.Reservationtype).HasColumnName("reservationtype");
             entity.Property(e => e.Reversetransactionid).HasColumnName("reversetransactionid");
+            entity.Property(e => e.Tentsites)
+                .HasColumnType("INT")
+                .HasColumnName("tentsites");
             entity.Property(e => e.Totalcartitems)
                 .HasColumnType("INT")
                 .HasColumnName("totalcartitems");
@@ -137,8 +160,14 @@ public partial class DirtbikeContext : DbContext
         {
             entity.ToTable("Cart");
 
+            entity.Property(e => e.Adults)
+                .HasColumnType("INT")
+                .HasColumnName("adults");
             entity.Property(e => e.Bookinginfo).HasColumnName("bookinginfo");
             entity.Property(e => e.CartId).HasColumnName("cartId");
+            entity.Property(e => e.Children)
+                .HasColumnType("INT")
+                .HasColumnName("children");
             entity.Property(e => e.DateAdded).HasColumnName("dateAdded");
             entity.Property(e => e.IsCheckedOut).HasColumnName("isCheckedOut");
             entity.Property(e => e.ItemDescription).HasColumnName("itemDescription");
@@ -149,6 +178,15 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Parkname).HasColumnName("parkname");
             entity.Property(e => e.Paymentid).HasColumnName("paymentid");
             entity.Property(e => e.Quantity).HasColumnName("quantity");
+            entity.Property(e => e.ResEnd)
+                .HasColumnType("date")
+                .HasColumnName("resEnd");
+            entity.Property(e => e.ResStart)
+                .HasColumnType("date")
+                .HasColumnName("resStart");
+            entity.Property(e => e.Tentsites)
+                .HasColumnType("INT")
+                .HasColumnName("tentsites");
             entity.Property(e => e.TotalPrice).HasColumnName("totalPrice");
             entity.Property(e => e.Totalcartitems).HasColumnName("totalcartitems");
             entity.Property(e => e.Transactiontotal).HasColumnName("transactiontotal");
@@ -164,6 +202,8 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.CartsActiveList).HasDefaultValue("{}");
             entity.Property(e => e.CartsCancelled).HasDefaultValue(0);
             entity.Property(e => e.CartsCount).HasDefaultValue(0);
+            entity.Property(e => e.Loyaltyid).HasColumnName("loyaltyid");
+            entity.Property(e => e.Loyaltyvendor).HasColumnName("loyaltyvendor");
             entity.Property(e => e.UserId).HasColumnName("UserID");
         });
 
@@ -176,13 +216,27 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Cartitemdate)
                 .HasColumnType("DATETIME")
                 .HasColumnName("cartitemdate");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("DATE")
+                .HasColumnName("created_date");
             entity.Property(e => e.Itemdescription).HasColumnName("itemdescription");
             entity.Property(e => e.Itemextendedprice).HasColumnName("itemextendedprice");
             entity.Property(e => e.Itemqty).HasColumnName("itemqty");
             entity.Property(e => e.Itemtotals).HasColumnName("itemtotals");
             entity.Property(e => e.Itemvendor).HasColumnName("itemvendor");
+            entity.Property(e => e.Memberid).HasColumnName("memberid");
             entity.Property(e => e.Parkid).HasColumnName("parkid");
+            entity.Property(e => e.Parkname).HasColumnName("parkname");
             entity.Property(e => e.Productid).HasColumnName("productid");
+            entity.Property(e => e.Qrcodeurl).HasColumnName("qrcodeurl");
+            entity.Property(e => e.ResEnd)
+                .HasColumnType("DATE")
+                .HasColumnName("res_end");
+            entity.Property(e => e.ResStart)
+                .HasColumnType("DATE")
+                .HasColumnName("res_start");
+            entity.Property(e => e.Reservationcode).HasColumnName("reservationcode");
+            entity.Property(e => e.Rewardsprovider).HasColumnName("rewardsprovider");
             entity.Property(e => e.Salescatid).HasColumnName("salescatid");
             entity.Property(e => e.Shopid).HasColumnName("shopid");
             entity.Property(e => e.Subtotal).HasColumnName("subtotal");
@@ -209,6 +263,27 @@ public partial class DirtbikeContext : DbContext
             entity.ToTable("Employee");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<Learnlog>(entity =>
+        {
+            entity.ToTable("learnlog");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Cataloguesku).HasColumnName("cataloguesku");
+            entity.Property(e => e.Category).HasColumnName("category");
+            entity.Property(e => e.Certauthority).HasColumnName("certauthority");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Emplid).HasColumnName("emplid");
+            entity.Property(e => e.Employee).HasColumnName("employee");
+            entity.Property(e => e.Employeeid).HasColumnName("employeeid");
+            entity.Property(e => e.Employeeidasint).HasColumnName("employeeidasint");
+            entity.Property(e => e.Enddate).HasColumnName("enddate");
+            entity.Property(e => e.Fullname).HasColumnName("fullname");
+            entity.Property(e => e.Learningmodulesid).HasColumnName("learningmodulesid");
+            entity.Property(e => e.Startdate).HasColumnName("startdate");
+            entity.Property(e => e.Status).HasColumnName("status");
+            entity.Property(e => e.Userid).HasColumnName("userid");
         });
 
         modelBuilder.Entity<Noctech>(entity =>
@@ -410,6 +485,8 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Accountactiondate).HasColumnName("accountactiondate");
             entity.Property(e => e.Accountactiondescription).HasColumnName("accountactiondescription");
             entity.Property(e => e.Accountstatus).HasColumnName("accountstatus");
+            entity.Property(e => e.Activepictureurl).HasColumnName("activepictureurl");
+            entity.Property(e => e.Activeprofileurl).HasColumnName("activeprofileurl");
             entity.Property(e => e.Azureid).HasColumnName("azureid");
             entity.Property(e => e.Btn).HasColumnName("BTN");
             entity.Property(e => e.Companyid).HasColumnName("companyid");
@@ -446,6 +523,54 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Usertwofactorenabled).HasColumnName("usertwofactorenabled");
             entity.Property(e => e.Usertwofactorkeysmsdestination).HasColumnName("usertwofactorkeysmsdestination");
             entity.Property(e => e.Usertwofactortype).HasColumnName("usertwofactortype");
+        });
+
+        modelBuilder.Entity<Useraction>(entity =>
+        {
+            entity.ToTable("useraction");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Acknowledged).HasColumnName("acknowledged");
+            entity.Property(e => e.Actiondate).HasColumnName("actiondate");
+            entity.Property(e => e.Actionpriority).HasColumnName("actionpriority");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Userid).HasColumnName("userid");
+        });
+
+        modelBuilder.Entity<Usergroup>(entity =>
+        {
+            entity.ToTable("usergroup");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Groupcompanyid).HasColumnName("groupcompanyid");
+            entity.Property(e => e.Groupdescription).HasColumnName("groupdescription");
+            entity.Property(e => e.Groupid).HasColumnName("groupid");
+            entity.Property(e => e.Groupownerid).HasColumnName("groupownerid");
+        });
+
+        modelBuilder.Entity<Userhelp>(entity =>
+        {
+            entity.ToTable("userhelp");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Bestcontactnumber).HasColumnName("bestcontactnumber");
+            entity.Property(e => e.Descr).HasColumnName("descr");
+            entity.Property(e => e.Email).HasColumnName("email");
+            entity.Property(e => e.Emplid).HasColumnName("emplid");
+            entity.Property(e => e.Fullname).HasColumnName("fullname");
+            entity.Property(e => e.Replied).HasColumnName("replied");
+            entity.Property(e => e.Repliedmanageremail).HasColumnName("repliedmanageremail");
+            entity.Property(e => e.Repliedmanagerid).HasColumnName("repliedmanagerid");
+            entity.Property(e => e.Repliedmanagerphone).HasColumnName("repliedmanagerphone");
+            entity.Property(e => e.Responsedate)
+                .HasColumnType("DATE")
+                .HasColumnName("responsedate");
+            entity.Property(e => e.Severity).HasColumnName("severity");
+            entity.Property(e => e.Ticketdate)
+                .HasColumnType("DATE")
+                .HasColumnName("ticketdate");
+            entity.Property(e => e.Ticketid).HasColumnName("ticketid");
+            entity.Property(e => e.Userid).HasColumnName("userid");
         });
 
         modelBuilder.Entity<Userlog>(entity =>

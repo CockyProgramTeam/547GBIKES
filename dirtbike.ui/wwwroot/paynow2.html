@@ -184,6 +184,18 @@
  
   document.getElementById("card-uid").value = uid;
 
+  
+  function getTodayDate() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+ 
+  
+  
+  
   async function fetchCards(uid) {
     const url = `${cardApi}?uid=${uid}`;
     const response = await fetch(url);
@@ -252,31 +264,40 @@
   };
 
   try {
-    // Submit payment
     await fetch(paymentApi, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(paymentData)
     });
 
-    // Clean and parse cart IDs
-    const rawCartIds = urlParams.get("cartIds")?.split(",") || [];
-    const cartIds = rawCartIds.map(id => id.split(":")[0].trim());
-    const cartDetails = cartIds.map(id => parseInt(id)).filter(id => !isNaN(id));
+    const cartIds = urlParams.get("cartIds")?.split(",").map(id => parseInt(id)) || [];
+    const parkIds = urlParams.get("parkIds")?.split(",").map(id => parseInt(id)) || [];
+    const parkNames = urlParams.get("parkNames")?.split(",").map(name => decodeURIComponent(name)) || [];
+    const startDates = urlParams.get("startDate")?.split(",") || [];
+    const endDates = urlParams.get("endDate")?.split(",") || [];
+    const adultsList = urlParams.get("adults")?.split(",").map(a => parseInt(a)) || [];
+    const childrenList = urlParams.get("children")?.split(",").map(c => parseInt(c)) || [];
 
-    // Fetch cart data
-    const cartDataArray = await fetchCartDetails(cartDetails);
+    const cartDataArray = await fetchCartDetails(cartIds);
 
-    for (const cartId of cartDetails) {
-      const updateUrl = `${cartApi}/${cartId}`;
+    for (let i = 0; i < cartIds.length; i++) {
+      const cartId = cartIds[i];
+      const parkId = parkIds[i] || 0;
+      const parkName = parkNames[i] || "Unknown Park";
+      const resStart = startDates[i] || new Date().toISOString();
+      const resEnd = endDates[i] || new Date().toISOString();
+      const quantityAdults = adultsList[i] || 1;
+      const quantityChildren = childrenList[i] || 0;
+
       const cartData = cartDataArray.find(c => c.cartId === cartId);
 
       // Update cart
+      const updateUrl = `${cartApi}/${cartId}`;
       const updatedItem = {
         cartId: cartId,
         isCheckedOut: 1,
         paymentid: transactionId,
-        totalcartitems: cartDetails.length
+        totalcartitems: cartIds.length
       };
 
       await fetch(updateUrl, {
@@ -292,18 +313,25 @@
         creditCardType: card.cardType,
         creditCardLast4: card.cardLast4,
         creditCardExpDate: card.cardExpDate,
-        quantityAdults: 1,
-        quantityChildren: 0,
+        quantityAdults: quantityAdults,
+        quantityChildren: quantityChildren,
         customerBillingName: card.fullname?.trim() || "Unknown",
         totalAmount: parseFloat(amount),
         transactionId: transactionId,
-        parkId: cartData?.parkId || 999,
-        parkName: cartData?.parkName || "Unknown Park",
+        parkId: parkId,
+        parkName: parkName,
         cartid: cartId.toString(),
         reservationtype: "Biking",
         reservationstatus: "Active",
-        cartDetailsJson: JSON.stringify(cartDetails),
-        totalcartitems: cartDetails.length
+        reservationStartDate: resStart,
+        reservationEndDate: resEnd,
+        cartDetailsJson: JSON.stringify(cartIds),
+        totalcartitems: cartIds.length,
+        adults: quantityAdults,
+        children: quantityChildren,
+        resStart: resStart,
+        resEnd: resEnd,
+        tentsites: 0
       };
 
       await fetch(bookingApi, {
@@ -313,12 +341,11 @@
       });
     }
 
-    // Show confirmation
     alert("Transaction complete!");
     document.getElementById("payment-status").innerHTML = `
       <p class="fw-bold text-success">✅ Payment of $${amount} processed using card ending in ${card.cardLast4}.</p>
       <p>Transaction ID: <strong>${transactionId}</strong></p>
-      <p>Cart IDs: ${cartDetails.join(", ")}</p>
+      <p>Cart IDs: ${cartIds.join(", ")}</p>
       <p>User ID: ${uid}</p>
     `;
   } catch (err) {
@@ -328,6 +355,7 @@
     `;
   }
 }
+
 
   document.getElementById("add-card-form").addEventListener("submit", async function (e) {
     e.preventDefault();

@@ -16,4 +16,8 @@ public partial class CartMaster
     public int? CartsActive { get; set; }
 
     public string? CartsActiveList { get; set; }
+
+    public string? Loyaltyid { get; set; }
+
+    public string? Loyaltyvendor { get; set; }
 }

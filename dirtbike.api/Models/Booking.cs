@@ -48,4 +48,14 @@ public partial class Booking
     public string? Reference { get; set; }
 
     public string? SubReference { get; set; }
+
+    public int? Adults { get; set; }
+
+    public int? Children { get; set; }
+
+    public DateTime? ResStart { get; set; }
+
+    public DateTime? ResEnd { get; set; }
+
+    public int? Tentsites { get; set; }
 }

@@ -30,4 +30,20 @@ public partial class Cartitem
     public string? Parkid { get; set; }
 
     public double? Subtotal { get; set; }
+
+    public DateTime? CreatedDate { get; set; }
+
+    public DateTime? ResStart { get; set; }
+
+    public DateTime? ResEnd { get; set; }
+
+    public string? Qrcodeurl { get; set; }
+
+    public string? Reservationcode { get; set; }
+
+    public string? Memberid { get; set; }
+
+    public string? Rewardsprovider { get; set; }
+
+    public byte[]? Parkname { get; set; }
 }

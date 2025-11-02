@@ -72,19 +72,24 @@ public static class CartEndpoints
                 context.Carts.Attach(someCart[0]);
 			if (input.ItemDescription != null) someCart[0].ItemDescription = input.ItemDescription;
 			if (input.Uid != null) someCart[0].Uid = input.Uid;
-			someCart[0].ParkId = input.ParkId;
+			//someCart[0].ParkId = input.ParkId; DECIDED TO NOT ALLOW THIS
 			if (input.ItemType != null) someCart[0].ItemType = input.ItemType;
 			someCart[0].Quantity = input.Quantity;
 			someCart[0].UnitPrice = input.UnitPrice;
 			 someCart[0].TotalPrice = input.TotalPrice;
 			 if (input.DateAdded != null) someCart[0].DateAdded = input.DateAdded;
+			 if (input.ResStart != null) someCart[0].ResStart = input.ResStart;
+			 if (input.ResEnd != null) someCart[0].ResEnd = input.ResEnd;
 			 if (input.IsCheckedOut != null) someCart[0].IsCheckedOut = input.IsCheckedOut;
 			 someCart[0].Totalcartitems = input.Totalcartitems;
 			 if (input.Paymentid != null) someCart[0].Paymentid = input.Paymentid;
 			 if (input.Bookinginfo != null) someCart[0].Bookinginfo = input.Bookinginfo;
                  	 someCart[0].Johnstotals = input.Johnstotals;
     			 someCart[0].Transactiontotal = input.Transactiontotal;
-    			 if(input.Parkname !=null) someCart[0].Parkname = input.Parkname;
+			 someCart[0].Adults = input.Adults;
+			 someCart[0].Children = input.Children;
+			 someCart[0].Tentsites = input.Tentsites;
+    			 //if(input.Parkname !=null) someCart[0].Parkname = input.Parkname; DECIDED TO EXPLICITLY DENY THIS FUNCTION
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.CartId);
