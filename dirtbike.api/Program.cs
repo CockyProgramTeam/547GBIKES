@@ -1,13 +1,15 @@
 using Enterprise.Controllers;
 using System.Text.Json;
+using ParkTools;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Load CORS settings from appsettings.json
 var corsSettings = builder.Configuration.GetSection("Cors");
-var allowedOrigins = corsSettings.GetSection("AllowedOrigins").Get<string[]>();
-var allowedMethods = corsSettings.GetSection("AllowedMethods").Get<string[]>();
-var allowedHeaders = corsSettings.GetSection("AllowedHeaders").Get<string[]>();
+var allowedOrigins = corsSettings.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
+var allowedMethods = corsSettings.GetSection("AllowedMethods").Get<string[]>() ?? Array.Empty<string>();
+var allowedHeaders = corsSettings.GetSection("AllowedHeaders").Get<string[]>() ?? Array.Empty<string>();
+
 
 // Add services
 builder.Services.AddControllers();
@@ -27,6 +29,7 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+app.UseMiddleware<SwaggerAuthMiddleware>();
 
 // Use middleware
 app.UseCors("UnifiedCors");
@@ -62,4 +65,6 @@ app.MapUseractionEndpoints();
 app.MapUsergroupsEndpoints();
 //app.MapUseractionEndpoints();
 app.MapUserhelpEndpoints();
+app.MapBatchEndpoints();
+app.MapBatchtypeEndpoints();
 app.Run();

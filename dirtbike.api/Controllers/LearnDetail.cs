@@ -14,7 +14,7 @@ namespace Enterprise.Controllers;
 public static class LearnlogEndpoints
 {
 
-    public static async void MapLearnlogEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapLearnlogEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Learndetail").WithTags(nameof(Learnlog));
 
@@ -58,7 +58,7 @@ public static class LearnlogEndpoints
 
 
         //[HttpPut]
-        group.MapPut("/{id}", (int id, Learnlog input) =>
+        group.MapPut("/{id}", async (int id, Learnlog input) =>
         {
             using (var context = new DirtbikeContext())
             {
@@ -71,7 +71,7 @@ public static class LearnlogEndpoints
                 someLearnlog[0].Employeeid = input.Employeeid;
                 someLearnlog[0].Learningmodulesid = input.Learningmodulesid;
                 someLearnlog[0].Cataloguesku = input.Cataloguesku;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
@@ -104,7 +104,7 @@ public static class LearnlogEndpoints
                 Learnlog[] someLearnlogs = context.Learnlogs.Where(m => m.Id == id).ToArray();
                 context.Learnlogs.Attach(someLearnlogs[0]);
                 context.Learnlogs.Remove(someLearnlogs[0]);
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
 
         })

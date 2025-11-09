@@ -45,5 +45,21 @@ public partial class Cartitem
 
     public string? Rewardsprovider { get; set; }
 
-    public byte[]? Parkname { get; set; }
+    public int? Adults { get; set; }
+
+    public int? Children { get; set; }
+
+    public double? Statetaxpercent { get; set; }
+
+    public string? Statetaxauth { get; set; }
+
+    public double? Ustaxpercent { get; set; }
+
+    public double? Ustaxtotal { get; set; }
+
+    public double? Statetaxtotal { get; set; }
+
+    public double? Itemsubtotal { get; set; }
+
+    public string? Parkname { get; set; }
 }

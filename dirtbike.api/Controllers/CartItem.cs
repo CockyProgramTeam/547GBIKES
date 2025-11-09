@@ -74,19 +74,46 @@ public static class CartitemEndpoints
         {
             using (var context = new DirtbikeContext())
             {
-                Cartitem[] someCartitem = context.Cartitems.Where(m => m.Id == id).ToArray();
-                context.Cartitems.Attach(someCartitem[0]);
-               if (input.Cartid != null) someCartitem[0].Cartid = input.Cartid;
-               if (input.Parkname != null) someCartitem[0].Parkname = input.Parkname;
-				if (input.Cartitemdate != null) someCartitem[0].Cartitemdate = input.Cartitemdate;
-				if (input.Itemvendor != null) someCartitem[0].Itemvendor = input.Itemvendor;
-				if (input.Itemdescription != null) someCartitem[0].Itemdescription = input.Itemdescription;
-				if (input.Itemextendedprice != null) someCartitem[0].Itemextendedprice = input.Itemextendedprice;
-				if (input.Itemqty != null) someCartitem[0].Itemqty = input.Itemqty;
-				if (input.Itemtotals != null) someCartitem[0].Itemtotals = input.Itemtotals;
-				if (input.Salescatid != null) someCartitem[0].Salescatid = input.Salescatid;
-				if (input.Productid != null) someCartitem[0].Productid = input.Productid;
-                await context.SaveChangesAsync();
+                var existingItem = context.Cartitems.FirstOrDefault(m => m.Id == id);
+        		if (existingItem == null)
+        		{
+            	return Results.NotFound($"Cartitem with ID {id} not found.");
+        		}
+
+        		context.Cartitems.Attach(existingItem);    
+            
+                                    
+               if (input.Cartid != null && input.Cartid != 0) existingItem.Cartid = input.Cartid;
+        if (!string.IsNullOrEmpty(input.Parkname)) existingItem.Parkname = input.Parkname;
+        if (input.Cartitemdate != null) existingItem.Cartitemdate = input.Cartitemdate;
+        if (!string.IsNullOrEmpty(input.Itemvendor)) existingItem.Itemvendor = input.Itemvendor;
+        if (!string.IsNullOrEmpty(input.Itemdescription)) existingItem.Itemdescription = input.Itemdescription;
+        if (input.Itemextendedprice != null && input.Itemextendedprice != 0) existingItem.Itemextendedprice = input.Itemextendedprice;
+        if (input.Itemqty != 0) existingItem.Itemqty = input.Itemqty;
+        if (input.Itemtotals != 0) existingItem.Itemtotals = input.Itemtotals;
+        if (input.Salescatid != null && input.Salescatid != 0) existingItem.Salescatid = input.Salescatid;
+        if (!string.IsNullOrEmpty(input.Productid)) existingItem.Productid = input.Productid;
+        if (input.Shopid != null) existingItem.Shopid = input.Shopid;
+        if (input.Parkid != null) existingItem.Parkid = input.Parkid;
+        if (input.Subtotal != null && input.Subtotal != 0) existingItem.Subtotal = input.Subtotal;
+        if (input.CreatedDate != null) existingItem.CreatedDate = input.CreatedDate;
+        if (input.ResStart != null) existingItem.ResStart = input.ResStart;
+        if (input.ResEnd != null) existingItem.ResEnd = input.ResEnd;
+        if (!string.IsNullOrEmpty(input.Qrcodeurl)) existingItem.Qrcodeurl = input.Qrcodeurl;
+        if (!string.IsNullOrEmpty(input.Reservationcode)) existingItem.Reservationcode = input.Reservationcode;
+        if (input.Memberid != null) existingItem.Memberid = input.Memberid;
+        if (!string.IsNullOrEmpty(input.Rewardsprovider)) existingItem.Rewardsprovider = input.Rewardsprovider;
+        if (input.Adults != 0) existingItem.Adults = input.Adults;
+        if (input.Children != 0) existingItem.Children = input.Children;
+        if (input.Statetaxpercent != 0) existingItem.Statetaxpercent = input.Statetaxpercent;
+        if (!string.IsNullOrEmpty(input.Statetaxauth)) existingItem.Statetaxauth = input.Statetaxauth;
+        if (input.Ustaxpercent != 0) existingItem.Ustaxpercent = input.Ustaxpercent;
+        if (input.Ustaxtotal != 0) existingItem.Ustaxtotal = input.Ustaxtotal;
+        if (input.Statetaxtotal != 0) existingItem.Statetaxtotal = input.Statetaxtotal;
+        if (input.Itemsubtotal != 0) existingItem.Itemsubtotal = input.Itemsubtotal;
+
+        		await context.SaveChangesAsync();
+                //LOG API CALL
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }

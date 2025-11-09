@@ -14,7 +14,7 @@ namespace Enterprise.Controllers;
 public static class UserhelpEndpoints
 {
 
-    public static async void MapUserhelpEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapUserhelpEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Userhelp").WithTags(nameof(Userhelp));
 
@@ -42,7 +42,7 @@ public static class UserhelpEndpoints
         .WithOpenApi();
 
         //[HttpPut]
-        group.MapPut("/{id}", (int id, Userhelp input) =>
+        group.MapPut("/{id}", async (int id, Userhelp input) =>
         {
             using (var context = new DirtbikeContext())
             {
@@ -64,7 +64,7 @@ public static class UserhelpEndpoints
                 //someUserhelp[0].Ticketdate = DateTime.UtcNow;
                 //someUserhelp[0].Responsedate = DateTime.UtcNow;
 
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
@@ -75,7 +75,7 @@ public static class UserhelpEndpoints
     
     
      //[HttpPut]
-        group.MapPut("/userid/{id}", (int Userid, Userhelp input) =>
+        group.MapPut("/userid/{id}", async (int Userid, Userhelp input) =>
         {
             using (var context = new DirtbikeContext())
             {
@@ -97,7 +97,7 @@ public static class UserhelpEndpoints
                 //someUserhelp[0].Ticketdate = DateTime.UtcNow;
                 //someUserhelp[0].Responsedate = DateTime.UtcNow;
 
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
@@ -130,7 +130,7 @@ public static class UserhelpEndpoints
                 Userhelp[] someUserhelps = context.Userhelps.Where(m => m.Id == id).ToArray();
                 context.Userhelps.Attach(someUserhelps[0]);
                 context.Userhelps.Remove(someUserhelps[0]);
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
 
         })

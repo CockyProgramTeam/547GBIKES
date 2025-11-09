@@ -11,23 +11,23 @@ using dirtbike.api.Models;
 using dirtbike.api.Data;
 namespace Enterprise.Controllers;
 
-public static class UseractionEndpoints
+public static class BatchEndpoints
 {
 
-    public static void MapUseractionEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapBatchEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Useraction").WithTags(nameof(Useraction));
+        var group = routes.MapGroup("/api/Batch").WithTags(nameof(Batch));
 
         //[HttpGet]
         group.MapGet("/", () =>
         {
             using (var context = new DirtbikeContext())
             {
-                return context.Useractions.ToList();
+                return context.Batches.ToList();
             }
 
         })
-        .WithName("GetAllUseractions")
+        .WithName("GetAllBatches")
         .WithOpenApi();
 
         //[HttpGet]
@@ -35,58 +35,64 @@ public static class UseractionEndpoints
         {
             using (var context = new DirtbikeContext())
             {
-                return context.Useractions.Where(m => m.Id == id).ToList();
+                return context.Batches.Where(m => m.Id == id).ToList();
             }
         })
-        .WithName("GetUseractionById")
+        .WithName("GetBatchById")
         .WithOpenApi();
 
         //[HttpPut]
-        group.MapPut("/{id}", async (int id, Useraction input) =>
+        group.MapPut("/{id}", async (int id, Batch input) =>
         {
             using (var context = new DirtbikeContext())
             {
-                Useraction[] someUseraction = context.Useractions.Where(m => m.Id == id).ToArray();
-                context.Useractions.Attach(someUseraction[0]);
-                someUseraction[0].Description = input.Description;
+                Batch[] someBatch = context.Batches.Where(m => m.Id == id).ToArray();
+                context.Batches.Attach(someBatch[0]);
+                someBatch[0].Batchname = input.Batchname;
+            someBatch[0].Filelocationpath = input.Filelocationpath;
+            someBatch[0].Batchtype = input.Batchtype;
+            someBatch[0].Batchstatus = input.Batchstatus;
+            someBatch[0].Batchend = input.Batchend;
+            someBatch[0].Qtystart = input.Qtystart;
+            someBatch[0].Qtyend = input.Qtyend;
                 await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
 
         })
-        .WithName("UpdateUseraction")
+        .WithName("UpdateBatch")
         .WithOpenApi();
 
-        group.MapPost("/", async (Useraction input) =>
+        group.MapPost("/", async (Batch input) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Random rnd = new Random();
                 int dice = rnd.Next(1000, 10000000);
                 //input.Id = dice;
-                context.Useractions.Add(input);
+                context.Batches.Add(input);
                 await context.SaveChangesAsync();
                 return TypedResults.Created("Created ID:" + input.Id);
             }
 
         })
-        .WithName("CreateUseraction")
+        .WithName("CreateBatch")
         .WithOpenApi();
 
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())
             {
-                //context.Useractions.Add(std);
-                Useraction[] someUseractions = context.Useractions.Where(m => m.Id == id).ToArray();
-                context.Useractions.Attach(someUseractions[0]);
-                context.Useractions.Remove(someUseractions[0]);
+                //context.Batches.Add(std);
+                Batch[] someBatches = context.Batches.Where(m => m.Id == id).ToArray();
+                context.Batches.Attach(someBatches[0]);
+                context.Batches.Remove(someBatches[0]);
                 await context.SaveChangesAsync();
             }
 
         })
-        .WithName("DeleteUseraction")
+        .WithName("DeleteBatch")
         .WithOpenApi();
     }
 }

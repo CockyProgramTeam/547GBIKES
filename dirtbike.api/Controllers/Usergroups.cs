@@ -14,7 +14,7 @@ namespace Enterprise.Controllers;
 public static class UsergroupEndpoints
 {
 
-    public static async void MapUsergroupsEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapUsergroupsEndpoints(this IEndpointRouteBuilder routes)
     {
         var group = routes.MapGroup("/api/Usergroups").WithTags(nameof(Usergroup));
 
@@ -42,14 +42,14 @@ public static class UsergroupEndpoints
         .WithOpenApi();
 
         //[HttpPut]
-        group.MapPut("/{id}", (int id, Usergroup input) =>
+        group.MapPut("/{id}", async (int id, Usergroup input) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Usergroup[] someUsergroups = context.Usergroups.Where(m => m.Id == id).ToArray();
                 context.Usergroups.Attach(someUsergroups[0]);
                 someUsergroups[0].Groupdescription = input.Groupdescription;
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
@@ -82,7 +82,7 @@ public static class UsergroupEndpoints
                 Usergroup[] someUsergroups = context.Usergroups.Where(m => m.Id == id).ToArray();
                 context.Usergroups.Attach(someUsergroups[0]);
                 context.Usergroups.Remove(someUsergroups[0]);
-                context.SaveChangesAsync();
+                await context.SaveChangesAsync();
             }
 
         })

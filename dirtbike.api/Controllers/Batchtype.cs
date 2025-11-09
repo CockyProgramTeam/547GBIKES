@@ -11,23 +11,23 @@ using dirtbike.api.Models;
 using dirtbike.api.Data;
 namespace Enterprise.Controllers;
 
-public static class UseractionEndpoints
+public static class BatchtypeEndpoints
 {
 
-    public static void MapUseractionEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapBatchtypeEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/Useraction").WithTags(nameof(Useraction));
+        var group = routes.MapGroup("/api/Batchtype").WithTags(nameof(Batchtype));
 
         //[HttpGet]
         group.MapGet("/", () =>
         {
             using (var context = new DirtbikeContext())
             {
-                return context.Useractions.ToList();
+                return context.Batchtypes.ToList();
             }
 
         })
-        .WithName("GetAllUseractions")
+        .WithName("GetAllBatchtypes")
         .WithOpenApi();
 
         //[HttpGet]
@@ -35,58 +35,58 @@ public static class UseractionEndpoints
         {
             using (var context = new DirtbikeContext())
             {
-                return context.Useractions.Where(m => m.Id == id).ToList();
+                return context.Batchtypes.Where(m => m.Id == id).ToList();
             }
         })
-        .WithName("GetUseractionById")
+        .WithName("GetBatchtypeById")
         .WithOpenApi();
 
         //[HttpPut]
-        group.MapPut("/{id}", async (int id, Useraction input) =>
+        group.MapPut("/{id}", async (int id, Batchtype input) =>
         {
             using (var context = new DirtbikeContext())
             {
-                Useraction[] someUseraction = context.Useractions.Where(m => m.Id == id).ToArray();
-                context.Useractions.Attach(someUseraction[0]);
-                someUseraction[0].Description = input.Description;
+                Batchtype[] someBatchtype = context.Batchtypes.Where(m => m.Id == id).ToArray();
+                context.Batchtypes.Attach(someBatchtype[0]);
+                someBatchtype[0].Batchtypename = input.Batchtypename;
                 await context.SaveChangesAsync();
                 return TypedResults.Accepted("Updated ID:" + input.Id);
             }
 
 
         })
-        .WithName("UpdateUseraction")
+        .WithName("UpdateBatchtype")
         .WithOpenApi();
 
-        group.MapPost("/", async (Useraction input) =>
+        group.MapPost("/", async (Batchtype input) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Random rnd = new Random();
                 int dice = rnd.Next(1000, 10000000);
                 //input.Id = dice;
-                context.Useractions.Add(input);
+                context.Batchtypes.Add(input);
                 await context.SaveChangesAsync();
                 return TypedResults.Created("Created ID:" + input.Id);
             }
 
         })
-        .WithName("CreateUseraction")
+        .WithName("CreateBatchtype")
         .WithOpenApi();
 
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())
             {
-                //context.Useractions.Add(std);
-                Useraction[] someUseractions = context.Useractions.Where(m => m.Id == id).ToArray();
-                context.Useractions.Attach(someUseractions[0]);
-                context.Useractions.Remove(someUseractions[0]);
+                //context.Batchtypes.Add(std);
+                Batchtype[] someBatchtypes = context.Batchtypes.Where(m => m.Id == id).ToArray();
+                context.Batchtypes.Attach(someBatchtypes[0]);
+                context.Batchtypes.Remove(someBatchtypes[0]);
                 await context.SaveChangesAsync();
             }
 
         })
-        .WithName("DeleteUseraction")
+        .WithName("DeleteBatchtype")
         .WithOpenApi();
     }
 }

@@ -18,7 +18,8 @@ namespace Enterpriseservices
                 var user = context.Users.FirstOrDefault(u => u.Id == userid);
                 if (user == null || string.IsNullOrEmpty(user.Hashedpassword))
                 {
-                    return (0, null); // User not found or no stored password
+               
+                	return (0, string.Empty); // 
                 }
 
                 // Compare hashed passwords (case-sensitive)
@@ -26,7 +27,7 @@ namespace Enterpriseservices
 
                 if (!successfull_login)
                 {
-                    return (0, null);
+                	return (0, string.Empty); // 
                 }
                 else
                 {

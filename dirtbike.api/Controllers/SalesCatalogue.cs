@@ -75,19 +75,19 @@ public static class SalesCatalogueEndpoints
             {
                 SalesCatalogue[] someSalesCatalogue = context.SalesCatalogues.Where(m => m.SalesCatalogueId == id).ToArray();
                 context.SalesCatalogues.Attach(someSalesCatalogue[0]);
-                if (input.SalesCatalogueId != null) someSalesCatalogue[0].SalesCatalogueId = input.SalesCatalogueId;
-				if (input.ParkId != null) someSalesCatalogue[0].ParkId = input.ParkId;
+                		someSalesCatalogue[0].SalesCatalogueId = input.SalesCatalogueId;
+				someSalesCatalogue[0].ParkId = input.ParkId;
 				if (input.ServiceType != null) someSalesCatalogue[0].ServiceType = input.ServiceType;
 				if (input.ServiceName != null) someSalesCatalogue[0].ServiceName = input.ServiceName;
 				if (input.Description != null) someSalesCatalogue[0].Description = input.Description;
-				if (input.Price != null) someSalesCatalogue[0].Price = input.Price;
+				someSalesCatalogue[0].Price = input.Price;
 				if (input.StartDate != null) someSalesCatalogue[0].StartDate = input.StartDate;
 				if (input.EndDate != null) someSalesCatalogue[0].EndDate = input.EndDate;
-				if (input.IsActive != null) someSalesCatalogue[0].IsActive = input.IsActive;
+				someSalesCatalogue[0].IsActive = input.IsActive;
 				if (input.SiteId != null) someSalesCatalogue[0].SiteId = input.SiteId;
-				if (input.National != null) someSalesCatalogue[0].National = input.National;
-				if (input.State != null) someSalesCatalogue[0].State = input.State;
-				if (input.Global != null) someSalesCatalogue[0].Global = input.Global;
+				someSalesCatalogue[0].National = input.National;
+				someSalesCatalogue[0].State = input.State;
+				someSalesCatalogue[0].Global = input.Global;
 
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");

@@ -30,4 +30,8 @@ public partial class SalesCatalogue
     public int? State { get; set; }
 
     public int? Global { get; set; }
+
+    public int? Qtyadults { get; set; }
+
+    public int? Qtychildren { get; set; }
 }

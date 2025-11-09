@@ -3,7 +3,7 @@ using System.Numerics;
 namespace Enterpriseservices
 {
 
-    public class twofactor
+    public class Twofactor
     {
         public string GenerateKey()
         {
