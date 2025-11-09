@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<script src="./js/bikes.js"></script>
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  
+  <title>MyLinkV25 - User Maintenance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+
+ 
+.highlight {
+      background-color: #e0f3ff !important;
+    }
+    .selected {
+      border: 2px solid #198754;
+    }
+    .park-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .header-image {
+      height: 350px;
+      width: 100%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+          <div class="dropdown">
+                <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                <div class="dropdown-content">
+                <a href="index.html">Site Home</a>
+                <a href="cartreview.html">MyCart</a>
+                <a href="parks5.html">Review Park Options</a>
+                <a href="parksreview5.html">Park Reviews</a>
+                <a href="mybookings5.html">MyReservations</a>
+                <a href="manager.html">Manager Utilities</a>
+          </div>
+  </div> 
+            <div class="logo">MyLinkv25 - User Manager</div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cartreview.html" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+  
+<div class="container py-4">
+  <div align="center">
+    <img src="./images/parkranger.png" width="100%" height="350px">
+  </div>
+  <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">Add User</button>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>UserId</th>
+        <th>Full Name</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>ProfilePictureUrl</th>
+      </tr>
+    </thead>
+    <tbody id="userTable"></tbody>
+  </table>
+</div>
+</div><!-- Create Modal -->
+<!-- Add User Modal -->
+<div class="modal fade" id="createModal" tabindex="-1">
+    <div class="modal-dialog">
+      <form id="createForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Add User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" name="fullName" class="form-control mb-2" placeholder="Full Name" required>
+          <input type="email" name="employeeEmail" class="form-control mb-2" placeholder="Email" required>
+          <input type="text" name="role" class="form-control mb-2" placeholder="Role">
+          <input type="number" name="companyId" class="form-control mb-2" placeholder="Company ID">
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <!-- Update Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <form id="updateForm" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Update User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+           <div class="modal-body row g-2">
+            <input type="hidden" name="id">
+            <input type="text" name="firstName" class="form-control" placeholder="First Name" required>
+            <input type="text" name="lastName" class="form-control" placeholder="Last Name" required>
+            <input type="text" name="userName" class="form-control" placeholder="Username" required>
+            <input type="email" name="employeeEmail" class="form-control" placeholder="Email" required>
+            <input type="text" name="plainPassword" class="form-control" placeholder="Password" required>
+            <input type="text" name="role" class="form-control" placeholder="Role">
+            <input type="text" name="registered" class="form-control" placeholder="Registered">
+          </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning">Update</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+  const API_URL = "https://gridactions3b.547bikes.info/api/User";
+  
+  function loadUsers() {
+    fetch(API_URL)
+      .then(res => res.json())
+      .then(data => {
+        const table = document.getElementById("userTable");
+        table.innerHTML = "";
+        data.forEach(user => {
+          table.innerHTML += `
+            <tr>
+              <td>${user.id}</td>
+              <td>${user.userid}</td>
+              <td>${user.fullName}</td>
+              <td>${user.username}</td>
+              <td>${user.email}</td>
+              <td>${user.role}</td>
+              <td>${user.activepicturl}</td>
+              <td>
+                <button class="btn btn-sm btn-warning" onclick='editUser(${JSON.stringify(user)})'>Edit</button>
+              </td>
+            </tr>`;
+        });
+      });
+  }
+  
+  document.getElementById("createForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const payload = Object.fromEntries(new FormData(this).entries());
+    payload.id = Math.floor(100000 + Math.random() * 900000);
+  
+    fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(() => {
+      this.reset();
+      bootstrap.Modal.getInstance(document.getElementById("createModal")).hide();
+      console.log(payload);
+      loadUsers();
+    });
+  });
+  
+  function editUser(user) {
+    const form = document.getElementById("updateForm");
+    Object.keys(user).forEach(key => {
+      if (form[key]) form[key].value = user[key];
+    });
+    new bootstrap.Modal(document.getElementById("updateModal")).show();
+  }
+  
+  document.getElementById("updateForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const payload = Object.fromEntries(new FormData(this).entries());
+    fetch(`${API_URL}/${payload.Id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).then(() => {
+      bootstrap.Modal.getInstance(document.getElementById("updateModal")).hide();
+      loadUsers();
+    });
+  });
+  
+  loadUsers();
+  </script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
+  </html>
+  

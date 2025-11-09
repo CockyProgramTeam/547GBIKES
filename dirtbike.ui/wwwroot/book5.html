@@ -98,7 +98,7 @@
         <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
         <div class="dropdown-content">
           <a href="index.html">Site Home</a>
-          <a href="cart5.html">MyCart</a>
+          <a href="cartreview.html">MyCart</a>
           <a href="mybookings5.html">MyReservations</a>
           <a href="manager.html">Manager Utilities</a>
         </div>
@@ -166,34 +166,55 @@
     </div>
   </div>
 </div>
+ </div>
+  </div>
+<div id="productselector">
+  <hr>
+  <div class="container">
 
+<div class="controls mb-4">
+  <!-- Date Inputs Row -->
+  <div class="d-flex justify-content-center align-items-center gap-3 mb-3 flex-wrap">
+    <label for="globalStartDate" class="form-label mb-0">Start:</label>
+    <input type="date" id="globalStartDate" class="form-control form-control-sm" style="max-width: 140px;" />
+
+    <label for="globalEndDate" class="form-label mb-0">End:</label>
+    <input type="date" id="globalEndDate" class="form-control form-control-sm" style="max-width: 140px;" />
+  </div>
+
+  <!-- Buttons Row -->
+  <div class="d-flex justify-content-center gap-3 mb-2 flex-wrap">
+    <button onclick="moveToSelected()" class="btn btn-primary" style="width: 160px;">Select Item(s)*</button>
+    <button onclick="moveToCatalogue()" class="btn btn-secondary" style="width: 160px;">Remove Item(s)</button>
+    <button onclick="addSelectedToCart()" class="btn btn-success" style="width: 160px;">Save to Cart</button>
+  </div>
+
+  <!-- Note Row -->
+  <div class="text-center" style="font-size: 9pt;">
+    *Qty's selected by picking the same item more than 
+</div>
+<div class="container">
+    <!-- Two Columns: Catalogue and Selected -->
+ <div class="row justify-content-center">
+  <div class="col-auto text-center">
+    <h5>Available Park Items</h5>
+    <select id="catalogue" multiple class="form-select" style="height: 300px; min-width: 600px;"></select>
+  </div>
+  <div class="col-auto text-center">
+    <h5>Selected Items</h5>
+    <select id="selected" multiple class="form-select" style="height: 300px; min-width: 600px;"></select>
+  </div>
+</div>  
+</div>
+
+    <br><br>
   </div>
 </div>
-</div>
-<div id="productselector">
-<HR>
-  <div class="container">
-    <div class="panel">
-    <span align="center"><h4>Available Park Items</h4></span>
-      <select id="catalogue" multiple></select>
-    </div>
-    <div class="controls">
-     <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-      <label for="globalStartDate" class="form-label mb-0">Start:</label>
-      <input type="date" id="globalStartDate" class="form-control form-control-sm" style="max-width: 140px;" />
+<hr>
 
-      <label for="globalEndDate" class="form-label mb-0">End:</label>
-      <input type="date" id="globalEndDate" class="form-control form-control-sm" style="max-width: 140px;" />
-    </div>
-    <div align="center"><button onclick="moveToSelected()">Add Item(s)</button> <button onclick="moveToCatalogue()">Remove Items(s)</button>&nbsp&nbsp<button onclick="addSelectedToCart()">Add to Cart</button></div>
-    </div>
-    <div class="panel">
-      <span align="center"><h4>Selected Items</h4></span>
-      <select id="selected" multiple></select>
-    </div><BR><BR>
-  </div><BR><BR>
-<HR>
+
 </div>
+
 <script>
  
   const baseUrl = "https://gridactions3b.547bikes.info";
@@ -216,6 +237,12 @@ function setDates() {
   document.getElementById('globalEndDate').value = today;
 }
 
+  function changeQty(id, delta) {
+    const input = document.getElementById(id);
+    let value = parseInt(input.value, 10) || 0;
+    value = Math.max(0, value + delta);
+    input.value = value;
+  }
 
   async function ensureCartMasterExists() {
     const response = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
@@ -391,74 +418,7 @@ async function loadCatalogue() {
   }
 }
 
-//THIS IS CORRECT TO HERE....
-async function oldloadCatalogue() {
-  try {
-    const response = await fetch(`https://gridactions3b.547bikes.info/api/SalesCatalogue/park/${parkId}`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    
-    const catalogueItems = await response.json();
-    console.log("✅ Catalogue items:", catalogueItems);
 
-    // Sort items alphabetically by description
-    catalogueItems.sort((a, b) => (a.description || '').localeCompare(b.description || ''));
-
-    const catalogueSelect = document.getElementById('catalogue');
-    catalogueSelect.innerHTML = '';
-
-    catalogueItems.forEach(item => {
-      const description = item.description || 'Unnamed Item';
-      const price = typeof item.price === 'number' ? item.price : 0;
-      const priceText = price > 0 ? `$${price.toFixed(2)}` : 'Free';
-
-      const option = document.createElement('option');
-      option.value = item.salesCatalogueId;
-      option.text = `${description}, ${priceText}`;
-      option.dataset.vendor = item.serviceType || 'Unknown';
-      option.dataset.price = price.toFixed(2);
-      option.dataset.salescatid = item.salesCatalogueId;
-
-      // Optional styling for free items
-      if (price === 0) {
-        option.style.color = 'green';
-        option.text += ' (Free)';
-      }
-
-      catalogueSelect.appendChild(option);
-    });
-  } catch (error) {
-    console.error("❌ Failed to load catalogue:", error);
-  }
-}
-/*
- async function loadCatalogue() {
-  try {
-    const response = await fetch(`https://gridactions3b.547bikes.info/api/SalesCatalogue/park/${parkId}`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-    
-    const catalogueItems = await response.json();
-    console.log("✅ Catalogue items:", catalogueItems);
-
-    const catalogueSelect = document.getElementById('catalogue');
-    catalogueSelect.innerHTML = '';
-
-    catalogueItems.forEach(item => {
-      const description = item.description || 'Unnamed Item';
-      const priceText = typeof item.price === 'number' ? `$${item.price.toFixed(2)}` : 'Price N/A';
-
-      const option = document.createElement('option');
-      option.value = item.salesCatalogueId;
-      option.text = `${description}, ${priceText}`;
-      option.dataset.vendor = item.serviceType || '';
-      option.dataset.price = typeof item.price === 'number' ? item.price.toFixed(2) : "0.00";
-      option.dataset.salescatid = item.salesCatalogueId;
-
-      catalogueSelect.appendChild(option);
-    });
-  } catch (error) {
-    console.error("❌ Failed to load catalogue:", error);
-  }
-}*/
 //THIS IS CORRECT TO HERE....
 
   async function loadParksDropdown() {
@@ -496,24 +456,35 @@ async function oldloadCatalogue() {
 
 //THIS IS CORRECT TO HERE....
 
-  function moveToSelected() {
-    const catalogue = document.getElementById('catalogue');
-    const selected = document.getElementById('selected');
-    Array.from(catalogue.selectedOptions).forEach(option => {
-      catalogue.removeChild(option);
-      selected.appendChild(option);
-    });
-  }
+function moveToCatalogue() {
+  const catalogue = document.getElementById('catalogue');
+  const selected = document.getElementById('selected');
+
+  Array.from(selected.selectedOptions).forEach(option => {
+    const newOption = option.cloneNode(true);
+    const originalText = option.getAttribute('data-original-text') || option.text;
+    newOption.text = originalText;
+    catalogue.appendChild(newOption);
+    selected.removeChild(option);
+  });
+}
+
 
 //THIS IS CORRECT TO HERE....
-  function moveToCatalogue() {
-    const catalogue = document.getElementById('catalogue');
-    const selected = document.getElementById('selected');
-    Array.from(selected.selectedOptions).forEach(option => {
-      selected.removeChild(option);
-      catalogue.appendChild(option);
-    });
-  }
+function moveToSelected() {
+  const catalogue = document.getElementById('catalogue');
+  const selected = document.getElementById('selected');
+
+  Array.from(catalogue.selectedOptions).forEach(option => {
+    const newOption = option.cloneNode(true);
+    newOption.text = option.text; // Keep original text
+    newOption.title = option.text; // Tooltip shows original text
+    newOption.setAttribute('data-original-text', option.text); // Store original text
+    selected.appendChild(newOption);
+    // Do NOT remove from catalogue — allows duplicates
+  });
+}
+
 
 async function loadParkSummary() {
     const parkDetails = document.getElementById("park-details");
@@ -570,7 +541,8 @@ async function loadParkSummary() {
       }
     });
   }
-  async function LoadNewCart() {
+  
+ async function LoadNewCart() {
     if (!uid) {
       alert("No UID found in localStorage. Please log in.");
       return;
@@ -578,7 +550,7 @@ async function loadParkSummary() {
 
     await ensureCartMasterExists();
     await displayCartMaster();
-    await createNewCart();
+    await createNewCart(); //MOVING NEW CART CREATION TO WAIT UNTIL ITEMS SELECTED.
     await loadCatalogue();
     await loadParksDropdown();
     await loadParkSummary();
@@ -601,9 +573,9 @@ let somecartid = 0;
 async function addSelectedToCart() {
   const selected = document.getElementById('selected');
   const urlParams = new URLSearchParams(window.location.search);
-  const parkId = parseInt(urlParams.get("parkId")) || 0;
+  const parkId = parseInt(urlParams.get("parkId")) || null;
   const shopId = parkId;
-
+  //alert('calling addSelectedToCart');
   if (!cartId) {
     alert('Cart has not been created yet. Please wait or try again.');
     console.error('Attempted to save CartItems without a valid cartId.');
@@ -616,32 +588,114 @@ async function addSelectedToCart() {
     return;
   }
 
-  let newlyAddedQty = 0;
   let totalPrice = 0;
   let totalQty = 0;
   let somecartid = cartId;
+  const today = new Date().toISOString();
 
   for (const option of items) {
-    const qty = 1;
     const price = parseFloat(option.dataset.price);
+    const productId = option.dataset.productid || "PARISMTN"; // fallback if needed
+    const qty = 1;
 
     if (isNaN(price) || price <= 0) {
       console.warn(`Invalid price for item:`, option);
       continue;
     }
 
-    const today = new Date().toISOString().split('T')[0]; 
-    const cartItem = {
-      cartid: parseInt(cartId),
+   /*const cartItem = {
+      cartid: cartId,
+      parkid: parkId,
+      cartitemdate: new Date().toISOString(),
+      itemvendor: option.dataset.vendor || "Unknown",
       itemdescription: option.text || "Unnamed Item",
       itemextendedprice: price,
       itemqty: qty,
       itemtotals: price * qty,
-      parkid: "11",
-      shopid: "20",
-      resStart: today,
-      resEnd: today,
-    };
+      salescatid: parseInt(option.dataset.salescatid) || 0,
+      productid: option.value || "0"
+     };
+     */
+  
+let shopId = 1;
+let subtotal = 1;
+let createdDate = new Date().toISOString();
+let resStart = new Date().toISOString();
+let resEnd = new Date().toISOString();
+let qrcodeurl = "1";
+let reservationcode = "1";
+let memberid = 1;
+let rewardsprovider = "Mariott";
+let adults = 1;
+let children = 1;
+let statetaxpercent = 1;
+let statetaxauth = "SC";
+let ustaxpercent = 1;
+let ustaxtotal = 1;
+let statetaxtotal = 1;
+let itemsubtotal = 1;
+let parkname = "SomePark";
+  
+  
+  
+  /*
+  const cartItem = {
+  cartid: cartId,
+  parkid: parkId,
+  cartitemdate: new Date().toISOString(),
+  itemvendor: option.dataset.vendor || "Unknown",
+  itemdescription: option.text || "Unnamed Item",
+  itemextendedprice: price,
+  itemqty: qty,
+  itemtotals: price * qty,
+  salescatid: parseInt(option.dataset.salescatid) || 0,
+  productid: option.value || "0",
+
+  // Additional fields with default fallback to 1
+  shopid: shopId ?? 1,
+  subtotal: subtotal ?? 1,
+  createdDate: createdDate ?? new Date().toISOString(),
+  resStart: resStart ?? new Date().toISOString(),
+  resEnd: resEnd ?? new Date().toISOString(),
+  qrcodeurl: qrcodeurl ?? "1",
+  reservationcode: reservationcode ?? "1",
+  memberid: memberid ?? 1,
+  rewardsprovider: rewardsprovider ?? "1",
+  adults: adults ?? 1,
+  children: children ?? 1,
+  statetaxpercent: statetaxpercent ?? 1,
+  statetaxauth: statetaxauth ?? "1",
+  ustaxpercent: ustaxpercent ?? 1,
+  ustaxtotal: ustaxtotal ?? 1,
+  statetaxtotal: statetaxtotal ?? 1,
+  itemsubtotal: itemsubtotal ?? 1,
+  parkname: someparkname ?? parkanme
+};
+*/
+  const cartItem = {
+  cartid: cartId,
+  parkid: parkId,
+  cartitemdate: new Date().toISOString(),
+  itemvendor: option.dataset.vendor || "Unknown",
+  itemdescription: option.text || "Unnamed Item",
+  itemextendedprice: price,
+  itemqty: qty,
+  itemtotals: price * qty,
+  salescatid: parseInt(option.dataset.salescatid) || 0,
+  productid: parseInt(option.value) || 0, // ✅ Ensure it's a number
+
+  // Add only fields your controller expects
+  createdDate: new Date().toISOString(),
+  resStart: new Date().toISOString(),
+  resEnd: new Date().toISOString(),
+  memberid: 1,
+  adults: 1,
+  children: 1
+};
+  
+  
+
+    console.log('CartItem', cartItem);
 
     try {
       await $.ajax({
@@ -651,8 +705,7 @@ async function addSelectedToCart() {
         data: JSON.stringify(cartItem)
       });
 
-      newlyAddedQty += qty;
-      totalPrice += price * qty;
+      totalPrice += price;
       totalQty += qty;
       somecartid = cartItem.cartid;
       console.log("✅ Item saved:", option.text);
@@ -662,11 +715,9 @@ async function addSelectedToCart() {
     }
   }
 
-  // ✅ Update cart master once after all items are added
   try {
-    let currentparkId = parseInt(urlParams.get('parkId')) || 0;
-   	await updateCartTotals(somecartid, currentparkId);
-    await updateCartMaster(somecartid, totalQty, totalPrice);
+    await updateCartTotals(somecartid, parkId);
+  	//updateCartMaster(somecartid, totalQty, totalPrice);
     console.log("🛒 Cart master updated.");
   } catch (err) {
     console.error("❌ Error updating cart master:", err);
@@ -694,7 +745,7 @@ async function updateCartMaster(somecartid, someqty, sometransactiontotal) {
         console.log("✅ Cart updated:", cartUpdate);
         //alert(`${newlyAddedQty} item(s) added to cart`);
         selected.innerHTML = '';
-        window.location.href = `cart5.html?uid=${encodeURIComponent(uid)}&parkId=${encodeURIComponent(parkId)}`;
+        //window.location.href = `cartreview.html`;
       },
       error: function (xhr, status, error) {
         console.error("❌ Error updating cart:", status, error);
@@ -711,15 +762,16 @@ async function updateCartMaster(somecartid, someqty, sometransactiontotal) {
 
     async function updateCartTotals(currentcartId, currentparkId) {
       try {
-        const response = await fetch(`${baseUrl}/api/CartItem/cart/${currentcartId}`);
+        const response = await fetch(`${baseUrl}/api/Cart/${currentcartId}`);
         const items = await response.json();
 
         let totalQty = 0;
         let totalPrice = 0;
-
+  		let totalAdults = 1;
+  		let totalChildren = 1;
         items.forEach(item => {
-          totalQty += item.itemqty ?? 0;
-          totalPrice += item.itemtotals ?? 0;
+          totalQty = item.itemqty ?? 0;
+          totalPrice += item.subtotal ?? 0;
         });
 
       	let somedescription = "";
@@ -741,10 +793,10 @@ async function updateCartMaster(somecartid, someqty, sometransactiontotal) {
 
         const cartUpdate = {
           cartId: currentcartId,
-	  totalcartitems: totalQty,
+	      totalcartitems: totalQty,
           transactiontotal: totalPrice,
-          itemDescription: somedescription
-        };
+          itemDescription: somedescription,
+          };
         console.log(cartUpdate);
       
         await fetch(`${baseUrl}/api/Cart/${cartId}`, {
@@ -755,6 +807,7 @@ async function updateCartMaster(somecartid, someqty, sometransactiontotal) {
 
         console.log(`✅ Cart ${cartId} updated: ${totalQty} items, $${totalPrice.toFixed(2)}`);
         console.log(cartUpdate);
+        //window.location.href = `cartreview.html`;
       } catch (err) {
         console.error("❌ Failed to update cart totals:", err);
       }

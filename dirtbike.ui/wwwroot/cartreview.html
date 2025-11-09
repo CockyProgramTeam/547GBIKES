@@ -99,7 +99,7 @@ width: 400px;
  <script>
   $(document).ready(function () {
     const params = new URLSearchParams(window.location.search);
-    const uid = params.get("uid");
+    let uid = params.get("uid");
     const currentParkId = params.get("parkId");
     const selectedCartIds = [];
     uid = localStorage.getItem("uid");

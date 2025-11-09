@@ -145,8 +145,8 @@ font-size: 12pt;
         document.getElementById("H3UserBanner").innerText = fullName;
         document.getElementById("userGreeting").innerHTML = "Welcome, " + fullName; // Display full name
 
-        if (userRole === "admin") {
-          window.open("adminhome.html", "_self");
+        if (userRole === "admin" || userRole == "superuser") {
+          window.open("manager.html", "_self");
         }
 
       } else {
@@ -216,7 +216,7 @@ font-size: 12pt;
       //donothing stay on home page.
       }
       else if (somerole === 'superuser') {
-        window.open("adminhome.html", "_self");
+        window.open("manager.html", "_self");
       }
        else if (someuid && someuid !== '901') {
 		// donothing - already handled.

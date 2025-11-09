@@ -4,149 +4,52 @@
 <meta charset="UTF-8">
   <title>CE SuperUserPortal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="home.css" />
+  <link rel="stylesheet" href="login.css" />
   <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   
     <style>
-            /* --- Overall Page Styles --- */
-    html, body {
-      height: 100%;
-      margin: 0;
-    }
+      button
+      {
+      width: 150px;
+      height: 60px;
+      }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #F2F2F2;
+      #adminmenu
+      {
+      background-color: black;
+      color: white;
       display: flex;
-      flex-direction: column;
-    }
-
-    main {
-      flex: 1;
-    }
-    /* --- Navigation Bar --- */
-    .navbar {
-      background-color: #1F3D7A;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .navbar .nav-left {
-      display: flex;
-      align-items: center;
-    }
-.navbar .nav-left a {
-  background-color: #3E5BA8; /* Slightly lighter blue than navbar */
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  margin-right: 15px;
-  padding: 6px 12px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
+      justify-content: center;  /* horizontal centering */
+      align-items: center;      /* vertical centering */
+      height: 100%;             /* fill the viewport */
+      gap: 15px;                /* spacing between buttons */
+      max-height: 80px;
+      min-height: 80px;
 }
 
-.navbar .nav-left a:hover {
-  background-color: #2e4a90;
-  color: #fff;
-}
+    #adminmenu a button 
+    {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+    }
  
-    .navbar .nav-right {
-      display: flex;
-      align-items: center;
-    }
-    .navbar .nav-right img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      margin-right: 10px;
-      object-fit: cover;
-    }
-    .navbar .nav-right span {
-      color: white;
-      font-weight: bold;
-      margin-right: 20px;
-    }
-    .navbar .nav-right button {
-      background-color: #f44336;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-    .navbar .nav-right button:hover {
-      background-color: #d32f2f;
-    }
-    /* Features Section */
-.features {
-    flex-grow: 1;
-    padding: 40px 15px;
-    text-align: center;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
-.features .container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
-}
-
-.feature {
-    width: 250px;
-    padding: 20px;
-    background: #f1f1f1;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: 0.3s;
-}
-
-.feature:hover {
-    background-color: #1F3D7A;
-    color: white;
-}
-
-.feature a {
-    text-decoration: none;
-    color: black;
-}
-
-.feature a:hover,
-.feature a:visited,
-.feature a:active {
-    color: black;
-}
-
-.feature h3 {
-    font-size: 20px;
-}
-
-.feature p {
-    font-size: 14px;
-}
-
-/* Footer */
-.footer {
-    background-color: #1F3D7A;
-    color: white;
-    text-align: center;
-    padding: 10px 0;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: auto;
-}
+      .feature
+      {
+      max-height: 150px;
+      min-height: 150px;
+      max-width: 200px;
+      min-width: 200px;
+      padding: 20px 20px;
+      }
     </style>
  
 </head>
-<body onload="checkpll()">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
 <!-- Navigation Bar -->
     <div class="navbar">
       <div class="nav-left">
@@ -154,19 +57,15 @@
                   <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html">MyCart</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
                   <a href="manager.html">Manager Utilities</a>
             </div>
     </div> 
               <div class="logo">&nbsp&nbspMyLinkv25- Superuser&nbsp&nbsp&nbsp</div>
-        <!-- Navigation Bar -->
-            <a href="adminhome.html">Admin Home</a>
-        <a href="employeemaint.html">Employee Maintenance</a>
-           <a href="parkmaint.html">Park Maintenance</a>
-           <a href="salescatalogue5.html">ParkSales Catalogue</a>
-            <a href="usermaint.html">User Maintenance</a>
-         </div>
+             </div>
         <div class="nav-right">
           <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" width="30px" height="30px"/>
           <span id="H3UserBanner">User</span>
@@ -175,49 +74,61 @@
       </div>
   
 <div align="center"><img src="./images/people.jpg" width=100% height=350px></div>
+<HR>
 <div align="center"><h3>MyLink Administration Options</h3></div>
-<div class="features">
+<HR>
+<div align="center" id="adminmenu">
+  <a href="adminhome.html"><button>Admin Home</button></a>
+  <a href="employeemaint.html"><button>Employee Maintenance</button></a>
+  <a href="parkmaint.html"><button>Park Maintenance</button></a>
+  <a href="salescatalogue5.html"><button>ParkSales Catalogue</button></a>
+  <a href="usermaint.html"><button>User Maintenance</button></a>
+</div>
+<div class="features" id="upperfeaturebar">
 <div class="feature">
-    <a href="./certreports/CertReportByCompany.html">
-      <h3>Certificate Report By Company</h3>
-      <p>View certificates issued across various companies. Analyze trends and insights by organization.</p>
+    <a href="./reports/transactionreport.html">
+      <h3>Trans Report</h3>
+      <p>Completed transactions reports includes posted, and refunded by park.</p>
     </a>
   </div>
       <div class="feature">
     <a href="./certreports/CertReportByBranch.html">
-      <h3>Certificate Report By Branch</h3>
-      <p>Explore certification statistics for each branch. Useful for localized compliance tracking.</p>
+      <h3>SalesCat Report</h3>
+      <p>Report showing Sales Catalgoue Pricing Elements Per Park.</p>
     </a>
   </div>
  <div class="feature">
     <a href="./certreports/CertReportByManager.html">
-      <h3>Certificate Report By Manager</h3>
-      <p>Track certifications supervised by different managers. Helps ensure leadership accountability.</p>
+      <h3>Booking Report</h3>
+      <p>Review the current Booked Parties per park.</p>
     </a>
   </div>
  
 </div>
-    <div class="jtools">
-    <h3 align="center">Secure Campus Utility</h3>
-    <p align="center">This utility works securely on campus. Click a feature below to access the appropriate tool or portal.</p>
-    </div>
-    <div class="features">
+  <div class="features" id="lowerfeaturebar">
+
+  
       <div class="feature">
-        <button onclick="myOpenCall()">Public Internet Tools</button>
+        <a href="adminstuff.html"><h3>Portal Admin</h3>
+        <p>Administer ISP Users, and Profiles</p>
+      </div>
+
+      <div class="feature">
+        <a href="adminstuff.html"><h3>Azure Upload</h3>
+        <p>Upload Pic, Docs, and Batches to Azure</p>
       </div>
       
       <div class="feature">
-        <button onclick="mylocalCall()">DomainSecure Campus Manager</button>
+        <a href="adminstuff.html"><h3>HR Actions</h3>
+        <p>Sales Hierachy Commisions, Onboarding, etc</p>
+        </a>
       </div>
-      
-      <div class="feature">
-        <button onclick="myAzureCall()">Bulk Upload to Azure</button>
+        <div class="feature">
+        <a href="./imagetest/selectorbar.html"><h3>SelectorBar</h3>
+        <p>Model Home Page Testing</p>
+        </a>
       </div>
-      
-      <div class="feature">
-        <button onclick="myCertsDownloadCall()">Download Certificates to Workstation</button>
-      </div>
-      </div>
+        </div>
         <script>
         function myOpenCall() {
            //alert('CallingOpenPublicManagerfunction');

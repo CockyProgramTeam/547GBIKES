@@ -113,19 +113,36 @@
 }
   </style>
 </head>
-<body onload="checkUserStatus(); displayProfilePicture();">
-       <!-- Navigation Bar -->
-       <div class="navbar">
-        <div class="nav-left">
-          <div class="logo">MyLinkV25 - SSO</div>
+<body onload="checkUserStatus(); displayProfilePicture(); callLogAdmin()">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+		  <a href="about.html">About</a>	
+          <a href="index.html">Site Home</a>
+          <a href="cart5.html">MyCart</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Superuser</a>
+		  <a href="manager.html">Utilities</a>
         </div>
-        <div class="nav-right">
-          <a id="button" href="index.html">Home</a>
-        </div>
-      </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Admin Error</div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 
   <div class="container">
-    <p>You cannot access this content until you login. <a href="https://home.547bikes.info/login.html" target="_blank"></a></p>
+    <p>You have reached this page because you are not an Administrator or SuperUser. You may have rights to reach other pages on the Navigation menu. Your access attempt has been logged. <a href="https://home.547bikes.info/login.html" target="_blank"></a></p>
     <button onclick="call_login()">Login Now</button>
   </div>
   <!-- Footer -->
@@ -135,16 +152,52 @@
     All rights reserved.
   </footer>
   <script>
-    function checkpll() {
-      var uid = localStorage.getItem("uid");
-      if (uid != "901") {
-        window.open("index.html", "_self");
-      }
-    }
+    
+	function callLogAdmin()
+	{
+	console.log('Logging failed Admin access!');
+	sendadminsecuritylogs();
+	}
 
-    function call_login() {
-      window.open("login.html", "_self");
+	  function sendadminsecuritylogs() {
+  const uid = localStorage.getItem('uid');
+  if (!uid) {
+    console.error('UID not found in localStorage');
+    return;
+  }
+
+  const payload = {
+    id: 0,
+    userid: uid,
+    date: new Date().toISOString(),
+    description: "Security log entry",
+    acknowledged: "false",
+    techid: 0,
+    managerescid: 0,
+    threatlevel: "low"
+  };
+
+  fetch('https://parksapi.547bikes.info/api/Adminlogs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`Server responded with ${response.status}`);
     }
+    return response.json();
+  })
+  .then(data => {
+    console.log('Log submitted successfully:', data);
+  })
+  .catch(error => {
+    console.error('Error submitting log:', error);
+  });
+}
+    
   </script>
 </body>
 </html>

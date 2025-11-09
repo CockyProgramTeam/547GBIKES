@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="login.css" />
   <link rel="stylesheet" href="dropmenu.css" />
-  <link rel="stylesheet" href="adminhome.css" />
 <script src="./js/bikes.js"></script>
 
   <title>Mountain Bike Parks - Grid View</title>
@@ -18,9 +17,48 @@
     .table td, .table th {
       font-size: 0.85rem;
     }
-  </style>
+
+    .highlight {
+      background-color: #e0f3ff !important;
+    }
+    .selected {
+      border: 2px solid #198754;
+    }
+    .park-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+  
+#userGreeting
+{
+  display: flex;
+  justify-content: center;     /* horizontal centering */
+  align-items: center;         /* vertical centering */
+  color: white;
+  text-align: center;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+display: flex;
+justify-content: center;     /* horizontal centering */
+align-items: center;         /* vertical centering */
+}
+  
+#cancelBtn
+{
+width: 400px;
+}
+</style>
+
 </head>
-<body onload="checkUserStatus()">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="nav-left">
@@ -28,20 +66,24 @@
         <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
         <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html">MyCart</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
                   <a href="manager.html">Manager Utilities</a>
         </div>
       </div> 
       <div class="logo" align="left">&nbsp;&nbsp;MyLinkV25 - Park Review Home</div>  
     </div>
-    <div class="nav-right">
-      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='../profile.html'" width="30px" height="30px"/> 
-      <span id="H3UserBanner">User</span>
-      <button id="logoutBtn" onclick="onLogout(event)">Logout</button>
-    </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner"></span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
   </div>
-
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
   <div class="container py-5">
     <div class="mb-3">
       <label for="stateFilter" class="form-label">Filter by State:</label>

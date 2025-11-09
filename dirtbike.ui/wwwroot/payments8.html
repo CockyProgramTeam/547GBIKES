@@ -18,7 +18,7 @@
     }
   </style>
 </head>
-<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary()">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="nav-left">
@@ -26,7 +26,7 @@
         <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
         <div class="dropdown-content">
           <a href="index.html">Site Home</a>
-          <a href="cart5.html">MyCart</a>
+          <a href="cartreview.html">MyCart</a>
           <a href="mybookings5.html">MyReservations</a>
           <a href="manager.html">Manager Utilities</a>
         </div>
@@ -104,7 +104,8 @@
 
   // Filter items to only those matching cartIds from URL
   const filteredItems = items.filter(item => cartIds.includes(item.cartId));
-
+  console.log('filtered_data', filteredItems);
+ 
   filteredItems.forEach(item => {
     const unitPrice = parseFloat(item.unitPrice) || 0;
     const quantity = parseInt(item.quantity) || 0;
@@ -120,10 +121,10 @@
       <td>${item.itemDescription || "No description"}</td>
       <td>${item.totalcartitems}</td>
       <td>$${item.transactiontotal}</td>
-      <td>${item.resStart || "N/A"}</td>
-      <td>${item.resEnd || "N/A"}</td>
-      <td>${item.adults ?? "N/A"}</td>
-      <td>${item.children ?? "N/A"}</td>
+      <td>${item.resStart.split('T')[0] || "N/A"}</td>
+      <td>${item.resEnd.split('T')[0] || "N/A"}</td>
+      <td>${item.adults || 0}</td>
+      <td>${item.children || 0}</td>
     `;
     tbody.appendChild(row);
     total += item.transactiontotal;

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-<script src="./js/bikes.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>User Maintenance</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     .header-image {
       height: 350px;
@@ -14,12 +18,38 @@
     }
   </style>
 </head>
-<body>
-  <!-- Header Image -->
-  
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png" /></button>
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cartreview.html">MyCart</a>
+          <a href="parks5.html">Review Park Options</a>
+          <a href="parksreview5.html">Park Reviews</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div>
+      <div class="logo">MyLinkv25 - User Administration</div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cartreview.html" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+
   <div class="container">
-  <img src="./images/people.jpg" alt="Mountain Biking" class="header-image">
-  <h2 class="mb-4">User List</h2>
+    <img src="./images/people.jpg" alt="Mountain Biking" class="header-image" />
+    <h2 class="mb-4">User List</h2>
+    <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#addUserModal">Quick Add</button>
     <table class="table table-bordered table-striped">
       <thead class="table-dark">
         <tr>
@@ -28,36 +58,184 @@
           <th>Email</th>
           <th>Role</th>
           <th>Company ID</th>
+          <th>Select</th>
         </tr>
       </thead>
       <tbody id="userTable"></tbody>
     </table>
   </div>
 
-  <script>
-    const API_URL = "https://gridactions3b.547bikes.info/api/User";
+  <!-- Add User Modal -->
+  <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="addUserForm">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3"><label class="form-label">First Name</label><input type="text" class="form-control" id="firstname" required /></div>
+            <div class="mb-3"><label class="form-label">Last Name</label><input type="text" class="form-control" id="lastname" required /></div>
+            <div class="mb-3"><label class="form-label">Username</label><input type="text" class="form-control" id="username" required /></div>
+            <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="email" required /></div>
+            <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" id="plainpassword" required /></div>
+            <div class="mb-3"><label class="form-label">Role</label><input type="text" class="form-control" id="role" required /></div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Add User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 
+  <!-- Update User Modal -->
+  <div class="modal fade" id="updateUserModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <form id="updateUserForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Update User</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="updateId" />
+            <div class="mb-3"><label class="form-label">First Name</label><input type="text" class="form-control" id="updateFirstname" required /></div>
+            <div class="mb-3"><label class="form-label">Last Name</label><input type="text" class="form-control" id="updateLastname" required /></div>
+            <div class="mb-3"><label class="form-label">Username</label><input type="text" class="form-control" id="updateUsername" required /></div>
+            <div class="mb-3"><label class="form-label">Email</label><input type="email" class="form-control" id="updateEmail" required /></div>
+            <div class="mb-3"><label class="form-label">Password</label><input type="password" class="form-control" id="updatePlainpassword" required /></div>
+            <div class="mb-3"><label class="form-label">Role</label><input type="text" class="form-control" id="updateRole" required /></div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-warning">Update</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_USER = "https://gridactions3b.547bikes.info/api/User";
+    const API_PROFILE = "https://gridactions3b.547bikes.info/api/Userprofile";
     function loadUsers() {
-      fetch(API_URL)
-        .then(res => res.json())
-        .then(data => {
-          const table = document.getElementById("userTable");
-          table.innerHTML = "";
-          data.forEach(user => {
-            table.innerHTML += `
-              <tr>
-                <td>${user.id}</td>
-                <td>${user.firstname} ${user.lastname}</td>
-                <td>${user.email}</td>
-                <td>${user.role}</td>
-                <td>${user.companyid}</td>
-              </tr>`;
-          });
-        });
+  $.getJSON(API_USER, function (data) {
+    const table = $("#userTable");
+    table.empty();
+    data.forEach(user => {
+      table.append(`
+        <tr>
+          <td>${user.id}</td>
+          <td>${user.firstname} ${user.lastname}</td>
+          <td>${user.email}</td>
+          <td>${user.role}</td>
+          <td>${user.companyid}</td>
+          <td>
+            <button class="btn btn-sm btn-primary" onclick='selectUser(${JSON.stringify(user)})'>
+              Update Selected
+            </button>
+          </td>
+        </tr>
+      `);
+    });
+  });
+}
+
+    function selectUser(user) {
+      $("#updateId").val(user.id);
+      $("#updateFirstname").val(user.firstname);
+      $("#updateLastname").val(user.lastname);
+      $("#updateUsername").val(user.username);
+      $("#updateEmail").val(user.email);
+      $("#updatePlainpassword").val(user.plainpassword || "");
+      $("#updateRole").val(user.role);
+      $("#updateUserModal").modal("show");
     }
 
-    loadUsers();
+    $("#addUserForm").submit(function (e) {
+      e.preventDefault();
+      const firstname = $("#firstname").val();
+      const lastname = $("#lastname").val();
+      const username = $("#username").val();
+      const email = $("#email").val();
+      const plainpassword = $("#plainpassword").val();
+      const role = $("#role").val();
+      const fullname = `${firstname} ${lastname}`;
+      const userid = "3";
+      const userPayload = { firstname, lastname, username, email, plainpassword, role, userid };
+      console.log("User Payload:", userPayload);
+
+      $.ajax({
+        url: API_USER,
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(userPayload),
+        success: function (userResult) {
+          console.log("User Created:", userResult);
+          const userid = userResult.userid;
+
+          const profilePayload = { firstname, lastname, fullname, userid };
+          console.log("Profile Payload:", profilePayload);
+
+          $.ajax({
+            url: API_PROFILE,
+            method: "POST",
+            contentType: "application/json",
+            data: JSON.stringify(profilePayload),
+            success: function (profileResult) {
+              console.log("Profile Created:", profileResult);
+              $("#addUserModal").modal("hide");
+              $("#addUserForm")[0].reset();
+              loadUsers();
+            },
+            error: function (xhr) {
+              console.error("Profile creation failed:", xhr.responseText);
+            }
+          });
+        },
+        error: function (xhr) {
+          console.error("User creation failed:", xhr.responseText);
+        }
+      });
+    });
+
+    $("#updateUserForm").submit(function (e) {
+      e.preventDefault();
+      const firstname = $("#updateFirstname").val();
+      const lastname = $("#updateLastname").val();
+      const username = $("#updateUsername").val();
+      const email = $("#updateEmail").val();
+      const plainpassword = $("#updatePlainpassword").val();
+      const role = $("#updateRole").val();
+      const updatePayload = { firstname, lastname, username, email, plainpassword, role};
+      console.log("Update Payload:", updatePayload);
+
+      $.ajax({
+        url: `${API_USER}/${id}`,
+        method: "PUT",
+        contentType: "application/json",
+        data: JSON.stringify(updatePayload),
+        success: function (result) {
+          console.log("User Updated:", result);
+          $("#updateUserModal").modal("hide");
+          loadUsers();
+        },
+        error: function (xhr) {
+          console.error("Update failed:", xhr.responseText);
+        }
+      });
+    });
+
+    $(document).ready(function () {
+      loadUsers();
+    });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+<footer class="footer text-center mt-5 mb-3">
+  &copy; Cocky Consulting 2025.<br>All rights reserved.<br>
+  <a href="sitemap.html" class="sitelink">SiteMap</a>
+</footer>
 </html>

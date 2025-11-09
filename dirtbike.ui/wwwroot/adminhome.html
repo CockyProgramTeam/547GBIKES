@@ -40,34 +40,69 @@
   font-size: 8pt;
 }
 
+#userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: yellow;
+}
+#banner
+{
+background-color: lightgrey;
+height: 260px;
+vertical-align: middle;
+width: 100%;
+}
+
+#cancelBtn
+{
+width: 400px;
+}
+
+#splash
+{
+font-size: 12pt;
+}
+
+.feature
+{
+max-height: 200px;
+min-height: 200px;
+max-width: 250px;
+min-width: 250px;
+gap: 15px;
+}
 </style>
+
 </head>
 
 
 <body onload="checkUserStatus(); displayProfilePicture(); writelocation();">
- <!-- Navigation Bar -->
+     <!-- Navigation Bar -->
     <div class="navbar">
       <div class="nav-left">
             <div class="dropdown">
                   <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
-                  <a href="..\employeehome.html">Employee Home</a>
-                  <a href="adminhome.html">EmployeeAdmin</a>
-                  <a href="adminservices.html">ServicesAdmin</a>
-                  <a href="whitelabeladmin.html">WhiteLabelAdmin</a>
-                  <a href="adminstuff.html">Admin Tools</a>
-                  <a href="..\certs\adminmycerts.html">Admin MyCerts</a>
-                  <a href="..\corp\corporatevents.html">Corporate Events</a>
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
             </div>
     </div> 
-         <div class="logo" align="left">&nbsp&nbspGEM EISPRO</div>  
+              <div class="logo">&nbsp&nbspMyLinkv25</div>
       </div>
       <div class="nav-right">
-          <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='../profile.html'" width="30px" height="30px"/> 
-          <span id="H3UserBanner">User</span>
-          <button id="logoutBtn" onclick="onLogout(event)">Logout</button>
-        </div>
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner"></span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
       </div>
+    </div>
+    <div align="center" id="banner" style="height: 60px;"><span id="userGreeting">Welcome Guest</span><BR>
+      <p>Manage Teams, Add Users, Visit EIS Home, Review logs.</p>
+    </div>
   <!-- Features Section -->
    <section class="features">
       <p>Exec Functions&nbsp&nbsp</p>
@@ -190,13 +225,7 @@
       Upload Employees
     </button>
   </div>
- <!-- Hero Section -->
-  <div class="hero">
-    <div class="hero-content">
-      <h2>Welcome, Administrator!</h2>
-      <p>Manage Teams, Add Users, Visit EIS Home, Review logs.</p>
-    </div>
-  </div>
+
   <!-- Logs Section -->
   <div class="logsheader" id="logheader" align="center">
     <hr />
@@ -349,28 +378,28 @@
 
     function fetchSyslog() {
       $.get(
-        "https://gridactions3b.capitoltechnology.net/api/Userlog"
+        "https://gridactions3b.547bikes.info/api/Userlog"
       )
         .done((data) => $("#syslogDisplay").text(JSON.stringify(data, null, 2)))
         .fail(() => $("#syslogDisplay").text("Error fetching syslog"));
     }
     function fetchSessionlog() {
       $.get(
-        "https://gridactions3b.capitoltechnology.net/api/Usersession"
+        "https://gridactions3b.547bikes.info/api/Usersession"
       )
         .done((data) => $("#sessionlogDisplay").text(JSON.stringify(data, null, 2)))
         .fail(() => $("#sessionlogDisplay").text("Error fetching syslog"));
     }
     function fetchApilog() {
       $.get(
-        "https://gridactions3b.capitoltechnology.net/api/Useraction"
+        "https://gridactions3b.547bikes.info/api/Apilog"
       )
         .done((data) => $("#apilogDisplay").text(JSON.stringify(data, null, 2)))
         .fail(() => $("#apilogDisplay").text("Error fetching apilog"));
     }
     function fetchLearnlog() {
       $.get(
-        "https://gridactions3b.capitoltechnology.net/api/Learndetail"
+        "https://gridactions3b.547bikes.info/api/Learndetail"
       )
         .done((data) =>
           $("#learnlogDisplay").text(JSON.stringify(data, null, 2))
@@ -467,10 +496,6 @@ for (i = 0; i < acc.length; i++) {
 }
   </script>
 </body>
-    <!-- Footer -->
-  <footer class="footer"> 
-     <!-- Hero Section -->
-
+      
     
-    
-    &copy;Capitol Technology Solutions, Raleigh, NC. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span><BR><span align="center" id="locationbar"></span><BR><span align="center" id="ipbar"></span></footer>
+    <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>

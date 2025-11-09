@@ -1,241 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MyLink25-Login</title>
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
+  <title>Mountain Bike Parks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<style>
+#userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: white;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+}
 
-  <!-- your original login CSS -->
-  <link href="login.css" rel="stylesheet" />
+#cancelBtn
+{
+width: 400px;
+}
 
-  <!-- jQuery (for AJAX logging) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-  <!-- Google reCAPTCHA -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+#splash
+{
+font-size: 12pt;
+}
+</style>
 </head>
-
-<body>
-       <!-- Navigation Bar -->
-       <div class="navbar">
-        <div class="nav-left">
-          <div class="logo">MyLink25</div>
-        </div>
-        <div class="nav-right">
-          <a id="button" href="index.html">Home</a>
+<body onload="checkUserStatus(); displayProfilePicture();">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+            <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+             </div>
+    </div> 
+              <div class="logo">&nbsp&nbspMyLinkv25 - Review Parks</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner"></span>
+        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+      </div>
+    </div>
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-4">
+        <div class="card shadow">
+          <div class="card-body">
+            <h4 class="card-title text-center mb-4">Login</h4>
+            <form id="loginForm">
+              <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" id="username" class="form-control" required>
+              </div>
+              <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Login</button>
+            </form>
+            <div id="message" class="mt-3 text-center text-danger"></div>
+          </div>
         </div>
       </div>
-    <div><p align="center"><img src="./images/hardrockmarathonsandiego.jpg" width=100% height=450px</p></div> <BR><BR>  
-  <!-- Login Form -->
-  <div class="login-page">
-    <div class="login-container">
-      <h2>Login</h2>
-      <form id="loginForm">
-        <input type="text" id="username" placeholder="Username" required />
-        <input type="password" id="password" placeholder="Password" required />
-        <div class="g-recaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"></div>
-        <button type="submit">Login</button>
-        <button type="button" id="cancelButton" class="cancel-btn">Cancel</button>
-        <button type="button" id="careButton" class="cancel-btn" onclick="callcare()"> Customer Support</button>
-      </form>
     </div>
   </div>
 
   <script>
-    window.onload = () => {
-      if (!localStorage.getItem("uid") || localStorage.getItem("uid") === "901") {
-        localStorage.setItem("uid", "901");
-        localStorage.setItem("fullname", "590 Visitor");
-        localStorage.setItem("role", "guest");
-        localStorage.setItem("status", "loggedout");
-        localStorage.setItem("isemployee","0");
-      }
-    };
-
-  document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    document.getElementById('loginForm').addEventListener('submit', async function(e) {
   e.preventDefault();
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const captcha  = window.grecaptcha && grecaptcha.getResponse();
-  if (!username || !password) {
-      return alert("Username and password are required!");
-  }
-  if (!captcha) {
-      return alert("Please complete the reCAPTCHA");
-  }
-  // build your payload exactly as Swagger
-  const payload = {
-  username: username,
-  plainPassword: password
-  // don't include extra fields the API doesn't expect
-  };
-  console.log("→ sending login payload:", payload);
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
   try {
-      const res = await fetch(
-        "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Auth/login",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
+    const response = await fetch('https://gridactions3b.547bikes.info/api/User');
+    const users = await response.json();
+
+    const user = users.find(u => u.username === username && u.plainpassword === password);
+
+    if (user) {
+      for (const key in user) {
+        const value = user[key];
+        if (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean') {
+          localStorage.setItem(key, value);
+        } else {
+          localStorage.setItem(key, JSON.stringify(value));
         }
-      );
-
-      console.log("← raw response status:", res.status);
-
-      // if the server errored
-      if (!res.ok) {
-        const text = await res.text();               // grab whatever it sent
-        console.error("Login API error:", res.status, text);
-        return alert(
-          `Login failed (HTTP ${res.status}):\n\n${text || "(no response body)"}`
-        );
       }
-
-      // only now safe to parse JSON
-      const user = await res.json();
-      console.log("← parsed user:", user);
-
-      alert("Login successful! Redirecting…");
-      localStorage.setItem("token", user.token || "N/A");
-      storeUserData(user);
-      await logUserLogin(user, true);
-      await createSession(user);
-      if (user.userRole === "admin") {
-      window.location.href = "adminhome.html";
-      } else if (user.userRole === "superuser") {
-      window.location.href = "manager.html";
-      } else if (user.userRole === "registered" && user.isEmployee === 1 ){
-        window.location.href = "employeehome.html";
-      }else{
-        window.location.href = "index.html";
-      }
-
-    } catch (err) {
-      console.error("Fetch/login error:", err);
-      alert("An error occurred: " + err.message);
-    }
-  });
-
-    function storeUserData(u) {
-      // alert('storing data'); //debug as this isnt working.
-      console.log(u);
-      localStorage.setItem("uid", u.userId);
-      localStorage.setItem("fullname", u.userFullName);
-      localStorage.setItem("role", u.userRole);
+      localStorage.setItem("uid", user.id);
       localStorage.setItem("status", "loggedin");
-      localStorage.setItem("firstname", u.userFirstname);
-      localStorage.setItem("lastname", u.userLastname);
-      localStorage.setItem("username", u.userUsername);
-      localStorage.setItem("email", u.userEmail);
-      localStorage.setItem("employeeid", u.employeeId || "N/A");
-      localStorage.setItem("isemployee", u.isEmployee);
-      localStorage.setItem("microsoftid", u.userMicrosoftId || "");
-      localStorage.setItem("ncrid", u.userNcrId || "");
-      localStorage.setItem("oracleid", u.userOracleId || "");
-      localStorage.setItem("azureid", u.userAzureId || "");
-      localStorage.setItem("jid", u.userJid || "");
-      localStorage.setItem("profileurl", u.userProfileUrl || "./images/bluecircle.png");
-      localStorage.setItem("company", u.userCompany || "");
-      localStorage.setItem("btn", u.userBtn || "");
-      localStorage.setItem("iscertified", u.userIsCertified ?? false);
-      localStorage.setItem("logindate", u.date);
-      // …any other user fields…
-    }
+      postUserSession();
 
-    async function logUserLogin(user, success) {
-      const ip     = await getIpAddress();
-      const stat   = success ? "successful" : "failed";
-      const descr  = `Login ${stat} for ${user.username} from ${ip} at ${new Date().toLocaleString()}`;
-      $.ajax({
-        url: "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userlog",
-        method: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({ descr }),
-      }).fail(xhr => console.error("Log error:", xhr.responseText));
-    }
+      document.getElementById('message').textContent = 'Login successful!';
+      document.getElementById('message').classList.remove('text-danger');
+      document.getElementById('message').classList.add('text-success');
 
-    async function getIpAddress() {
-      try {
-        const r = await fetch("https://api.ipify.org?format=json");
-        return (await r.json()).ip;
-      } catch {
-        return "Unknown IP";
-      }
+      window.location.href = "index.html";
+    } else {
+      document.getElementById('message').textContent = 'Invalid username or password.';
     }
-  function callcare()
-    {
-    window.open("help.html", "_self");
-    }
-    
-    async function createSession(u) {
-            //alert("calling userSession!"); //Make Sure the entire auth parameters are being passed.
-            //console.log(u);
-          var someuid = Number(u.userId);
-          if (isNaN(someuid)) {
-            someuid = 1;
-          }      
-            var someemail = u.userEmail;
-            var somerole = u.userRole;
-            var somefirstname = u.userFirstname;
-            var somelastname = u.userLastname;
-            var somefullname = u.userFullName;
-            var someusername = u.userUsername;
-            var sometoken = u.token;
-            // alert("userSession! VariablesSet"); 
-            
-            if (!u.token) {
-            sometoken = 'defaulttoken';
-            }
-            var currentDate = new Date();
-            const utcOffset = currentDate.getTimezoneOffset() * 60000;
-            const estOffset = -5 * 3600000; // EST is UTC-5
-            const estDate = new Date(currentDate.getTime() + utcOffset + estOffset);
-            const estTime = estDate.toISOString().slice(11, 19); // Extracting HH:MM:SS
-            var somestartdate = estDate;
-            var somesessiondescription = "User:" + localStorage.getItem("fullname") + " is on LOGIN as a " + somerole + " On Date: " + somestartdate;
+  } catch (error) {
+    document.getElementById('message').textContent = 'Error connecting to server.';
+    console.error(error);
+  }
+});
+  
+  function postUserSession() {
+  // Step 1: Retrieve values from localStorage
+  const uid = localStorage.getItem('uid');
+  const fullname = localStorage.getItem('fullname');
+  const email = localStorage.getItem('email');
 
-             const somedata = {
-                userid: someuid,
-                token:  sometoken,
-                sessionusername: someusername,
-                sessionfirstname: somefirstname,
-                sessionlastname: somelastname,
-                sessionemail: someemail
-                };
-      console.log(somedata);
-      $.ajax({
-        url: 'https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Usersession',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(somedata),
-        success: function(response) {
-            console.log('Record posted successfully:', response);
-            //alert('RecordPosted');
-        },
-        error: function(error) {
-            //alert('Error posting record:', error);
-            console.log('Record details on error:', somedata);
-        }
+  // Step 2: Generate a random string (3 letters + 6 digits)
+  const randomAlpha = Array.from({ length: 3 }, () =>
+    String.fromCharCode(65 + Math.floor(Math.random() * 26))
+  ).join('');
+  const randomNumber = Math.floor(100000 + Math.random() * 900000);
+  const randomString = `${randomAlpha}${randomNumber}`;
+
+  // Step 3: Construct the payload
+  const payload = {
+    userid: uid,
+    sessionfullname: fullname,
+    sessionemail: email,
+    token: randomString
+  };
+
+  // Step 4: Send POST request
+  fetch('https://gridactions3b.547bikes.info/api/usersession', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(response => {
+      if (!response.ok) throw new Error('Network response was not ok');
+      return response.json();
+    })
+    .then(data => {
+      console.log('Session posted successfully:', data);
+    })
+    .catch(error => {
+      console.error('Error posting session:', error);
     });
-          }
-
-    document.getElementById("cancelButton").addEventListener("click", () => {
-      document.getElementById("username").value = "";
-      document.getElementById("password").value = "";
-      if (window.grecaptcha) grecaptcha.reset();
-      localStorage.setItem("uid", "901");
-      localStorage.setItem("fullname", "590 Visitor");
-      localStorage.setItem("role", "guest");
-      localStorage.setItem("status", "loggedout");
-    });
+}
   </script>
-<a href="help.html" class="help-button">
-  <img src="https://png.pngtree.com/element_our/png/20181205/question-mark-vector-icon-png_256683.jpg" alt="Help" />
-</a>
-  <!-- Footer -->
-  <footer class="footer">
-    &copy; Cocky Consulting 2025.
-    <br> All rights reserved.<br><span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span>
-  </footer>
 </body>
+<footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>
