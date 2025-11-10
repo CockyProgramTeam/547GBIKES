@@ -89,6 +89,10 @@ public static class ParksEndpoints
 				if (input.Rafting != null) someParks[0].Rafting = input.Rafting;
 				if (input.Canoeing != null) someParks[0].Canoeing = input.Canoeing;
 				if (input.Frisbee != null) someParks[0].Frisbee = input.Frisbee; 
+				if (input.Tents != null) someParks[0].Tents = input.Tents; 
+				if (input.Cabins != null) someParks[0].Cabins = input.Cabins; 
+				if (input.Motocross != null) someParks[0].Motocross = input.Motocross; 
+				if (input.Skiing != null) someParks[0].Skiing = input.Skiing; 
             
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "TEST", "TEST");

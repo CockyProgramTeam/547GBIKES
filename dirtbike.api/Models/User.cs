@@ -11,9 +11,9 @@ public partial class User
 
     public string? Lastname { get; set; }
 
-    public string? Username { get; set; }
+    public string Username { get; set; } = null!;
 
-    public string? Email { get; set; }
+    public string Email { get; set; } = null!;
 
     public int? Employee { get; set; }
 
@@ -39,7 +39,7 @@ public partial class User
 
     public string? Role { get; set; }
 
-    public string? Fullname { get; set; }
+    public string Fullname { get; set; } = null!;
 
     public int? Companyid { get; set; }
 
@@ -47,7 +47,7 @@ public partial class User
 
     public string? Resettokenexpiration { get; set; }
 
-    public int? Userid { get; set; }
+    public int Userid { get; set; }
 
     public string? Btn { get; set; }
 
@@ -87,5 +87,5 @@ public partial class User
 
     public string? Activeprofileurl { get; set; }
 
-    public string? Activepictureurl { get; set; }
+    public string Activepictureurl { get; set; } = null!;
 }

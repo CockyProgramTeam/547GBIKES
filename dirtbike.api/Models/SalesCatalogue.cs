@@ -17,15 +17,9 @@ public partial class SalesCatalogue
 
     public double Price { get; set; }
 
-    public DateOnly? StartDate { get; set; }
-
-    public DateOnly? EndDate { get; set; }
-
     public int? IsActive { get; set; }
 
     public string? SiteId { get; set; }
-
-    public byte[]? National { get; set; }
 
     public int? State { get; set; }
 
@@ -34,4 +28,10 @@ public partial class SalesCatalogue
     public int? Qtyadults { get; set; }
 
     public int? Qtychildren { get; set; }
+
+    public int? National { get; set; }
+
+    public DateTime? StartDate { get; set; }
+
+    public DateTime? EndDate { get; set; }
 }

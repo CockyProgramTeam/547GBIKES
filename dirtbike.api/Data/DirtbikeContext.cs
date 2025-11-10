@@ -371,6 +371,9 @@ public partial class DirtbikeContext : DbContext
         modelBuilder.Entity<Park>(entity =>
         {
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.Cabins)
+                .HasColumnType("INT")
+                .HasColumnName("cabins");
             entity.Property(e => e.Camping)
                 .HasColumnType("INT")
                 .HasColumnName("camping");
@@ -410,6 +413,9 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Maxvisitors)
                 .HasColumnType("INT")
                 .HasColumnName("maxvisitors");
+            entity.Property(e => e.Motocross)
+                .HasColumnType("INT")
+                .HasColumnName("motocross");
             entity.Property(e => e.Mountainbikes)
                 .HasColumnType("INT")
                 .HasColumnName("mountainbikes");
@@ -426,7 +432,13 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Rafting)
                 .HasColumnType("INT")
                 .HasColumnName("rafting");
+            entity.Property(e => e.Skiing)
+                .HasColumnType("INT")
+                .HasColumnName("skiing");
             entity.Property(e => e.State).HasColumnName("state");
+            entity.Property(e => e.Tents)
+                .HasColumnType("INT")
+                .HasColumnName("tents");
             entity.Property(e => e.Trailmapurl)
                 .HasColumnType("string")
                 .HasColumnName("trailmapurl");
@@ -452,6 +464,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
+            entity.Property(e => e.Transtype).HasColumnName("transtype");
         });
 
         modelBuilder.Entity<SalesCatalogue>(entity =>
@@ -459,8 +472,10 @@ public partial class DirtbikeContext : DbContext
             entity.ToTable("SalesCatalogue");
 
             entity.Property(e => e.SalesCatalogueId).HasColumnName("SalesCatalogueID");
+            entity.Property(e => e.EndDate).HasColumnType("date");
             entity.Property(e => e.Global).HasColumnType("INT");
             entity.Property(e => e.IsActive).HasDefaultValue(1);
+            entity.Property(e => e.National).HasColumnType("INT");
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
             entity.Property(e => e.Qtyadults)
                 .HasColumnType("INT")
@@ -468,6 +483,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Qtychildren)
                 .HasColumnType("INT")
                 .HasColumnName("qtychildren");
+            entity.Property(e => e.StartDate).HasColumnType("date");
             entity.Property(e => e.State).HasColumnType("INT");
         });
 
@@ -569,11 +585,7 @@ public partial class DirtbikeContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.ToTable("users");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Accountactiondate).HasColumnName("accountactiondate");
             entity.Property(e => e.Accountactiondescription).HasColumnName("accountactiondescription");
             entity.Property(e => e.Accountstatus).HasColumnName("accountstatus");

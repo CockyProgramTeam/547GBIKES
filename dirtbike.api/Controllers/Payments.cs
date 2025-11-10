@@ -64,6 +64,18 @@ public static class PaymentsEndpoints
         .WithOpenApi();
     
     
+               //[HttpGet]
+        group.MapGet("/transactions/{Paymentid}", (string Paymentid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Payments.Where(m => m.TransactionId == Paymentid).ToList();
+            }
+        })
+        .WithName("GetTransactionByTransactionId")
+        .WithOpenApi();
+    
     
     
 

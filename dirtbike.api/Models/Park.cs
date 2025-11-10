@@ -82,4 +82,12 @@ public partial class Park
     public int? Iscanadian { get; set; }
 
     public int? Ismexican { get; set; }
+
+    public int? Motocross { get; set; }
+
+    public int? Cabins { get; set; }
+
+    public int? Tents { get; set; }
+
+    public int? Skiing { get; set; }
 }
