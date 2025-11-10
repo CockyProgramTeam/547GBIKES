@@ -177,9 +177,7 @@ width: 400px;
       method: "GET",
       success: function (cart) {
         const originalAmount = parseFloat(cart.totalAmount);
-        const refundAmount = !isNaN(originalAmount) && originalAmount > 0
-          ? (originalAmount * 0.75).toFixed(2)
-          : "0.01";
+        const refundAmount = parseFloat($("#totalAmount").text());
 
         alert(`Reservation will be cancelled.\nRefund Amount: $${refundAmount}`);
 
@@ -205,6 +203,7 @@ width: 400px;
           }),
           success: function () {
             alert("Reservation cancelled successfully.");
+            reversepayment();
             window.location.href = "mybookings5.html";
           },
           error: function () {
@@ -218,6 +217,60 @@ width: 400px;
       }
     });
   }
+ 
+ function reversepayment() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const bookingId = urlParams.get("bookingid");
+  const cartId = urlParams.get("cartid");
+
+  $.ajax({
+    url: `https://gridactions3b.547bikes.info/api/Booking/${bookingId}`,
+    method: "GET",
+    success: function (bookings) {
+      if (!Array.isArray(bookings) || bookings.length === 0) {
+        alert("Booking not found.");
+        return;
+      }
+
+      const booking = bookings[0];
+      const refundAmount = parseFloat(booking.totalAmount);
+      const reverseId = $("#reversetransactionid").text();
+
+      const payment = {
+        transtype: "Reversal", // ← new field added
+        amount: refundAmount * -1,
+        uid: booking.uid,
+        cartid: booking.cartid,
+        paymentmethod: booking.creditCardType,
+        last4: booking.creditCardLast4,
+        relatedtransactionid: booking.transactionId,
+        reversetransactionid: reverseId,
+        timestamp: new Date().toISOString()
+      };
+
+      console.log("Posting reversal payment:", payment);
+
+      $.ajax({
+        url: "https://gridactions3b.547bikes.info/api/Payments",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(payment),
+        success: function () {
+          alert("Reversal transaction successfully recorded.");
+        },
+        error: function (xhr) {
+          console.error("❌ Failed to record reversal:", xhr.responseText);
+          alert("Failed to record reversal transaction.");
+        }
+      });
+    },
+    error: function () {
+      alert("Failed to retrieve booking for reversal.");
+    }
+  });
+}
+ 
+ 
 </script>
 
 

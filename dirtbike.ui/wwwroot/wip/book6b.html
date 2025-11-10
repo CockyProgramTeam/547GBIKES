@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
+  <title>Mountain Bike Parks</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    #userGreeting {
+      text-align: center;
+      vertical-align: middle;
+      color: white;
+    }
+    #banner {
+      background-color: lightgrey;
+      height: 60px;
+      vertical-align: middle;
+      width: 100%;
+    }
+    #cancelBtn {
+      width: 400px;
+    }
+    #splash {
+      font-size: 12pt;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+    }
+    .panel {
+      width: 40%;
+    }
+    .panel h2 {
+      text-align: center;
+    }
+    select {
+      width: 100%;
+      height: 300px;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+    }
+  
+    #newcartbutton
+  {
+  width: 100%;
+  }
+  </style>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary()">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cart5.html">MyCart</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Review Parks</div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+    </div>
+  </div>
+
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+
+  <!-- CartMaster Summary Card -->
+<div class="container my-4">
+<div id="park-details" class="mb-5"></div>
+<div class="card border-info">
+    <div class="card-header bg-info text-white">Selected Park</div>
+    <div class="card-body">
+      <p class="card-text">
+        Current Park ID: <span id="currentParkId" class="fw-bold"></span><br>
+        Current Park Name: <span id="currentParkName" class="fw-bold"></span>
+      </p>
+      <label for="parkSelector" class="form-label">Change Park:</label>
+      <select id="parkSelector" class="form-select" onchange="changePark()">
+        <option value="">Select a Park</option>
+      </select>
+    </div>
+  </div>  
+<div class="card text-white bg-primary mb-3" id="cartMasterCard" style="display:none;">
+    <div class="card-header d-flex justify-content-between align-items-center">
+    <div align="center"><span align="center">Your Cart Master Summary</span></div>
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">User ID: <span id="cmUserId"></span></h5>
+      <p class="card-text">
+        Carts Count: <span id="cmCartsCount"></span><br>
+        Active Carts: <span id="cmCartsActive"></span><br>
+        Cancelled Carts: <span id="cmCartsCancelled"></span><br>
+        Active List: <span id="cmCartsActiveList"></span>
+      </p>
+    <div><button id="newcartbutton" class="btn btn-light" onclick="createNewCart()">Add New Cart</button></div>
+    </div>
+  </div>
+  
+</div>
+
+  <div class="container">
+    <div class="panel">
+      <h2>Available Park Items</h2>
+      <select id="catalogue" multiple></select>
+    </div>
+    <div class="controls">
+      <button onclick="moveToSelected()">âž¡ï¸?</button>
+      <button onclick="moveToCatalogue()">â¬…ï¸?</button>
+      <button onclick="addSelectedToCart()">ðŸ›’ Add to Cart</button>
+    </div>
+    <div class="panel">
+      <h2>Selected Items</h2>
+      <select id="selected" multiple></select>
+    </div>
+  </div>
+
+
+ <script>
+  const API_ROOT = 'https://gridactions3b.547bikes.info';
+  const uid = localStorage.getItem('uid');
+  const urlParams = new URLSearchParams(window.location.search);
+  let parkId = parseInt(urlParams.get('parkId')) || 0;
+
+  let cartId = null;
+  let catalogueItems = [];
+
+  async function ensureCartMasterExists() {
+    const response = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+    const masters = await response.json();
+
+    if (masters.length === 0) {
+      const newMaster = {
+        userId: uid,
+        cartsCount: 0,
+        cartsCancelled: 0,
+        cartsActive: 0,
+        cartsActiveList: ""
+      };
+
+      await fetch(`${API_ROOT}/api/CartMaster`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newMaster)
+      });
+    }
+  }
+
+  async function displayCartMaster() {
+    const response = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+    const masters = await response.json();
+
+    if (masters.length > 0) {
+      const master = masters[0];
+      document.getElementById('cmUserId').textContent = master.userId;
+      document.getElementById('cmCartsCount').textContent = master.cartsCount;
+      document.getElementById('cmCartsActive').textContent = master.cartsActive;
+      document.getElementById('cmCartsCancelled').textContent = master.cartsCancelled;
+      document.getElementById('cmCartsActiveList').textContent = master.cartsActiveList;
+      document.getElementById('cartMasterCard').style.display = 'block';
+    }
+  }
+
+  async function createNewCart() {
+  const generatedCartId = Math.floor(Math.random() * 1000000);
+
+  const newCart = {
+    cartId: generatedCartId,
+    uid: uid,
+    parkId: parkId,
+    itemType: "",
+    itemDescription: "",
+    quantity: 0,
+    unitPrice: 0,
+    totalPrice: 0,
+    dateAdded: new Date().toISOString(),
+    isCheckedOut: 0,
+    paymentid: "",
+    bookinginfo: "",
+    totalcartitems: 0
+  };
+
+  try {
+    const response = await fetch(`${API_ROOT}/api/Cart`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCart)
+    });
+
+    const text = await response.text();
+
+    if (response.status !== 201) {
+      console.error('Cart creation failed:', response.status);
+      alert('Failed to create cart.');
+      return;
+    }
+
+    let createdCart;
+    try {
+      createdCart = text ? JSON.parse(text) : {};
+    } catch (err) {
+      console.warn('Response body not valid JSON:', text);
+      createdCart = {};
+    }
+
+    cartId = createdCart.cartId || generatedCartId;
+    console.log('Cart created with ID:', cartId);
+
+    // Update CartMaster
+    const masterRes = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+    const masters = await masterRes.json();
+    if (masters.length > 0) {
+      const master = masters[0];
+      const updatedMaster = {
+        ...master,
+        cartsCount: master.cartsCount + 1,
+        cartsActive: master.cartsActive + 1
+      };
+
+      await fetch(`${API_ROOT}/api/CartMaster/${master.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updatedMaster)
+      });
+
+      console.log('CartMaster updated:', updatedMaster);
+      await displayCartMaster();
+    }
+  } catch (error) {
+    console.error('Unexpected error during cart creation:', error);
+    alert('An unexpected error occurred while creating the cart.');
+  }
+}
+
+
+  async function loadCatalogue() {
+    const response = await fetch(`${API_ROOT}/api/SalesCatalogue?parkId=${parkId}`);
+    catalogueItems = await response.json();
+
+    const catalogueSelect = document.getElementById('catalogue');
+    catalogueSelect.innerHTML = '';
+    catalogueItems.forEach(item => {
+      const description = item.description || 'Unnamed Item';
+      const price = item.unitPrice !== undefined ? `$${item.unitPrice}` : 'Price N/A';
+      const option = document.createElement('option');
+      option.value = item.salesCatalogueId;
+      option.text = `${description}, ${price}`;
+      option.dataset.vendor = item.serviceType || '';
+      option.dataset.price = item.unitPrice || 0;
+      option.dataset.salescatid = item.salesCatalogueId;
+      catalogueSelect.appendChild(option);
+    });
+  }
+
+  async function loadParksDropdown() {
+    const response = await fetch(`${API_ROOT}/api/Parks`);
+    const parks = await response.json();
+
+    const selector = document.getElementById('parkSelector');
+    selector.innerHTML = '<option value="">-- Select a Park --</option>';
+    parks.forEach(park => {
+      const option = document.createElement('option');
+      option.value = park.parkId;
+      option.textContent = `${park.parkName} (ID: ${park.parkId})`;
+      selector.appendChild(option);
+    });
+
+    document.getElementById('currentParkId').textContent = parkId;
+    const currentPark = parks.find(p => p.parkId === parkId);
+    document.getElementById('currentParkName').textContent = currentPark ? currentPark.parkName : 'Unknown';
+  }
+
+  function changePark() {
+    const newParkId = document.getElementById('parkSelector').value;
+    if (!newParkId) return;
+
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('parkId', newParkId);
+    window.history.pushState({}, '', newUrl);
+
+    parkId = parseInt(newParkId);
+    document.getElementById('currentParkId').textContent = parkId;
+    loadParkSummary();
+    loadCatalogue();
+  }
+
+  function moveToSelected() {
+    const catalogue = document.getElementById('catalogue');
+    const selected = document.getElementById('selected');
+    Array.from(catalogue.selectedOptions).forEach(option => {
+      catalogue.removeChild(option);
+      selected.appendChild(option);
+    });
+  }
+
+  function moveToCatalogue() {
+    const catalogue = document.getElementById('catalogue');
+    const selected = document.getElementById('selected');
+    Array.from(selected.selectedOptions).forEach(option => {
+      selected.removeChild(option);
+      catalogue.appendChild(option);
+    });
+  }
+
+  async function addSelectedToCart() {
+    if (!cartId) {
+      alert('Cart has not been created yet. Please wait or try again.');
+      console.error('Attempted to save CartItems without a valid cartId.');
+      return;
+    }
+
+    const selected = document.getElementById('selected');
+    const items = Array.from(selected.options);
+
+    for (const option of items) {
+      const qty = 1;
+      const cartItem = {
+        cartid: cartId,
+        cartitemdate: new Date().toISOString(),
+        itemvendor: option.dataset.vendor,
+        itemdescription: option.text,
+        itemextendedprice: parseFloat(option.dataset.price),
+        itemqty: qty,
+        itemtotals: parseFloat(option.dataset.price) * qty,
+        salescatid: parseInt(option.dataset.salescatid),
+        productid: option.value
+      };
+
+      await fetch(`${API_ROOT}/api/CartItem`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(cartItem)
+      });
+    }
+
+    alert(`${items.length} item(s) added to cart`);
+    selected.innerHTML = '';
+  }
+
+  async function loadParkSummary() {
+    const parkDetails = document.getElementById("park-details");
+    if (!parkId) {
+      parkDetails.innerHTML = `<div class="alert alert-danger">No parkId provided in URL.</div>`;
+      return;
+    }
+
+    $.ajax({
+      url: `${API_ROOT}/api/Parks/${parkId}`,
+      method: "GET",
+      success: function (data) {
+        const park = Array.isArray(data) ? data[0] : data;
+        if (!park) {
+          parkDetails.innerHTML = `<div class="alert alert-warning">No park found for ID ${parkId}.</div>`;
+          return;
+        }
+
+        const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${park.latitude},${park.longitude}`;
+
+        parkDetails.innerHTML = `
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h3 class="card-title">${park.name}</h3>
+              <p><strong>Region:</strong> ${park.region}</p>
+              <p><strong>Address:</strong> ${park.address}</p>
+              <p><strong>Phone:</strong> ${park.phone}</p>
+              <p><strong>Trail Length:</strong> ${park.trailLengthMiles} miles</p>
+              <p><strong>Difficulty:</strong> ${park.difficulty}</p>
+              <p><strong>Day Pass:</strong> $${typeof park.dayPassPriceUsd === "number" ? park.dayPassPriceUsd.toFixed(2) : "N/A"}</p>
+              <p><strong>Description:</strong> ${park.description}</p>
+              <p><strong>GPS:</strong> ${park.latitude}, ${park.longitude}</p>
+              ${park.trailmapurl ? `<a href="${park.trailmapurl}" class="btn btn-primary btn-sm mt-2" target="_blank">Trail Map</a>` : `<span class="text-muted">No trail map available</span>`}
+              <a href="https://www.google.com/maps?q=${park.latitude},${park.longitude}" class="btn btn-outline-secondary btn-sm mt-2 ms-2" target="_blank">Open in Google Maps</a>
+              <a href="${directionsLink}" class="btn btn-outline-primary btn-sm mt-2 ms-2" target="_blank">Get Driving Directions</a>
+            </div>
+          </div>
+        `;
+      },
+      error: function (xhr, status, error) {
+        console.error("? Error loading park:", status, error);
+        parkDetails.innerHTML = `<div class="alert alert-danger">Error loading park details: ${error}</div>`;
+      }
+    });
+  }
+
+  async function LoadNewCart() {
+    if (!uid) {
+      alert("No UID found in localStorage. Please log in.");
+      return;
+    }
+
+    await ensureCartMasterExists();
+    await displayCartMaster();
+    await createNewCart();
+    await loadCatalogue();
+    await loadParksDropdown();
+    await loadParkSummary();
+  }
+
+  function checkpll() {
+    const someuid = localStorage.getItem('uid');
+    if (someuid === '901') {
+      window.location.href = 'loginerror.html';
+    }
+  }
+</script>
+  
+
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; Cocky Consulting 2025. <br> All rights reserved.<br>
+    <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span>
+  </footer>
+</body>
+</html>

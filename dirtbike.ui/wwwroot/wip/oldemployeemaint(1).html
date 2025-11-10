@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Employee Manager</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container py-4">
+  <h2 class="mb-4">Employee Manager</h2>
+  <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createModal">Add Employee</button>
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Company</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="employeeTable"></tbody>
+  </table>
+</div>
+
+<!-- Create Modal -->
+<div class="modal fade" id="createModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <form id="createForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Create Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-2">
+        <!-- Repeat for all fields -->
+        <input type="text" name="fullName" class="form-control" placeholder="Full Name" required>
+        <input type="email" name="employeeEmail" class="form-control" placeholder="Email" required>
+        <input type="text" name="role" class="form-control" placeholder="Role">
+        <input type="text" name="employeeId" class="form-control" placeholder="Employee ID">
+        <input type="text" name="employeeTenure" class="form-control" placeholder="Tenure">
+        <input type="text" name="employeeStartDate" class="form-control" placeholder="Start Date">
+        <input type="text" name="employeeReturnDate" class="form-control" placeholder="Return Date">
+        <input type="text" name="hrId" class="form-control" placeholder="HR ID">
+        <input type="text" name="hrSystemConString" class="form-control" placeholder="HR System Connection">
+        <input type="number" name="userId" class="form-control" placeholder="User ID">
+        <input type="number" name="userProfileId" class="form-control" placeholder="User Profile ID">
+        <input type="number" name="managerId" class="form-control" placeholder="Manager ID">
+        <input type="number" name="regionId" class="form-control" placeholder="Region ID">
+        <input type="number" name="buId" class="form-control" placeholder="BU ID">
+        <input type="number" name="storeId" class="form-control" placeholder="Store ID">
+        <input type="number" name="companyId" class="form-control" placeholder="Company ID">
+        <input type="number" name="employeeIdAsInt" class="form-control" placeholder="Employee ID (Int)">
+        <input type="number" name="employee1" class="form-control" placeholder="Employee1">
+        <input type="text" name="plainPassword" class="form-control" placeholder="Plain Password">
+        <input type="text" name="hashedPassword" class="form-control" placeholder="Hashed Password">
+        <input type="number" name="passwordType" class="form-control" placeholder="Password Type">
+        <input type="text" name="token" class="form-control" placeholder="Token">
+        <input type="text" name="tokenProvider" class="form-control" placeholder="Token Provider">
+        <input type="text" name="resetToken" class="form-control" placeholder="Reset Token">
+        <input type="text" name="tokenExpiration" class="form-control" placeholder="Token Expiration">
+        <input type="text" name="btn" class="form-control" placeholder="BTN">
+        <input type="text" name="ncrId" class="form-control" placeholder="NCR ID">
+        <input type="text" name="alohaId" class="form-control" placeholder="Aloha ID">
+        <input type="text" name="oracleId" class="form-control" placeholder="Oracle ID">
+        <input type="text" name="azureId" class="form-control" placeholder="Azure ID">
+        <input type="text" name="profileUrl" class="form-control" placeholder="Profile URL">
+        <input type="number" name="isCertified" class="form-control" placeholder="Is Certified">
+        <input type="text" name="groupId1" class="form-control" placeholder="Group ID 1">
+        <input type="text" name="groupId2" class="form-control" placeholder="Group ID 2">
+        <input type="text" name="groupId3" class="form-control" placeholder="Group ID 3">
+        <input type="text" name="groupId4" class="form-control" placeholder="Group ID 4">
+        <input type="text" name="groupId5" class="form-control" placeholder="Group ID 5">
+        <input type="text" name="firstName" class="form-control" placeholder="First Name">
+        <input type="text" name="lastName" class="form-control" placeholder="Last Name">
+        <input type="text" name="userName" class="form-control" placeholder="Username">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success">Create</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Update Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <form id="updateForm" class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Employee</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body row g-2">
+        <input type="hidden" name="id">
+        <input type="text" name="employeeId" class="form-control" placeholder="Employee ID">
+        <input type="text" name="employeeTenure" class="form-control" placeholder="Tenure">
+        <input type="text" name="employeeStartDate" class="form-control" placeholder="Start Date">
+        <input type="text" name="employeeReturnDate" class="form-control" placeholder="Return Date">
+        <input type="text" name="hrId" class="form-control" placeholder="HR ID">
+        <input type="text" name="hrSystemConString" class="form-control" placeholder="HR System Connection">
+        <input type="text" name="fullName" class="form-control" placeholder="Full Name">
+        <input type="number" name="userId" class="form-control" placeholder="User ID">
+        <input type="number" name="userProfileId" class="form-control" placeholder="User Profile ID">
+        <input type="number" name="managerId" class="form-control" placeholder="Manager ID">
+        <input type="number" name="regionId" class="form-control" placeholder="Region ID">
+        <input type="number" name="buId" class="form-control" placeholder="BU ID">
+        <input type="number" name="storeId" class="form-control" placeholder="Store ID">
+        <input type="number" name="companyId" class="form-control" placeholder="Company ID">
+        <input type="number" name="employeeIdAsInt" class="form-control" placeholder="Employee ID (Int)">
+        <input type="email" name="employeeEmail" class="form-control" placeholder="Email">
+        <input type="number" name="employee1" class="form-control" placeholder="Employee1">
+        <input type="text" name="plainPassword" class="form-control" placeholder="Plain Password">
+        <input type="text" name="hashedPassword" class="form-control" placeholder="Hashed Password">
+        <input type="number" name="passwordType" class="form-control" placeholder="Password Type">
+        <input type="text" name="token" class="form-control" placeholder="Token">
+        <input type="text" name="tokenProvider" class="form-control" placeholder="Token Provider">
+        <input type="text" name="resetToken" class="form-control" placeholder="Reset Token">
+        <input type="text" name="tokenExpiration" class="form-control" placeholder="Token Expiration">
+        <input type="text" name="role" class="form-control" placeholder="Role">
+        <input type="text" name="btn" class="form-control" placeholder="BTN">
+        <input type="text" name="ncrId" class="form-control" placeholder="NCR ID">
+        <input type="text" name="alohaId" class="form-control" placeholder="Aloha ID">
+        <input type="text" name="oracleId" class="form-control" placeholder="Oracle ID">
+        <input type="text" name="azureId" class="form-control" placeholder="Azure ID">
+        <input type="text" name="profileUrl" class="form-control" placeholder="Profile URL">
+        <input type="number" name="isCertified" class="form-control" placeholder="Is Certified">
+        <input type="text" name="groupId1" class="form-control" placeholder="Group ID 1">
+        <input type="text" name="groupId2" class="form-control" placeholder="Group ID 2">
+        <input type="text" name="groupId3" class="form-control" placeholder="Group ID 3">
+        <input type="text" name="groupId4" class="form-control" placeholder="Group ID 4">
+        <input type="text" name="groupId5" class="form-control" placeholder="Group ID 5">
+        <input type="text" name="firstName" class="form-control" placeholder="First Name">
+        <input type="text" name="lastName" class="form-control" placeholder="Last Name">
+        <input type="text" name="userName" class="form-control" placeholder="Username">
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-warning">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<script>
+const API_URL = "https://gridactions3b.547bikes.info/api/Employee";
+
+function loadEmployees() {
+  fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+      const table = document.getElementById("employeeTable");
+      table.innerHTML = "";
+      data.forEach(emp => {
+        table.innerHTML += `
+          <tr>
+            <td>${emp.id}</td>
+            <td>${emp.fullName}</td>
+            <td>${emp.employeeEmail}</td>
+            <td>${emp.role}</td>
+            <td>${emp.companyId}</td>
+            <td>
+              <button class="btn btn-sm btn-warning" onclick='editEmployee(${JSON.stringify(emp)})'>Edit</button>
+            </td>
+          </tr>`;
+      });
+    });
+}
+
+document.getElementById("createForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(this).entries());
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    this.reset();
+    bootstrap.Modal.getInstance(document.getElementById("createModal")).hide();
+    loadEmployees();
+  });
+});
+
+function editEmployee(emp) {
+  const form = document.getElementById("updateForm");
+  Object.keys(emp).forEach(key => {
+    if (form[key]) form[key].value = emp[key];
+  });
+  new bootstrap.Modal(document.getElementById("updateModal")).show();
+}
+
+document.getElementById("updateForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+  const payload = Object.fromEntries(new FormData(this).entries());
+  fetch(`${API_URL}/${payload.id}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    bootstrap.Modal.getInstance(document.getElementById("updateModal")).hide();
+    loadEmployees();
+  });
+});
+
+loadEmployees();
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

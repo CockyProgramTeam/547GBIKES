@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulate Payment</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container mt-5">
+  <h2>Choose a Credit Card</h2>
+
+  <table class="table table-bordered table-striped mt-4">
+    <thead class="table-dark">
+      <tr>
+        <th>Card Type</th>
+        <th>Vendor</th>
+        <th>Last 4 Digits</th>
+        <th>Expiration</th>
+        <th>Billing Zip</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="card-table-body"></tbody>
+  </table>
+
+  <div id="no-card-message" class="mt-3 text-danger fw-bold"></div>
+  <button id="add-card-button" class="btn btn-secondary mt-2" style="display:none;" data-bs-toggle="modal" data-bs-target="#addCardModal">Add Card</button>
+
+  <div id="payment-status" class="mt-4"></div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="addCardModal" tabindex="-1" aria-labelledby="addCardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="add-card-form" class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addCardModalLabel">Add New Card</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="card-uid">
+          <div class="mb-3">
+            <label for="cardType" class="form-label">Card Type</label>
+            <input type="text" class="form-control" id="cardType" required>
+          </div>
+          <div class="mb-3">
+            <label for="cardVendor" class="form-label">Card Vendor</label>
+            <input type="text" class="form-control" id="cardVendor" required>
+          </div>
+          <div class="mb-3">
+            <label for="cardLast4" class="form-label">Last 4 Digits</label>
+            <input type="text" class="form-control" id="cardLast4" maxlength="4" required>
+          </div>
+          <div class="mb-3">
+            <label for="cardExpDate" class="form-label">Expiration Date</label>
+            <input type="text" class="form-control" id="cardExpDate" placeholder="MM/YY" required>
+          </div>
+          <div class="mb-3">
+            <label for="billingZip" class="form-label">Billing Zip</label>
+            <input type="text" class="form-control" id="billingZip" required>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save Card</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const baseUrl = "https://gridactions3b.547bikes.info";
+    const cardApi = `${baseUrl}/api/Card`;
+    const paymentApi = `${baseUrl}/api/Payments`;
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const uid = urlParams.get("uid") || "1";
+    const amount = urlParams.get("amount") || "0.00";
+    const cartIds = urlParams.get("cartIds")?.split(",") || [];
+
+    document.getElementById("card-uid").value = uid;
+
+    async function fetchCards(uid) {
+      const url = `${cardApi}?uid=${uid}`;
+      console.log("Fetching cards from:", url);
+      const response = await fetch(url);
+      const cards = await response.json();
+      console.log("Raw card data:", cards);
+      return cards;
+    }
+
+    function renderCards(cards) {
+      const tbody = document.getElementById("card-table-body");
+      tbody.innerHTML = "";
+      const noCardMsg = document.getElementById("no-card-message");
+      const addCardBtn = document.getElementById("add-card-button");
+
+      if (!cards || cards.length === 0) {
+        noCardMsg.textContent = "No credit card on file.";
+        addCardBtn.style.display = "inline-block";
+        alert("No card on file. Please add one to proceed.");
+        return;
+      }
+
+      noCardMsg.textContent = "";
+      addCardBtn.style.display = "none";
+
+      cards.forEach(card => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${card.cardType}</td>
+          <td>${card.cardVendor}</td>
+          <td>${card.cardLast4}</td>
+          <td>${card.cardExpDate}</td>
+          <td>${card.billingZip}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" onclick="simulatePayment(${JSON.stringify(card)})">
+              Pay $${amount}
+            </button>
+          </td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    async function simulatePayment(card) {
+      const transactionId = "TXN" + Math.floor(Math.random() * 1000000);
+      const paymentData = {
+        paymentId: 0,
+        bookingId: 0,
+        paymentMethod: "Credit Card",
+        cardType: card.cardType,
+        cardLast4: card.cardLast4,
+        cardExpDate: card.cardExpDate,
+        amountPaid: parseFloat(amount),
+        paymentDate: new Date().toISOString(),
+        transactionId: transactionId
+      };
+
+      console.log("Submitting payment:", paymentData);
+
+      try {
+        const response = await fetch(paymentApi, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(paymentData)
+        });
+
+        if (!response.ok) throw new Error("Payment submission failed");
+
+        const result = await response.json();
+        console.log("Payment response:", result);
+
+        document.getElementById("payment-status").innerHTML = `
+          <p class="fw-bold text-success">✅ Payment of $${amount} processed using card ending in ${card.cardLast4}.</p>
+          <p>Transaction ID: <strong>${transactionId}</strong></p>
+          <p>Cart IDs: ${cartIds.join(", ")}</p>
+          <p>User ID: ${uid}</p>
+        `;
+      } catch (err) {
+        console.error("Error submitting payment:", err);
+        document.getElementById("payment-status").innerHTML = `
+          <p class="text-danger">❌ Payment failed. Please try again.</p>
+        `;
+      }
+    }
+
+    document.getElementById("add-card-form").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const newCard = {
+        cardId: 0,
+        uid: uid,
+        cardType: document.getElementById("cardType").value,
+        cardVendor: document.getElementById("cardVendor").value,
+        cardLast4: document.getElementById("cardLast4").value,
+        cardExpDate: document.getElementById("cardExpDate").value,
+        billingZip: document.getElementById("billingZip").value,
+        isActive: 1
+      };
+
+      console.log("Adding new card:", newCard);
+
+      try {
+        const response = await fetch(cardApi, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newCard)
+        });
+
+        if (!response.ok) throw new Error("Card submission failed");
+
+        const result = await response.json();
+        console.log("Card added:", result);
+
+        const modal = bootstrap.Modal.getInstance(document.getElementById("addCardModal"));
+        modal.hide();
+
+        await refreshCards();
+      } catch (err) {
+        console.error("Error adding card:", err);
+        alert("Failed to add card. Please try again.");
+      }
+    });
+
+    async function refreshCards() {
+      const cards = await fetchCards(uid);
+      renderCards(cards);
+    }
+
+    refreshCards();
+  </script>
+</body>
+</html>

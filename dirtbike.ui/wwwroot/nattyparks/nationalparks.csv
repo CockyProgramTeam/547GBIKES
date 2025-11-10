@@ -1,0 +1,64 @@
+Park Name,Address1,Address2,City,State,Zip,Latitude,Longitude,Bicycling,Camping,Day Pass Cost,Week Pass Cost
+Acadia National Park,20 McFarland Hill Dr,,Bar Harbor,ME,4609,44.338974,-68.27343,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+American Samoa National Park,,,Pago Pago,AS,96799,-14.258889,-170.684444,Limited,No,Free,Free
+Arches National Park,,,Moab,UT,84532,38.733082,-109.592514,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Badlands National Park,25216 Ben Reifel Rd,,Interior,SD,57750,43.855011,-102.339676,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Big Bend National Park,,,Big Bend National Park,TX,79834,29.2502,-103.2505,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Biscayne National Park,9700 SW 328th St,,Homestead,FL,33033,25.49,-80.21,Limited,Yes,Free,Free
+Black Canyon of the Gunnison National Park,,,Montrose,CO,81401,38.573611,-107.701667,Limited,Yes,$30 vehicle,$30 vehicle (7-day)
+Bryce Canyon National Park,,,Bryce Canyon,UT,84764,37.593048,-112.187332,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Canyonlands National Park,,,Moab,UT,84532,38.326944,-109.878611,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Capitol Reef National Park,,,Torrey,UT,84775,38.0896,-111.14991,Yes,Yes,$20 vehicle,$20 vehicle (7-day)
+Carlsbad Caverns National Park,,,Carlsbad,NM,88220,32.1475,-104.556667,Limited,Yes,$15 person,$15 person (7-day)
+Channel Islands National Park,,,Ventura,CA,93001,33.998028,-119.772949,No,Yes,Free,Free
+Congaree National Park,100 National Park Rd,,Hopkins,SC,29061,33.835694,-80.782222,Yes,Yes,Free,Free
+Crater Lake National Park,,,Crater Lake,OR,97604,42.944611,-122.109245,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Cuyahoga Valley National Park,15610 Vaughn Rd,,Brecksville,OH,44141,41.240833,-81.551111,Yes,No,Free,Free
+Death Valley National Park,,,Death Valley,CA,92328,36.240556,-116.816944,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Denali National Park,,,Denali Park,AK,99755,63.129887,-151.197418,Yes,Yes,$15 person,$15 person (7-day)
+Dry Tortugas National Park,,,Key West,FL,33040,24.628611,-82.873056,No,Yes,$15 person,$15 person (7-day)
+Everglades National Park,40001 State Road 9336,,Homestead,FL,33034,25.286615,-80.898651,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Gates of the Arctic National Park,,,Bettles,AK,99726,67.915199,-153.46373,Limited,Yes,Free,Free
+Gateway Arch National Park,11 N 4th St,,St. Louis,MO,63102,38.624722,-90.184722,Yes,No,$15 adult,$15 adult (7-day)
+Glacier National Park,,,West Glacier,MT,59936,48.759613,-113.787022,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Glacier Bay National Park,,,Gustavus,AK,99826,58.665806,-136.900208,Limited,Yes,Free,Free
+Grand Canyon National Park,,,Grand Canyon,AZ,86023,36.266033,-112.363808,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Grand Teton National Park,,,Moose,WY,83012,43.790802,-110.684944,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Great Basin National Park,,,Baker,NV,89311,38.983333,-114.3,Yes,Yes,Free,Free
+Great Sand Dunes National Park,11999 State Highway 150,,Mosca,CO,81146,37.733333,-105.516667,Yes,Yes,$25 vehicle,$25 vehicle (7-day)
+Great Smoky Mountains National Park,107 Park Headquarters Rd,,Gatlinburg,TN,37738,35.611763,-83.489548,Yes,Yes,Free,Free
+Guadalupe Mountains National Park,,,Salt Flat,TX,79847,31.923056,-104.860833,Yes,Yes,$10 person,$10 person (7-day)
+Haleakalā National Park,,,Kula,HI,96790,20.701283,-156.173325,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Hawaii Volcanoes National Park,,,Hawaii National Park,HI,96718,19.419444,-155.288056,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Hot Springs National Park,101 Reserve St,,Hot Springs,AR,71901,34.52153,-93.042267,Limited,No,Free,Free
+Indiana Dunes National Park,1100 N Mineral Springs Rd,,Porter,IN,46304,41.653333,-87.053333,Yes,Yes,Free,Free
+Isle Royale National Park,,,Houghton,MI,49931,47.995833,-88.909167,No,Yes,$7 person,$7 person (7-day)
+Joshua Tree National Park,,,Twentynine Palms,CA,92277,33.881866,-115.90065,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Katmai National Park,,,King Salmon,AK,99613,58.597813,-154.693756,Limited,Yes,Free,Free
+Kenai Fjords National Park,,,Seward,AK,99664,60.043777,-149.81636,No,Yes,Free,Free
+Kobuk Valley National Park,,,Kotzebue,AK,99752,67.55,-159.283333,Limited,Yes,Free,Free
+Lake Clark National Park,,,Port Alsworth,AK,99653,60.412697,-154.323502,Limited,Yes,Free,Free
+Lassen Volcanic National Park,,,Mineral,CA,96063,40.498056,-121.420556,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Mammoth Cave National Park,,,Mammoth Cave,KY,42259,37.18364,-86.159943,Yes,Yes,Free,Free
+Mesa Verde National Park,,,Mesa Verde,CO,81330,37.230873,-108.461838,Limited,Yes,$30 vehicle,$30 vehicle (7-day)
+Mount Rainier National Park,,,Ashford,WA,98304,46.879967,-121.726906,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+New River Gorge National Park,,,Glen Jean,WV,25846,38.067222,-81.072222,Yes,Yes,Free,Free
+North Cascades National Park,,,Sedro-Woolley,WA,98284,48.771667,-121.205278,Yes,Yes,Free,Free
+Olympic National Park,,,Port Angeles,WA,98362,47.802222,-123.604722,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Petrified Forest National Park,,,Petrified Forest,AZ,86028,34.909988,-109.806793,Yes,Yes,$25 vehicle,$25 vehicle (7-day)
+Pinnacles National Park,,,Paicines,CA,95043,36.491508,-121.197243,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Redwood National Park,,,Crescent City,CA,95531,41.213181,-124.004631,Yes,Yes,Free,Free
+Rocky Mountain National Park,1000 US Highway 36,,Estes Park,CO,80517,40.343182,-105.688103,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Saguaro National Park,,,Tucson,AZ,85730,32.166667,-110.738889,Yes,Yes,$25 vehicle,$25 vehicle (7-day)
+Sequoia National Park,,,Three Rivers,CA,93271,36.563611,-118.772222,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Shenandoah National Park,,,Luray,VA,22835,38.700516,-78.292694,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Theodore Roosevelt National Park,,,Medora,ND,58645,46.978889,-103.536944,Yes,Yes,$30 vehicle,$30 vehicle (7-day)
+Virgin Islands National Park,1300 Cruz Bay Creek,,St. John,VI,830,18.343333,-64.733333,Limited,Yes,Free,Free
+Voyageurs National Park,,,International Falls,MN,56649,48.416667,-92.833333,No,Yes,Free,Free
+White Sands National Park,,,Alamogordo,NM,88310,32.77972,-106.171669,Limited,Yes,$25 vehicle,$25 vehicle (7-day)
+Wind Cave National Park,,,Hot Springs,SD,57747,43.566667,-103.483333,Limited,Yes,Free,Free
+Wrangell-St. Elias National Park,,,Copper Center,AK,99573,61.710445,-142.985687,Limited,Yes,Free,Free
+Yellowstone National Park,,,Yellowstone National Park,WY,82190,44.427895,-110.588379,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Yosemite National Park,,,Yosemite Valley,CA,95389,37.865101,-119.53833,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Zion National Park,,,Springdale,UT,84767,37.297817,-113.02877,Yes,Yes,$35 vehicle,$35 vehicle (7-day)
+Kings Canyon National Park,,,Three Rivers,CA,93271,36.887856,-118.555145,Yes,Yes,$35 vehicle,$35 vehicle (7-day)

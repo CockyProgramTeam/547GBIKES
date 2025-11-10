@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Payment Page</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="home.css" />
+   <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body onload="checkUserStatus()">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <div class="nav-left">
+        <div class="logo">Review Parks</div>
+      </div>
+      <div class="nav-right">
+        <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="H3UserBanner">User</span>
+      </div>
+    </div>
+
+<div class="container mt-5">
+  <h2 class="mb-4">Your Cart Summary</h2>
+  <table class="table table-bordered table-striped">
+    <thead class="table-dark">
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Unit Price</th>
+        <th>Total Price</th>
+      </tr>
+    </thead>
+    <tbody id="cart-table-body"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4" class="text-end fw-bold">Total Amount:</td>
+        <td id="total-amount" class="fw-bold">$0.00</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <button id="pay-button" class="btn btn-success">Pay Now</button>
+</div>
+  <script>
+    const baseUrl = "https://gridactions3b.547bikes.info";
+    const cartApi = `${baseUrl}/api/Cart`;
+    const paymentApi = `${baseUrl}/api/Payment`;
+
+    const uid = localStorage.getItem("uid") || "1";
+    const urlParams = new URLSearchParams(window.location.search);
+    const cartIds = urlParams.getAll("cartId");
+
+    async function fetchCartItems(cartIds) {
+      const allItems = await Promise.all(cartIds.map(cartId => {
+        const url = `${cartApi}/${cartId}`;
+        console.log("Fetching cart item from:", url);
+        return fetch(url).then(res => res.json());
+      }));
+
+      console.log("Raw cart items:", allItems);
+      return allItems;
+    }
+
+    function renderCart(items) {
+      const tbody = document.getElementById("cart-table-body");
+      let total = 0;
+
+      items.forEach(item => {
+        const unitPrice = item.unitPrice ?? 0;
+        const totalPrice = item.totalPrice ?? 0;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.itemType}</td>
+          <td>${item.itemDescription}</td>
+          <td>${item.quantity}</td>
+          <td>$${unitPrice.toFixed(2)}</td>
+          <td>$${totalPrice.toFixed(2)}</td>
+        `;
+        tbody.appendChild(row);
+        total += totalPrice;
+      });
+
+      document.getElementById("total-amount").textContent = `$${total.toFixed(2)}`;
+
+      document.getElementById("pay-button").onclick = () => {
+        if (confirm(`Your total is $${total.toFixed(2)}. Are you ready to proceed?`)) {
+          window.location.href = `paynow2.html?uid=${uid}&amount=${total.toFixed(2)}&cartIds=${cartIds.join(",")}`;
+        }
+      };
+    }
+
+    fetchCartItems(cartIds).then(renderCart).catch(err => {
+      console.error("Error fetching cart items:", err);
+      alert("Failed to load cart data.");
+    });
+  </script>
+</body>
+   <!-- Footer -->
+  <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
+
+</html>

@@ -81,7 +81,7 @@ font-size: 12pt;
                   <a href="manager.html">Manager Utilities</a>
              </div>
     </div> 
-              <div class="logo">&nbsp&nbspMyLinkv25 - Review Parks</div>
+      <div class="logo">&nbsp&nbsp<H5>MyLinkv25 - Review Parks</H5></div>
       </div>
       <div class="nav-right">
         <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
@@ -327,9 +327,11 @@ font-size: 12pt;
         $("#updateEnd").val(item.endDate);
         $("#updateActive").val(item.isActive);
         $("#updateSiteId").val(item.siteId ?? '');
-        $("#updateNational").val(item.national ?? '');
-        $("#updateState").val(item.state ?? '');
-        $("#updateGlobal").val(item.global ?? '');
+        $("#updateNational").val(item.national ?? 0);
+        $("#updateState").val(item.state ?? 0);
+        $("#updateGlobal").val(item.global ?? 0);
+        $("#updateQtyAdults").val(item.qtyadults ?? 0);
+        $("#updateQtyChildren").val(item.qtychildren ?? 0);
         $("#updateModal").modal("show");
       }
     });
@@ -337,60 +339,97 @@ font-size: 12pt;
     // Add form submit
     $("#addForm").on("submit", function (e) {
       e.preventDefault();
+
       const data = {
-        serviceType: $("input[name='serviceType']").val(),
-        serviceName: $("input[name='serviceName']").val(),
-        description: $("textarea[name='description']").val(),
-        price: parseFloat($("input[name='price']").val()) || 0,
-        parkId: parseInt($("input[name='parkId']").val()) || 0,
-        startDate: $("input[name='startDate']").val(),
-        endDate: $("input[name='endDate']").val(),
-        isActive: parseInt($("select[name='isActive']").val()),
-        siteId: parseInt($("input[name='siteId']").val()) || null,
-        national: $("input[name='national']").val() || null,
-        state: $("input[name='state']").val() || null,
-        global: $("input[name='global']").val() || null
+        salesCatalogueId: 0,
+        parkId: parseInt($("input[name='parkId']").val()),
+        serviceType: $("input[name='serviceType']").val()?.trim() || "DefaultType",
+        serviceName: $("input[name='serviceName']").val()?.trim() || "Unnamed",
+        description: $("textarea[name='description']").val()?.trim() || "No description",
+        price: parseFloat($("input[name='price']").val()),
+        isActive: parseInt($("select[name='isActive']").val()) || 1,
+        siteId: $("input[name='siteId']").val()?.trim() || "",
+        state: parseInt($("input[name='state']").val()) || 0,
+        global: parseInt($("input[name='global']").val()) || 0,
+        qtyadults: parseInt($("input[name='qtyadults']").val()) || 0,
+        qtychildren: parseInt($("input[name='qtychildren']").val()) || 0,
+        national: parseInt($("input[name='national']").val()) || 0,
+        startDate: $("input[name='startDate']").val() || new Date().toISOString(),
+        endDate: $("input[name='endDate']").val() || new Date().toISOString()
       };
-       console.log(data);
+
+      if (!data.parkId || isNaN(data.parkId)) {
+        alert("Park ID is required and must be a number.");
+        return;
+      }
+      if (!data.price || isNaN(data.price)) {
+        alert("Price is required and must be a number.");
+        return;
+      }
+
+      console.log("Submitting:", data);
+
       $.ajax({
         url: "https://gridactions3b.547bikes.info/api/SalesCatalogue",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(data),
         success: () => location.reload(),
-        error: () => alert("Error adding item")
+        error: (xhr) => {
+          console.error("Error:", xhr.responseText);
+          alert("Error adding item. Check console for details.");
+        }
       });
     });
 
     // Update form submit
     $("#updateForm").on("submit", function (e) {
       e.preventDefault();
+
       const data = {
         salesCatalogueId: parseInt($("#updateId").val()),
-        serviceType: $("#updateType").val(),
-        serviceName: $("#updateName").val(),
-        description: $("#updateDesc").val(),
-        price: parseFloat($("#updatePrice").val()) || 0,
-        parkId: parseInt($("#updateParkId").val()) || 0,
-        startDate: $("#updateStart").val(),
-        endDate: $("#updateEnd").val(),
-        isActive: parseInt($("#updateActive").val()),
-        siteId: parseInt($("#updateSiteId").val()) || null,
-        national: $("#updateNational").val() || null,
-        state: $("#updateState").val() || null,
-        global: $("#updateGlobal").val() || null
+        parkId: parseInt($("#updateParkId").val()),
+        serviceType: $("#updateType").val()?.trim() || "DefaultType",
+        serviceName: $("#updateName").val()?.trim() || "Unnamed",
+        description: $("#updateDesc").val()?.trim() || "No description",
+        price: parseFloat($("#updatePrice").val()),
+        isActive: parseInt($("#updateActive").val()) || 1,
+        siteId: $("#updateSiteId").val()?.trim() || "",
+        state: parseInt($("#updateState").val()) || 0,
+        global: parseInt($("#updateGlobal").val()) || 0,
+        qtyadults: parseInt($("#updateQtyAdults").val()) || 0,
+        qtychildren: parseInt($("#updateQtyChildren").val()) || 0,
+        national: parseInt($("#updateNational").val()) || 0,
+        startDate: $("#updateStart").val() || new Date().toISOString(),
+        endDate: $("#updateEnd").val() || new Date().toISOString()
       };
+
+      if (!data.parkId || isNaN(data.parkId)) {
+        alert("Park ID is required and must be a number.");
+        return;
+      }
+      if (!data.price || isNaN(data.price)) {
+        alert("Price is required and must be a number.");
+        return;
+      }
+
+      console.log("Updating:", data);
+
       $.ajax({
         url: `https://gridactions3b.547bikes.info/api/SalesCatalogue/${data.salesCatalogueId}`,
         method: "PUT",
         contentType: "application/json",
         data: JSON.stringify(data),
         success: () => location.reload(),
-        error: () => alert("Error updating item")
+        error: (xhr) => {
+          console.error("Error:", xhr.responseText);
+          alert("Error updating item. Check console for details.");
+        }
       });
     });
   });
 </script>
+
 
 </body>
 </html>
