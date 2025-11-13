@@ -1,0 +1,11 @@
+To Build:
+
+ionic build
+
+To Run:
+
+ionic serve
+
+TARGET OUTPUT IS ./DIST/*.* FOR WEBROOT   
+
+TO PUBLISH YOU HAVE TO COPY THE DIST FOLDER TO THE SERVER WEB DIRECTORY
