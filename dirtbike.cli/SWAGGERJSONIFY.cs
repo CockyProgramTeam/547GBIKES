@@ -12,7 +12,7 @@ public class T4SWAGGERDUMP
         
         static public void callswaggerinfo()
         {
-            string swaggerurl = "http://class.usc547team4.info:8080/swagger/swagger.json";
+            string swaggerurl = "http://parksapi.547bikes.info/swagger/swagger.json";
             Console.WriteLine($"Paste the Following URL in your Browser(When API is Running): {swaggerurl}");
             Console.WriteLine("Would You like to Launch This URL? yes or no");
             string youranswer = Console.ReadLine();
