@@ -5,5 +5,5 @@
 #5 ServicesSecurity contains all security logic.
 #6 Views simply contains the views necessary to review areas with multitable joins.
 #7 Models contains the Reverse Engineered Database Output for each table. Its Plus 30 Tables.
-#8 Controllers contains the Rest Endpoints for Each Table. CRUD Operations for the Record ID are included with every Table, and there are additional ones for User, and Transaction Endpoints.
+#8 Controllers contains the Rest Endpoints for Each Table defined in Models plus a few extra(Auth). CRUD Operations for the Record ID are included with every Table, and there are additional ones for User, and Transaction Endpoints.
 #9 Utilities included initial efforts to take .csv files and turn them into JSONs and vice versa. We had Copilot generate us some samples so we could build a CLI installer.
