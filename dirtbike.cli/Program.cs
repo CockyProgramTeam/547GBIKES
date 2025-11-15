@@ -50,8 +50,8 @@ public class Program
         string pString = "c:/windows/system32/WindowsPowerShell/v1.0/";
         do
         {
-            Console.WriteLine("\nSystemCockyEntertainment[V2.1] Installation and Maintenance Utilities");
-            Console.WriteLine("CE Uses a React & ASPX FrontEnd, RESTBackEnd, ASP.NET->LanManager, and COTS Demonstrating The Breadth of Our Team Skills.");
+            Console.WriteLine("\nSystemParks[V3.1] Installation and Maintenance Utilities");
+            Console.WriteLine("Parks Uses a React & HTML JSFrontEnd, C#RESTBackEnd.");
             Console.WriteLine("Please Enter Your Choice:");
             Console.WriteLine("0.Review Seed Data Before Installation:");
             Console.WriteLine("1.Review Current Table Information(DUMP SQL Info):");
