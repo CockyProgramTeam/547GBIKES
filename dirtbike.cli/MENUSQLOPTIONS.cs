@@ -69,14 +69,14 @@ namespace MENUSYSTEM34
             int number = 0;
             do
             {
-                Console.WriteLine("\nSystem Utilities: GEM [V6.01] Installation and Maintenance.");
-                Console.WriteLine("GEM Uses a React & ASPX FrontEnd, RESTBackEnd, ASP.NET->LanManager, and COTS Demonstrating The Breadth of Our Team Skills.");
+                Console.WriteLine("\nSystem Utilities: Parks [V3.01] Installation and Maintenance.");
+                Console.WriteLine("Parks Uses a React & HTML FrontEnd, C# RESTBackEnd.");
                 Console.WriteLine("Please Enter Your Choice:");
                 Console.WriteLine("9.Diagnostics Processes, and SQL.Utilities");
-                Console.WriteLine("10.Installation(MySQL, PGSQL or MSSQL)");
+                Console.WriteLine("10.Installation(O)racleMySQL, (P)GSQL, (M)SSQL, Or (S)QLITE)");
                 Console.WriteLine("11.Load Sample Data");
                 Console.WriteLine("99.Exit:");
-                Console.WriteLine("Please Enter Your Choice(1,2,3,4,5,6,7,8,9,10,11,99(Exit):\n");
+                Console.WriteLine("Please Enter Your Choice(9,10,11,99(Exit):\n");
                 string somestring = "1";
                 char myChar = '1';
                 somestring = Console.ReadLine();
@@ -92,7 +92,7 @@ namespace MENUSYSTEM34
                 else if (number == 9)
                 {
                     Console.WriteLine("You Choose Option: 9-UsersBySQL - QUERY DATA\n");
-                    Console.WriteLine("Enter O for OracleMysql, M for Microsoft Sql Server, or P for Postgresql Server, E to Exit to Previous Menu");
+                    Console.WriteLine("Enter O for OracleMysql, M for Microsoft Sql Server, P for Postgresql Server, or S for SQLite3 E to Exit to Previous Menu");
                     do
                     {
                         somestring = Console.ReadLine();
@@ -111,6 +111,11 @@ namespace MENUSYSTEM34
                             T4PGSQL.connectiontest();
                             exit = 101;
                         }
+                        else if (somestring[0] == 'S')
+                        {
+                            T4SQLITE.connectiontest();
+                            exit = 101;
+                        }  
                         else if (somestring[0] == 'E')
                         {
                             exit = 101;
@@ -127,7 +132,7 @@ namespace MENUSYSTEM34
                 else if (number == 10)
                 {
                     Console.WriteLine("You Choose Option: 10-Installation\n");
-                    Console.WriteLine("Enter O for OracleMysql, or M for Microsoft Sql Server, E to Exit to Previous Menu");
+                    Console.WriteLine("Enter O for OracleMysql, or M for Microsoft Sql Server,  P for Postgresql Server, or S for SQLite3, E to Exit to Previous Menu");
                     do
                     {
                         somestring = Console.ReadLine();
@@ -141,6 +146,16 @@ namespace MENUSYSTEM34
                             MSSQLINSTALLER.createmssqldb(); 
                             exit = 101;
                         }
+                         else if (somestring[0] == 'P')
+                        {
+                            PSQLINSTALLER.createpsqldb(); 
+                            exit = 101;
+                        }
+                        else if (somestring[0] == 'S')
+                        {
+                            SQLITEINSTALLER.createsqlitedb(); ;
+                            exit = 101;
+                        }  
                         else if (somestring[0] == 'E')
                         {
                             exit = 101;
