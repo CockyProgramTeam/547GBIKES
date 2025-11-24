@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("dirtbike.cli")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2e5f62a2653daadddac207794892b457f5a58529")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdb5354e9717963d6f06cffed104016f97a3ab87")]
 [assembly: System.Reflection.AssemblyProductAttribute("dirtbike.cli")]
 [assembly: System.Reflection.AssemblyTitleAttribute("dirtbike.cli")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

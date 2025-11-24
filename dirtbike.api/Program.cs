@@ -92,4 +92,5 @@ app.MapUsergroupsEndpoints();
 app.MapUserhelpEndpoints();
 app.MapBatchEndpoints();
 app.MapBatchtypeEndpoints();
+app.UseMiddleware<SwaggerAuthMiddleware>();
 app.Run();

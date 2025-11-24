@@ -1,5 +1,6 @@
 using System;
-using Gas.Models; // adjust namespace to match your project
+using dirtbike.api.Models;
+using dirtbike.api.Data; // adjust namespace to match your project
 using Microsoft.EntityFrameworkCore;
 namespace Enterpriseservices;
 
@@ -7,7 +8,7 @@ public class ApiLogHelper
 {
     public static void InsertDummyRecord()
     {
-        using (var context = new GashubContext())
+        using (var context = new DirtbikeContext())
         {
             var dummyLog = new Apilog
             {
