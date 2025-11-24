@@ -14,7 +14,9 @@ using System.Security.Claims;
 using Services;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
+using Azure.Messaging.ServiceBus;
 namespace Enterprise.Controllers;
+
 //using Services;
 
 
@@ -30,10 +32,6 @@ public static class Auth
     private const string UsersFilePath = "Controllers/Auth/userList.json";
     private const string CredentialsFilePath = "Controllers/Auth/userCredential.json";
 
-    //  Using HttpContext because the current JSON based setup requires reading and writing to JSON files in memory
-    //  Since we are not using a database yet, we load entire JSON lists into memory and process them in the API
-    //  Once the UserCred table is set up in a database, this will connect to DirtbikeContext for real time access
-    //  JSON storage requires reading entire files before finding user data
 
     public static void MapAuthEndpoints(this IEndpointRouteBuilder routes)
     {
@@ -229,10 +227,10 @@ public static class Auth
         })
         .WithName("signupUser")
         .WithOpenApi();
-    }
-/*
+
+
         //  Forgot Password Route
-        group.MapPost("/forgotPasswordLocal", async (ForgotPasswordRequest request, ServiceBusService serviceBusService, IConfiguration config) =>
+        group.MapPost("/forgotPassword", async (ForgotPasswordRequest request, ServiceBusSender sender, IConfiguration config) =>
         {
             var users = await LoadUsersFromJson();
             var user = users.FirstOrDefault(u => u.Email?.ToLower() == request.Email.ToLower());
@@ -264,38 +262,37 @@ public static class Auth
         .WithName("forgotPasswordLocal")
         .WithOpenApi();
 
-        group.MapPost("/forgotPassword", async (ForgotPasswordRequest request, ServiceBusService serviceBusService, IConfiguration config) =>
+        group.MapPost("/forgotPassword", async (ForgotPasswordRequest request, ServiceBusSender sender, IConfiguration config) =>
         {
-            using (var context = new DirtbikeContext())
+            using var context = new DirtbikeContext();
+            var user = await context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == request.Email.ToLower());
+
+            if (user == null)
+                return Results.NotFound("User not found (DB).");
+
+            var resetToken = Guid.NewGuid().ToString();
+            var resetTokenExpiration = DateTime.UtcNow.AddHours(1);
+
+            user.Resettoken = resetToken;
+            user.Resettokenexpiration = resetTokenExpiration;
+            await context.SaveChangesAsync();
+
+            var resetLink = $"{config["FrontendUrl"]}/ResetPassword?token={resetToken}";
+
+            var message = new
             {
-                var user = await context.Users.FirstOrDefaultAsync(u => u.Email.ToLower() == request.Email.ToLower());
+                email = user.Email,
+                subject = "Reset Your Password (DB)",
+                body = $"Click the link to reset your password: {resetLink}"
+            };
 
-                if (user == null)
-                    return Results.NotFound("User not found (DB).");
+            var sbMessage = new ServiceBusMessage(JsonConvert.SerializeObject(message));
+            await sender.SendMessageAsync(sbMessage);
 
-                var resetToken = Guid.NewGuid().ToString();
-                var resetTokenExpiration = DateTime.UtcNow.AddHours(1);
-
-                user.Resettoken = resetToken;
-                user.Resettokenexpiration = resetTokenExpiration;
-
-                await context.SaveChangesAsync();
-
-                var resetLink = $"{config["FrontendUrl"]}/ResetPassword?token={resetToken}";
-
-                var message = new
-                {
-                    email = user.Email,
-                    subject = "Reset Your Password (DB)",
-                    body = $"Click the link to reset your password: {resetLink}"
-                };
-
-                //await serviceBusService.SendMessageAsync(JsonConvert.SerializeObject(message));
-
-                return Results.Ok(new { message = "Reset link sent to your email (DB)." });
-            }
-        }).WithName("forgotPassword")
-        .WithOpenApi();
+            return Results.Ok(new { message = "Reset link sent to your email (DB)." });
+        })
+.WithName("forgotPassword")
+.WithOpenApi();
 
         group.MapPost("/resetPasswordProfile", async (ResetPasswordRequestProfile request, HttpContext httpContext, IConfiguration config) =>
         {
@@ -415,7 +412,7 @@ public static class Auth
         .WithOpenApi();
 
     }
-*/
+
 
     // File Handling Methods
     private static async Task<List<User>> LoadUsersFromJson()

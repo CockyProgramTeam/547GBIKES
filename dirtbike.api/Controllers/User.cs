@@ -106,7 +106,6 @@ public static class UserEndpoints
     if (!string.IsNullOrEmpty(input.Role)) existingUser.Role = input.Role;
     if (!string.IsNullOrEmpty(input.Fullname)) existingUser.Fullname = input.Fullname;
     if (!string.IsNullOrEmpty(input.Resettoken)) existingUser.Resettoken = input.Resettoken;
-    if (!string.IsNullOrEmpty(input.Resettokenexpiration)) existingUser.Resettokenexpiration = input.Resettokenexpiration;
     if (!string.IsNullOrEmpty(input.Btn)) existingUser.Btn = input.Btn;
     if (!string.IsNullOrEmpty(input.Groupid1)) existingUser.Groupid1 = input.Groupid1;
     if (!string.IsNullOrEmpty(input.Groupid2)) existingUser.Groupid2 = input.Groupid2;

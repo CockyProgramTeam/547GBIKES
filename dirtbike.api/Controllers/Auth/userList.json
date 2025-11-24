@@ -136,28 +136,5 @@
     "Companyid": null,
     "ResetToken": null,
     "ResetTokenExpiration": null
-  },
-  {
-    "Id": 12,
-    "Firstname": "blueey",
-    "Lastname": "blackwelll",
-    "Username": "blempman",
-    "Email": "blemp@email.sc.edu",
-    "Employee": 0,
-    "Employeeid": "",
-    "Microsoftid": "",
-    "Ncrid": "",
-    "Oracleid": "",
-    "Azureid": "",
-    "Plainpassword": "",
-    "Hashedpassword": "$2a$11$X8KCqPdjjrM0dBTg2MH0b.3wSydgfhEtNE6/W9quY0S/rwolKV1M2",
-    "Passwordtype": 1,
-    "Jid": null,
-    "Profileurl": "",
-    "Role": "user",
-    "Fullname": "blueey blackwelll",
-    "Companyid": null,
-    "ResetToken": null,
-    "ResetTokenExpiration": null
   }
 ]

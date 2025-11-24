@@ -7280,6 +7280,7 @@
           },
           "resettokenexpiration": {
             "type": "string",
+            "format": "date-time",
             "nullable": true
           },
           "userid": {

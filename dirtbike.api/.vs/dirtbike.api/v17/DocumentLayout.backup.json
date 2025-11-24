@@ -7,28 +7,14 @@
       "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\controllers\\template.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:controllers\\template.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\controllers\\auth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:controllers\\auth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\services\\parkutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:services\\parkutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Controllers\\Auth.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\servicesnotifier\\emailnotifier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:servicesnotifier\\emailnotifier.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\models\\apilog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:models\\apilog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\unittests\\apilogtester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:unittests\\apilogtester.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|c:\\users\\stritzj\\source\\repos\\cockyprogramteam\\547gbikes\\dirtbike.api\\controllers\\batch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{482F85A2-6E2F-F7A6-74D7-4E6736FD9D3C}|dirtbike.api.csproj|solutionrelative:controllers\\batch.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,60 +24,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAAtwCEAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:11:40.206Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Template.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Template.cs",
-              "RelativeDocumentMoniker": "Controllers\\Template.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Template.cs",
-              "RelativeToolTip": "Controllers\\Template.cs",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAAAGoAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:07:07.452Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "ParkUtils.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Services\\ParkUtils.cs",
-              "RelativeDocumentMoniker": "Services\\ParkUtils.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Services\\ParkUtils.cs",
-              "RelativeToolTip": "Services\\ParkUtils.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:06:25.359Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "EmailNotifier.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\ServicesNotifier\\EmailNotifier.cs",
-              "RelativeDocumentMoniker": "ServicesNotifier\\EmailNotifier.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\ServicesNotifier\\EmailNotifier.cs",
-              "RelativeToolTip": "ServicesNotifier\\EmailNotifier.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAYAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:03:25.57Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
@@ -110,41 +44,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Apilog.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Models\\Apilog.cs",
-              "RelativeDocumentMoniker": "Models\\Apilog.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Models\\Apilog.cs",
-              "RelativeToolTip": "Models\\Apilog.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA5wBUAAAAeAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:04:54.118Z",
+              "WhenOpened": "2025-11-24T18:23:21.112Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Batch.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Batch.cs",
-              "RelativeDocumentMoniker": "Controllers\\Batch.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Batch.cs",
-              "RelativeToolTip": "Controllers\\Batch.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Auth.cs",
+              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Auth.cs",
+              "RelativeDocumentMoniker": "Controllers\\Auth.cs",
+              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\Controllers\\Auth.cs",
+              "RelativeToolTip": "Controllers\\Auth.cs",
+              "ViewState": "AgIAAAABAAAAAAAAAAAAwCYBAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:04:13.453Z",
+              "WhenOpened": "2025-11-24T18:19:35.526Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Apilogtester.cs",
-              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\UnitTests\\Apilogtester.cs",
-              "RelativeDocumentMoniker": "UnitTests\\Apilogtester.cs",
-              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\UnitTests\\Apilogtester.cs",
-              "RelativeToolTip": "UnitTests\\Apilogtester.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAgwAoAAAApAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Program.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\greenvilleassociates\\bikesapi\\Program.cs",
+              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Program.cs",
+              "RelativeToolTip": "..\\..\\..\\greenvilleassociates\\bikesapi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-24T02:03:57.741Z",
+              "WhenOpened": "2025-11-24T18:18:31.949Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Auth.cs",
+              "DocumentMoniker": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Controllers\\Auth.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\greenvilleassociates\\bikesapi\\Controllers\\Auth.cs",
+              "ToolTip": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\Controllers\\Auth.cs",
+              "RelativeToolTip": "..\\..\\..\\greenvilleassociates\\bikesapi\\Controllers\\Auth.cs",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAAAOUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-24T18:19:09.785Z",
               "EditorCaption": ""
             }
           ]

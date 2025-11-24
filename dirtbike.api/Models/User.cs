@@ -45,7 +45,7 @@ public partial class User
 
     public string? Resettoken { get; set; }
 
-    public string? Resettokenexpiration { get; set; }
+    public DateTime? Resettokenexpiration { get; set; }
 
     public int Userid { get; set; }
 
