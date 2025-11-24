@@ -43,9 +43,11 @@
     <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.9" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="SQLDATA\" />
-  </ItemGroup>
+    <ItemGroup>
+  <Content Include="SQLDATA\**\*">
+    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+  </Content>
+</ItemGroup>
 
   <ItemGroup>
     <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
