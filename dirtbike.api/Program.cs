@@ -1,6 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Services;
+using System.Text;
+using Azure;
+using Azure.AI.FormRecognizer.DocumentAnalysis;
+using Microsoft.OpenApi.Models;
 using Enterprise.Controllers;
 using System.Text.Json;
 using ParkTools;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +19,21 @@ var allowedOrigins = corsSettings.GetSection("AllowedOrigins").Get<string[]>() ?
 var allowedMethods = corsSettings.GetSection("AllowedMethods").Get<string[]>() ?? Array.Empty<string>();
 var allowedHeaders = corsSettings.GetSection("AllowedHeaders").Get<string[]>() ?? Array.Empty<string>();
 
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 
 // Add services
 builder.Services.AddControllers();
@@ -60,6 +84,7 @@ app.MapAdminlogsEndpoints();
 app.MapSuperuserlogEndpoints();
 app.MapNoctechsEndpoints();
 app.MapControllers();
+app.MapParkCalendarEndpoints();
 app.MapLearnlogEndpoints();
 app.MapUseractionEndpoints();
 app.MapUsergroupsEndpoints();

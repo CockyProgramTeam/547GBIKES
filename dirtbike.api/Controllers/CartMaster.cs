@@ -50,6 +50,23 @@ public static class CartMasterEndpoints
         })
         .WithName("GetCartMasterById")
         .WithOpenApi();
+    
+    
+     //[HttpGet]
+        group.MapGet("/user/{id}", (int id) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.CartMasters.Where(m => m.UserId == id).ToList();
+            }
+        })
+        .WithName("GetCartMasterByUserId")
+        .WithOpenApi();
+    
+    
+       
+    
 
         //[HttpPut]
         group.MapPut("/{id}", async (int id, CartMaster input) =>
@@ -58,7 +75,17 @@ public static class CartMasterEndpoints
             {
                 CartMaster[] someCartMaster = context.CartMasters.Where(m => m.Id == id).ToArray();
                 context.CartMasters.Attach(someCartMaster[0]);
-                if (input.CartsActiveList != null) someCartMaster[0].CartsActiveList = input.CartsActiveList;
+              // Integers (nullable int? checks)
+				if (input.UserId != null) someCartMaster[0].UserId = input.UserId;
+				if (input.CartsCount != null) someCartMaster[0].CartsCount = input.CartsCount;
+				if (input.CartsCancelled != null) someCartMaster[0].CartsCancelled = input.CartsCancelled;
+				if (input.CartsActive != null) someCartMaster[0].CartsActive = input.CartsActive;
+
+				// Strings (check not null or empty)
+				if (!string.IsNullOrEmpty(input.CartsActiveList)) someCartMaster[0].CartsActiveList = input.CartsActiveList;
+				if (!string.IsNullOrEmpty(input.Loyaltyid)) someCartMaster[0].Loyaltyid = input.Loyaltyid;
+				if (!string.IsNullOrEmpty(input.Loyaltyvendor)) someCartMaster[0].Loyaltyvendor = input.Loyaltyvendor;
+
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.Id);

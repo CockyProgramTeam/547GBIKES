@@ -46,6 +46,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Park> Parks { get; set; }
 
+    public virtual DbSet<ParkCalendar> ParkCalendars { get; set; }
+
     public virtual DbSet<ParkReview> ParkReviews { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
@@ -75,6 +77,8 @@ public partial class DirtbikeContext : DbContext
     public virtual DbSet<Userhelp> Userhelps { get; set; }
 
     public virtual DbSet<Userlog> Userlogs { get; set; }
+
+    public virtual DbSet<Usernotice> Usernotices { get; set; }
 
     public virtual DbSet<Userprofile> Userprofiles { get; set; }
 
@@ -444,6 +448,19 @@ public partial class DirtbikeContext : DbContext
                 .HasColumnName("trailmapurl");
         });
 
+        modelBuilder.Entity<ParkCalendar>(entity =>
+        {
+            entity.ToTable("ParkCalendar");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.BookId).HasColumnName("BookID");
+            entity.Property(e => e.EndDate).HasColumnType("DATE");
+            entity.Property(e => e.QtyAdults).HasDefaultValue(0);
+            entity.Property(e => e.QtyChildren).HasDefaultValue(0);
+            entity.Property(e => e.StartDate).HasColumnType("DATE");
+            entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
+        });
+
         modelBuilder.Entity<ParkReview>(entity =>
         {
             entity.Property(e => e.DateApproved).HasColumnName("dateApproved");
@@ -477,6 +494,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.IsActive).HasDefaultValue(1);
             entity.Property(e => e.National).HasColumnType("INT");
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
+            entity.Property(e => e.Productclass).HasColumnName("productclass");
             entity.Property(e => e.Qtyadults)
                 .HasColumnType("INT")
                 .HasColumnName("qtyadults");
@@ -686,6 +704,21 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Hashid).HasColumnName("hashid");
             entity.Property(e => e.Loginstatus).HasColumnName("loginstatus");
             entity.Property(e => e.Username).HasColumnName("username");
+        });
+
+        modelBuilder.Entity<Usernotice>(entity =>
+        {
+            entity.ToTable("usernotices");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.NoticeDatetime)
+                .HasDefaultValueSql("DATETIME('now')")
+                .HasColumnType("DATETIME")
+                .HasColumnName("notice_datetime");
+            entity.Property(e => e.Userid)
+                .HasColumnType("VARCHAR(255)")
+                .HasColumnName("userid");
         });
 
         modelBuilder.Entity<Userprofile>(entity =>

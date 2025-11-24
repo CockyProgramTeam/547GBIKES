@@ -180,53 +180,31 @@ public static class UserEndpoints
         .WithOpenApi();
     
     	group.MapPost("/quickadd", async ([FromBody] QuickUserAdd dto) =>
-		{
+{
+    Console.WriteLine($"QuickUserAdd DTO received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}");
 
-	 	Console.WriteLine($"QuickUserAdd DTO received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}");
-        string logPath = "/opt/ga/547bikes/logs/quickusers.log"; // or wherever you want the log file
+    string logPath = "/opt/ga/547bikes/logs/quickusers.log";
+    string logEntry = $"[{DateTime.Now}] QuickUserAdd received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}{Environment.NewLine}";
 
-		string logEntry = $"[{DateTime.Now}] QuickUserAdd received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}{Environment.NewLine}";
-
-		try
-		{
-    	string? directoryPath = Path.GetDirectoryName(logPath);
-		if (!string.IsNullOrWhiteSpace(directoryPath))
-		{
-    	Directory.CreateDirectory(directoryPath);
-		} // ensures the directory exists
-    	File.AppendAllText(logPath, logEntry);
-		}
-		catch (Exception ex)
-		{
-      	File.AppendAllText("/opt/ga/547bikes/logs/error.log", $"[{DateTime.Now}] Error: {ex.Message}{Environment.NewLine}");
-		}
-    
-        
-        
-    	using (var context = new DirtbikeContext())
-    	{
-        int newUserId = dto.GenerateUserId();
-
-        var user = new User
+    try
+    {
+        string? directoryPath = Path.GetDirectoryName(logPath);
+        if (!string.IsNullOrWhiteSpace(directoryPath))
         {
-            Username = dto.Username,
-            Fullname = dto.Fullname,
-            Email = dto.Email,
-            Activeprofileurl = dto.ActiveProfileUrl,
-            Userid = newUserId,
-            Role = dto.Role
-        };
+            Directory.CreateDirectory(directoryPath);
+        }
+        File.AppendAllText(logPath, logEntry);
+    }
+    catch (Exception ex)
+    {
+        File.AppendAllText("/opt/ga/547bikes/logs/error.log", $"[{DateTime.Now}] Error: {ex.Message}{Environment.NewLine}");
+    }
 
-        var profile = new Userprofile
-        {
-            Userid = newUserId,
-            Fullname = dto.Fullname,
-            Email = dto.Email,
-            Activepictureurl = dto.ActiveProfileUrl
-        };
+    using (var context = new DirtbikeContext())
+    {
+        var user = dto.ToUser();   // 👈 use the DTO’s mapper
 
         context.Users.Add(user);
-        context.Userprofiles.Add(profile);
         await context.SaveChangesAsync();
 
         Enterpriseservices.ApiLogger.logapi(
@@ -234,11 +212,12 @@ public static class UserEndpoints
             Enterpriseservices.Globals.ControllerAPINumber,
             "QUICKADD", 1, "QuickUserAdd", "Created");
 
-        return TypedResults.Created($"Created User and Profile with ID: {newUserId}");
-    	}
-		})
-		.WithName("QuickAddUser")
-		.WithOpenApi();
+        return TypedResults.Created($"Created User Successfully");
+    }
+})
+.WithName("QuickAddUser")
+.WithOpenApi();
+
     
     
     

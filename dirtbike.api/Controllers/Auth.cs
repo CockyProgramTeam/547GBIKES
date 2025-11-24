@@ -11,9 +11,11 @@ using NuGet.Common;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
-namespace Enterprise.Controllers;
 using Services;
+using Microsoft.EntityFrameworkCore;
+using BCrypt.Net;
+namespace Enterprise.Controllers;
+//using Services;
 
 
 public enum Roles
@@ -227,7 +229,8 @@ public static class Auth
         })
         .WithName("signupUser")
         .WithOpenApi();
-
+    }
+/*
         //  Forgot Password Route
         group.MapPost("/forgotPasswordLocal", async (ForgotPasswordRequest request, ServiceBusService serviceBusService, IConfiguration config) =>
         {
@@ -412,7 +415,7 @@ public static class Auth
         .WithOpenApi();
 
     }
-
+*/
 
     // File Handling Methods
     private static async Task<List<User>> LoadUsersFromJson()

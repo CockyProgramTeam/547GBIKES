@@ -88,7 +88,7 @@ public static class SalesCatalogueEndpoints
 				someSalesCatalogue[0].National = input.National;
 				someSalesCatalogue[0].State = input.State;
 				someSalesCatalogue[0].Global = input.Global;
-
+				someSalesCatalogue[0].Productclass = input.Productclass;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.SalesCatalogueId);

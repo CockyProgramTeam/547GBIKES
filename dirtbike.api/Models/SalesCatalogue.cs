@@ -34,4 +34,6 @@ public partial class SalesCatalogue
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
+
+    public string? Productclass { get; set; }
 }
