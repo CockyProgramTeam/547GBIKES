@@ -1,20 +1,22 @@
+using Azure.Core;
+using Azure.Messaging.ServiceBus;
+using BCrypt.Net;
+using dirtbike.api.Data;
+using dirtbike.api.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
+using NuGet.Common;
+using Services;
 using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using System.IO;
-using dirtbike.api.Models;
-using dirtbike.api.Data;
-using NuGet.Common;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Services;
-using Microsoft.EntityFrameworkCore;
-using BCrypt.Net;
-using Azure.Messaging.ServiceBus;
 namespace Enterprise.Controllers;
 
 //using Services;
@@ -157,7 +159,8 @@ public static class Auth
                 Jid = null,
                 Companyid = null,
                 Resettoken = null,
-                Resettokenexpiration = null
+                Resettokenexpiration = null,
+                Activepictureurl = request.Activepictureurl
             };
 
             users.Add(newUser);
@@ -216,7 +219,8 @@ public static class Auth
                     Jid = null,
                     Companyid = null,
                     Resettoken = null,
-                    Resettokenexpiration = null
+                    Resettokenexpiration = null,
+                    Activepictureurl = request.Activepictureurl
                 };
 
                 context.Users.Add(newUser);
@@ -473,7 +477,7 @@ public static class Auth
 }
 
 public class LoginRequest { public string Username { get; set; } public string PlainPassword { get; set; } }
-public class SignupRequest { public string Firstname { get; set; } public string Lastname { get; set; } public string Username { get; set; } public string Email { get; set; } public string PlainPassword { get; set; } }
+public class SignupRequest { public string Firstname { get; set; } public string Lastname { get; set; } public string Username { get; set; } public string Email { get; set; } public string PlainPassword { get; set; } public string Activepictureurl { get; set; } }
 public class ForgotPasswordRequest { public string Email { get; set; } }
 public class ResetPasswordRequest { public string ResetToken { get; set; } public string NewPassword { get; set; } }
 public class ResetPasswordRequestProfile { public string CurrentPassword { get; set; } public string NewPassword { get; set; } }

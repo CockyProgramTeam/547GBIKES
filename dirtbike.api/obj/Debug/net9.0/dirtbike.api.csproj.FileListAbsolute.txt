@@ -1046,3 +1046,7 @@ C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.48A9639E.Up2Date
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.api.genruntimeconfig.cache
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\ref\dirtbike.api.dll
+C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\SQLDATA\dirtbike.db
+C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\SQLDATA\dirtbike1019.db
+C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\SQLDATA\dirtbikeold.db
+C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\SQLDATA\dirtbitke.db
