@@ -82,7 +82,7 @@ font-size: 12pt;
   <script>
   $(document).ready(function () {
     $.ajax({
-      url: "https://gridactions3b.547bikes.info/api/Parks",
+      url: "https://parksapi.547bikes.info/api/Parks",
       method: "GET",
       success: function (parks) {
         console.log("✅ Parks data retrieved:", parks);
@@ -123,7 +123,7 @@ font-size: 12pt;
                     <p class="card-text"><strong>GPS:</strong> ${park.latitude}, ${park.longitude}</p>
                     <p class="card-text"><strong>CapacityMax: </strong> ${park.maxvisitors} <strong>&nbsp&nbspCapacityCurrent: </strong>${park.currentvisitors}</p>
                     <span>&nbsp&nbsp${trailMapLink}<br>
-                    <a href="book55.html?parkId=${park.parkId}" class="btn btn-success btn-sm mt-2 ms-2">Book This Park</a><br>
+                    <a href="book555.html?parkId=${park.parkId}" class="btn btn-success btn-sm mt-2 ms-2">Book This Park</a><br>
                     <a href="${mapsLink}" class="btn btn-outline-secondary btn-sm mt-2 ms-2" target="_blank">Open in Google Maps</a>
                     <a href="${directionsLink}" class="btn btn-outline-primary btn-sm mt-2 ms-2" target="_blank">Get Driving Directions</a>
                     <br>
