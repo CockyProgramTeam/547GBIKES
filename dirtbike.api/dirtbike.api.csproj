@@ -43,7 +43,7 @@
     <PackageReference Include="System.Security.Cryptography.Xml" Version="9.0.9" />
   </ItemGroup>
 
-    <ItemGroup>
+  <ItemGroup>
   <Content Include="SQLDATA\**\*">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </Content>

@@ -20,5 +20,4 @@ public partial class Apilog
     public string? Apiresult { get; set; }
 
     public string? Description { get; set; }
-
 }

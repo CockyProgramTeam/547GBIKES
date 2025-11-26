@@ -52,23 +52,36 @@ public static class UserprofileEndpoints
         .WithOpenApi();
     
             //[HttpGet]
-        group.MapGet("/user/{Useridastring}", (string Userid) =>
+        group.MapGet("/user/{Useridastring}", (string Useridasstring) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETUSERWITHID", 1, "Test", "Test"); 
-                return context.Userprofiles.Where(m => m.Useridasstring == Userid).ToList();
+                return context.Userprofiles.Where(m => m.Useridasstring == Useridasstring).ToList();
+            }
+        })
+        .WithName("GetUserprofileByUserIdAsString")
+        .WithOpenApi();
+
+
+        //[HttpGet]
+        group.MapGet("/userid/{Userid}", (int Userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETUSERWITHID", 1, "Test", "Test");
+                return context.Userprofiles.Where(m => m.Userid == Userid).ToList();
             }
         })
         .WithName("GetUserprofileByUserId")
         .WithOpenApi();
-    
-    
-group.MapPut("/profile/{id}", async (int id, Userprofile input) =>
+
+
+        group.MapPut("/profile/{userid}", async (int Userid, Userprofile input) =>
 {
     await using var context = new DirtbikeContext();
 
-    var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Userid == id);
+    var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Userid == Userid);
     if (existingProfile == null)
     {
         return Results.NotFound();
@@ -114,13 +127,131 @@ group.MapPut("/profile/{id}", async (int id, Userprofile input) =>
     Enterpriseservices.ApiLogger.logapi(
         Enterpriseservices.Globals.ControllerAPIName,
         Enterpriseservices.Globals.ControllerAPINumber,
-        "PUTWITHID", 1, "UpdateUserprofile", $"Updated UserID: {id}"
+        "PUTWITHID", 1, "UpdateUserprofile", $"Updated UserID: {Userid}"
     );
 
-    return TypedResults.Accepted($"Updated UserID: {id}");
+    return TypedResults.Accepted($"Updated UserID: {Userid}");
 })
-.WithName("UpdateUserprofile")
+.WithName("UpdateUserprofileByUserid")
 .WithOpenApi();
+
+        group.MapPut("/profile/{useridasstring}", async (string Useridasstring, Userprofile input) =>
+        {
+            await using var context = new DirtbikeContext();
+
+            var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Useridasstring == Useridasstring);
+            if (existingProfile == null)
+            {
+                return Results.NotFound();
+            }
+
+            // Update only if string is not null or empty
+            if (!string.IsNullOrEmpty(input.Address1)) existingProfile.Address1 = input.Address1;
+            if (!string.IsNullOrEmpty(input.Address2)) existingProfile.Address2 = input.Address2;
+            if (!string.IsNullOrEmpty(input.City)) existingProfile.City = input.City;
+            if (!string.IsNullOrEmpty(input.Stateregion)) existingProfile.Stateregion = input.Stateregion;
+            if (!string.IsNullOrEmpty(input.Country)) existingProfile.Country = input.Country;
+            if (!string.IsNullOrEmpty(input.Phone)) existingProfile.Phone = input.Phone;
+            if (!string.IsNullOrEmpty(input.Cellphone)) existingProfile.Cellphone = input.Cellphone;
+            if (!string.IsNullOrEmpty(input.Email)) existingProfile.Email = input.Email;
+            if (!string.IsNullOrEmpty(input.Maritalstatus)) existingProfile.Maritalstatus = input.Maritalstatus;
+            if (!string.IsNullOrEmpty(input.University1)) existingProfile.University1 = input.University1;
+            if (!string.IsNullOrEmpty(input.University2)) existingProfile.University2 = input.University2;
+            if (!string.IsNullOrEmpty(input.Linkedinurl)) existingProfile.Linkedinurl = input.Linkedinurl;
+            if (!string.IsNullOrEmpty(input.Instagramurl)) existingProfile.Instagramurl = input.Instagramurl;
+            if (!string.IsNullOrEmpty(input.Vimeourl)) existingProfile.Vimeourl = input.Vimeourl;
+            if (!string.IsNullOrEmpty(input.Facebookurl)) existingProfile.Facebookurl = input.Facebookurl;
+            if (!string.IsNullOrEmpty(input.Googleurl)) existingProfile.Googleurl = input.Googleurl;
+            if (!string.IsNullOrEmpty(input.University)) existingProfile.University = input.University;
+            if (!string.IsNullOrEmpty(input.Title)) existingProfile.Title = input.Title;
+            if (!string.IsNullOrEmpty(input.Pronoun)) existingProfile.Pronoun = input.Pronoun;
+            if (!string.IsNullOrEmpty(input.Title2)) existingProfile.Title2 = input.Title2;
+            if (!string.IsNullOrEmpty(input.Activepictureurl)) existingProfile.Activepictureurl = input.Activepictureurl;
+            if (!string.IsNullOrEmpty(input.Employeeid)) existingProfile.Employeeid = input.Employeeid;
+            if (!string.IsNullOrEmpty(input.Postalzip)) existingProfile.Postalzip = input.Postalzip;
+            if (!string.IsNullOrEmpty(input.Companyid)) existingProfile.Companyid = input.Companyid;
+            if (!string.IsNullOrEmpty(input.Fullname)) existingProfile.Fullname = input.Fullname;
+            if (!string.IsNullOrEmpty(input.Firstname)) existingProfile.Firstname = input.Firstname;
+            if (!string.IsNullOrEmpty(input.Lastname)) existingProfile.Lastname = input.Lastname;
+            if (!string.IsNullOrEmpty(input.Defaultinstanceid)) existingProfile.Defaultinstanceid = input.Defaultinstanceid;
+            if (!string.IsNullOrEmpty(input.Defaultshardid)) existingProfile.Defaultshardid = input.Defaultshardid;
+            if (!string.IsNullOrEmpty(input.Useridasstring)) existingProfile.Useridasstring = input.Useridasstring;
+
+            // Non-string fields (like ints) can be updated directly
+            existingProfile.Sms = input.Sms;
+
+            await context.SaveChangesAsync();
+
+            Enterpriseservices.ApiLogger.logapi(
+                Enterpriseservices.Globals.ControllerAPIName,
+                Enterpriseservices.Globals.ControllerAPINumber,
+                "PUTWITHID", 1, "UpdateUserprofile", $"Updated UserIDasstring: {Useridasstring}"
+            );
+
+            return TypedResults.Accepted($"Updated UserIDasstring: {Useridasstring}");
+        })
+.WithName("UpdateUserprofileByUseridassting")
+.WithOpenApi();
+
+        group.MapPut("/{Id}", async (int Id, Userprofile input) =>
+        {
+            await using var context = new DirtbikeContext();
+
+            var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Id == Id);
+            if (existingProfile == null)
+            {
+                return Results.NotFound();
+            }
+
+            // Update only if string is not null or empty
+            if (!string.IsNullOrEmpty(input.Address1)) existingProfile.Address1 = input.Address1;
+            if (!string.IsNullOrEmpty(input.Address2)) existingProfile.Address2 = input.Address2;
+            if (!string.IsNullOrEmpty(input.City)) existingProfile.City = input.City;
+            if (!string.IsNullOrEmpty(input.Stateregion)) existingProfile.Stateregion = input.Stateregion;
+            if (!string.IsNullOrEmpty(input.Country)) existingProfile.Country = input.Country;
+            if (!string.IsNullOrEmpty(input.Phone)) existingProfile.Phone = input.Phone;
+            if (!string.IsNullOrEmpty(input.Cellphone)) existingProfile.Cellphone = input.Cellphone;
+            if (!string.IsNullOrEmpty(input.Email)) existingProfile.Email = input.Email;
+            if (!string.IsNullOrEmpty(input.Maritalstatus)) existingProfile.Maritalstatus = input.Maritalstatus;
+            if (!string.IsNullOrEmpty(input.University1)) existingProfile.University1 = input.University1;
+            if (!string.IsNullOrEmpty(input.University2)) existingProfile.University2 = input.University2;
+            if (!string.IsNullOrEmpty(input.Linkedinurl)) existingProfile.Linkedinurl = input.Linkedinurl;
+            if (!string.IsNullOrEmpty(input.Instagramurl)) existingProfile.Instagramurl = input.Instagramurl;
+            if (!string.IsNullOrEmpty(input.Vimeourl)) existingProfile.Vimeourl = input.Vimeourl;
+            if (!string.IsNullOrEmpty(input.Facebookurl)) existingProfile.Facebookurl = input.Facebookurl;
+            if (!string.IsNullOrEmpty(input.Googleurl)) existingProfile.Googleurl = input.Googleurl;
+            if (!string.IsNullOrEmpty(input.University)) existingProfile.University = input.University;
+            if (!string.IsNullOrEmpty(input.Title)) existingProfile.Title = input.Title;
+            if (!string.IsNullOrEmpty(input.Pronoun)) existingProfile.Pronoun = input.Pronoun;
+            if (!string.IsNullOrEmpty(input.Title2)) existingProfile.Title2 = input.Title2;
+            if (!string.IsNullOrEmpty(input.Activepictureurl)) existingProfile.Activepictureurl = input.Activepictureurl;
+            if (!string.IsNullOrEmpty(input.Employeeid)) existingProfile.Employeeid = input.Employeeid;
+            if (!string.IsNullOrEmpty(input.Postalzip)) existingProfile.Postalzip = input.Postalzip;
+            if (!string.IsNullOrEmpty(input.Companyid)) existingProfile.Companyid = input.Companyid;
+            if (!string.IsNullOrEmpty(input.Fullname)) existingProfile.Fullname = input.Fullname;
+            if (!string.IsNullOrEmpty(input.Firstname)) existingProfile.Firstname = input.Firstname;
+            if (!string.IsNullOrEmpty(input.Lastname)) existingProfile.Lastname = input.Lastname;
+            if (!string.IsNullOrEmpty(input.Defaultinstanceid)) existingProfile.Defaultinstanceid = input.Defaultinstanceid;
+            if (!string.IsNullOrEmpty(input.Defaultshardid)) existingProfile.Defaultshardid = input.Defaultshardid;
+            if (!string.IsNullOrEmpty(input.Useridasstring)) existingProfile.Useridasstring = input.Useridasstring;
+
+            // Non-string fields (like ints) can be updated directly
+            existingProfile.Sms = input.Sms;
+
+            await context.SaveChangesAsync();
+
+            Enterpriseservices.ApiLogger.logapi(
+                Enterpriseservices.Globals.ControllerAPIName,
+                Enterpriseservices.Globals.ControllerAPINumber,
+                "PUTWITHID", 1, "UpdateUserprofile", $"Updated Id: {Id}"
+            );
+
+            return TypedResults.Accepted($"Updated Id: {Id}");
+        })
+.WithName("UpdateUserprofileById")
+.WithOpenApi();
+
+
 
         group.MapPost("/", async (Userprofile input) =>
         {

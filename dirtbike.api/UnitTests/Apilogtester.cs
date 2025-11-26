@@ -1,6 +1,6 @@
 using System;
-using dirtbike.api.Models;
-using dirtbike.api.Data; // adjust namespace to match your project
+using dirtbike.api.Data;
+using dirtbike.api.Models; // adjust namespace to match your project
 using Microsoft.EntityFrameworkCore;
 namespace Enterpriseservices;
 

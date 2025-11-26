@@ -10155,11 +10155,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\dirtbike.api.csproj",
+      "projectUniqueName": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\dirtbike.api.csproj",
       "projectName": "dirtbike.api",
-      "projectPath": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\dirtbike.api.csproj",
+      "projectPath": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\dirtbike.api.csproj",
       "packagesPath": "C:\\Users\\stritzj\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\stritzj\\source\\repos\\CockyProgramTeam\\547GBIKES\\dirtbike.api\\obj\\",
+      "outputPath": "C:\\Users\\stritzj\\source\\repos\\greenvilleassociates\\bikesapi\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

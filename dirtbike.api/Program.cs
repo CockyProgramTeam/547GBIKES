@@ -1,16 +1,17 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using Services;
-using System.Text;
 using Azure;
 using Azure.AI.FormRecognizer.DocumentAnalysis;
-using Microsoft.OpenApi.Models;
-using Enterprise.Controllers;
-using System.Text.Json;
-using ParkTools;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Azure.Messaging.ServiceBus;
+using Enterprise.Controllers;
 using Enterpriseservices;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using ParkTools;
+using Services;
+using System.Text;
+using System.Text.Json;
+using Azure.Messaging.ServiceBus;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -104,7 +105,7 @@ app.MapUsergroupsEndpoints();
 app.MapUserhelpEndpoints();
 app.MapBatchEndpoints();
 app.MapBatchtypeEndpoints();
-app.UseMiddleware<SwaggerAuthMiddleware>();
+app.MapAuthEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.
 //IT WILL REBUILD THE PASSWORDS ALSO USING A RANDOM HASHER USING BCRYPT
@@ -115,4 +116,7 @@ app.UseMiddleware<SwaggerAuthMiddleware>();
 
 //var myPasswords = new MyPasswords();
 //await MyPasswords.HashAllUserPasswordsAsync();
+
 app.Run();
+
+
