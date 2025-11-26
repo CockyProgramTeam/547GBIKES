@@ -63,7 +63,7 @@
           <span id="H3UserBanner" class="text-white me-3">User</span>
           <a href="login.html" id="loginBtn" class="btn btn-outline-light me-2" onclick="loginUser(event)">Login</a>
           <a href="login.html" id="logoutBtn" class="btn btn-outline-light me-2" onclick="logoutUser(event)">Logout</a>
-          <a href="cart5.html?uid=1" id="cartBtn" class="btn btn-outline-light" onclick="checkUser(event)">Cart</a>
+          <a href="cartreview.html" id="cartBtn" class="btn btn-outline-light" onclick="checkUser(event)">Cart</a>
         </div>
       </div>
     </div>
@@ -86,7 +86,7 @@
   </div>
 
 <script>
-  const baseUrl = "https://gridactions3b.547bikes.info";
+  const baseUrl = "https://parksapi.547bikes.info";
   const urlParams = new URLSearchParams(window.location.search);
   const cartId = urlParams.get("cartid");
 

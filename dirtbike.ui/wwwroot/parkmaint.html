@@ -33,7 +33,7 @@
       <span id="H3UserBanner"></span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -306,7 +306,7 @@
 
 $(document).ready(function () {
   $.ajax({
-    url: "https://gridactions3b.547bikes.info/api/Parks",
+    url: "https://parksapi.547bikes.info/api/Parks",
     method: "GET",
     success: function (parks) {
       allParks = parks;
@@ -445,7 +445,7 @@ $("#updateParkBtn").on("click", function () {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(this));
       $.ajax({
-        url: "https://gridactions3b.547bikes.info/api/Parks",
+        url: "https://parksapi.547bikes.info/api/Parks",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(data),
@@ -461,7 +461,7 @@ $("#updateParkForm").on("submit", function (e) {
   console.log(data); // ✅ Log the data before sending
 
   $.ajax({
-    url: `https://gridactions3b.547bikes.info/api/Parks/${data.parkId}`,
+    url: `https://parksapi.547bikes.info/api/Parks/${data.parkId}`,
     method: "PUT",
     contentType: "application/json",
     data: JSON.stringify(data),
@@ -477,7 +477,7 @@ $("#deleteParkBtn").on("click", function () {
   if (!confirmed) return;
 
   $.ajax({
-    url: `https://gridactions3b.547bikes.info/api/Parks/${selectedPark}`,
+    url: `https://parksapi.547bikes.info/api/Parks/${selectedPark}`,
     method: "DELETE",
     success: () => {
       alert("Park deleted successfully.");

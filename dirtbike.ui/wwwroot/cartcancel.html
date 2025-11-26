@@ -44,21 +44,21 @@ width: 400px;
         <button class="jsmenu"><img src="./images/jsmenu4.png" width="100%" height="350px"></button> 
         <div class="dropdown-content">
              <a href="index.html">Site Home</a>
-                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="cartreview.html">MyCart</a>
                   <a href="parks5.html">Review Park Options</a>
                   <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
                   <a href="manager.html">Manager Utilities</a>
         </div>
       </div> 
-      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Cancel Reservation</div><BR>
+    <div class="logo">&nbsp&nbsp<H5>MyLinkv25 - Cancel Reservation</H5></div><BR>
     </div>
     <div class="nav-right">
       <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
       <span id="H3UserBanner">User</span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
   <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -112,7 +112,7 @@ width: 400px;
 
     // Load booking details
     $.ajax({
-      url: `https://gridactions3b.547bikes.info/api/Booking/${bookingId}`,
+      url: `https://parksapi.547bikes.info/api/Booking/${bookingId}`,
       method: "GET",
       success: function (bookings) {
         if (!Array.isArray(bookings) || bookings.length === 0) {
@@ -173,7 +173,7 @@ width: 400px;
     const cartId = urlParams.get('cartid');
 
     $.ajax({
-      url: `https://gridactions3b.547bikes.info/api/Cart/${cartId}`,
+      url: `https://parksapi.547bikes.info/api/Cart/${cartId}`,
       method: "GET",
       success: function (cart) {
         const originalAmount = parseFloat(cart.totalAmount);
@@ -191,7 +191,7 @@ width: 400px;
         reverseElem.style.fontWeight = "bold";
 
         $.ajax({
-          url: `https://gridactions3b.547bikes.info/api/Booking/${bookingId}`,
+          url: `https://parksapi.547bikes.info/api/Booking/${bookingId}`,
           method: "PUT",
           contentType: "application/json",
           data: JSON.stringify({
@@ -208,7 +208,7 @@ width: 400px;
           },
           error: function () {
             alert("Failed to cancel reservation.");
-            console.log(`https://gridactions3b.547bikes.info/api/Booking/${bookingId}`);
+            console.log(`https://parksapi.547bikes.info/api/Booking/${bookingId}`);
           }
         });
       },
@@ -224,7 +224,7 @@ width: 400px;
   const cartId = urlParams.get("cartid");
 
   $.ajax({
-    url: `https://gridactions3b.547bikes.info/api/Booking/${bookingId}`,
+    url: `https://parksapi.547bikes.info/api/Booking/${bookingId}`,
     method: "GET",
     success: function (bookings) {
       if (!Array.isArray(bookings) || bookings.length === 0) {
@@ -251,7 +251,7 @@ width: 400px;
       console.log("Posting reversal payment:", payment);
 
       $.ajax({
-        url: "https://gridactions3b.547bikes.info/api/Payments",
+        url: "https://parksapi.547bikes.info/api/Payments",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(payment),

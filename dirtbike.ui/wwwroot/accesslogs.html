@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Results</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #results {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Results</h1>
+    <button id="fetchData">Fetch Data</button>
+    <div id="results"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#fetchData').click(function() {
+                $.ajax({
+                    url: 'https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userlog',
+                    type: 'GET',
+                    success: function(data) {
+                        $('#results').html('<pre>' + JSON.stringify(data, null, 2) + '</pre>');
+                    },
+                    error: function(error) {
+                        $('#results').html('<p>Error fetching data</p>');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

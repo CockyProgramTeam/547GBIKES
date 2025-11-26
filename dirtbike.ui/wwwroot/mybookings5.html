@@ -33,7 +33,7 @@
         <button class="jsmenu"><img src="./images/jsmenu4.png" width="100%" height="350px"></button> 
         <div class="dropdown-content">
           <a href="index.html">Site Home</a>
-          <a href="cart5.html?uid=1">MyCart</a>
+          <a href="cartreview.html">MyCart</a>
           <a href="parks5.html">Review Park Options</a>
           <a href="parksreview5.html">Park Reviews</a>
           <a href="mybookings5.html">MyReservations</a>
@@ -47,13 +47,13 @@
       <span id="H3UserBanner">User</span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 
   <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 
-  <div class="container py-5">
+  <div class="container-fluid" style="width:90%;">
     <div align="center"><img src="./images/rafting.jpg" width="100%" height="250px"></div>
 
     <!-- Active Bookings Table -->
@@ -103,8 +103,8 @@
                     <th>Park Name</th>
                     <th>Booking Start</th>
                     <th>Booking End</th>
-                    <th>Adults</th>
-                    <th>Children</th>
+                    <th>Adult Items</th>
+                    <th>Jr. Items</th>
                     <th>Total ($)</th>
                     <th>Transaction ID(s)</th>
                     <th>Booking Type</th>
@@ -124,87 +124,93 @@
   <!-- Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <script>
-    $(document).ready(function () {
-      const activeBody = $("#active-bookings-body");
-      const cancelledBody = $("#cancelled-bookings-body");
+ <script>
+  $(document).ready(function () {
+    const activeBody = $("#active-bookings-body");
+    const cancelledBody = $("#cancelled-bookings-body");
 
-      $.ajax({
-        url: "https://gridactions3b.547bikes.info/api/Booking",
-        method: "GET",
-        success: function (bookings) {
-          let pendingRequests = bookings.length;
+    // Get the current user's ID from localStorage
+    const currentUid = localStorage.getItem("id");
 
-          bookings.forEach(function (booking) {
-            $.ajax({
-              url: `https://gridactions3b.547bikes.info/api/Parks/${booking.parkId}`,
-              method: "GET",
-              success: function (park) {
-                const parkName = park && park[0] ? park[0].name : 'Test Park';
-                const row = `
-                  <tr>
-                    <td>${booking.bookingId}</td>
-                    <td>${booking.uid}</td>
-                    <td>${booking.parkId}</td>
-                    <td>${booking.cartid}</td>
-                    <td>${parkName}</td>
-                    <td>${booking.resStart || 'N/A'}</td>
-                    <td>${booking.resEnd || 'N/A'}</td>
-                    <td>${booking.adults}</td>
-                    <td>${booking.children}</td>
-                    <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
-                    <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
-                    <td>${booking.reservationtype}</td>
-                    <td>${booking.reservationstatus}</td>
-                    <td>
-                      <button class="btn btn-sm btn-dark" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">Review Cart</button><br>
-                      <button class="btn btn-sm btn-danger mt-1" onclick="window.location.href='cartcancel.html?bookingid=${booking.bookingId}&cartid=${booking.cartid}'">Cancel</button>
-                    </td>
-                  </tr>
-                `;
+    $.ajax({
+      url: "https://parksapi.547bikes.info/api/Booking",
+      method: "GET",
+      success: function (bookings) {
+        // Filter bookings for the current user only
+        const userBookings = bookings.filter(b => b.uid === currentUid);
 
-                if (booking.reservationstatus.toLowerCase() === "cancelled") {
-                  cancelledBody.append(row);
-                } else {
-                  activeBody.append(row);
-                }
+        let pendingRequests = userBookings.length;
 
-                pendingRequests--;
-                if (pendingRequests === 0) {
-                  initializeTables();
-                }
-              },
-              error: function () {
-                pendingRequests--;
-                if (pendingRequests === 0) {
-                  initializeTables();
-                }
+        userBookings.forEach(function (booking) {
+          $.ajax({
+            url: `https://parksapi.547bikes.info/api/Parks/${booking.parkId}`,
+            method: "GET",
+            success: function (park) {
+              const parkName = park && park[0] ? park[0].name : 'Test Park';
+              const row = `
+                <tr>
+                  <td>${booking.bookingId}</td>
+                  <td>${booking.uid}</td>
+                  <td>${booking.parkId}</td>
+                  <td>${booking.cartid}</td>
+                  <td>${parkName}</td>
+                  <td>${booking.resStart || 'N/A'}</td>
+                  <td>${booking.resEnd || 'N/A'}</td>
+                  <td>${booking.adults}</td>
+                  <td>${booking.children}</td>
+                  <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
+                  <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
+                  <td>${booking.reservationtype}</td>
+                  <td>${booking.reservationstatus}</td>
+                  <td>
+                    <button class="btn btn-sm btn-dark" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">Review Cart</button><br>
+                    <button class="btn btn-sm btn-danger mt-1" onclick="window.location.href='cartcancel.html?bookingid=${booking.bookingId}&cartid=${booking.cartid}'">Cancel</button>
+                  </td>
+                </tr>
+              `;
+
+              if (booking.reservationstatus.toLowerCase() === "cancelled") {
+                cancelledBody.append(row);
+              } else {
+                activeBody.append(row);
               }
-            });
+
+              pendingRequests--;
+              if (pendingRequests === 0) {
+                initializeTables();
+              }
+            },
+            error: function () {
+              pendingRequests--;
+              if (pendingRequests === 0) {
+                initializeTables();
+              }
+            }
           });
-        },
-        error: function (xhr, status, error) {
-          activeBody.html(`<tr><td colspan="14" class="text-danger">Error loading bookings: ${error}</td></tr>`);
-        }
-      });
-
-      function initializeTables() {
-        $("#active-bookings-table").DataTable({
-          paging: true,
-          searching: true,
-          order: [[0, 'desc']],
-          responsive: true
         });
-
-        $("#cancelled-bookings-table").DataTable({
-          paging: true,
-          searching: true,
-          order: [[0, 'desc']],
-          responsive: true
-        });
+      },
+      error: function (xhr, status, error) {
+        activeBody.html(`<tr><td colspan="14" class="text-danger">Error loading bookings: ${error}</td></tr>`);
       }
     });
-  </script>
+
+    function initializeTables() {
+      $("#active-bookings-table").DataTable({
+        paging: true,
+        searching: true,
+        order: [[0, 'desc']],
+        responsive: true
+      });
+
+      $("#cancelled-bookings-table").DataTable({
+        paging: true,
+        searching: true,
+        order: [[0, 'desc']],
+        responsive: true
+      });
+    }
+  });
+</script>
 
   <footer class="footer text-center mt-5">
     &copy; Cocky Consulting 2025. <br> All rights reserved.<br>

@@ -60,7 +60,7 @@ font-size: 12pt;
         <span id="H3UserBanner"></span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+                <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
       </div>
     </div>
   <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -115,7 +115,7 @@ font-size: 12pt;
       }
 
       $.ajax({
-        url: `https://gridactions3b.547bikes.info/api/Parks/${parkId}`,
+        url: `https://parksapi.547bikes.info/api/Parks/${parkId}`,
         method: "GET",
         success: function (data) {
           const park = Array.isArray(data) ? data[0] : data;
@@ -183,7 +183,7 @@ font-size: 12pt;
           isCheckedOut: 0
         };
 
-        $.get("https://gridactions3b.547bikes.info/api/Cart", function (cart) {
+        $.get("https://parksapi.547bikes.info/api/Cart", function (cart) {
           const exists = cart.some(item =>
             item.uid === bookingData.uid &&
             item.parkId === bookingData.parkId &&
@@ -192,7 +192,7 @@ font-size: 12pt;
 
           if (!exists) {
             $.ajax({
-              url: "https://gridactions3b.547bikes.info/api/Cart",
+              url: "https://parksapi.547bikes.info/api/Cart",
               method: "POST",
               contentType: "application/json",
               data: JSON.stringify(bookingData),

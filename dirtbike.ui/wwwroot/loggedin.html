@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body onload="getstatus(), getpllinfo()">
+  <div class="container mt-5">
+    <div class="alert alert-info">
+      <strong><p id="mystatus" name="mystatustag">LoggedIn Status:</p></strong>
+    </div>
+    <div id="userInfo" class="card p-3"></div>
+  </div>
+  <BR><BR>
+  <div align="center"><span align="center"><button onclick="relogin()">Login</button>&nbsp&nbsp<button onclick="screenlogout()">Logout</button>&nbsp&nbsp<button onclick="clearold()">Refresh Page</button>&nbsp&nbsp<button onclick="resetpass()">Reset Password</button>&nbsp&nbsp<button onclick="forgotpass()">Forgot Password</button>&nbsp&nbsp<button onclick="registerme()">Register</button>&nbsp&nbsp<button onclick="seclogs()">SecurityLogs</button>&nbsp&nbsp</span></div>
+  
+  
+
+<script>
+    function getstatus()
+      {
+      var somestatus = localStorage.getItem("uid");
+      var num = parseInt(somestatus);
+      if (num > 0 && num != 901)
+      {
+        document.getElementById("mystatus").innerHTML = "LoggedIn Status: LoggedIn";
+      }
+      else
+      {
+       document.getElementById("mystatus").innerHTML = "LoggedIn Status: Not Authenticated";
+      }
+      }
+    function getpllinfo() {
+      //alert("calling getpllinfo");
+      var someuid = localStorage.getItem("uid");
+      var somefullname = localStorage.getItem("fullname");
+      var somefirstname = localStorage.getItem("firstname");
+      var somelastname = localStorage.getItem("lastname");
+      var someemail = localStorage.getItem("email");
+      var somerole = localStorage.getItem("role");
+
+      var userInfo = `<h5 class="card-title">Hi ${somefirstname} ${somelastname}</h5>
+                      <p class="card-text"><strong>UID:</strong> ${someuid}</p>
+                      <p class="card-text"><strong>Full Name:</strong> ${somefullname}</p>
+                      <p class="card-text"><strong>Email:</strong> ${someemail}</p>
+                      <p class="card-text"><strong>Role:</strong> ${somerole}</p>`;
+
+      document.getElementById("userInfo").innerHTML = userInfo;
+
+      // Force reload to overwrite cache
+    }
+    
+    function clearold()
+    {
+    window.location.reload(true);
+    }
+
+    function relogin()
+    {
+    window.open('login.html','_self');
+    }
+  
+    function screenlogout()
+    {
+    localStorage.setItem("id", "901");
+    localStorage.setItem("uid", "901");
+    localStorage.setItem("jid", "901");
+    localStorage.setItem("firstname", "visitor");  
+    localStorage.setItem("lastname", "590team1");    
+    localStorage.setItem("fullname", "visitor@590team1.info");  
+    localStorage.setItem("email", "visitor@590team1.info");    
+    localStorage.setItem("role", "guest");
+    clearold();
+    //alert("Logging Out. Cleared Permissions");  
+    }
+  
+  function seclogs()
+  {
+  alert("This function is not implemented yet");
+  }
+  
+  function resetpass()
+  {
+  alert("This function is not implemented yet");
+  }
+ 
+  function registerme()
+  {
+  window.open('register.html','_self');
+  }
+  
+  function forgotpass()
+  {
+  window.open('forgotpassword.html','_self');
+  }
+  </script>
+  </body>
+</html>

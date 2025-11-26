@@ -68,7 +68,7 @@ width: 400px;
                   <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="cartreview.html">MyCart</a>
                   <a href="parks5.html">Review Park Options</a>
                   <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
@@ -82,7 +82,7 @@ width: 400px;
         <span id="H3UserBanner"></span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+                <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
       </div>
     </div>
   <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -109,11 +109,11 @@ width: 400px;
       return;
     }
 
-    $.get("https://gridactions3b.547bikes.info/api/Parks", function (parks) {
+    $.get("https://parksapi.547bikes.info/api/Parks", function (parks) {
       const parkMap = {};
       parks.forEach(p => parkMap[p.parkId] = p);
 
-      $.get("https://gridactions3b.547bikes.info/api/Cart", function (cart) {
+      $.get("https://parksapi.547bikes.info/api/Cart", function (cart) {
         const userItems = cart.filter(item => item.uid === uid && item.isCheckedOut !== 1 && item.isCheckedOut !== 2);
         if (userItems.length === 0) {
           $("#cart-items").html(`<div class="alert alert-info">No Transactions Pending for UID ${uid}.</div>`);
@@ -124,7 +124,7 @@ width: 400px;
           const isCurrent = currentParkId && item.parkId.toString() === currentParkId;
           const park = parkMap[item.parkId];
           const parkName = park ? park.name : `Park #${item.parkId}`;
-          const parkLogo = park && park.parklogourl ? `<img src="${park.parklogourl}" alt="Logo" class="park-logo">` : "";
+          const parkLogo = park && park.parklogourl ? `<img src="${park.parklogourl}" alt="Logo" class="park-logo" onerror="this.style.display='none';">` : "";
           const parkAddress = park ? park.address : "Address not available";
           const cardId = `cart-${item.cartId}`;
 
@@ -197,7 +197,7 @@ width: 400px;
     if (!confirm("Are you sure you want to remove this item from your cart?")) return;
 
     $.ajax({
-      url: `https://gridactions3b.547bikes.info/api/Cart/${cartId}`,
+      url: `https://parksapi.547bikes.info/api/Cart/${cartId}`,
       type: "PUT",
       contentType: "application/json",
       data: JSON.stringify({ isCheckedOut: 2 }),

@@ -117,7 +117,7 @@ font-size: 12pt;
 }
   </style>
 </head>
-<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadProfile(); LoadProfileDetails();">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadProfile(); LoadProfileDetails(); ensureUserProfile();">
     <!-- Navigation Bar -->
     <div class="navbar">
       <div class="nav-left">
@@ -132,14 +132,14 @@ font-size: 12pt;
                   <a href="manager.html">Manager Utilities</a>
              </div>
     </div> 
-              <div class="logo">&nbsp&nbspMyLinkv25 - Profile Manager</div>
+              <div class="logo">&nbsp&nbsp<H5>MyLinkv25 - Profile Manager<H5></div>
       </div>
       <div class="nav-right">
         <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
         <span id="H3UserBanner"></span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cartreview.html" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+                <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
       </div>
     </div>
 <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -173,6 +173,7 @@ font-size: 12pt;
             <button id="btnEditPic" class="btn btn-warning btn-sm me-2" onclick="openUpdatePictureModal()">Update Picture</button>
             <button id="userEnhancedBtn" class="btn btn-info btn-sm me-2" onclick="openUserEnhancedModal()">Update Enhanced</button>
             <button id="userPasswordBtn" class="btn btn-secondary btn-sm me-2" onclick="openPasswordModal()">Change Password</button>
+             <button id="userPasswordBtn" class="btn btn-danger btn-sm me-2" onclick="loadCartMaster()">Review Account</button>
             </div>
         </div>
       </div>
@@ -305,27 +306,102 @@ font-size: 12pt;
   <!-- Bootstrap Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-const profileApiUrl = "https://gridactions3b.547bikes.info/api/Userprofile";
+const profileApiUrl = "https://parksapi.547bikes.info/api/Userprofile";
 const editProfileModal = new bootstrap.Modal(document.getElementById("editProfileModal"));
 const editPicModal = new bootstrap.Modal(document.getElementById("editPicModal"));
+let profilerecordnumber = 0;
 
+async function ensureUserProfile() {
+  // localStorage always returns strings, so convert to integer
+  const someuidStr = localStorage.getItem("uid");
+  if (!someuidStr) {
+    console.error("No UID found in localStorage");
+    return;
+  }
+  const someuid = Number(someuidStr); // now guaranteed to be an integer
+
+  try {
+    // Step 1: Check if user profile exists
+    const getResponse = await fetch(
+      `https://parksapi.547bikes.info/api/Userprofile/user/${someuid}?Userid=${someuid}`,
+      {
+        method: "GET",
+        headers: { "Accept": "application/json" }
+      }
+    );
+
+    if (getResponse.ok) {
+      const userProfile = await getResponse.json();
+      if (userProfile && Object.keys(userProfile).length > 0) {
+        console.log("User profile already exists:", userProfile);
+        return userProfile;
+      }
+    }
+
+    // Step 2: Build DTO for new user with default picture
+    const newUserDto = {
+      id: someuid,
+      activepictureurl: "./images/bluecircle.png", // default picture
+      userid: someuid,
+      useridasstring: someuid.toString()
+    };
+
+    // Step 3: Create new user profile
+    const postResponse = await fetch(
+      "https://parksapi.547bikes.info/api/Userprofile",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        body: JSON.stringify(newUserDto)
+      }
+    );
+
+    if (!postResponse.ok) {
+      throw new Error("Failed to create user profile");
+    }
+
+    const newProfile = await postResponse.json();
+    console.log("Created new user profile:", newProfile);
+    return newProfile;
+
+  } catch (error) {
+    console.error("Error ensuring user profile:", error);
+  }
+}
+
+
+
+
+
+
+  
 async function LoadProfile() {
   const someuid = localStorage.getItem("uid");
   if (!someuid) {
     alert("User ID not found in localStorage.");
     return;
   }
-  const fullstring = `${profileApiUrl}/${someuid}`;
+  const fullstring = `${profileApiUrl}/user/{Useridastring}?Userid=${someuid.toString()}`;
   console.log("Fetching profile from:", fullstring);
 
   try {
     const response = await fetch(fullstring);
     if (!response.ok) throw new Error("Failed to fetch profile.");
 
- const profilearray = await response.json();
+const profilearray = await response.json();
 const profile = profilearray?.[0];
 console.log(profile);
-  
+console.log(profile.id);
+profilerecordnumber = profile.id;
+localStorage.setItem("profilerecordnumber", profilerecordnumber);    
+console.log('profilerecordnumber', profilerecordnumber);    
+stringurl = profile.id + "," + profile.userid;
+alert(stringurl); //Alert with the Profileid, userid combination.
+    
+localStorage.setItem("profileid", profile.id);    
 if (!profile || typeof profile !== "object") {
   console.warn("No profile data found.");
   return;
@@ -377,6 +453,12 @@ function openEditProfileModal() {
   editProfileModal.show();
 }
 
+function loadCartMaster() {
+  window.open('cartmaster.html','_self');
+}
+
+
+
 function openUpdatePictureModal() {
   editPicModal.show();
 }
@@ -386,14 +468,14 @@ function closeModal() {
 }
 
 async function openUserEnhancedModal() {
-  const someuid = localStorage.getItem("uid");
+  const someuid = localStorage.getItem("profilerecordnumber");    
   if (!someuid) {
     alert("User ID not found in localStorage.");
     return;
   }
 
   try {
-    const response = await fetch(`https://gridactions3b.547bikes.info/api/Userprofile/${someuid}`);
+    const response = await fetch(`https://parksapi.547bikes.info/api/Userprofile/${someuid}`);
     if (!response.ok) throw new Error("Failed to fetch profile.");
 
     const profilearray = await response.json();
@@ -425,8 +507,8 @@ async function openUserEnhancedModal() {
 }
   
 function SaveProfile() {
-  const uid = localStorage.getItem("uid");
-  if (!uid) {
+  const someuid = localStorage.getItem("profilerecordnumber");    
+  if (!someuid) {
     alert("User ID not found in localStorage.");
     return;
   }
@@ -451,7 +533,7 @@ function SaveProfile() {
     }
   });
 
-  fetch(`https://gridactions3b.547bikes.info/api/Userprofile/profile/${uid}`, {
+  fetch(`https://parksapi.547bikes.info/api/Userprofile/profile/${someuid}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -473,14 +555,14 @@ function SaveProfile() {
 }
 
 async function LoadProfileDetails() {
-  const someuid = localStorage.getItem("uid");
-  if (!someuid) {
+  const someuid = localStorage.getItem("profilerecordnumber");    
+    if (!someuid) {
     console.error("UID not found in localStorage");
     return;
   }
 
   try {
-    const response = await fetch(`https://parksapi.547bikes.info/api/Userprofile/user/{Useridastring}?Userid=${someuid}`);
+    const response = await fetch(`https://parksapi.547bikes.info/api/Userprofile/${someuid}`);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
@@ -518,8 +600,8 @@ async function LoadProfileDetails() {
   }
 }
 function saveEnhancedProfile() {
-  const uid = localStorage.getItem("uid");
-  if (!uid) {
+ const someuid = localStorage.getItem("profilerecordnumber");    
+  if (!someuid) {
     alert("User ID not found.");
     return;
   }
@@ -535,7 +617,7 @@ function saveEnhancedProfile() {
     localStorage.setItem(key, input.value); // ✅ Still store locally
   });
 
-  fetch(`https://parksapi.547bikes.info/api/Userprofile/${uid}`, {
+  fetch(`https://parksapi.547bikes.info/api/Userprofile/profile/${someuid}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
@@ -566,12 +648,12 @@ function saveEnhancedProfile() {
   }
 
   async function submitNewPassword() {
-    const uid = localStorage.getItem("uid");
+    const someuid = localStorage.getItem("profilerecordnumber");    
     const oldPassword = localStorage.getItem("plainpassword");
     const newPassword = document.getElementById("newPassword").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
-    if (!uid || !oldPassword) {
+    if (!someuid || !oldPassword) {
       document.getElementById("errorMsg").innerText = "Missing user credentials in localStorage.";
       return;
     }
@@ -586,7 +668,7 @@ function saveEnhancedProfile() {
 
     // Send PUT request
     try {
-      const response = await fetch(`/password/${uid}`, {
+      const response = await fetch(`https://parksapi.547bikes.info/api/User/password/${someuid}?someplainpassword=${newPassword}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json"
@@ -606,5 +688,9 @@ function saveEnhancedProfile() {
     }
   }
 </script>
+</body>
+   <!-- Footer -->
+  <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 
+</html>
   

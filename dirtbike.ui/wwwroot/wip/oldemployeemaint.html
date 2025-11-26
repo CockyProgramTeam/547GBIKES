@@ -107,7 +107,7 @@
     let selectedUid = null;
 
     $(document).ready(function () {
-      $.get("https://gridactions3b.547bikes.info/api/Employee", function (employees) {
+      $.get("https://parksapi.547bikes.info/api/Employee", function (employees) {
         allEmployees = employees;
         const tbody = $("#employee-table-body");
         employees.forEach(emp => {
@@ -152,7 +152,7 @@
         e.preventDefault();
         const data = Object.fromEntries(new FormData(this));
         $.ajax({
-          url: "https://gridactions3b.547bikes.info/api/Employee",
+          url: "https://parksapi.547bikes.info/api/Employee",
           method: "POST",
           contentType: "application/json",
           data: JSON.stringify(data),
@@ -165,7 +165,7 @@
         e.preventDefault();
         const data = Object.fromEntries(new FormData(this));
         $.ajax({
-          url: `https://gridactions3b.547bikes.info/api/Employee/${data.uid}`,
+          url: `https://parksapi.547bikes.info/api/Employee/${data.uid}`,
           method: "PUT",
           contentType: "application/json",
           data: JSON.stringify(data),

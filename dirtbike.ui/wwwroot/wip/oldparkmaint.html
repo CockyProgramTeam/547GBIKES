@@ -330,7 +330,7 @@
 
   $(document).ready(function () {
     $.ajax({
-      url: "https://gridactions3b.547bikes.info/api/Parks",
+      url: "https://parksapi.547bikes.info/api/Parks",
       method: "GET",
       success: function (parks) {
         allParks = parks;
@@ -414,7 +414,7 @@ $("#updateParkBtn").on("click", function () {
       e.preventDefault();
       const data = Object.fromEntries(new FormData(this));
       $.ajax({
-        url: "https://gridactions3b.547bikes.info/api/Parks",
+        url: "https://parksapi.547bikes.info/api/Parks",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify(data),
@@ -430,7 +430,7 @@ $("#updateParkForm").on("submit", function (e) {
   console.log(data); // ✅ Log the data before sending
 
   $.ajax({
-    url: `https://gridactions3b.547bikes.info/api/Parks/${data.parkId}`,
+    url: `https://parksapi.547bikes.info/api/Parks/${data.parkId}`,
     method: "PUT",
     contentType: "application/json",
     data: JSON.stringify(data),

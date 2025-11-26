@@ -40,14 +40,14 @@
                   <a href="manager.html">Manager Utilities</a>
             </div>
       </div> 
-      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Review Parks</div>
+    <div class="logo">&nbsp&nbsp<H5>MyLinkv25 - Review Parks</H5></div>
     </div>
     <div class="nav-right">
       <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
       <span id="H3UserBanner"></span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cartreview.html" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 
@@ -58,56 +58,70 @@
     <div id="cart-summary" class="mb-4"></div>
   <button onlick="setCartTotals();" style="width: 180px; font-size: 8pt;">RefreshTotals</button><BR><BR>
   <div>
-    <h4 class="mb-3">Cart Items</h4>
-    <div class="row fw-bold border-bottom pb-2 mb-2">
-      <div class="col-md-2">ResStart</div>
-      <div class="col-md-2">ResEnd</div>
-      <div class="col-md-3">Description</div>
-      <div class="col-md-1">Qty</div>
-      <div class="col-md-2">Price</div>
-      <div class="col-md-2">Total</div>
-    </div>
-    <div id="cart-items"></div>
-
-  </div>
+  <HR>
+  <div align=center><h6 class="mb-2 text-muted"><H5>Cart Items</H5></div>
+  <HR>
+ <div class="row fw-semibold border-bottom pb-1 mb-1 text-muted small">
+  <div class="col-1 small">Start</div>
+  <div class="col-1 small">End</div>
+  <div class="col-3">Description</div>
+  <div class="col-1">Qty</div>
+  <div class="col-1">Price</div>
+  <div class="col-1">Subtotal</div>        <!-- NEW -->
+  <div class="col-1">State Tax</div>       <!-- NEW -->
+  <div class="col-1">Local Tax</div>       <!-- NEW -->
+  <div class="col-1">Total</div>
+</div>
+  <div id="cart-items"></div>
+</div>
 
   <script>
-    const baseUrl = "https://gridactions3b.547bikes.info";
+    const baseUrl = "https://parksapi.547bikes.info";
     const urlParams = new URLSearchParams(window.location.search);
     const cartId = urlParams.get("cartid");
 
-  async function setCartTotals() {
-      try {
-        const cartId = urlParams.get("cartid");
-        const response = await fetch(`${baseUrl}/api/CartItem/cart/${cartId}`);
-        const items = await response.json();
+ async function setCartTotals() {
+  try {
+    const cartId = urlParams.get("cartid");
+    const response = await fetch(`${baseUrl}/api/CartItem/cart/${cartId}`);
+    const items = await response.json();
 
-        let totalQty = 0;
-        let totalPrice = 0;
+    let totalQty = 0;
+    let totalPrice = 0;
 
-        items.forEach(item => {
-          totalQty += item.itemqty ?? 0;
-          totalPrice += item.itemtotals ?? 0;
-        });
+    items.forEach(item => {
+      totalQty += item.itemqty ?? 0;
+      totalPrice += item.itemtotals ?? 0;
+    });
 
-        const cartUpdate = {
-          totalcartitems: totalQty,
-          transactiontotal: totalPrice
-        };
+    const cartUpdate = {
+      totalcartitems: totalQty,
+      transactiontotal: totalPrice
+    };
 
-        await fetch(`${baseUrl}/api/Cart/${cartId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(cartUpdate)
-        });
+    // Update the cart totals
+    const putRes = await fetch(`${baseUrl}/api/Cart/${cartId}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(cartUpdate)
+    });
 
-        console.log(`✅ Cart ${cartId} updated: ${totalQty} items, $${totalPrice.toFixed(2)}`);
-        console.log(cartUpdate);
-      } catch (err) {
-        console.error("❌ Failed to update cart totals:", err);
-      }
+    if (!putRes.ok) {
+      throw new Error(`PUT failed with status ${putRes.status}`);
     }
-  
+
+    // Now fetch the full updated cart
+    const cartRes = await fetch(`${baseUrl}/api/Cart/${cartId}`);
+    const cartData = await cartRes.json();
+
+    console.log(`✅ Cart ${cartId} updated: ${totalQty} items, $${totalPrice.toFixed(2)}`);
+    console.log("Full cart object:", cartData);
+
+    return cartData; // so you can use it elsewhere
+  } catch (err) {
+    console.error("❌ Failed to update cart totals:", err);
+  }
+}
   
   
   
@@ -168,8 +182,8 @@
             <p><strong>Total Items:</strong> ${cart.totalcartitems}</p>
             <p><strong>Total Price:</strong> ${cart.transactiontotal}</p>
             <p><strong>Trans Date:</strong> ${cart.dateAdded ? new Date(cart.dateAdded).toLocaleDateString() : "N/A"}</p>
-            <p><strong>ResStart:&nbsp</strong> ${cart.resStart.split('T')[0]}</p>
-            <p><strong>ResEnd:&nbsp&nbsp&nbsp</strong> ${cart.resEnd.split('T')[0]}</p>
+            <p><strong>Start Date:&nbsp</strong> ${cart.resStart.split('T')[0]}</p>
+            <p><strong>End Date:&nbsp&nbsp&nbsp</strong> ${cart.resEnd.split('T')[0]}</p>
           </div>
         </div>
       `;
@@ -193,18 +207,24 @@
       }
 
       items.forEach(item => {
-        const row = document.createElement("div");
-        row.className = "row mb-2";
-        row.innerHTML = `
-          <div class="col-md-2"><strong>ResStart:&nbsp</strong> ${cart.resStart.split('T')[0]}</div>
-		  <div class="col-md-2"><strong>ResEnd:&nbsp&nbsp&nbsp</strong> ${cart.resEnd.split('T')[0]}</div>
-          <div class="col-md-3">${item.itemdescription || "N/A"}</div>
-          <div class="col-md-1">${item.itemqty ?? 0}</div>
-          <div class="col-md-2">$${typeof item.itemextendedprice === "number" ? item.itemextendedprice.toFixed(2) : "0.00"}</div>
-          <div class="col-md-2">$${typeof item.itemtotals === "number" ? item.itemtotals.toFixed(2) : "0.00"}</div>
-        `;
-        container.appendChild(row);
-      });
+  const row = document.createElement("div");
+  row.className = "row mb-1 text-muted small";
+  row.innerHTML = `
+    <div class="col-1">${item.resStart ? item.resStart.split('T')[0] : ""}</div>
+    <div class="col-1">${item.resEnd ? item.resEnd.split('T')[0] : ""}</div>
+    <div class="col-3">
+      ${item.itemdescription || "N/A"}<br>
+      <span class="text-secondary">Adults: ${item.adults ?? 0}, Children: ${item.children ?? 0}</span>
+    </div>
+    <div class="col-1">${item.itemqty ?? 0}</div>
+    <div class="col-1">$${typeof item.itemextendedprice === "number" ? item.itemextendedprice.toFixed(2) : "0.00"}</div>
+    <div class="col-1">$${typeof item.itemsubtotal === "number" ? item.itemsubtotal.toFixed(2) : "0.00"}</div>   <!-- NEW -->
+    <div class="col-1">$${typeof item.statetaxtotal === "number" ? item.statetaxtotal.toFixed(2) : "0.00"}</div> <!-- NEW -->
+    <div class="col-1">$${typeof item.ustaxtotal === "number" ? item.ustaxtotal.toFixed(2) : "0.00"}</div> <!-- NEW -->
+    <div class="col-1">$${typeof item.itemtotals === "number" ? item.itemtotals.toFixed(2) : "0.00"}</div>
+  `;
+  container.appendChild(row);
+});
     }
 
     async function initializeCartPage() {

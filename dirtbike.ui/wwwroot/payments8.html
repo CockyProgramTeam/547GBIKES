@@ -18,7 +18,7 @@
     }
   </style>
 </head>
-<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture(); updateCartTotals();">
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="nav-left">
@@ -38,7 +38,7 @@
       <span id="H3UserBanner"></span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 
@@ -58,8 +58,9 @@
       <th>Total Price</th>
       <th>Start Date</th>
       <th>End Date</th>
-      <th>Adults</th>
-      <th>Children</th>
+      <th>Adult Items</th>
+      <th>Jr. Items</th>
+      <th>Bookinginfo</th>
       </tr>
     </thead>
     <tbody id="cart-table-body"></tbody>
@@ -75,7 +76,7 @@
 </div>
 
  <script>
-  const baseUrl = "https://gridactions3b.547bikes.info";
+  const baseUrl = "https://parksapi.547bikes.info";
   const cartApi = `${baseUrl}/api/Cart/user`;
   const paymentApi = `${baseUrl}/api/Payment`;
 
@@ -125,6 +126,7 @@
       <td>${item.resEnd.split('T')[0] || "N/A"}</td>
       <td>${item.adults || 0}</td>
       <td>${item.children || 0}</td>
+      <td>${item.bookinginfo || 0}</td>
     `;
     tbody.appendChild(row);
     total += item.transactiontotal;
@@ -157,6 +159,51 @@
     console.error("Error fetching cart items:", err);
     alert("Failed to load cart data.");
   });
+
+ async function updateCartTotals() {
+    // Get the full query string from the current URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+  // Extract the cartId value
+  const cartId = urlParams.get("cartId");
+   
+      try {
+        const response = await fetch(`${baseUrl}/api/CartItem/cart/${cartId}`);
+        const items = await response.json();
+
+        let totalQty = 0;
+        let totalPrice = 0;
+        let totalAdults = 0;
+        let totalChildren = 0;
+
+        items.forEach(item => {
+          totalQty += item.itemqty ?? 0;
+          totalPrice += item.itemtotals ?? 0;
+          totalAdults += item.adults ?? 0;
+          totalChildren += item.children ?? 0;
+        });
+
+        const cartUpdate = {
+          totalcartitems: totalQty,
+          transactiontotal: totalPrice,
+          adults: totalAdults,
+          children: totalChildren
+        };
+
+        await fetch(`${baseUrl}/api/Cart/${cartId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(cartUpdate)
+        });
+
+        console.log(`✅ Cart ${cartId} updated: ${totalQty} items, $${totalPrice.toFixed(2)}`);
+        console.log(cartUpdate);
+      } catch (err) {
+        console.error("❌ Failed to update cart totals:", err);
+      }
+    }
+
+   
 </script>
 
 

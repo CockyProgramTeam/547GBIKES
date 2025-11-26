@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>User Profiles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+            const usersUrl = "https://gridactions3b.capitoltechnology.net/api/Users";
+            const userProfileUrl = "https://gridactions3b.capitoltechnology.net/api/Userprofile";
+
+            try {
+                // Fetch Users Data
+                const usersResponse = await fetch(usersUrl);
+                const users = await usersResponse.json();
+                console.log("Users Data:", users);
+
+                // Fetch User Profile Data
+                const userProfileResponse = await fetch(userProfileUrl);
+                const userProfiles = await userProfileResponse.json();
+                console.log("User Profile Data:", userProfiles);
+
+                // Merge user data into userMerge object without filtering
+                const userMerge = users.map(user => {
+                    const profile = userProfiles.find(profile => profile.userid === user.userid);
+                    return profile ? { ...user, ...profile } : user;
+                });
+
+                console.log("Merged User Data:", userMerge); // Logs merged data for debugging
+
+                const tableBody = document.getElementById("userTableBody");
+                const jsonOutput = document.getElementById("jsonOutput");
+
+                userMerge.forEach(user => {
+                    const row = `<tr>
+                        <td>${user.userid}</td>
+                        <td>${user.username}</td>
+                        <td>${user.btn}</td>
+                        <td>${user.email}</td>
+                        <td>${user.employee}</td>
+                        <td>${user.employeeid}</td>
+                        <td>${user.address1 || "N/A"}</td>
+                        <td>${user.city || "N/A"}</td>
+                        <td>${user.stateregion || "N/A"}</td>
+                        <td>${user.country || "N/A"}</td>
+                        <td>${user.phone || "N/A"}</td>
+                        <td>${user.cellphone || "N/A"}</td>
+                        <td>${user.linkedinurl ? `<a href="${user.linkedinurl}" target="_blank">LinkedIn</a>` : "N/A"}</td>
+                    </tr>`;
+                    tableBody.innerHTML += row;
+                });
+
+                // Dump full userMerge JSON at the bottom of the page
+                jsonOutput.textContent = JSON.stringify(userMerge, null, 4);
+            } catch (error) {
+                console.error("Error fetching data:", error);
+            }
+        });
+    </script>
+    <style>
+            html, body {
+      height: 100%;
+      margin: 0;
+    }
+    body {
+      margin: 0; 
+      font-family: Arial, sans-serif; 
+      background: #F2F2F2;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    .navbar { 
+      background-color: #1F3D7A; 
+      padding: 10px 20px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; }
+    .navbar .nav-left a { 
+      background-color: #3E5BA8; 
+      color: white; 
+      text-decoration: none; 
+      font-weight: bold; 
+      margin-right: 15px; 
+      padding: 6px 12px; 
+      border-radius: 4px; 
+      transition: background-color 0.3s ease; 
+    }
+    .navbar .nav-left a:hover { 
+      background-color: #2e4a90; 
+    }
+    .navbar .nav-right { 
+      display: flex; align-items: center; 
+    }
+    .navbar .nav-right img { 
+      width: 35px; 
+      height: 35px; 
+      border-radius: 50%; 
+      margin-right: 10px; 
+      object-fit: cover; 
+      cursor: pointer; 
+    }
+    .navbar .nav-right span { 
+      color: white; 
+      font-weight: bold; 
+      margin-right: 20px; 
+    }
+    .navbar .nav-right button { 
+      background-color: #f44336; 
+      color: white; 
+      border: none; 
+      padding: 6px 12px; 
+      border-radius: 4px; 
+      cursor: pointer; 
+    }
+    .navbar .nav-right button:hover { 
+      background-color: #d32f2f; 
+    }
+    .profile-card {
+      max-width: 800px; margin: 2rem auto; background: #fff;
+      border-radius: .5rem; overflow: hidden; box-shadow: 0 0 10px rgba(0,0,0,.1);
+      display: flex;
+      width: 100%;
+    }
+    .profile-card .left {
+      background: #1F3D7A; padding: 2rem; text-align: center; flex: 1;
+    }
+    .profile-card .left img {
+      width: 120px; height: 120px; object-fit: cover;
+      border-radius: 50%; border: 4px solid #fff;
+    }
+    .profile-card .right {
+      padding: 2rem; flex: 2;
+    }
+    .profile-card .right h3 {
+      margin-top: 0; color: #1F3D7A;
+    }
+    .profile-card .right p {
+      margin-bottom: .5rem;
+    }
+    .profile-card .right p strong {
+      display: inline-block; width: 120px;
+    }
+    footer {
+      text-align: center; padding: 1rem 0; background: #fff; border-top: 1px solid #ddd;
+    }
+    .modal-dialog.modal-lg-custom {
+      max-width: 800px;
+      width:100%;
+    }
+    .modal-body input.form-control {
+      border-radius: 0.5rem;
+      padding: 0.5rem 0.75rem;
+    }
+    .modal-body {
+      padding: 1.5rem 2rem;
+    }
+    .modal-content .modal-body {
+      padding: 1.5rem 2rem !important;
+    }
+
+    /* Footer */
+.footer {
+    background-color: #1F3D7A;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: auto;
+}
+    </style>
+</head>
+<body>
+      <!-- Navbar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <a href="index.html">Home</a>
+      <a id="certLink" href="mycerts.html">My Certifications</a>
+      <a href="certcat.html">Certificate Catalogue</a>
+      <a href="help.html">Customer Care</a>
+    </div>
+    <div class="nav-right">
+      <img id="navbar-pic" img src="./images/bluecircle.png" id="photospot" name="photocircle" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+        <span id="userBanner" class="text-white me-3">User</span>
+        <button id="logoutBtn" class="btn btn-sm btn-danger">Logout</button>
+    </div>
+</div>
+
+    <h4 class="text-center mb-4">User Profiles</h4>
+    <table class="table table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>BTN</th>
+                <th>Email</th>
+                <th>Employee</th>
+                <th>Employee ID</th>
+                <th>Address</th>
+                <th>City</th>
+                <th>State/Region</th>
+                <th>Country</th>
+                <th>Phone</th>
+                <th>Cell Phone</th>
+                <th>LinkedIn</th>
+            </tr>
+        </thead>
+        <tbody id="userTableBody"></tbody>
+    </table>
+<div class="container mt-5">
+    <h2 class="mt-5">JSON Export</h2>
+    <pre id="jsonOutput" class="border p-3 bg-light"></pre>
+</div>
+</body>
+      <!-- Footer -->
+  <footer class="footer">
+    ©Capitol Technology Solutions, Raleigh, NC.
+    <br>
+    All rights reserved.
+  </footer>
+</html>

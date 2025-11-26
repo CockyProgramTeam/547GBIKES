@@ -35,7 +35,7 @@
                   <button class="jsmenu"><img src="../images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="cartreview.html">MyCart</a>
                   <a href="parks5.html">Review Park Options</a>
                   <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
@@ -49,7 +49,7 @@
         <span id="H3UserBanner"></span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+                <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
       </div>
     </div>
 <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
@@ -62,7 +62,7 @@
 
   <script>
     $(document).ready(function () {
-      fetch("https://gridactions3b.547bikes.info/api/Booking")
+      fetch("https://parksapi.547bikes.info/api/Booking")
         .then(response => response.json())
         .then(data => {
           if (!Array.isArray(data) || data.length === 0) {

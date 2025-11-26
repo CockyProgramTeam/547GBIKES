@@ -52,8 +52,8 @@ function checkUserStatus() {
 
   if (userId && userId !== "901") {
     document.getElementById("userGreeting").innerHTML = "Welcome, " + fullName;
-	document.getElementById("H3UserBanner").innerText = fullName;  
-	loginBtn.style.display = "none";
+    document.getElementById("H3UserBanner").innerText = fullName;  
+    loginBtn.style.display = "none";
     logoutBtn.style.display = "inline-block";
     
     if (userRole === "admin") {
@@ -271,7 +271,7 @@ function closeUserSession() {
   };
 
   // Step 4: Send POST request to close the session
-  fetch(`https://gridactions3b.547bikes.info/api/Usersession/user/${uid}`, {
+  fetch(`https://parksapi.547bikes.info/api/Usersession/user/${uid}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

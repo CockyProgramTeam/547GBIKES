@@ -51,6 +51,7 @@ h1 { text-align: center; }
 #selected th {
   background-color: #e0e0e0;
   font-weight: bold;
+  width: 80px;
 }
 
 #selected tbody tr:nth-child(even) {
@@ -75,6 +76,41 @@ h1 { text-align: center; }
   width: 10%;   /* Adults & Children columns */
   text-align: center;
 }
+/* Master container spans full width */
+/* Master container spans full width and centers content */
+.master-row {
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: flex-start;   /* align at the top */
+  gap: 30px;                 /* space between date block and radios */
+  width: 100%;
+  margin: 20px auto;         /* center with margin */
+  box-sizing: border-box;
+}
+
+/* Date block styling */
+.date-block {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* Interests block styling */
+.interests-block {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.8rem;          /* smaller print */
+}
+
+#park-details
+{
+font-size: 10pt;
+margin-top: 3px;
+margin-bottom: 3px;
+left:20px;
+}
+  
 </style>
 </head>
 <body onload=" setDates(); checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary();">
@@ -97,7 +133,7 @@ h1 { text-align: center; }
       <span id="H3UserBanner"></span>
       <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
       <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-      <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 
@@ -149,24 +185,30 @@ h1 { text-align: center; }
  <div id="productstuff">
    <div id="interiorpanel">
      <h2>Product Selection</h2>
-     <div style="display:flex; gap:20px; margin-bottom:20px;">
-       <label for="globalStartDate">Start:</label>
-       <input type="date" id="globalStartDate" style="max-width: 140px;" />
+<div class="master-row">
+  <!-- Start/End Date Block -->
+  <div class="date-block">
+    <label for="globalStartDate">Start:</label>
+    <input type="date" id="globalStartDate" style="max-width: 140px;" />
 
-       <label for="globalEndDate">End:</label>
-       <input type="date" id="globalEndDate" style="max-width: 140px;" />
-     </div>
+    <label for="globalEndDate">End:</label>
+    <input type="date" id="globalEndDate" style="max-width: 140px;" />
+  </div>
 
-     <div id="radios" style="display:flex; gap:15px; flex-wrap:wrap;">
-       <label>Interests:</label>
-       <label><input type="checkbox" name="activities" value="dirtbikes"> Dirtbikes</label>
-       <label><input type="checkbox" name="activities" value="mountain_biking" checked> Mountain Biking</label>
-       <label><input type="checkbox" name="activities" value="tentcamping"> Tent Camping</label>
-       <label><input type="checkbox" name="activities" value="cabins"> Cabins</label>
-       <label><input type="checkbox" name="activities" value="skiing"> Skiing</label>
-       <label><input type="checkbox" name="activities" value="rafting"> Rafting</label>
-       <label><input type="checkbox" name="activities" value="other" checked> Other Actions</label>
-     </div><br><br>
+  <!-- Interests Block -->
+  <div id="radios" class="interests-block">
+    <label style="color: blue; font-size: 13pt">Interests:</label>
+    <label><input type="checkbox" name="activities" value="dirtbikes"> Dirtbikes</label>
+    <label><input type="checkbox" name="activities" value="mountain_biking" checked> Mountain Biking</label>
+    <label><input type="checkbox" name="activities" value="tentcamping"> Tent Camping</label>
+    <label><input type="checkbox" name="activities" value="cabins"> Cabins</label>
+    <label><input type="checkbox" name="activities" value="skiing"> Skiing</label>
+    <label><input type="checkbox" name="activities" value="rafting"> Rafting</label>
+    <label><input type="checkbox" name="activities" value="other" checked> Other Actions</label>
+    </div>
+</div>
+
+
 
      <div class="row">
        <div class="columnproducts" style="background-color:#aaa;">
@@ -186,14 +228,14 @@ h1 { text-align: center; }
          <table id="selected">
   <thead>
     <tr>
-      <th>Description</th>
-      <th>Price</th>
-      <th>Adults</th>
-      <th>Children</th>
-      <th>Subtotal</th>
-      <th>State Tax (6%)</th>
-      <th>Local Tax (1.5%)</th>
-      <th>Line Total</th>
+      <th style="width:160px;">Description</th>
+      <th style="width:90px;">Price</th>
+      <th style="width:60px;">Adults</th>
+      <th style="width:60px;">Children</th>
+      <th style="width:90px;">Subtotal</th>
+      <th style="width:90px;">State Tax (6%)</th>
+      <th style="width:90px;">Local Tax (1.5%)</th>
+      <th style="width:60px;">Line Total</th>
     </tr>
   </thead>
   <tbody></tbody>
@@ -257,7 +299,8 @@ function changeQty(id, delta) {
 
 // --- Cart Master Functions ---
 async function ensureCartMasterExists() {
-  const response = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+  const uid = localStorage.getItem('id');
+  const response = await fetch(`${API_ROOT}/api/CartMaster/user/${uid}`);
   const masters = await response.json();
 
   if (masters.length === 0) {
@@ -278,7 +321,8 @@ async function ensureCartMasterExists() {
 }
 
 async function displayCartMaster() {
-  const response = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+  const uid = localStorage.getItem('id');
+  const response = await fetch(`${API_ROOT}/api/CartMaster/user/${uid}`);
   const masters = await response.json();
 
   if (masters.length > 0) {
@@ -293,6 +337,7 @@ async function displayCartMaster() {
 }
 
   async function createNewCart() {
+    const uid = localStorage.getItem('id');
     const generatedCartId = Math.floor(Math.random() * 1000000);
     cartId = generatedCartId;
     const today = new Date().toISOString().split('T')[0];
@@ -350,7 +395,7 @@ async function displayCartMaster() {
       cartId = createdCart.cartId || generatedCartId;
       console.log('Cart created with ID:', cartId);
 
-      const masterRes = await fetch(`${API_ROOT}/api/CartMaster?userId=${uid}`);
+      const masterRes = await fetch(`${API_ROOT}/api/CartMaster/user/${uid}`);
       const masters = await masterRes.json();
       if (masters.length > 0) {
         const master = masters[0];
@@ -514,16 +559,16 @@ function moveToSelected() {
 
     const row = document.createElement('tr');
     row.innerHTML = `
-      <td>${description}</td>
-      <td>$${price.toFixed(2)}</td>
+      <td style="width:160px;">${description}</td>
+      <td style="width:90px;">$${price.toFixed(2)}</td>
       <td><input type="number" class="adults" value="1" min="0" style="width:60px;"></td>
       <td><input type="number" class="children" value="0" min="0" style="width:60px;"></td>
-      <td class="subtotal">$0.00</td>
-      <td class="state-tax">$0.00</td>
-      <td class="local-tax">$0.00</td>
-      <td class="line-total">$0.00</td>
+      <td class="subtotal" style="width:90px;">$0.00</td>
+      <td class="state-tax" style="width:90px;">$0.00</td>
+      <td class="local-tax" style="width:90px;">$0.00</td>
+      <td class="line-total" style="width:90px;">$0.00</td>
     `;
-
+    
     selectedTable.appendChild(row);
     catalogue.removeChild(option);
 
@@ -707,10 +752,10 @@ async function updateCartTotals(currentcartId, currentparkId) {
       totalTax += itemTax;
 
       // ✅ Adults and children only count for class P tickets
-      if (item.productclass === 'P') {
+      //if (item.productclass === 'P') {
         totalAdults += item.adults ?? 0;
         totalChildren += item.children ?? 0;
-      }
+      //}
     });
 
     const totalPrice = subtotal + totalTax;
@@ -754,10 +799,14 @@ async function setCartTotals() {
 
         let totalQty = 0;
         let totalPrice = 0;
+        let totalAdults = 0;
+        let totalChildren = 0;
 
         items.forEach(item => {
           totalQty += item.itemqty ?? 0;
           totalPrice += item.itemtotals ?? 0;
+          totalAdults += item.adults ?? 0;
+          totalChildren += item.children ?? 0;
         });
 
       
@@ -778,7 +827,9 @@ async function setCartTotals() {
         const cartUpdate = {
           totalcartitems: totalQty,
           transactiontotal: totalPrice,
-          itemDescription: somedescription
+          itemDescription: somedescription,
+          adults: totalAdults,
+          children: totalChildren
         };
 
         await fetch(`${baseUrl}/api/Cart/${cartId}`, {
@@ -807,6 +858,22 @@ document.addEventListener('DOMContentLoaded', async () => {
 </body>
 <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

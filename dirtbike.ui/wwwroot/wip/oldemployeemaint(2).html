@@ -40,7 +40,7 @@
                   <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
                   <div class="dropdown-content">
                   <a href="index.html">Site Home</a>
-                  <a href="cart5.html?uid=1">MyCart</a>
+                  <a href="cartreview.html">MyCart</a>
                   <a href="parks5.html">Review Park Options</a>
                   <a href="parksreview5.html">Park Reviews</a>
                   <a href="mybookings5.html">MyReservations</a>
@@ -60,7 +60,7 @@
         <span id="H3UserBanner">User</span>
         <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
         <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-        <a href="cart5.html?uid=1" id="cartBtn" class="btn secondary-btn" onclick="checkUser(event)">Cart</a>
+                <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
       </div>
     </div>
 
@@ -164,7 +164,7 @@
 
 
 <script>
-const API_URL = "https://gridactions3b.547bikes.info/api/Employee";
+const API_URL = "https://parksapi.547bikes.info/api/Employee";
 
 function loadEmployees() {
   fetch(API_URL)
@@ -195,7 +195,7 @@ document.getElementById("createForm").addEventListener("submit", function(e) {
   // Generate a random ID (e.g., between 100000 and 999999)
   payload.id = Math.floor(100000 + Math.random() * 900000);
 
-  fetch("https://gridactions3b.547bikes.info/api/Employee", {
+  fetch("https://parksapi.547bikes.info/api/Employee", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload)
