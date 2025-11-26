@@ -1735,6 +1735,40 @@
         }
       }
     },
+    "/api/Cartitem/cart/user/{Userid}": {
+      "get": {
+        "tags": [
+          "Cartitem"
+        ],
+        "operationId": "GetCartitemsByUserId",
+        "parameters": [
+          {
+            "name": "Userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Cartitem"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/CartMaster": {
       "get": {
         "tags": [
@@ -6497,6 +6531,11 @@
           },
           "parkname": {
             "type": "string",
+            "nullable": true
+          },
+          "userid": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },

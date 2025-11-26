@@ -62,4 +62,6 @@ public partial class Cartitem
     public double? Itemsubtotal { get; set; }
 
     public string? Parkname { get; set; }
+
+    public int? Userid { get; set; }
 }

@@ -1370,7 +1370,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.CartitemEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_4",
+    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_5",
     "RelativePath": "api/Cartitem/",
     "HttpMethod": "POST",
     "IsController": false,
@@ -1424,7 +1424,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.CartitemEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_3",
+    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_4",
     "RelativePath": "api/Cartitem/{id}",
     "HttpMethod": "PUT",
     "IsController": false,
@@ -1455,7 +1455,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.CartitemEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_5",
+    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_6",
     "RelativePath": "api/Cartitem/{id}",
     "HttpMethod": "DELETE",
     "IsController": false,
@@ -1506,6 +1506,34 @@
       "Cartitem"
     ],
     "EndpointName": "GetCartitemsByCartId"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.CartitemEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapCartitemEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Cartitem/cart/user/{Userid}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Userid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Cartitem, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Cartitem"
+    ],
+    "EndpointName": "GetCartitemsByUserId"
   },
   {
     "ContainingType": "Enterprise.Controllers.CartMasterEndpoints\u002B\u003C\u003Ec",
