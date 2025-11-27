@@ -85,11 +85,11 @@ font-size: 12pt;
   top: 150px;
   background: #bfc1c2;
   padding: 20px;
-  width: 240px;
+  width: 200px;
   max-width: 25%;
   font-size: 8pt;
   height: 120px;
-  left: 85%;
+  right: 20px;
   padding: 10px 20px;
   color: peachpuff;
   box-shadow: 5px 5px 10px rgba(0,0,0,0.3),
@@ -203,18 +203,17 @@ font-size: 12pt;
   <div id="travelModal" class="modal-overlay">
     <div class="modal-box">
       <label>Destination:</label>
-      <input type="text" id="mypick2" placeholder="City/State or Campground">
+      <input type="text" id="mypick2" placeholder="City/State or Campground" style="width: 45px;">
       <div class="modal-actions">
-        <button id="findme" onclick="findmypark()">Find</button>
-        <button id="closeModal" onclick="closeModal()">Close</button>
-		<p>For a better search experience,<a href="login.html">Login</a> or <a href="register.html">Register</a></p>
+        <button id="findme" onclick="findmypark()">Find</button><button id="closeModal" onclick="closeModal()">Close</button>
+		    <p>For a better search experience,<a href="login.html">Login</a> or <a href="register.html">Register</a></p>
       </div>
     </div>
   </div>
 
 <div id="travelBox">
   <div id="destination"><label for="mypick">Destination:</label>
-  <select id="mypick" name="mypick" class="form-select">
+  <select id="mypick" name="mypick" class="some-form-select" style="width: 85px;">
     <!-- US States -->
     <option value="AL">Alabama</option>
     <option value="AK">Alaska</option>
@@ -278,12 +277,10 @@ font-size: 12pt;
     <option value="CA">Canada</option>
     <option value="MX">Mexico</option>
   </select></div>
-  <BR><BR>
-  <div class="popup-actions">
-    <button id="findme" onclick="findmypark()">Find</button>
-    <button id="closeBox" onclick="closeBox()">Close</button>
-    <p>For a better search experience,
-      <a href="login.html">Login</a> or <a href="register.html">Register</a>
+  <BR><div class="popup-actions">
+    <button id="findme" onclick="findmypark()">Find</button><button id="closeBox" onclick="closeBox()">Close</button>
+    <p align="center">For Better experiences: <BR><BR>
+      <a href="login.html">Login</a>&nbsp&nbspOr&nbsp&nbsp <a href="register.html">Register</a>
     </p>
   </div>
 </div>	

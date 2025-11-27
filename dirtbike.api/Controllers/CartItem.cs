@@ -122,6 +122,8 @@ public static class CartitemEndpoints
         if (input.Ustaxtotal != 0) existingItem.Ustaxtotal = input.Ustaxtotal;
         if (input.Statetaxtotal != 0) existingItem.Statetaxtotal = input.Statetaxtotal;
         if (input.Itemsubtotal != 0) existingItem.Itemsubtotal = input.Itemsubtotal;
+	if (input.Userid != 0) existingItem.Userid = input.Userid;
+
 
         		await context.SaveChangesAsync();
                 //LOG API CALL
