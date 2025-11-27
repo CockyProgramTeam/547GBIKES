@@ -42,7 +42,30 @@ button
 {
 width: 120px;
 }
+* {
+  box-sizing: border-box;
+}
 
+/* Create two equal columns that floats next to each other */
+.column1 {
+  float: left;
+  width: 40%;
+  padding: 10px;
+  height: 700px; /* Should be removed. Only for demonstration */
+}
+/* Create two equal columns that floats next to each other */
+.column2 {
+  float: left;
+  width: 60%;
+  padding: 10px;
+  height: 700px; /* Should be removed. Only for demonstration */
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 </style>
 </head>
 <body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
@@ -72,47 +95,51 @@ width: 120px;
     </div>
 <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
 
-<div align="center"><img src="./images/people.jpg" width=100% height=350px></div>
+
 <HR>
 <div align="center"><h3>MyLink Administration Options</h3></div>
 <HR>
-<div align="center" id="adminmenu">
-  <a href="securityhome.html"><button>Security Administrator</button></a>
-  <a href="employeemaint.html"><button>Employee Maintenance</button></a>
-  <a href="parkmaint.html"><button>Park Maintenance</button></a>
-  <a href="salescatalogue5.html"><button>ParkSales Catalogue</button></a>
-  <a href="usermaint.html"><button>User Maintenance</button></a>
-</div>
-<div class="features" id="upperfeaturebar">
-	<div class="feature">
-    <a href="./reports/salesreport.html">
-      <h3>Trans Report</h3>
-      <p>Completed transactions posted, and refunded by park.</p>
-    </a>
-  </div>
-      <div class="feature">
-    <a href="./reports/salescatalogue.html">
-      <h3>SalesCat Report</h3>
-      <p>Sales Catalgoue Pricing Elements Per Park.</p>
-    </a>
-  </div>
- <div class="feature">
-    <a href="./reports/bookingreportbypark.html">
-      <h3>Booking Report</h3>
-      <p>Review the current Booked Parties per park.</p>
-    </a>
-  </div>
-    <div class="feature">
-        <a href="adminstuff.html"><h3>Portal Admin</h3>
-        <p>Administer ISP Users, and Profiles</p>
-      </div>
-
-        <div class="feature">
-        <a href="./imagetest/selectorbar.html"><h3>Selector Bar</h3>
-        <p>Model Viz Home Page Testing & Selector</p>
+<div class="row">
+  <div class="column1" style="background-color:#bbb;">
+    <div align="center"><img src="./images/people.jpg" width=100% height=100% style="margin-left: 20px;"></div>
+ </div>
+  <div class="column2" style="background-color:#bbb;">
+       <div class="features" id="upperfeaturebar1">
+      <div class="feature"><a href="securityhome.html"><h3>Security Administrator</h3><p>Security Tools and Processes.</p></a></div>
+      <div class="feature"><a href="employeemaint.html"><h3>Employee<BR> Maintenance</h3><p>Manage Employees</p></a></div>
+      <div class="feature"><a href="parkmaint.html"><h3>Park<BR> Maintenance</h3><p>Update and Maintain Parks.</p></a></div>
+      <div class="feature"><a href="salescatalogue5.html"><h3>Park Sales<BR> Catalogue</h3><p>Update and Maintain Pricing.</p></a></div>
+      <div class="feature"><a href="usermaint.html"><h3>User<BR> Maintenance</h3><p>Update and Maintain Users.</p></a></div>
+    </div>
+      <div class="features" id="upperfeaturebar">
+      <div class="feature"><a href="./reports/salesreport.html"><h3>Trans Report</h3><p>Completed transactions posted & Refunded Per park.</p></a></div>
+          <div class="feature">
+        <a href="./reports/salescatalogue.html">
+          <h3>SalesCat Report</h3>
+          <p>Sales Catalgoue Pricing Elements Per Park.</p>
         </a>
       </div>
-</div>
+     <div class="feature">
+        <a href="./reports/bookingreportbypark.html">
+          <h3>Booking Report</h3>
+          <p>Review the current Booked Parties per park.</p>
+        </a>
+      </div>
+        <div class="feature">
+            <a href="adminstuff.html"><h3>Portal Admin</h3>
+            <p>Administer ISP Users, and Profiles</p>
+          </div>
+    
+            <div class="feature">
+            <a href="./imagetest/selectorbar.html"><h3>Selector Bar</h3>
+            <p>Model Viz Home Page Testing & Selector</p>
+            </a>
+          </div>
+    </div>
+      </div>
+    </div>
+      
+
         <script>
         function myOpenCall() {
            //alert('CallingOpenPublicManagerfunction');
