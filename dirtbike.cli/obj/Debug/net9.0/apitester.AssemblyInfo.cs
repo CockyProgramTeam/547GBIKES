@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("apitester")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fdb5354e9717963d6f06cffed104016f97a3ab87")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c465a79e23c59ecf3531c2bdf17a6316628b0e4e")]
 [assembly: System.Reflection.AssemblyProductAttribute("apitester")]
 [assembly: System.Reflection.AssemblyTitleAttribute("apitester")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

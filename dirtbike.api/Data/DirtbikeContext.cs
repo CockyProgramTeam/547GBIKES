@@ -301,6 +301,9 @@ public partial class DirtbikeContext : DbContext
                 .HasColumnType("float")
                 .HasColumnName("statetaxtotal");
             entity.Property(e => e.Subtotal).HasColumnName("subtotal");
+            entity.Property(e => e.Userid)
+                .HasColumnType("INT")
+                .HasColumnName("userid");
             entity.Property(e => e.Ustaxpercent)
                 .HasColumnType("float")
                 .HasColumnName("ustaxpercent");
@@ -633,7 +636,9 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Plainpassword).HasColumnName("plainpassword");
             entity.Property(e => e.Profileurl).HasColumnName("profileurl");
             entity.Property(e => e.Resettoken).HasColumnName("resettoken");
-            entity.Property(e => e.Resettokenexpiration).HasColumnName("resettokenexpiration");
+            entity.Property(e => e.Resettokenexpiration)
+                .HasColumnType("datetime")
+                .HasColumnName("resettokenexpiration");
             entity.Property(e => e.Role).HasColumnName("role");
             entity.Property(e => e.Twofactorkeyemaildestination).HasColumnName("twofactorkeyemaildestination");
             entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");

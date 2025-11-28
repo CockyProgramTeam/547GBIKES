@@ -1649,7 +1649,6 @@ C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.48A9639E.Up2Date
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.api.dll
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\refint\dirtbike.api.dll

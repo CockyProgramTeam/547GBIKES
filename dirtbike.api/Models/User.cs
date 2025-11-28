@@ -45,8 +45,6 @@ public partial class User
 
     public string? Resettoken { get; set; }
 
-    public DateTime? Resettokenexpiration { get; set; }
-
     public int Userid { get; set; }
 
     public string? Btn { get; set; }
@@ -88,4 +86,6 @@ public partial class User
     public string? Activeprofileurl { get; set; }
 
     public string Activepictureurl { get; set; } = null!;
+
+    public DateTime? Resettokenexpiration { get; set; }
 }
