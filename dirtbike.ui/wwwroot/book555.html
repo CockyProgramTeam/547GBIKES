@@ -11,6 +11,21 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 <style>
+#userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: yellow;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+}
+
+
 * { box-sizing: border-box; }
 
 .columnproducts { float: left; width: 30%; padding: 10px; height: 450px; }
@@ -20,8 +35,19 @@
 .parkinfo { float: left; width: 49%; padding: 10px; height: 500px; overflow-y: auto;}
 .cartinfo { float: left; width: 49%; padding: 10px; height: 500px; overflow-y: auto;}
 
-#productstuff { background-color: lightblue; height: 640px; }
-#interiorpanel { margin-left: 50px; height: 550px; }
+#productstuff { background-color: #aaa; height: 640px; width: 95%; }
+#interiorpanel { margin-left: 50px; height: 150px; width: 95%;   margin-bottom: 5px;
+  padding-bottom: 5px;}
+
+#salesgrid
+{
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  float: left;
+  margin-left: 50px;
+  width: 95%;
+  height: 450px;
+}  
 
 button { width: 150px; height: 60px; }
 
@@ -80,12 +106,14 @@ h1 { text-align: center; }
 /* Master container spans full width and centers content */
 .master-row {
   display: flex;
-  justify-content: center;   /* center horizontally */
-  align-items: flex-start;   /* align at the top */
+  /*justify-content: center;   center horizontally */
+  /*align-items: flex-start;   align at the top */
   gap: 30px;                 /* space between date block and radios */
-  width: 100%;
+  width: 95%;
   margin: 20px auto;         /* center with margin */
   box-sizing: border-box;
+  float: left;
+  background-color: #75BFEC;
 }
 
 /* Date block styling */
@@ -110,10 +138,171 @@ margin-top: 3px;
 margin-bottom: 3px;
 left:20px;
 }
-  
+
+ /* Modal background */
+    #reservationModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Modal box */
+    .modal-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 450px;
+      text-align: center;
+      background-color: peachpuff;
+    }
+
+    /* Modal inputs (full width for usability) */
+    .modal-content input {
+      width: 80%;
+      padding: 6px;
+      margin-top: 8px;
+    }
+
+    /* Result window fields (your request: 50px wide) */
+    .result-field {
+      width: 120px;
+      padding: 4px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 16px;
+    }
+
+ .number-row {
+  width: 100%;
+  overflow: hidden; /* keeps the row height correct */
+  margin-bottom: 8px;
+}
+
+.number-row label,
+.number-row input,
+.number-row button {
+  float: left;
+  margin-right: 6px;
+}
+
+#leftblock input[type="date"],
+#leftblock input[type="number"] {
+  border: 1px solid #ccc;   /* or your preferred border */
+  outline: none;
+  box-shadow: none;
+}
+
+#reservationModal button {
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  margin: 2px;
+  font-size: 16px;
+  line-height: 30px;
+  text-align: center;
+  display: inline-block;
+}
+
+/* Make modal inputs consistent */
+#reservationModal input[type="number"],
+#reservationModal input[type="date"] {
+  width: 100px;          /* ✅ fixed width */
+  height: 28px;
+  font-size: 14px;
+  padding: 2px 4px;
+  box-sizing: border-box;
+}
+
+/* Make + / – buttons small and neat */
+#reservationModal .number-row button {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  margin-left: 4px;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: center;
+}
+
+/* Left-align the number rows */
+#reservationModal .number-row {
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+#reservationModal .number-row label,
+#reservationModal .number-row input,
+#reservationModal .number-row button {
+  float: left;
+  margin-right: 6px;
+}
+
+/* --- MASTER LAYOUT --- */
+.master-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  width: 95%
+  margin-bottom: 5px;
+  padding-bottom: 5px;
+  max-height: 100px;
+}
+
+/* --- LEFT COLUMN --- */
+.left-column {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  border-bottom: none;  
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+.date-block,
+.shell-block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+/* --- RIGHT COLUMN --- */
+.right-column {
+  display: flex;
+  flex-direction: row;   /* puts h5 and interests on same line */
+  align-items: center;
+  gap: 20px;
+  flex-wrap: nowrap;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
+/* --- INTERESTS BLOCK --- */
+.interests-block {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;     /* keeps all checkboxes on one line */
+  gap: 15px;
+  align-items: center;
+}
+
+
+
 </style>
 </head>
-<body onload=" setDates(); checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary();">
+<body onload="openReservationModal(); checkpll(); checkUserStatus(); displayProfilePicture(); loadParkSummary();">
   <!-- Navigation Bar -->
   <div class="navbar">
     <div class="nav-left">
@@ -137,7 +326,7 @@ left:20px;
     </div>
   </div>
 
-  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div><BR><BR>
 
 
  <div class="row2">
@@ -184,34 +373,51 @@ left:20px;
 
  <div id="productstuff">
    <div id="interiorpanel">
-     <h2>Product Selection</h2>
-<div class="master-row">
-  <!-- Start/End Date Block -->
-  <div class="date-block">
-    <label for="globalStartDate">Start:</label>
-    <input type="date" id="globalStartDate" style="max-width: 140px;" />
+     <h4>Reservation Details</h4>
+        <div class="master-row">
 
-    <label for="globalEndDate">End:</label>
-    <input type="date" id="globalEndDate" style="max-width: 140px;" />
-  </div>
+              <!-- LEFT COLUMN -->
+              <div class="left-column">
+              <h5 style="color: blue;">Reservation Basics</h5>
 
-  <!-- Interests Block -->
-  <div id="radios" class="interests-block">
-    <label style="color: blue; font-size: 13pt">Interests:</label>
-    <label><input type="checkbox" name="activities" value="dirtbikes"> Dirtbikes</label>
-    <label><input type="checkbox" name="activities" value="mountain_biking" checked> Mountain Biking</label>
-    <label><input type="checkbox" name="activities" value="tentcamping"> Tent Camping</label>
-    <label><input type="checkbox" name="activities" value="cabins"> Cabins</label>
-    <label><input type="checkbox" name="activities" value="skiing"> Skiing</label>
-    <label><input type="checkbox" name="activities" value="rafting"> Rafting</label>
-    <label><input type="checkbox" name="activities" value="other" checked> Other Actions</label>
+              <div class="date-block">
+                <label for="globalStartDate" style="font-size: 8pt;">Start:</label>
+                <input type="date" id="globalStartDate">
+
+                <label for="globalEndDate" style="font-size: 8pt;">End:</label>
+                <input type="date" id="globalEndDate">
+              </div>
+
+            <div class="shell-block">
+              <label for="globalAdults" style="font-size: 8pt;">Adults:</label>
+              <input type="number" id="globalAdults" style="width: 50px;">
+
+              <label for="globalChildren" style="margin-left: 10px; font-size: 8pt;">Children:</label>
+              <input type="number" id="globalChildren" style="width: 50px;">
+
+              <label for="globalTentSites" style="margin-left: 10px; font-size: 8pt;">TentSites:</label>
+              <input type="number" id="globalTentSites" style="width: 50px;">
+            </div>
+            </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="right-column">
+    <h5 style="color: blue;">Interests:</h5>
+
+    <div class="interests-block">
+      <label><input type="checkbox" name="activities" value="dirtbikes"> Dirtbikes</label>
+      <label><input type="checkbox" name="activities" value="mountain_biking" checked> Mountain Biking</label>
+      <label><input type="checkbox" name="activities" value="tentcamping"> Tent Camping</label>
+      <label><input type="checkbox" name="activities" value="cabins"> Cabins</label>
+      <label><input type="checkbox" name="activities" value="skiing"> Skiing</label>
+      <label><input type="checkbox" name="activities" value="rafting"> Rafting</label>
+      <label><input type="checkbox" name="activities" value="other"> Other Actions</label>
     </div>
+  </div>
 </div>
-
-
-
-     <div class="row">
-       <div class="columnproducts" style="background-color:#aaa;">
+</div>
+     <div class="row" id="salesgrid">
+       <div class="columnproducts" style="background-color:#D3D3D3;">
          <h3>Products</h3>
          <hr>
          <select id="catalogue" multiple style="width: 90%; margin-left: 20px;"></select>
@@ -222,32 +428,52 @@ left:20px;
          <button onclick="moveToCatalogue()">Remove Item(s)</button><br><br>
          <button onclick="addSelectedToCart()">Save Item(s)</button><br>
        </div>
-         <div class="columnselected" style="background-color:#bbb;">
+        <div class="columnselected" style="background-color: #D3D3D3;">
          <h3>Selected</h3>
          <hr>
          <table id="selected">
-  <thead>
-    <tr>
-      <th style="width:160px;">Description</th>
-      <th style="width:90px;">Price</th>
-      <th style="width:60px;">Adults</th>
-      <th style="width:60px;">Children</th>
-      <th style="width:90px;">Subtotal</th>
-      <th style="width:90px;">State Tax (6%)</th>
-      <th style="width:90px;">Local Tax (1.5%)</th>
-      <th style="width:60px;">Line Total</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
-
+          <thead>
+          <tr>
+          <th style="width:160px;">Description</th>
+          <th style="width:90px;">Price</th>
+          <th style="width:60px;">Adults</th>
+          <th style="width:60px;">Children</th>
+          <th style="width:90px;">Subtotal</th>
+          <th style="width:90px;">State Tax (6%)</th>
+          <th style="width:90px;">Local Tax (1.5%)</th>
+          <th style="width:60px;">Line Total</th>
+          </tr>
+          </thead>
+          <tbody></tbody>
+          </table>
        </div>
       
      </div>
    </div>
- </div>
 
  <hr>
+
+<!-- Modal -->
+<div id="reservationModal">
+  <div class="modal-content">
+    <h3>Reservation Basics</h3>
+  <div class="number-row"><label>Adults:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label> <input type="number" id="modalAdults" value="1" > <button type="button" onclick="dec('modalAdults')">−</button><button type="button" onclick="inc('modalAdults')">+</button></div>
+<br>
+<div class="number-row">
+  <label>Children:&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label><input type="number" id="modalChildren" value="0" ><button type="button" onclick="dec('modalChildren')">−</button><button type="button" onclick="inc('modalChildren')">+</button></div>
+<br>
+
+<div class="number-row"><label>Tent Sites:&nbsp&nbsp&nbsp&nbsp</label><input type="number" id="modalTentSites" value="0"><button type="button" onclick="dec('modalTentSites')">−</button><button type="button" onclick="inc('modalTentSites')">+</button></div>
+<br>
+
+    <div style="font-size: 8pt;"><label id="startdate" style="float: left;font-size: 8pt;">Start Date:<input type="date" id="modalStartDate"></label>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<label id="enddate" style="float:  left;font-size: 8pt;">End Date:&nbsp&nbsp&nbsp<input type="date" id="modalEndDate"></label></div>
+    <br><br>
+    <button onclick="submitModalDetails()" style="width: 100px;">Submit</button>
+    <button onclick="closeReservationModal()" style="width: 100px; margin-left: 10px;">Close</button>
+  </div>
+</div>
+
+
 
 <!-- ================== SCRIPT PART 1: Globals & Utilities ================== -->
 <script>
@@ -336,25 +562,30 @@ async function displayCartMaster() {
   }
 }
 
-  async function createNewCart() {
-    const uid = localStorage.getItem('id');
-    const generatedCartId = Math.floor(Math.random() * 1000000);
-    cartId = generatedCartId;
-    const today = new Date().toISOString().split('T')[0];
-      const startDate = document.getElementById("globalStartDate").value;
-      const endDate   = document.getElementById("globalEndDate").value;
-  
-    const newCart = {
+async function createNewCart() {
+  const uid = localStorage.getItem('id');
+  const generatedCartId = Math.floor(Math.random() * 1000000);
+  cartId = generatedCartId;
+
+  // ✅ Pull values from your UI
+  const startDate = document.getElementById("globalStartDate").value;
+  const endDate   = document.getElementById("globalEndDate").value;
+
+  const adults    = Number(document.getElementById("globalAdults").value) || 0;
+  const children  = Number(document.getElementById("globalChildren").value) || 0;
+  const tentsites = Number(document.getElementById("globalTentSites").value) || 0;
+
+  const newCart = {
     cartId: generatedCartId,
-    uid: uid, // assumed to be defined elsewhere
-    parkId: parkId, // assumed to be defined elsewhere
-    parkname: someparkname,
+    uid: uid,
+    parkId: parkId,            // assumed defined elsewhere
+    parkname: someparkname,    // assumed defined elsewhere
     itemType: "Combination",
     itemDescription: "2 Separate Products",
     quantity: 0,
     unitPrice: 0,
     totalPrice: 0,
-    dateAdded: new Date().toISOString().split("T")[0], // format: YYYY-MM-DD
+    dateAdded: new Date().toISOString().split("T")[0],
     isCheckedOut: 0,
     paymentid: "",
     bookinginfo: "[33,34]",
@@ -362,68 +593,73 @@ async function displayCartMaster() {
     multipleitems: 0,
     johnstotals: 0,
     transactiontotal: 0,
+
+    // ✅ These now come from your UI
     resStart: startDate,
     resEnd: endDate,
-    adults: 1,
-    children: 0,
-    tentsites: 0
+    adults: adults,
+    children: children,
+    tentsites: tentsites
   };
 
+  try {
+    const response = await fetch(`${API_ROOT}/api/Cart`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newCart)
+    });
+
+    const text = await response.text();
+
+    if (response.status !== 201) {
+      console.error('Cart creation failed:', response.status);
+      alert('Failed to create cart.');
+      return;
+    }
+
+    let createdCart;
     try {
-      const response = await fetch(`${API_ROOT}/api/Cart`, {
-        method: 'POST',
+      createdCart = text ? JSON.parse(text) : {};
+    } catch (err) {
+      console.warn('Response body not valid JSON:', text);
+      createdCart = {};
+    }
+
+    cartId = createdCart.cartId || generatedCartId;
+    console.log('Cart created with ID:', cartId);
+
+    // ✅ Update CartMaster
+    const masterRes = await fetch(`${API_ROOT}/api/CartMaster/user/${uid}`);
+    const masters = await masterRes.json();
+
+    if (masters.length > 0) {
+      const master = masters[0];
+      const updatedList = master.cartsActiveList
+        ? `${master.cartsActiveList},${cartId}`
+        : `${cartId}`;
+
+      const updatedMaster = {
+        ...master,
+        cartsCount: master.cartsCount + 1,
+        cartsActive: master.cartsActive + 1,
+        cartsActiveList: updatedList
+      };
+
+      await fetch(`${API_ROOT}/api/CartMaster/${master.id}`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newCart)
+        body: JSON.stringify(updatedMaster)
       });
 
-      const text = await response.text();
-
-      if (response.status !== 201) {
-        console.error('Cart creation failed:', response.status);
-        alert('Failed to create cart.');
-        return;
-      }
-
-      let createdCart;
-      try {
-        createdCart = text ? JSON.parse(text) : {};
-      } catch (err) {
-        console.warn('Response body not valid JSON:', text);
-        createdCart = {};
-      }
-
-      cartId = createdCart.cartId || generatedCartId;
-      console.log('Cart created with ID:', cartId);
-
-      const masterRes = await fetch(`${API_ROOT}/api/CartMaster/user/${uid}`);
-      const masters = await masterRes.json();
-      if (masters.length > 0) {
-        const master = masters[0];
-        const updatedList = master.cartsActiveList
-          ? `${master.cartsActiveList},${cartId}`
-          : `${cartId}`;
-
-        const updatedMaster = {
-          ...master,
-          cartsCount: master.cartsCount + 1,
-          cartsActive: master.cartsActive + 1,
-          cartsActiveList: updatedList
-        };
-
-        await fetch(`${API_ROOT}/api/CartMaster/${master.id}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(updatedMaster)
-        });
-
-        console.log('CartMaster updated with new cart:', updatedMaster);
-        await displayCartMaster();
-      }
-    } catch (error) {
-      console.error('Unexpected error during cart creation:', error);
-      alert('An unexpected error occurred while creating the cart.');
+      console.log('CartMaster updated with new cart:', updatedMaster);
+      await displayCartMaster();
     }
+  } catch (error) {
+    console.error('Unexpected error during cart creation:', error);
+    alert('An unexpected error occurred while creating the cart.');
   }
+}
+
   
 // --- Park Functions ---
 async function loadParksDropdown() {
@@ -550,6 +786,7 @@ async function loadCatalogue() {
 }
 
 function moveToSelected() {
+  LoadNewCart();
   const catalogue = document.getElementById('catalogue');
   const selectedTable = document.getElementById('selected').querySelector('tbody');
 
@@ -631,6 +868,7 @@ async function addSelectedToCart() {
   const shopId = parkId;
   const startDate = document.getElementById("globalStartDate").value;
   const endDate   = document.getElementById("globalEndDate").value;
+  const someuser = localStorage.getItem("uid");
 
   if (!cartId) {
     alert('Cart has not been created yet. Please wait or try again.');
@@ -674,13 +912,13 @@ async function addSelectedToCart() {
       cartitemdate: isoDate,
       itemvendor: "Unknown",
       itemdescription: description || "Unnamed Item",
-      itemextendedprice: price,
+      itemextendedprice: price.toFixed(2),
       itemqty: qty,
       adults,
       children,
-      itemsubtotal: subtotal,       // ✅ base subtotal
-      statetaxtotal: stateTax,      // ✅ state tax
-      ustaxtotal: localTax,         // ✅ local tax
+      itemsubtotal: subtotal.toFixed(2),       // ✅ base subtotal
+      statetaxtotal: stateTax.toFixed(2),      // ✅ state tax
+      ustaxtotal: localTax.toFixed(2),         // ✅ local tax
       itemtotals: lineTotal,        // ✅ subtotal + taxes
       statetaxpercent: 6,
       statetaxauth: "SC",
@@ -696,7 +934,8 @@ async function addSelectedToCart() {
       reservationcode: "1",
       memberid: "1",
       rewardsprovider: "Mariott",
-      parkname: parkName
+      parkname: parkName,
+      userid: parseInt(someuser) || 0
     };
 
     console.log('CartItem', cartItem);
@@ -723,7 +962,11 @@ async function addSelectedToCart() {
   // After all items are processed
   try {
     await setCartTotals();
-    window.open('cartreview.html','_self');
+    const uid = localStorage.getItem("uid");
+    const urlParams = new URLSearchParams(window.location.search);
+    const parkId = urlParams.get("parkId");
+    const cartUrl = `cart5.html?uid=${encodeURIComponent(uid)}&parkId=${encodeURIComponent(parkId)}`;
+    window.open(cartUrl, '_self');
   } catch (err) {
     console.error("❌ Error updating cart totals:", err.message);
     alert("Failed to update cart totals.");
@@ -758,6 +1001,17 @@ async function updateCartTotals(currentcartId, currentparkId) {
       //}
     });
 
+      // Get the Adults value
+      let globaladults = document.getElementById("globalAdults").value;
+
+      // Get the Children value
+      let globalchildren = document.getElementById("globalChildren").value;
+
+      // Get the TentSites value
+      let globaltentSites = document.getElementById("globalTentSites").
+
+
+
     const totalPrice = subtotal + totalTax;
 
     let somedescription = "";
@@ -776,8 +1030,9 @@ async function updateCartTotals(currentcartId, currentparkId) {
       unitPrice: totalTax,         // sum of tax totals
       totalPrice: totalPrice,      // subtotal + tax
       itemDescription: somedescription,
-      adults: totalAdults,         // only class P adults
-      children: totalChildren      // only class P children
+      adults: globaladults,         // only class P adults
+      children: globalchildren,      // only class P children
+      tentsites: globaltentSites
     };
 
     await fetch(`${baseUrl}/api/Cart/${currentcartId}`, {
@@ -808,6 +1063,14 @@ async function setCartTotals() {
           totalAdults += item.adults ?? 0;
           totalChildren += item.children ?? 0;
         });
+          // Get the Adults value
+          let globaladults = document.getElementById("globalAdults").value;
+
+          // Get the Children value
+          let globalchildren = document.getElementById("globalChildren").value;
+
+          // Get the TentSites value
+          let globaltentSites = document.getElementById("globalTentSites").
 
       
        	let somedescription = "";
@@ -828,8 +1091,9 @@ async function setCartTotals() {
           totalcartitems: totalQty,
           transactiontotal: totalPrice,
           itemDescription: somedescription,
-          adults: totalAdults,
-          children: totalChildren
+          adults: globaladults,
+          children: globalchildren,
+          tensites: globaltentSites
         };
 
         await fetch(`${baseUrl}/api/Cart/${cartId}`, {
@@ -846,6 +1110,56 @@ async function setCartTotals() {
       }
     }
 
+//PART5 - MODAL FORM SCRIPTS TO CREATE RESERVATION SHELL
+ 
+
+function openReservationModal() {
+  // Show the modal
+  document.getElementById("reservationModal").style.display = "flex";
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split("T")[0];
+
+  // Set the MODAL date fields (replace with your modal IDs)
+  document.getElementById("modalStartDate").value = today;
+  document.getElementById("modalEndDate").value = today;
+}
+
+  function submitModalDetails() {
+    const adults = document.getElementById("modalAdults").value;
+    const children = document.getElementById("modalChildren").value;
+    const startDate = document.getElementById("modalStartDate").value;
+    const endDate = document.getElementById("modalEndDate").value;
+    const gtents = document.getElementById("modalTentSites").value;
+    alert("Calling SubmitModal");
+    // ✅ Update your existing global fields
+    document.getElementById("globalAdults").value = adults;
+    document.getElementById("globalChildren").value = children;
+    document.getElementById("globalStartDate").value = startDate;
+    document.getElementById("globalEndDate").value = endDate;
+    document.getElementById("globalTentSites").value = gtents;
+
+
+    // Close modal
+    document.getElementById("reservationModal").style.display = "none";
+  }
+
+  function closeReservationModal() {
+    document.getElementById("reservationModal").style.display = "none";
+  }
+
+function inc(id) {
+  const el = document.getElementById(id);
+  el.value = Number(el.value || 0) + 1;
+}
+
+function dec(id) {
+  const el = document.getElementById(id);
+  const newVal = Number(el.value || 0) - 1;
+  el.value = newVal < 0 ? 0 : newVal;
+}
+
+
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', async () => {
   await ensureCartMasterExists();
@@ -858,6 +1172,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 </body>
 <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>
+
 
 
 

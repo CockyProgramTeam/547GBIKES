@@ -105,6 +105,7 @@ app.MapUsergroupsEndpoints();
 app.MapUserhelpEndpoints();
 app.MapBatchEndpoints();
 app.MapBatchtypeEndpoints();
+app.MapRefundEndpoints();
 app.MapAuthEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.

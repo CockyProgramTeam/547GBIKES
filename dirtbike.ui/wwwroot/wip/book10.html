@@ -27,8 +27,8 @@
       padding: 20px;
     }
 
-    #someselectionheader,
-    #someselectedheader {
+    #selectionheader,
+    #selectedheader {
       margin: 10px 0 20px 30px;
     }
 
@@ -168,12 +168,6 @@
   display: table;
   clear: both;
 }
-  <style>
-  #cartMasterCard .card-body {
-    max-height: 225px;
-    overflow-y: auto;
-  }
-</style>
   </style>
 </head>
 <body onload="checkpll(); checkUserStatus(); displayProfilePicture(); LoadNewCart(); loadParkSummary()">
@@ -216,8 +210,8 @@
       <!-- Park Details -->
     
       <!-- Selected Park Card -->
-    <div class="card border-info mb-3" style="max-height: 225px;">
-  <div class="card-header bg-info text-white py-2 px-3 small" style="max-height: 225px;">
+    <div class="card border-info mb-3">
+  <div class="card-header bg-info text-white py-2 px-3 small">
   <span id="someparkid"><strong>Current Park ID:</strong></span><span id="currentParkId" class="fw-semibold"></span><br>
   </div>
   <div class="card-body">
@@ -227,7 +221,8 @@
     </select>
   </div>
 </div>
-  
+
+
       <!-- Cart Summary Card -->
       <div class="card text-white bg-primary mb-4" id="cartMasterCard" style="display:none;">
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -254,34 +249,13 @@
 <h5>Select Cart Items</h5>
 
 <div class="row">
-  <!-- Column 1: Selection List -->
-  <div class="col-md-4" style="background-color:#aaa;">
-    <select id="catalogue" multiple class="form-select form-select-sm"></select>
+  <div class="column" style="background-color:#aaa;">
+    	<div id="someselectionlist" class="itemcontainer">
   </div>
-
-  <div class="col-md-4 text-center" style="background-color:#bbb;">
-  <div class="my-3">
-    <div class="d-flex justify-content-center align-items-center gap-2 mb-3">
-      <label for="globalStartDate" class="form-label mb-0">Start:</label>
-      <input type="date" id="globalStartDate" class="form-control form-control-sm" style="max-width: 140px;" />
-
-      <label for="globalEndDate" class="form-label mb-0">End:</label>
-      <input type="date" id="globalEndDate" class="form-control form-control-sm" style="max-width: 140px;" />
-    </div>
-
-    <button class="btn btn-primary" onclick="moveToSelected()">➤</button>
-    &nbsp;&nbsp;&nbsp;
-    <button class="btn btn-secondary" onclick="moveToCatalogue()">←</button>
-    &nbsp;&nbsp;&nbsp;
-    <button class="btn btn-success" onclick="addSelectedToCart()">Add to Cart</button>
+  <div class="column" align="center" style="background-color:#bbb;">
+        <span align="center"<button class="btn btn-primary" onclick="moveToSelected()">➤</button>&nbsp&nbsp&nbsp<button class="btn btn-secondary" onclick="moveToCatalogue()">←</button>&nbsp&nbsp&nbsp<button class="btn btn-success" onclick="addSelectedToCart()">Add to Cart</button></span>
   </div>
-</div>
-
-
-
-  <!-- Column 3: Selected Items -->
-  <div class="col-md-4" style="background-color:#ccc;">
-    <span id="selectedItemsContainer"></span>
+  <div class="column" style="background-color:#ccc;"> <span id="selectedItemsContainer"></span>
   </div>
 </div>
     
@@ -498,44 +472,14 @@ async function loadCatalogue() {
 
 //THIS IS CORRECT TO HERE....
 
-function moveToSelected() {
-  const catalogue = document.getElementById("catalogue");
-  const container = document.getElementById("selectedItemsContainer");
-
-  Array.from(catalogue.selectedOptions).forEach(option => {
-    if (document.getElementById(`item-${option.value}`)) return;
-
-    const itemRow = document.createElement("div");
-    itemRow.className = "border p-2 mb-2 rounded";
-    itemRow.id = `item-${option.value}`;
-    itemRow.dataset.price = option.dataset.price;
-    itemRow.dataset.salescatid = option.dataset.salescatid;
-    itemRow.dataset.vendor = option.dataset.vendor;
-
-    const label = document.createElement("div");
-    label.textContent = option.text;
-    label.className = "mb-1";
-
-    const qtyInput = document.createElement("input");
-    qtyInput.type = "number";
-    qtyInput.min = "1";
-    qtyInput.value = "1";
-    qtyInput.className = "form-control form-control-sm mb-1";
-    qtyInput.placeholder = "Quantity";
-    qtyInput.name = `qty-${option.value}`;
-
-    const removeBtn = document.createElement("button");
-    removeBtn.textContent = "Remove";
-    removeBtn.className = "btn btn-sm btn-danger";
-    removeBtn.onclick = () => itemRow.remove();
-
-    itemRow.appendChild(label);
-    itemRow.appendChild(qtyInput);
-    itemRow.appendChild(removeBtn);
-
-    container.appendChild(itemRow);
-  });
-}
+  function moveToSelected() {
+    const catalogue = document.getElementById('catalogue');
+    const selected = document.getElementById('selected');
+    Array.from(catalogue.selectedOptions).forEach(option => {
+      catalogue.removeChild(option);
+      selected.appendChild(option);
+    });
+  }
 
 //THIS IS CORRECT TO HERE....
   function moveToCatalogue() {
@@ -568,7 +512,7 @@ async function loadParkSummary() {
               : `<span class="text-muted">No trail map available</span>`;
             const mapsLink = `https://www.google.com/maps?q=${park.latitude},${park.longitude}`;
 			const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${park.latitude},${park.longitude}`;
-            const pictureurl = `https://ww2.547bikes.info/picturewall.html?parkId=${park.parkId}`;
+            const pictureurl = `https://home.547bikes.info/picturewall.html?parkId=${park.parkId}`;
 
         parkDetails.innerHTML = `
           <div class="card shadow-sm">
@@ -635,16 +579,9 @@ async function addSelectedToCart() {
   const parkId = parseInt(urlParams.get("parkId")) || 0;
   const shopId = parkId;
 
-  const globalStartDate = document.getElementById('globalStartDate').value;
-  const globalEndDate = document.getElementById('globalEndDate').value;
-
-  if (!globalStartDate || !globalEndDate) {
-    alert("Start and end dates are required. Please set them before adding to cart.");
-    return;
-  }
-
   if (!cartId) {
     alert('Cart has not been created yet. Please wait or try again.');
+    console.error('Attempted to save CartItems without a valid cartId.');
     return;
   }
 
@@ -653,17 +590,14 @@ async function addSelectedToCart() {
     return;
   }
 
-  newlyAddedQty = 0;
-  totalPrice = 0;
-  totalQty = 0;
-  somecartid = cartId;
+  let newlyAddedQty = 0;
+  let totalPrice = 0;
+  let totalQty = 0;
+  let somecartid = cartId;
 
   for (const item of selectedItems) {
-    const qtyInput = item.querySelector('input[type="number"]');
-    const qty = parseInt(qtyInput?.value) || 1;
+    const qty = 1;
     const price = parseFloat(item.dataset.price);
-    const salescatid = parseInt(item.dataset.salescatid) || 0;
-    const vendor = item.dataset.vendor || "Unknown";
 
     if (isNaN(price) || price <= 0) {
       console.warn(`Invalid price for item:`, item);
@@ -671,41 +605,31 @@ async function addSelectedToCart() {
     }
 
     const cartItem = {
-      cartid: cartId,
-      cartitemdate: new Date().toISOString(),
-      itemvendor: vendor,
-      itemdescription: item.querySelector('div')?.textContent || "Unnamed Item",
+      cartid: parseInt(cartId),
+      itemdescription: item.textContent || "Unnamed Item",
       itemextendedprice: price,
       itemqty: qty,
       itemtotals: price * qty,
-      salescatid: salescatid,
-      productid: "",
-      shopid: shopId.toString(),
-      parkid: parkId.toString(),
-      subtotal: price * qty,
-      createdDate: new Date().toISOString(),
-      resStart: new Date(globalStartDate).toISOString(),
-      resEnd: new Date(globalEndDate).toISOString(),
-      qrcodeurl: "",
-      reservationcode: "",
-      memberid: uid || "",
-      rewardsprovider: ""
+      parkid: "11",
+      shopid: "20"
     };
 
     try {
-      await fetch("https://parksapi.547bikes.info/api/CartItem", {
+      await $.ajax({
+        url: "https://parksapi.547bikes.info/api/CartItem",
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cartItem)
+        contentType: "application/json",
+        data: JSON.stringify(cartItem)
       });
 
       newlyAddedQty += qty;
       totalPrice += price * qty;
       totalQty += qty;
-      console.log("✅ Item saved:", cartItem.itemdescription);
+      somecartid = cartItem.cartid;
+      console.log("✅ Item saved:", item.textContent);
     } catch (err) {
       console.error("❌ Error saving item:", err);
-      alert(`Failed to save item: ${cartItem.itemdescription}`);
+      alert(`Failed to save item: ${item.textContent}`);
     }
   }
 
@@ -718,7 +642,6 @@ async function addSelectedToCart() {
     alert("Failed to update cart totals.");
   }
 }
-
 
 async function updateCartMaster(somecartid, someqty, sometransactiontotal) {
   const cartUpdate = {
@@ -857,13 +780,6 @@ function moveToSelected() {
     container.appendChild(itemRow);
   });
 }
- 
- window.addEventListener('load', () => {
-  const today = new Date().toISOString().split('T')[0];
-  document.getElementById('globalStartDate').value = today;
-  document.getElementById('globalEndDate').value = today;
-});
-
 </script>
 </body>
 </html>

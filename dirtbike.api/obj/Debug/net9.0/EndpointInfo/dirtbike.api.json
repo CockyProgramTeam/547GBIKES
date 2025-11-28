@@ -3763,6 +3763,223 @@
         }
       }
     },
+    "/api/Refunds": {
+      "get": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "GetAllRefunds",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Refund"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "CreateRefunds",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Refund"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/Refunds/{id}": {
+      "get": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "GetRefundsById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Refund"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "UpdateRefunds",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Refund"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": { }
+            }
+          },
+          "202": {
+            "description": "Accepted"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "DeleteRefunds",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Void"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Refunds/user/{Userid}": {
+      "get": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "GetRefundsByUserId",
+        "parameters": [
+          {
+            "name": "Userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Refund"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Refunds/transactions/{Refundid}": {
+      "get": {
+        "tags": [
+          "Refund"
+        ],
+        "operationId": "GetRefundByRedundId",
+        "parameters": [
+          {
+            "name": "Refundid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Refund"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/SalesCatalogue": {
       "get": {
         "tags": [
@@ -7060,12 +7277,12 @@
           },
           "longitude": {
             "type": "number",
-            "format": "double",
+            "format": "float",
             "nullable": true
           },
           "latitude": {
             "type": "number",
-            "format": "double",
+            "format": "float",
             "nullable": true
           },
           "trailmapurl": {
@@ -7413,6 +7630,73 @@
           },
           "plainpassword": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Refund": {
+        "type": "object",
+        "properties": {
+          "refundId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardType": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardLast4": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardExpDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "amountPaid": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "transactionId": {
+            "type": "string",
+            "nullable": true
+          },
+          "useridasstring": {
+            "type": "string",
+            "nullable": true
+          },
+          "transtype": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullname": {
+            "type": "string",
+            "nullable": true
+          },
+          "parkName": {
+            "type": "string",
+            "nullable": true
+          },
+          "state": {
+            "type": "string",
+            "nullable": true
+          },
+          "parkId": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -7777,11 +8061,6 @@
             "type": "string",
             "nullable": true
           },
-          "resettokenexpiration": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "userid": {
             "type": "integer",
             "format": "int32"
@@ -7866,6 +8145,11 @@
           },
           "activepictureurl": {
             "type": "string",
+            "nullable": true
+          },
+          "resettokenexpiration": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },

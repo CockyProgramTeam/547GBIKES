@@ -57,7 +57,7 @@ namespace Enterpriseservices
                 rng.GetBytes(tokenBytes);
             }
 
-            // Convert to a hexadecimal string
+            // Convert to a hexafloat string
             return BitConverter.ToString(tokenBytes).Replace("-", "").ToLower();
         }
 

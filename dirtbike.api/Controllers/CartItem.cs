@@ -64,18 +64,18 @@ public static class CartitemEndpoints
         .WithName("GetCartitemsByCartId")
         .WithOpenApi();
 
+
         //[HttpGet]
-        group.MapGet("/cart/user/{Userid}", (int userid) =>
+        group.MapGet("/cart/user/{Userid}", (int Userid) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETITEMSFORCARTBYID", 1, "Test", "Test");
-                return context.Cartitems.Where(m => m.Userid == userid).ToList();
+                return context.Cartitems.Where(m => m.Userid == Userid).ToList();
             }
         })
         .WithName("GetCartitemsByUserId")
         .WithOpenApi();
-
 
 
 
@@ -122,8 +122,7 @@ public static class CartitemEndpoints
         if (input.Ustaxtotal != 0) existingItem.Ustaxtotal = input.Ustaxtotal;
         if (input.Statetaxtotal != 0) existingItem.Statetaxtotal = input.Statetaxtotal;
         if (input.Itemsubtotal != 0) existingItem.Itemsubtotal = input.Itemsubtotal;
-	if (input.Userid != 0) existingItem.Userid = input.Userid;
-
+        if (input.Userid != 0) existingItem.Userid = input.Userid;
 
         		await context.SaveChangesAsync();
                 //LOG API CALL

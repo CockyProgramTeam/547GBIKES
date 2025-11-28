@@ -156,7 +156,6 @@ C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
-C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/obj/Debug/net9.0/staticwebassets.upToDateCheck.txt
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/System.Security.Cryptography.Pkcs.dll
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/System.Security.Cryptography.Xml.dll
 C:/Users/stritzj/source/repos/greenvilleassociates/mountainproject/dirtbike.api/bin/Debug/net9.0/runtimes/win/lib/net9.0/System.Security.Cryptography.Pkcs.dll
@@ -1042,7 +1041,6 @@ C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
-C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\dirtbike.48A9639E.Up2Date
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\dirtbike.api.genruntimeconfig.cache
 C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\obj\Debug\net9.0\ref\dirtbike.api.dll
@@ -1351,6 +1349,8 @@ C:\Users\stritzj\source\repos\greenvilleassociates\bikesapi\obj\Debug\net9.0\dir
 C:\Users\stritzj\source\repos\greenvilleassociates\bikesapi\obj\Debug\net9.0\ref\dirtbike.api.dll
 C:\Users\stritzj\source\repos\greenvilleassociates\bikesapi\bin\Debug\net9.0\SQLDATA\dirtbike.db
 C:\Users\stritzj\source\repos\greenvilleassociates\bikesapi\bin\Debug\net9.0\SQLDATA\Publish.txt
+C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\bin\Debug\net9.0\SQLDATA\dirtbike.db
+C:\Users\stritzj\source\repos\greenvilleassociates\mountainproject\dirtbike.api\bin\Debug\net9.0\SQLDATA\Publish.txt
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\appsettings.json
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\bin\Debug\net9.0\Controllers\Auth\userCredential.json
@@ -1649,6 +1649,7 @@ C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.48A9639E.Up2Date
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.api.dll
 C:\Users\stritzj\source\repos\CockyProgramTeam\547GBIKES\dirtbike.api\obj\Debug\net9.0\refint\dirtbike.api.dll

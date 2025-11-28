@@ -3154,6 +3154,195 @@
     "EndpointName": "GetPaymentsByUserId"
   },
   {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_0",
+    "RelativePath": "api/Refunds/",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Refund, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "GetAllRefunds"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_5",
+    "RelativePath": "api/Refunds/",
+    "HttpMethod": "POST",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Refund",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 201
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "CreateRefunds"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_1",
+    "RelativePath": "api/Refunds/{id}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Refund, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "GetRefundsById"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_4",
+    "RelativePath": "api/Refunds/{id}",
+    "HttpMethod": "PUT",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "input",
+        "Type": "dirtbike.api.Models.Refund",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 202
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "UpdateRefunds"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_6",
+    "RelativePath": "api/Refunds/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Void",
+        "MediaTypes": [],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "DeleteRefunds"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_3",
+    "RelativePath": "api/Refunds/transactions/{Refundid}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Refundid",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Refund, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "GetRefundByRedundId"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.RefundEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapRefundEndpoints\u003Eb__0_2",
+    "RelativePath": "api/Refunds/user/{Userid}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Userid",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.Refund, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "Refund"
+    ],
+    "EndpointName": "GetRefundsByUserId"
+  },
+  {
     "ContainingType": "Enterprise.Controllers.SalesCatalogueEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CMapSalesCatalogueEndpoints\u003Eb__0_0",
     "RelativePath": "api/SalesCatalogue/",

@@ -23,9 +23,9 @@ public partial class Park
 
     public double? DayPassPriceUsd { get; set; }
 
-    public decimal? Longitude { get; set; }
+    public float? Longitude { get; set; }
 
-    public decimal? Latitude { get; set; }
+    public float? Latitude { get; set; }
 
     public string? Trailmapurl { get; set; }
 

@@ -186,9 +186,7 @@
         const cartUpdate = {
           totalcartitems: totalQty,
           transactiontotal: totalPrice,
-          adults: totalAdults,
-          children: totalChildren
-        };
+         };
 
         await fetch(`${baseUrl}/api/Cart/${cartId}`, {
           method: 'PUT',

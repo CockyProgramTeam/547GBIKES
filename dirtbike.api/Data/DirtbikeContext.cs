@@ -52,6 +52,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Payment> Payments { get; set; }
 
+    public virtual DbSet<Refund> Refunds { get; set; }
+
     public virtual DbSet<SalesCatalogue> SalesCatalogues { get; set; }
 
     public virtual DbSet<SalesSession> SalesSessions { get; set; }
@@ -301,9 +303,7 @@ public partial class DirtbikeContext : DbContext
                 .HasColumnType("float")
                 .HasColumnName("statetaxtotal");
             entity.Property(e => e.Subtotal).HasColumnName("subtotal");
-            entity.Property(e => e.Userid)
-                .HasColumnType("INT")
-                .HasColumnName("userid");
+            entity.Property(e => e.Userid).HasColumnType("INT");
             entity.Property(e => e.Ustaxpercent)
                 .HasColumnType("float")
                 .HasColumnName("ustaxpercent");
@@ -485,6 +485,27 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.BookingId).HasColumnName("BookingID");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.Transtype).HasColumnName("transtype");
+        });
+
+        modelBuilder.Entity<Refund>(entity =>
+        {
+            entity.ToTable("refund");
+
+            entity.Property(e => e.RefundId).HasColumnName("refundId");
+            entity.Property(e => e.AmountPaid).HasColumnName("amountPaid");
+            entity.Property(e => e.BookingId).HasColumnName("bookingId");
+            entity.Property(e => e.CardExpDate).HasColumnName("cardExpDate");
+            entity.Property(e => e.CardLast4).HasColumnName("cardLast4");
+            entity.Property(e => e.CardType).HasColumnName("cardType");
+            entity.Property(e => e.Fullname).HasColumnName("fullname");
+            entity.Property(e => e.ParkId).HasColumnName("parkId");
+            entity.Property(e => e.ParkName).HasColumnName("parkName");
+            entity.Property(e => e.PaymentDate).HasColumnName("paymentDate");
+            entity.Property(e => e.PaymentMethod).HasColumnName("paymentMethod");
+            entity.Property(e => e.State).HasColumnName("state");
+            entity.Property(e => e.TransactionId).HasColumnName("transactionId");
+            entity.Property(e => e.Transtype).HasColumnName("transtype");
+            entity.Property(e => e.Useridasstring).HasColumnName("useridasstring");
         });
 
         modelBuilder.Entity<SalesCatalogue>(entity =>
