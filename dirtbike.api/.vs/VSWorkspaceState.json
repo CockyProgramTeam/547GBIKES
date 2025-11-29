@@ -1,6 +1,10 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Controllers",
+    "\\Data",
+    "\\Models",
+    "\\ServicesBusiness"
   ],
   "PreviewInSolutionExplorer": false
 }

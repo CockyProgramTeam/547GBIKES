@@ -423,6 +423,9 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Motocross)
                 .HasColumnType("INT")
                 .HasColumnName("motocross");
+            entity.Property(e => e.AverageRating)
+               .HasColumnType("FLOAT")
+               .HasColumnName("averagerating");
             entity.Property(e => e.Mountainbikes)
                 .HasColumnType("INT")
                 .HasColumnName("mountainbikes");

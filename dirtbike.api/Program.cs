@@ -106,6 +106,8 @@ app.MapUserhelpEndpoints();
 app.MapBatchEndpoints();
 app.MapBatchtypeEndpoints();
 app.MapRefundEndpoints();
+app.MapTaxtableStateEndpoints();
+app.MapTaxtableUSEndpoints();
 app.MapAuthEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.

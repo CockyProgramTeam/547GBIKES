@@ -90,4 +90,6 @@ public partial class Park
     public int? Tents { get; set; }
 
     public int? Skiing { get; set; }
+
+    public float? AverageRating { get; set; }
 }

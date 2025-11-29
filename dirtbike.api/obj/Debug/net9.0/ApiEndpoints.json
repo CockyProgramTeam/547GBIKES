@@ -2632,7 +2632,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.ParkReviewEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_4",
+    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_5",
     "RelativePath": "api/ParkReview/",
     "HttpMethod": "POST",
     "IsController": false,
@@ -2686,7 +2686,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.ParkReviewEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_3",
+    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_4",
     "RelativePath": "api/ParkReview/{id}",
     "HttpMethod": "PUT",
     "IsController": false,
@@ -2717,7 +2717,7 @@
   },
   {
     "ContainingType": "Enterprise.Controllers.ParkReviewEndpoints\u002B\u003C\u003Ec",
-    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_5",
+    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_6",
     "RelativePath": "api/ParkReview/{id}",
     "HttpMethod": "DELETE",
     "IsController": false,
@@ -2744,6 +2744,34 @@
   {
     "ContainingType": "Enterprise.Controllers.ParkReviewEndpoints\u002B\u003C\u003Ec",
     "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_2",
+    "RelativePath": "api/ParkReview/parkid/{parkid}",
+    "HttpMethod": "GET",
+    "IsController": false,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "parkid",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.List\u00601[[dirtbike.api.Models.ParkReview, dirtbike.api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "application/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "Tags": [
+      "ParkReview"
+    ],
+    "EndpointName": "GetParkReviewByParkId"
+  },
+  {
+    "ContainingType": "Enterprise.Controllers.ParkReviewEndpoints\u002B\u003C\u003Ec",
+    "Method": "\u003CMapParkReviewEndpoints\u003Eb__0_3",
     "RelativePath": "api/ParkReview/user/{Useridasstring}",
     "HttpMethod": "GET",
     "IsController": false,
@@ -5205,6 +5233,27 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "EnterpriseControllers.SystemConsoleController",
+    "Method": "GetSystemInfo",
+    "RelativePath": "SystemConsole/{option}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "option",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "parkId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
   },
   {
     "ContainingType": "somecontrollers.Controllers.WeatherForecastController",

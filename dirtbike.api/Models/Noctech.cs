@@ -26,4 +26,6 @@ public partial class Noctech
     public string? Techstate { get; set; }
 
     public string? Techzip { get; set; }
+
+    public string? Fullname { get; set; }
 }

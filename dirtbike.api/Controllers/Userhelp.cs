@@ -59,7 +59,7 @@ public static class UserhelpEndpoints
                 someUserhelp[0].Repliedmanagerid = input.Repliedmanagerid;
                 someUserhelp[0].Repliedmanagerphone = input.Repliedmanagerphone;
                 someUserhelp[0].Repliedmanageremail = input.Repliedmanageremail;
-
+                someUserhelp[0].Ticketstatus = input.Ticketstatus;
                 // Set today's date
                 //someUserhelp[0].Ticketdate = DateTime.UtcNow;
                 //someUserhelp[0].Responsedate = DateTime.UtcNow;

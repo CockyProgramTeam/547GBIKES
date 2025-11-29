@@ -50,8 +50,26 @@ public static class ParkReviewEndpoints
         })
         .WithName("GetParkReviewById")
         .WithOpenApi();
-    
-       //[HttpGet]
+
+        //[HttpGet]
+        group.MapGet("/parkid/{parkid}", (int parkid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test");
+                return context.ParkReviews.Where(m => m.ParkId == parkid).ToList();
+            }
+        })
+        .WithName("GetParkReviewByParkId")
+        .WithOpenApi();
+
+
+
+
+
+
+
+        //[HttpGet]
         group.MapGet("/user/{Useridasstring}", (string Userid) =>
         {
             using (var context = new DirtbikeContext())

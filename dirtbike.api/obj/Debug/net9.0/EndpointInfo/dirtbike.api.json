@@ -3445,6 +3445,40 @@
         }
       }
     },
+    "/api/ParkReview/parkid/{parkid}": {
+      "get": {
+        "tags": [
+          "ParkReview"
+        ],
+        "operationId": "GetParkReviewByParkId",
+        "parameters": [
+          {
+            "name": "parkid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParkReview"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/ParkReview/user/{Useridasstring}": {
       "get": {
         "tags": [
@@ -4614,6 +4648,37 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/SystemConsole/{option}": {
+      "get": {
+        "tags": [
+          "SystemConsole"
+        ],
+        "parameters": [
+          {
+            "name": "option",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "parkId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
           }
         }
       }
@@ -7428,6 +7493,11 @@
           "skiing": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "averageRating": {
+            "type": "number",
+            "format": "float",
             "nullable": true
           }
         },

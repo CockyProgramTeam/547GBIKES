@@ -45,6 +45,8 @@ public static class ParksEndpoints
         .WithName("GetParksById")
         .WithOpenApi();
 
+        
+
         //[HttpPut]
         group.MapPut("/{id}", async (int id, Park input) =>
         {
@@ -92,8 +94,9 @@ public static class ParksEndpoints
 				if (input.Tents != null) someParks[0].Tents = input.Tents; 
 				if (input.Cabins != null) someParks[0].Cabins = input.Cabins; 
 				if (input.Motocross != null) someParks[0].Motocross = input.Motocross; 
-				if (input.Skiing != null) someParks[0].Skiing = input.Skiing; 
-            
+				if (input.Skiing != null) someParks[0].Skiing = input.Skiing;
+                someParks[0].AverageRating = input.AverageRating;
+
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "UPDATEWITHID", 1, "TEST", "TEST");
                 return TypedResults.Accepted("Updated ID:" + input.ParkId);
