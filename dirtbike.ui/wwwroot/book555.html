@@ -171,7 +171,7 @@ left:20px;
 
     /* Result window fields (your request: 50px wide) */
     .result-field {
-      width: 120px;
+      width: 150px;
       padding: 4px;
     }
 
@@ -180,6 +180,16 @@ left:20px;
       padding: 8px 16px;
     }
 
+#modalStartDate
+  {
+  width: 190px;
+  }
+#modalEndDate
+  {
+  width: 190px;
+  }
+
+  
  .number-row {
   width: 100%;
   overflow: hidden; /* keeps the row height correct */
@@ -1008,7 +1018,7 @@ async function updateCartTotals(currentcartId, currentparkId) {
       let globalchildren = document.getElementById("globalChildren").value;
 
       // Get the TentSites value
-      let globaltentSites = document.getElementById("globalTentSites").
+      let globaltentSites = document.getElementById("globalTentSites").value;
 
 
 
@@ -1028,7 +1038,7 @@ async function updateCartTotals(currentcartId, currentparkId) {
       totalcartitems: totalQty,
       subtotal: subtotal,          // sum of product subtotals
       unitPrice: totalTax,         // sum of tax totals
-      totalPrice: totalPrice,      // subtotal + tax
+      totalPrice: totalPrice.toFixed(2),      // subtotal + tax
       itemDescription: somedescription,
       adults: globaladults,         // only class P adults
       children: globalchildren,      // only class P children
@@ -1070,7 +1080,7 @@ async function setCartTotals() {
           let globalchildren = document.getElementById("globalChildren").value;
 
           // Get the TentSites value
-          let globaltentSites = document.getElementById("globalTentSites").
+          let globaltentSites = document.getElementById("globalTentSites").value;
 
       
        	let somedescription = "";
@@ -1172,6 +1182,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 </body>
 <footer class="footer"> &copy; Cocky Consulting 2025. <br> All rights reserved.<br>  <span align="center"><a href="sitemap.html" class="sitelink">SiteMap</a></span></footer>
 </html>
+
 
 
 

@@ -58,8 +58,8 @@
       <th>Total Price</th>
       <th>Start Date</th>
       <th>End Date</th>
-      <th>Adult Items</th>
-      <th>Jr. Items</th>
+      <th>Adults</th>
+      <th>Jrs.</th>
       <th>Bookinginfo</th>
       </tr>
     </thead>
@@ -90,10 +90,15 @@
   const urlParams = new URLSearchParams(window.location.search);
   const cartIds = urlParams.getAll("cartId").map(id => parseInt(id));
 
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+  
   async function fetchCartItems(uid) {
     const url = `${cartApi}/${uid}`;
     console.log("Fetching all cart items for user:", url);
-    const response = await fetch(url);
+      const response = await fetch(url);
+    await wait(3000);
     const items = await response.json();
     console.log("Full cart items:", items);
     return items;
@@ -179,8 +184,8 @@
         items.forEach(item => {
           totalQty += item.itemqty ?? 0;
           totalPrice += item.itemtotals ?? 0;
-          totalAdults += item.adults ?? 0;
-          totalChildren += item.children ?? 0;
+          //totalAdults += item.adults ?? 0;
+          //totalChildren += item.children ?? 0;
         });
 
         const cartUpdate = {

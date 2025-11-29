@@ -9,6 +9,21 @@ body {
     flex-direction: column;
   }
 
+#userGreeting
+{
+text-align: center;
+vertical-align: middle;
+color: yellow;
+}
+#banner
+{
+background-color: lightgrey;
+height: 60px;
+vertical-align: middle;
+width: 100%;
+}
+
+
   main {
     flex: 1;
   }

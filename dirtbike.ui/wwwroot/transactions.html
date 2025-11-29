@@ -82,6 +82,7 @@
                 <th class="sortable" data-field="amountPaid">Amount</th>
                 <th class="sortable" data-field="paymentDate">Date</th>
                 <th class="sortable" data-field="transactionId">Transaction ID</th>
+                <th class="sortable" data-field="refundId">Refund ID</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -198,6 +199,7 @@
                     <td>${p.amountPaid}</td>
                     <td>${p.paymentDate}</td>
                     <td>${p.transactionId}</td>
+                    <td>${p.refundTransactionId}</td>
                 </tr>
             `;
             tbody.insertAdjacentHTML("beforeend", row);

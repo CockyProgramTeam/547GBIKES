@@ -180,7 +180,7 @@
             <p><strong>Status:</strong> ${cart.isCheckedOut === 1 ? "Checked Out" : "Pending"}</p>
          <p><strong>Payment ID:</strong><a href="reviewpayment5.html?id=${cart.paymentid}" target="_blank">${cart.paymentid || "N/A"}</a></p>
             <p><strong>Total Items:</strong> ${cart.totalcartitems}</p>
-            <p><strong>Total Price:</strong> ${cart.transactiontotal.toFixed(2) }</p>
+            <p><strong>Total Price:</strong> ${(Number(cart.transactiontotal) || 0).toFixed(2)}</p>
             <p><strong>Trans Date:</strong> ${cart.dateAdded ? new Date(cart.dateAdded).toLocaleDateString() : "N/A"}</p>
             <p><strong>Start Date:&nbsp</strong> ${cart.resStart.split('T')[0]}</p>
             <p><strong>End Date:&nbsp&nbsp&nbsp</strong> ${cart.resEnd.split('T')[0]}</p>
