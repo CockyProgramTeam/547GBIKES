@@ -1,24 +1,15 @@
 import { useState } from "react";
-import CartService from "./../../services/cartService"; // import your CartService
 
-export default function PaymentDetails() {
+export default function JohnPaymentDetails() {
   const [cardNumber, setCardNumber] = useState("");
   const [expDate, setExpDate] = useState("");
   const [name, setName] = useState("");
   const [amount, setAmount] = useState(100); // Example amount, replace with real cart total
 
-  const cartService = new CartService();
-
-  // Call finalizeBooking from CartService
-  const PostCart = async () => {
-    try {
-      const result = await cartService.finalizeBooking();
-      alert("Cart finalized and booking posted!");
-      console.log("Booking result:", result);
-    } catch (err) {
-      console.error("Error finalizing booking:", err);
-      alert("Failed to finalize booking.");
-    }
+  // Stub for PostCart
+  const PostCart = () => {
+    console.log("PostCart called!");
+    // Here you would call your service function to post the cart
   };
 
   const handleExpDate = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +37,7 @@ export default function PaymentDetails() {
 
     const paymentPayload = {
       paymentId: 0,
-      bookingId: 0, // you may want to tie this to the bookingId returned from finalizeBooking
+      bookingId: 0,
       paymentMethod: "CreditCard",
       cardType: "Visa", // or detect from card number
       cardLast4: last4,
@@ -54,7 +45,7 @@ export default function PaymentDetails() {
       amountPaid: amount,
       paymentDate: new Date().toISOString(),
       transactionId: transactionId,
-      useridasstring: localStorage.getItem("userid") || "guest",
+      useridasstring: "123", // replace with actual user id from localStorage
       transtype: "Sale",
       refundTransactionId: "",
       amountRefunded: 0,

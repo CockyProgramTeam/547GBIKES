@@ -1,21 +1,17 @@
 import { CartItem } from "../models/cartItem";
 
 export default class CartService {
-    private items: CartItem[];
-
-    private CART_KEY = 'rideFinderExampleApp'
-
-
-    //loadCart will be our public facing method, all invocations of getCart should be internal so we only have one source of truth
+    private CART_KEY = 'rideFinderExampleApp';
 
     loadCart = (): CartItem[] => {
-        return JSON.parse(localStorage.getItem(this.CART_KEY));
+        const data = localStorage.getItem(this.CART_KEY);
+        return data ? JSON.parse(data) : [];
     }
 
     addItemToCart = (newItem: CartItem) => {
-        const cart = this.loadCart() || [];
+        const cart = this.loadCart();
         const itemInCart = cart.findIndex((item: CartItem) => item.park.id === newItem.park.id);
-        if(itemInCart > -1) {
+        if (itemInCart > -1) {
             this.updateCart(cart[itemInCart], newItem);
         }
         cart.push(newItem);
@@ -24,18 +20,12 @@ export default class CartService {
 
     removeItemFromCart = (remItem: CartItem) => {
         const cart = this.loadCart();
-        
-        const result = cart.filter((val: CartItem) => val.park.id !== remItem.park.id)
+        const result = cart.filter((val: CartItem) => val.park.id !== remItem.park.id);
         this.save(result);
     }
 
     updateCart(oldItem: CartItem, newItem: CartItem) {
         const cart = this.loadCart();
-        if(oldItem.park.id !== newItem.park.id) {
-            this.save(cart);
-        }
-
-        //Update with new item first and then old item if it doesn't exist
         const combinedItem = {
             park: newItem.park || oldItem.park,
             numDays: newItem.numDays || oldItem.numDays,
@@ -43,10 +33,72 @@ export default class CartService {
             numKids: newItem.numKids || oldItem.numKids
         };
         const index = cart.findIndex((val: CartItem) => val.park.id === combinedItem.park.id);
-        if(index > -1) {
+        if (index > -1) {
             cart[index] = combinedItem;
         }
         this.save(cart);
+    }
+
+    clearCart = () => {
+        localStorage.removeItem(this.CART_KEY);
+    }
+
+    // 👉 New function: finalize booking with fixed header and POST to API
+    finalizeBooking = async (): Promise<any> => {
+        const cart = this.loadCart();
+
+        const booking = {
+            header: {
+                uid: 10000,
+                fullname: "capgemeni user",
+                email: "capgemeniuser@547bikes.info",
+                username: "capgemeniuser@547bikes.info",
+                bookingId: Date.now(),
+                bookingDate: new Date().toISOString(),
+                totalItems: cart.length,
+                totalCost: cart.reduce((sum, item) => {
+                    const adultCost = item.numAdults * item.park.adultPrice;
+                    const kidCost = item.numKids * item.park.childPrice;
+                    return sum + (adultCost + kidCost) * item.numDays;
+                }, 0)
+            },
+            items: cart.map(item => ({
+                parkId: item.park.id,
+                parkName: item.park.parkName,
+                location: item.park.location,
+                numDays: item.numDays,
+                numAdults: item.numAdults,
+                numKids: item.numKids,
+                cost: (item.numAdults * item.park.adultPrice +
+                       item.numKids * item.park.childPrice) * item.numDays
+            }))
+        };
+
+        console.log("Finalized booking:", booking);
+
+        try {
+            const response = await fetch("https://parksapi.547bikes.info/api/CGCart", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(booking)
+            });
+
+            if (!response.ok) {
+                throw new Error(`Failed to post booking: ${response.statusText}`);
+            }
+
+            const result = await response.json();
+            console.log("Booking successfully posted:", result);
+
+            // ✅ Clear cart only after successful post
+            this.clearCart();
+
+            return result;
+        } catch (err) {
+            console.error("Error posting booking:", err);
+            // Optionally: return booking so caller can retry
+            return booking;
+        }
     }
 
     private save(cart: CartItem[]) {

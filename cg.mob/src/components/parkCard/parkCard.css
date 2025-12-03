@@ -71,3 +71,25 @@
     top: .05em;
     color: rgba(255, 255, 255, 0.95);
 }
+
+.button2-primary {
+    background-color: #ccc;
+    width: 100%;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .75rem 1.5rem;
+    border-radius: .5rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all .2s ease;
+    text-align: center;
+}
+
+.button2-primary:hover {
+    background-color: #bd5d12;
+    top: .05em;
+    color: rgba(255, 255, 255, 0.95);
+}

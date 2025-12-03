@@ -1,5 +1,6 @@
 import IPark from "../../models/park";
 import './parkCard.css'
+import { Link } from 'react-router-dom';
 
 export function ParkCard({park}: {park: IPark }) {
 
@@ -27,9 +28,9 @@ export function ParkCard({park}: {park: IPark }) {
 
     return(
         <div className="parkCard card-container">
-            <a href={`/details/${park.id}`}> 
-                <img src={park.imageUrl} alt={park.parkName} className="parkCard image-park"/>
-            </a>
+            <Link to={`/details/${park.id}`}>
+  				 <img src={park.imageUrl} alt={park.parkName} className="parkCard image-park"/>
+            </Link>
             <div className="parkCard card-text">
                 <h2> {park.parkName} </h2>
                 <div className="parkCard location-container">
@@ -45,9 +46,13 @@ export function ParkCard({park}: {park: IPark }) {
                 <div>
                     {park.description}
                 </div>
-                <a href={`/details/${park.id}`}>
-                    <button className="button-primary button-book">Book Now</button>
-                </a>
+             <Link to={`/details/${park.id}`}>
+  				<button className="button-primary button-book">Book Now</button>
+			</Link>
+            <Link to={`/details2?parkid=${park.id}`}>
+				  <button className="button2-primary button2-book">Park Reviews</button>
+			</Link>
+
             </div>
         </div>
     )

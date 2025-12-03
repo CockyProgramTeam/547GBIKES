@@ -1,52 +1,152 @@
-import './homebar.css';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import { Link, useLocation } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import HomeIcon from '@mui/icons-material/Home';
+import { Button, IconButton } from '@mui/material';
 import { useState } from 'react';
+import './Navbar.css';
+import './homebar.css';
 
 type HomebarProps = {
-    numItems: number;
-}
+  numItems: number;
+};
 
-export default function Homebar(props: HomebarProps) {
-    const title = "RideFinder"
+export default function Homebar({ numItems }: HomebarProps) {
+  const title = 'RideFinder';
+  const location = useLocation();
+  const [darkTheme, setDarkTheme] = useState(false);
 
-    const { numItems } = props;
+  const toggleTheme = () => setDarkTheme(!darkTheme);
 
-    const [darkTheme, setDarkTheme] = useState(false)
+  return (
+    <AppBar position="sticky" enableColorOnDark>
+      <Toolbar>
+        {/* Left side: logo/title */}
+        <Typography
+          noWrap
+          component={Link}
+          to="/"
+          sx={{
+            mr: 2,
+            fontFamily: 'Impact, Haettenschweiler, Arial Narrow Bold, sans-serif',
+            fontWeight: 700,
+            color: 'inherit',
+            textDecoration: 'none',
+            fontSize: '1.7rem',
+            cursor: 'pointer',
+          }}
+        >
+          [CGUIV2.0]
+        </Typography>
 
-    const toggleTheme = () => {
-        setDarkTheme(!darkTheme);
-    }
+        {/* Spacer */}
+        <Box sx={{ flexGrow: 1 }} />
 
-    return (
-        <div className="flex">
-            <div className="left title inner-flex">
-                <div className="title-arrow">
-                    <svg className="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z"/><path d="m15 12-3 3-3-3"/></svg>
-                </div>
-                <div className="title-text">
-                    <a href="/">
-                        {title}
-                    </a>
-                </div>
-            </div>
-            <div className="right inner-flex">
-                <button className='theme-toggle' onClick={() => toggleTheme()} aria-label='Toggle theme'>
-                    {darkTheme ? 
-                        <svg className="icon moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
-                        :
-                        <svg className="icon sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
-                    }
-                </button>
-                <div className="cart display">
-                    {numItems > 0 && 
-                    <div className="cartNumber">
-                        {numItems}
-                    </div>
-                    }
-                    <a href="/cart">
-                        <svg className="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.16"/></svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    )
+        {/* MUI buttons menu */}
+        <Button
+          component={Link}
+          to="/"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/' ? 'MuiButton-root active' : ''}
+        >
+          <HomeIcon />
+        </Button>
+        <Button
+          component={Link}
+          to="/login"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/login' ? 'MuiButton-root active' : ''}
+        >
+          Login
+        </Button>
+        <Button
+          component={Link}
+          to="/register"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/signup' ? 'MuiButton-root active' : ''}
+        >
+          Signup
+        </Button>
+        <Button
+          component={Link}
+          to="/home"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/home' ? 'MuiButton-root active' : ''}
+        >
+          CGHome
+        </Button>
+        <Button
+          component={Link}
+          to="/details/164fd43c-b898-755d-3163-fff7f6e80a32"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/details/164fd43c-b898-755d-3163-fff7f6e80a32' ? 'MuiButton-root active' : ''}
+        >
+          T1OW
+        </Button>
+        <Button
+          component={Link}
+          to="/details/fc099512-96d4-497a-a42f-d7b3967abc03"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/details/fc099512-96d4-497a-a42f-d7b3967abc03' ? 'MuiButton-root active' : ''}
+        >
+          T2CB
+        </Button>
+         <Button
+          component={Link}
+          to="/details/92ed4740-12d9-4573-a8f1-c883ca216a00"
+          sx={{ color: 'inherit', fontWeight: 500 }}
+          className={location.pathname === '/details/92ed4740-12d9-4573-a8f1-c883ca216a00' ? 'MuiButton-root active' : ''}
+        >
+          T3MM
+        </Button>
+          
+        <Button
+          component={Link}
+          to="/home2"
+          sx={{ color: 'cyan', fontWeight: 500 }}
+          className={location.pathname === '/home2' ? 'MuiButton-root active' : ''}
+        >
+         AllParks
+        </Button>
+        <Button
+          component={Link}
+          to="/Welcome"
+          sx={{ color: 'cyan', fontWeight: 500 }}
+          className={location.pathname === '/cart' ? 'MuiButton-root active' : ''}
+        >
+          WelcomePage
+        </Button>
+
+        {/* Theme toggle */}
+        <IconButton onClick={toggleTheme} color="inherit" aria-label="Toggle theme">
+          {darkTheme ? (
+            <svg className="icon moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+            </svg>
+          ) : (
+            <svg className="icon sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+          )}
+        </IconButton>
+
+        {/* Cart with badge */}
+        <IconButton component={Link} to="/cart" color="inherit">
+          <ShoppingCartIcon />
+          {numItems > 0 && <span className="cartNumber">{numItems}</span>}
+        </IconButton>
+      </Toolbar>
+    </AppBar>
+  );
 }
