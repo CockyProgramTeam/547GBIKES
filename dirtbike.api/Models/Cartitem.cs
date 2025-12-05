@@ -64,4 +64,8 @@ public partial class Cartitem
     public string? Parkname { get; set; }
 
     public int? Userid { get; set; }
+
+    public int? NumDays { get; set; }
+
+    public string? Parkidasstring { get; set; }
 }

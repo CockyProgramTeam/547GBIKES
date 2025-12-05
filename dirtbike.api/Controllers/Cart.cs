@@ -115,31 +115,7 @@ public static class CartEndpoints
         .WithName("UpdateCartWithTempItems")
         .WithOpenApi();
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+     
     
 
         group.MapPost("/", async (Cart input) =>

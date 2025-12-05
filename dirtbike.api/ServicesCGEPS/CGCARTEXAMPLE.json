@@ -1,0 +1,30 @@
+{
+  "userId": 12345,
+  "username": "motocrossFan",
+  "fullName": "Jane Rider",
+  "email": "jane.rider@example.com",
+  "carts": [
+    {
+      "id": 1001,
+      "uid": "TX1001",
+      "parkId": 5,
+      "parkName": "Dirtbike Valley",
+      "itemType": "Pass",
+      "itemDescription": "Day Pass",
+      "quantity": 2,
+      "unitPrice": 25.0,
+      "totalPrice": 50.0,
+      "items": [
+        {
+          "id": 501,
+          "itemDescription": "Motocross Helmet",
+          "itemQty": 1,
+          "itemExtendedPrice": 199.99,
+          "itemTotals": 199.99,
+          "productId": "HELM123",
+          "parkName": "Dirtbike Valley"
+        }
+      ]
+    }
+  ]
+}

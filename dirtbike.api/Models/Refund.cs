@@ -18,13 +18,10 @@ public partial class Refund
     public string? CardExpDate { get; set; }
 
     public double AmountPaid { get; set; }
-    public double AmountRefunded { get; set; }
 
     public string? PaymentDate { get; set; }
 
     public string? TransactionId { get; set; }
-
-    public string? RefundTransactionId {get; set;}
 
     public string? Useridasstring { get; set; }
 
@@ -37,4 +34,8 @@ public partial class Refund
     public string? State { get; set; }
 
     public int? ParkId { get; set; }
+
+    public double? AmountRefunded { get; set; }
+
+    public string? RefundTransactionId { get; set; }
 }

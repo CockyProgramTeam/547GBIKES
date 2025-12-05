@@ -88,4 +88,8 @@ public partial class User
     public string Activepictureurl { get; set; } = null!;
 
     public DateTime? Resettokenexpiration { get; set; }
+
+    public string? Displayname { get; set; }
+
+    public DateOnly? DateOfBirth { get; set; }
 }

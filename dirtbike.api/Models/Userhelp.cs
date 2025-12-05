@@ -34,6 +34,6 @@ public partial class Userhelp
     public DateTime? Ticketdate { get; set; }
 
     public DateTime? Responsedate { get; set; }
-    
+
     public string? Ticketstatus { get; set; }
 }

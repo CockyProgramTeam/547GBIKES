@@ -4,15 +4,13 @@ using Azure.Messaging.ServiceBus;
 using Enterprise.Controllers;
 using Enterpriseservices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ParkTools;
 using Services;
 using System.Text;
 using System.Text.Json;
-using Azure.Messaging.ServiceBus;
-
+using dirtbike.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,6 +39,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 // Add services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+//REMOVED DI FOR THIS SERVICE builder.Services.AddScoped<CGCartService>();
+//REMOVED DI FOR THIS SERVICE builder.Services.AddScoped<CGPARKSService>();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration["ServiceBus:ConnectionString"];
@@ -108,6 +108,8 @@ app.MapBatchtypeEndpoints();
 app.MapRefundEndpoints();
 app.MapTaxtableStateEndpoints();
 app.MapTaxtableUSEndpoints();
+app.MapCGUIParksEndpoints();
+app.MapCGUICartEndpoints();
 app.MapAuthEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.

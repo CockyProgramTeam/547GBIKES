@@ -23,9 +23,9 @@ public partial class Park
 
     public double? DayPassPriceUsd { get; set; }
 
-    public float? Longitude { get; set; }
+    public decimal? Longitude { get; set; }
 
-    public float? Latitude { get; set; }
+    public decimal? Latitude { get; set; }
 
     public string? Trailmapurl { get; set; }
 
@@ -91,5 +91,13 @@ public partial class Park
 
     public int? Skiing { get; set; }
 
-    public float? AverageRating { get; set; }
+    public double? AverageRating { get; set; }
+
+    public string? Id { get; set; }
+
+    public string? Reviews { get; set; }
+
+    public double? ChildPrice { get; set; }
+
+    public double? AdultPrice { get; set; }
 }
