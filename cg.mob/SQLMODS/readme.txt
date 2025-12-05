@@ -12,3 +12,9 @@ childPrice;
 id (ParkID AS STRING-> CG USES GUI ID FORM).
 
 All these fields are MAPPED ON THE PARK SERVICE WHICH REQUIRES METADATA STRUCTURES FROM THE API...
+
+Supporting the CG UI Requires Modifications to the CartItem table
+sqlite> alter table CartItem add column numDays int; //RESERVATIONS HAVE A NUMBER OF DAYS SPECIFICALLY WRITTEN... THIS COULD BE A COMPUTED FIELD.
+sqlite> alter table CartItem add column Parkidasstring string; //ParkIDs are GUIDS for Capgemeni.
+
+
