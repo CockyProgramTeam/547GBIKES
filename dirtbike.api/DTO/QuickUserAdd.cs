@@ -5,7 +5,7 @@ namespace dirtbike.api.DTOs
         public required string Username { get; set; }
         public required string Fullname { get; set; }
         public required string Email { get; set; }
-        public required string Activeprofileurl { get; set; }
+        public required string Activepictureurl { get; set; }
         public required string Role { get; set; }
         public required string Plainpassword { get; set;}
 
@@ -16,8 +16,7 @@ namespace dirtbike.api.DTOs
                 Username = this.Username,
                 Fullname = this.Fullname,
                 Email = this.Email,
-                Activeprofileurl = this.Activeprofileurl,
-                Activepictureurl = this.Activeprofileurl, // ✅ required non-null
+                Activepictureurl = this.Activepictureurl, // ✅ required non-null
                 Role = this.Role,
                 Plainpassword = this.Plainpassword
                 // Id → auto-increment

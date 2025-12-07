@@ -27,9 +27,13 @@ public partial class ParkReview
 
     public string? Useridasstring { get; set; }
 
+    public bool? Active { get; set; }
+
     public string? Displayname { get; set; }
 
     public string? Fullname { get; set; }
 
-    public bool? Active { get; set; }
+    public string? ParkName { get; set; }
+
+    public string? ParkIdAsString { get; set; }
 }

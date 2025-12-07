@@ -35,8 +35,6 @@ public partial class User
 
     public int? Jid { get; set; }
 
-    public string? Profileurl { get; set; }
-
     public string? Role { get; set; }
 
     public string Fullname { get; set; } = null!;
@@ -82,8 +80,6 @@ public partial class User
     public string? Twofactorproviderauthstring { get; set; }
 
     public string? Uidstring { get; set; }
-
-    public string? Activeprofileurl { get; set; }
 
     public string Activepictureurl { get; set; } = null!;
 

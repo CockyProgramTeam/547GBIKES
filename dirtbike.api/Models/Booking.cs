@@ -58,4 +58,8 @@ public partial class Booking
     public DateTime? ResEnd { get; set; }
 
     public int? Tentsites { get; set; }
+
+    public string? ParkGuid { get; set; }
+
+    public int? NumDays { get; set; }
 }

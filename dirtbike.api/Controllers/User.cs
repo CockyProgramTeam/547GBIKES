@@ -102,7 +102,6 @@ public static class UserEndpoints
     if (!string.IsNullOrEmpty(input.Azureid)) existingUser.Azureid = input.Azureid;
     if (!string.IsNullOrEmpty(input.Plainpassword)) existingUser.Plainpassword = input.Plainpassword;
     if (!string.IsNullOrEmpty(input.Hashedpassword)) existingUser.Hashedpassword = input.Hashedpassword;
-    if (!string.IsNullOrEmpty(input.Profileurl)) existingUser.Profileurl = input.Profileurl;
     if (!string.IsNullOrEmpty(input.Role)) existingUser.Role = input.Role;
     if (!string.IsNullOrEmpty(input.Fullname)) existingUser.Fullname = input.Fullname;
     if (!string.IsNullOrEmpty(input.Resettoken)) existingUser.Resettoken = input.Resettoken;
@@ -122,7 +121,6 @@ public static class UserEndpoints
     if (!string.IsNullOrEmpty(input.Twofactorprovidertoken)) existingUser.Twofactorprovidertoken = input.Twofactorprovidertoken;
     if (!string.IsNullOrEmpty(input.Twofactorproviderauthstring)) existingUser.Twofactorproviderauthstring = input.Twofactorproviderauthstring;
     if (!string.IsNullOrEmpty(input.Uidstring)) existingUser.Uidstring = input.Uidstring;
-    if (!string.IsNullOrEmpty(input.Activeprofileurl)) existingUser.Activeprofileurl = input.Activeprofileurl;
     if (!string.IsNullOrEmpty(input.Activepictureurl)) existingUser.Activepictureurl = input.Activepictureurl;
 
     // Non-string fields can be updated directly

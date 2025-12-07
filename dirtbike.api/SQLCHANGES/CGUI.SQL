@@ -17,6 +17,9 @@ WHERE ParkId > 1;
 UPDATE PARKS set childPrice = 8.00 where ParkId >0;
 UPDATE PARKS set adultPrice = 23.00 where ParkId >0;
 
+ALTER PARK REVIEWS TO SUPPORT CG UI.
+sqlite> alter table ParkReviews add column ParkName text;
+sqlite> alter table ParkReviews add column ParkIdAsString text;
 
 
 "adultPrice": 23, 

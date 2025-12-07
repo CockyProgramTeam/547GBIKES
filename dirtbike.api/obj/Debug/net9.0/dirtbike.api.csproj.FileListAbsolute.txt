@@ -1799,3 +1799,8 @@ X:/G547/bikesapi/obj/Debug/net9.0/ref/dirtbike.api.dll
 /home/547G/bikesapi/obj/Debug/net9.0/dirtbike.48A9639E.Up2Date
 /home/547G/bikesapi/obj/Debug/net9.0/dirtbike.api.genruntimeconfig.cache
 /home/547G/bikesapi/obj/Debug/net9.0/ref/dirtbike.api.dll
+/home/547G/bikesapi/bin/Debug/net9.0/SQLLITE/dirtbike.db
+/home/547G/bikesapi/bin/Debug/net9.0/SQLLITE/sqldiff.exe
+/home/547G/bikesapi/bin/Debug/net9.0/SQLLITE/sqlite3.exe
+/home/547G/bikesapi/bin/Debug/net9.0/SQLLITE/sqlite3_analyzer.exe
+/home/547G/bikesapi/bin/Debug/net9.0/SQLLITE/sqlite3_rsync.exe

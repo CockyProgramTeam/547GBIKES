@@ -170,6 +170,9 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Children)
                 .HasColumnType("INT")
                 .HasColumnName("children");
+            entity.Property(e => e.NumDays)
+                .HasColumnType("INT")
+                .HasColumnName("numDays");
             entity.Property(e => e.ParkId).HasColumnName("ParkID");
             entity.Property(e => e.ResEnd)
                 .HasColumnType("date")
@@ -491,6 +494,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.DateDenied).HasColumnName("dateDenied");
             entity.Property(e => e.DatePosted).HasColumnName("datePosted");
             entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Displayname).HasColumnName("displayname");
             entity.Property(e => e.ParkId).HasColumnName("parkId");
             entity.Property(e => e.ReasonDescription).HasColumnName("reasonDescription");
             entity.Property(e => e.ReviewManagerId).HasColumnName("reviewManagerId");
@@ -660,7 +664,6 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Accountactiondescription).HasColumnName("accountactiondescription");
             entity.Property(e => e.Accountstatus).HasColumnName("accountstatus");
             entity.Property(e => e.Activepictureurl).HasColumnName("activepictureurl");
-            entity.Property(e => e.Activeprofileurl).HasColumnName("activeprofileurl");
             entity.Property(e => e.Azureid).HasColumnName("azureid");
             entity.Property(e => e.Btn).HasColumnName("BTN");
             entity.Property(e => e.Companyid).HasColumnName("companyid");
@@ -687,7 +690,6 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Oracleid).HasColumnName("oracleid");
             entity.Property(e => e.Passwordtype).HasColumnName("passwordtype");
             entity.Property(e => e.Plainpassword).HasColumnName("plainpassword");
-            entity.Property(e => e.Profileurl).HasColumnName("profileurl");
             entity.Property(e => e.Resettoken).HasColumnName("resettoken");
             entity.Property(e => e.Resettokenexpiration)
                 .HasColumnType("datetime")

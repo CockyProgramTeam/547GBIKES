@@ -111,9 +111,7 @@ namespace somecontrollers.Controllers
                     var user = context.Users.FirstOrDefault(m => m.Id == id);
                     if (user != null)
                     {
-                        user.Profileurl = savePath;
                         user.Activepictureurl = savePath;
-                        user.Activeprofileurl = savePath;
                         context.Users.Update(user);
                         await context.SaveChangesAsync();
                     }

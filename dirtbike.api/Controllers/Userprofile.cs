@@ -303,9 +303,7 @@ public static class UserprofileEndpoints
                 context.Users.Attach(someUser[0]);
                 if (input.profileurl != null) 
                 {
-                someUser[0].Profileurl = input.profileurl;
                 someUser[0].Activepictureurl = input.profileurl;
-                someUser[0].Activeprofileurl = input.profileurl;
                 }
 
                     await context.SaveChangesAsync();
