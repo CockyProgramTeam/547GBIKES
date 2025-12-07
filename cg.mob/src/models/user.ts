@@ -4,7 +4,7 @@
 
 export default interface User {
     id: string;
-    displayName: string;
-    fullName: string;
-    dateOfBirth: Date;
+    displayName: string | null;
+    fullName: string | null;
+    dateOfBirth: date | null;
 }

@@ -1,4 +1,6 @@
 import { CartItem } from "../models/cartItem";
+import { NavigateFunction } from "react-router-dom";
+
 
 export default class CartService {
     private CART_KEY = 'rideFinderExampleApp';
@@ -41,67 +43,64 @@ export default class CartService {
 
     clearCart = () => {
         localStorage.removeItem(this.CART_KEY);
+        window.dispatchEvent(new Event("cartUpdated"));
     }
-
-    // 👉 New function: finalize booking with fixed header and POST to API
-    finalizeBooking = async (): Promise<any> => {
-        const cart = this.loadCart();
-
-        const booking = {
-            header: {
-                uid: 10000,
-                fullname: "capgemeni user",
-                email: "capgemeniuser@547bikes.info",
-                username: "capgemeniuser@547bikes.info",
-                bookingId: Date.now(),
-                bookingDate: new Date().toISOString(),
-                totalItems: cart.length,
-                totalCost: cart.reduce((sum, item) => {
-                    const adultCost = item.numAdults * item.park.adultPrice;
-                    const kidCost = item.numKids * item.park.childPrice;
-                    return sum + (adultCost + kidCost) * item.numDays;
-                }, 0)
-            },
-            items: cart.map(item => ({
-                parkId: item.park.id,
-                parkName: item.park.parkName,
-                location: item.park.location,
-                numDays: item.numDays,
-                numAdults: item.numAdults,
-                numKids: item.numKids,
-                cost: (item.numAdults * item.park.adultPrice +
-                       item.numKids * item.park.childPrice) * item.numDays
-            }))
-        };
-
-        console.log("Finalized booking:", booking);
-
-        try {
-            const response = await fetch("https://parksapi.547bikes.info/api/CGCart", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(booking)
-            });
-
-            if (!response.ok) {
-                throw new Error(`Failed to post booking: ${response.statusText}`);
-            }
-
-            const result = await response.json();
-            console.log("Booking successfully posted:", result);
-
-            // ✅ Clear cart only after successful post
-            this.clearCart();
-
-            return result;
-        } catch (err) {
-            console.error("Error posting booking:", err);
-            // Optionally: return booking so caller can retry
-            return booking;
-        }
-    }
-
+    
     private save(cart: CartItem[]) {
         localStorage.setItem(this.CART_KEY, JSON.stringify(cart));
+    	window.dispatchEvent(new Event("cartUpdated"));
     }
 }
+
+
+export async function postBookingDetails(
+  paymentID: string
+): Promise<any> {
+  const uid = localStorage.getItem("uid");
+  const useridasstring = localStorage.getItem("uidstring");
+
+  if (!uid || !useridasstring) {
+    throw new Error("Missing uid or useridasstring in localStorage. You Must Login to Purchase Services.");
+  }
+
+  const cartJson = localStorage.getItem("rideFinderExampleApp");
+  if (!cartJson) {
+    throw new Error("No cart data found in localStorage under key 'rideFinderExampleApp'");
+  }
+
+  const localCart = JSON.parse(cartJson);
+
+  const payload = {
+  	cart: localCart,  
+  	uid: Number(uid),
+    useridasstring,
+    paymentID,
+    };
+  console.log("payload", payload);
+  try {
+    const response = await fetch("https://parksapi.547bikes.info/api/GCCARTIMPORT", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to import cart: ${response.status} ${response.statusText}`);
+    }
+
+    const result = await response.json();
+
+    localStorage.removeItem("rideFinderExampleApp");
+
+    const bookingId = result.bookingId || result.id || "(unknown)";
+    alert(`Booking completed successfully! Your booking ID is ${bookingId}.`);
+
+    window.open('/','_self');
+    return result;
+  } catch (err) {
+    console.error("Error importing cart:", err);
+    alert("Booking failed. Please try again.");
+    return payload;
+  }
+}
+

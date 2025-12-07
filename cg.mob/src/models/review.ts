@@ -4,7 +4,7 @@ export default interface Review {
     author: User;
     rating: number;
     review: string;
-    dateWritten?: Date;
-    dateVisited?: Date;
+    dateWritten?: Date string | null;
+    dateVisited?: Date | null;
     active?: boolean;
 }

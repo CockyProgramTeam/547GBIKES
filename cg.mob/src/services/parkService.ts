@@ -4,19 +4,36 @@ export default class ParkService {
     public parks: IPark[] = [];
 
     // Helper to fetch parks from remote API
-    private async fetchRemoteParks(): Promise<IPark[]> {
-        try {
-            const response = await fetch("https://parksapi.547bikes.info/api/CGParks");
-            if (!response.ok) {
-                throw new Error(`Failed to fetch parks: ${response.statusText}`);
-            }
-            const data = await response.json();
-            return data as IPark[];
-        } catch (error) {
-            console.error("Error fetching remote parks:", error);
-            return []; // fallback to empty if API fails
+private async fetchRemoteParks(): Promise<IPark[]> {
+    try {
+        const response = await fetch("https://parksapi.547bikes.info/api/CGParks");
+        if (!response.ok) {
+            throw new Error(`Failed to fetch parks: ${response.statusText}`);
         }
+        const data = await response.json();
+
+        const today = new Date().toISOString();
+
+        // Reset dates to today
+        const normalized = (data as IPark[]).map((park) => ({
+            ...park,
+            reviews: park.reviews?.map((review) => ({
+                ...review,
+                author: {
+                    ...review.author,
+                    dateOfBirth: today
+                },
+                dateWritten: today,
+                dateVisited: today
+            })) || []
+        }));
+
+        return normalized;
+    } catch (error) {
+        console.error("Error fetching remote parks:", error);
+        return []; // fallback to empty if API fails
     }
+}
 
     // Get all parks (local + remote)
     getAllParks: () => Promise<IPark[]> = async () => {
@@ -159,6 +176,6 @@ const mockData: IPark[] = [
                 dateVisited: "2025-09-15T00:00:00.000Z",
                 review: "Exciting rides, though a bit too intense for younger kids."
             }
-            }]
+            ]}]
     
             

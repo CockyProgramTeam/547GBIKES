@@ -23,7 +23,7 @@ const theme = createTheme({
   },
 });
 
-function LoginPage() {
+function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -46,6 +46,14 @@ function LoginPage() {
       if (matchedUser) {
         // Save user object to localStorage
         localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
+        localStorage.setItem("status", "loggedin");
+        localStorage.setItem("uid", parseInt(matchedUser.userid) || 0);
+        localStorage.setItem("uidstring", matchedUser.uidstring || null);
+        localStorage.setItem("fullname", matchedUser.email || null);
+        localStorage.setItem("username", matchedUser.username || null);
+        localStorage.setItem("firstname", matchedUser.firstname || null);
+        localStorage.setItem("lastname", matchedUser.lastname || null);
+      
 
         setMessage(`Welcome, ${matchedUser.firstname} ${matchedUser.lastname}!`);
         setLoading(true);
@@ -134,4 +142,4 @@ function LoginPage() {
   );
 }
 
-export default LoginPage;
+export default Login;

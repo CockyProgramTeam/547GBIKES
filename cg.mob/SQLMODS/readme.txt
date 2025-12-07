@@ -18,3 +18,8 @@ sqlite> alter table CartItem add column numDays int; //RESERVATIONS HAVE A NUMBE
 sqlite> alter table CartItem add column Parkidasstring string; //ParkIDs are GUIDS for Capgemeni.
 
 
+Support the CG UI Via Booking requires Modifications to the Booking Table
+ParkGuid is the ID from the UI.
+numDays is the reservation number of days.
+
+
