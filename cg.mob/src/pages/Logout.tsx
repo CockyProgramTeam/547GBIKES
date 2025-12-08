@@ -21,6 +21,26 @@ const theme = createTheme({
   },
 });
 
+const postUserLog = async () => {
+  try {
+    const someusername = localStorage.getItem("username") || "";
+    const uid = parseInt(localStorage.getItem("uid") || "0");
+
+    await fetch("https://parksapi.547bikes.info/api/Userlog", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: someusername,
+        loginstatus: "new", // default
+        description: "logging out",
+        uiorigin: "react",
+      }),
+    });
+  } catch (err) {
+    console.error("Error posting user log:", err);
+  }
+};
+
 function Logout() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -34,6 +54,7 @@ function Logout() {
     localStorage.setItem("status", "loggedout")
     localStorage.setItem("firstname", "Ridefinder")
     localStorage.setItem("lastname", "Guest")
+    postUserLog();
     // Simulate a short delay for UX
     setTimeout(() => {
       setLoading(false);

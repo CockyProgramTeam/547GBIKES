@@ -87,7 +87,7 @@
   console.log("→ sending login payload:", payload);
   try {
       const res = await fetch(
-        "https://gemroot-d3h6hybke9c4f0fr.centralus-01.azurewebsites.net/api/Auth/login",
+        "https://parksapi.547bikes.info/api/Auth/login",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -177,7 +177,7 @@
       const stat   = success ? "successful" : "failed";
       const descr  = `Login ${stat} for ${user.username} from ${ip} at ${new Date().toLocaleString()}`;
       $.ajax({
-        url: "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userlog",
+        url: "https://parksapi.547bikes.info/api/Userlog",
         method: "POST",
         contentType: "application/json",
         data: JSON.stringify({ descr }),
@@ -238,7 +238,7 @@
                 };
       console.log(somedata);
       $.ajax({
-        url: 'https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Usersession',
+        url: 'https://parksapi.547bikes.info/api/Usersession',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(somedata),

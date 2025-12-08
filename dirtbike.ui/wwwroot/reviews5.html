@@ -156,8 +156,11 @@
 
         const mapsLink = `https://www.google.com/maps?q=${park.latitude},${park.longitude}`;
         const directionsLink = `https://www.google.com/maps/dir/?api=1&destination=${park.latitude},${park.longitude}`;
-        const pictureurl = `https://ww2.547bikes.info/picturewall.html?parkId=${park.parkId}`;
-
+        const pictureurl = `https:// home.547bikes.info/picturewall.html?parkId=${park.parkId}`;
+        localStorage.setItem("ParkIdAsString", park.id);
+        localStorage.setItem("ParkName", park.name);
+        let temp = localStorage.getItem("fullname");
+        localStorage.setItem("DisplayName", temp);
         $("#park-details").html(`
           <div class="card shadow-sm">
             <div class="card-body">
@@ -218,7 +221,29 @@
       $("#review-form").on("submit", function (e) {
         e.preventDefault();
 
-        const review = {
+const someparkid = localStorage.getItem("ParkIdAsString");
+const someparkname = localStorage.getItem("ParkName");
+
+
+const review = {
+  parkId: Number(parkId),                  // the int foreign key
+  parkIdAsString: someparkid,   // the GUID from Parks table
+  parkName: someparkname,       // park name from Parks API
+  userId: Number($("#userId").val()),      // int user id
+  useridasstring: $("#userId").val().toString(), // string version of user id
+  displayname: localStorage.getItem("DisplayName") || "Guest",
+  fullname: localStorage.getItem("fullname") || "Anonymous",
+  description: $("#description").val(),
+  stars: Number($("#stars").val()),
+  datePosted: new Date().toISOString(),
+  dateApproved: null,
+  dateDenied: null,
+  reasonDescription: null,
+  reviewManagerId: 0,
+  active: true
+};
+
+      /*  const review = {
           parkId: Number(parkId),
           userId: Number($("#userId").val()),
           description: $("#description").val(),
@@ -228,7 +253,7 @@
           dateDenied: null,
           reasonDescription: null,
           reviewManagerId: null
-        };
+        };*/
 
         $.ajax({
           url: "https://parksapi.547bikes.info/api/ParkReview",

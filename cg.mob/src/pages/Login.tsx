@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ThemeProvider,
   createTheme,
@@ -23,6 +23,26 @@ const theme = createTheme({
   },
 });
 
+const postUserLog = async () => {
+  try {
+    const someusername = localStorage.getItem("username") || "";
+    const uid = parseInt(localStorage.getItem("uid") || "0");
+
+    await fetch("https://parksapi.547bikes.info/api/Userlog", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: someusername,
+        loginstatus: "new", // default
+        description: "logging in",
+        uiorigin: "react",
+      }),
+    });
+  } catch (err) {
+    console.error("Error posting user log:", err);
+  }
+};
+
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -30,6 +50,14 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
+
+  // 👇 check login status on component mount
+  useEffect(() => {
+    const status = localStorage.getItem("status");
+    if (status === "loggedin") {
+      navigate("/home");
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -47,13 +75,13 @@ function Login() {
         // Save user object to localStorage
         localStorage.setItem("loggedInUser", JSON.stringify(matchedUser));
         localStorage.setItem("status", "loggedin");
-        localStorage.setItem("uid", parseInt(matchedUser.userid) || 0);
+        localStorage.setItem("uid", matchedUser.userid || 0);
         localStorage.setItem("uidstring", matchedUser.uidstring || null);
-        localStorage.setItem("fullname", matchedUser.email || null);
+        localStorage.setItem("fullname", matchedUser.fullname || null);
         localStorage.setItem("username", matchedUser.username || null);
         localStorage.setItem("firstname", matchedUser.firstname || null);
         localStorage.setItem("lastname", matchedUser.lastname || null);
-      
+        localStorage.setItem("email", matchedUser.email || null);
 
         setMessage(`Welcome, ${matchedUser.firstname} ${matchedUser.lastname}!`);
         setLoading(true);
@@ -62,6 +90,8 @@ function Login() {
         setTimeout(() => {
           navigate("/home");
         }, 2000);
+
+        await postUserLog();
       } else {
         setMessage("Invalid username or password.");
       }
@@ -72,7 +102,7 @@ function Login() {
   };
 
   return (
-     <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme}>
       <CssBaseline />
       <Box position="relative" minHeight="100vh" bgcolor="#f0f4f8">
         <Paper
