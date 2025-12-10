@@ -6,6 +6,24 @@ namespace dirtbike.api.Services
 {
     public class CGCartService
     {
+        // Helper: Check park capacity before saving
+        private bool CheckCapacity(DirtbikeContext context, string parkName, int numAdults, int numChildren)
+        {
+            var park = context.Parks.FirstOrDefault(p => p.Name == parkName);
+            if (park == null) return false; // park not found
+
+            int maxVisitors = park.MaxVisitors;
+
+            // Current visitors already booked today
+            int currentVisitors = context.Cartitems
+                .Where(i => i.Parkname == parkName && i.CreatedDate.Date == DateTime.UtcNow.Date)
+                .Sum(i => i.Itemqty);
+
+            int requestedVisitors = numAdults + numChildren;
+
+            return (currentVisitors + requestedVisitors) <= maxVisitors;
+        }
+
         // CREATE: Save a new cart with items
         public CGCartDto? CreateCart(CGCompletedCartDto dto)
         {
@@ -18,6 +36,22 @@ namespace dirtbike.api.Services
 
                 var user = context.Users.FirstOrDefault(u => u.Userid == dto.UserId);
                 if (user == null) return null;
+
+                // ✅ Capacity check before saving
+                foreach (var itemDto in dto.Items)
+                {
+                    bool capacityOk = CheckCapacity(context, itemDto.ParkName, itemDto.NumAdults, itemDto.NumChildren);
+                    if (!capacityOk)
+                    {
+                        Enterpriseservices.ApiLogger.logapi(
+                            Enterpriseservices.Globals.ControllerAPIName,
+                            Enterpriseservices.Globals.ControllerAPINumber,
+                            "CGCREATECART", 2, "CapacityExceeded",
+                            $"Park {itemDto.ParkName} exceeded capacity");
+
+                        return null; // reject booking
+                    }
+                }
 
                 var cart = new Cart
                 {
@@ -111,6 +145,13 @@ namespace dirtbike.api.Services
                 var cart = context.Carts.FirstOrDefault(c => c.Id == cartId);
                 if (cart == null) return false;
 
+                // ✅ Capacity check before updating
+                foreach (var itemDto in dto.Items)
+                {
+                    bool capacityOk = CheckCapacity(context, itemDto.ParkName, itemDto.NumAdults, itemDto.NumChildren);
+                    if (!capacityOk) return false;
+                }
+
                 cart.Transactiontotal = dto.TransactionTotal;
                 cart.IsCheckedOut = 1;
                 context.SaveChanges();
@@ -160,3 +201,4 @@ namespace dirtbike.api.Services
         }
     }
 }
+
