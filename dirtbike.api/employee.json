@@ -1,0 +1,35 @@
+[
+  {
+    "uid": "e1a9f3b2-4c1d-4a7e-9f2a-1c3d5e6f7890",
+    "name": "John Smith",
+    "address1": "123 Main St",
+    "address2": "Apt 4B",
+    "city": "Springfield",
+    "state": "IL",
+    "zip": "62704",
+    "birthdate": "1985-06-15",
+    "employeeId": "Smith8372"
+  },
+  {
+    "uid": "b7c2d8e4-9f3a-4b1c-8e7d-2a4f6b3c1d90",
+    "name": "Maria Gonzalez",
+    "address1": "456 Elm St",
+    "address2": "",
+    "city": "Austin",
+    "state": "TX",
+    "zip": "73301",
+    "birthdate": "1990-11-02",
+    "employeeId": "Gonza1945"
+  },
+  {
+    "uid": "d3f1a7c9-2e8b-4d6f-9c1a-3b7e5f2d4a60",
+    "name": "David O'Connor",
+    "address1": "789 Oak Ave",
+    "address2": "Suite 300",
+    "city": "Boston",
+    "state": "MA",
+    "zip": "02108",
+    "birthdate": "1978-03-22",
+    "employeeId": "O'Con5821"
+  }
+]

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="dropmenu.css" />
+    <script src="./js/bikes.js"></script>
+    <title>Customer Help Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & jQuery CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="home.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .btn-submit {
+            background-color: maroon;
+            color: white;
+        }
+        .btn-submit:hover {
+            background-color: darkred;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .jcolumn {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 300px;
+        }
+        .jrow:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+                  <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                  <div class="dropdown-content">
+                  <a href="index.html">Site Home</a>
+                  <a href="cartreview.html">MyCart</a>
+                  <a href="parks5.html">Review Park Options</a>
+                  <a href="parksreview5.html">Park Reviews</a>
+                  <a href="mybookings5.html">MyReservations</a>
+                  <a href="manager.html">Manager Utilities</a>
+            </div>
+      </div> 
+    <div class="logo">&nbsp&nbsp<H5>MyLinkv25</H5></div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
+    </div>
+    </div>
+    <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+    <div class="jrow">
+        <div class="jcolumn">
+            <br><br><br>
+            <p align=center><img src='./images/shamrock.png' width=85% height=650px></p>
+        </div>
+        <div class="jcolumn">
+            <div class="container">
+                <div class="form-container mt-5">
+                    <h2 class="text-center">Submit a Customer Help Ticket</h2>
+                    <form id="ticketForm">
+                        <div class="form-group">
+                            <label for="emplid">Employee ID:</label>
+                            <input type="text" class="form-control" id="emplid">
+                        </div>
+                        <div class="form-group">
+                            <label for="descr">Description:</label>
+                            <textarea class="form-control" id="descr" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="severity">Severity (0-5):</label>
+                            <input type="number" class="form-control" id="severity" min="0" max="5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="userid">User ID:</label>
+                            <input type="number" class="form-control" id="userid">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="fullname">Full Name:</label>
+                            <input type="text" class="form-control" id="fullname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bestcontactnumber">Best Contact Number:</label>
+                            <input type="text" class="form-control" id="bestcontactnumber" required>
+                        </div>
+                        <button type="submit" class="btn btn-submit btn-block">Submit Ticket</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Load values from localStorage, defaulting to 100 if null or empty
+            $("#emplid").val(localStorage.getItem("emplid") || "100");
+            $("#userid").val(localStorage.getItem("userid") || "100");
+            $("#email").val(localStorage.getItem("email") || "100");
+
+            $("#ticketForm").submit(function(e) {
+                e.preventDefault();
+
+                let data = {
+                    descr: $("#descr").val(),
+                    severity: $("#severity").val(),
+                    email: $("#email").val(),
+                    fullname: $("#fullname").val(),
+                    bestcontactnumber: $("#bestcontactnumber").val()
+                };
+
+                $.ajax({
+                    url: "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userhelp",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(data),
+                    async: true,
+                    timeout: 5000,
+                    success: function(response) {
+                        alert("Help ticket postedsuccessfully!");
+                        window.open("profile.html", "_self");
+                    },
+                    error: function(xhr, status, error) {
+                        if (status === 'timeout') {
+                            alert("Error: No response received within 5 seconds.");
+                        } else {
+                            alert("Error: " + error);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+      <!-- Footer -->
+  <footer class="footer text-center mt-5">
+    &copy; Cocky Consulting 2025. <br> All rights reserved.<br>
+    <a href="sitemap.html" class="sitelink">SiteMap</a>
+  </footer>
+</html>

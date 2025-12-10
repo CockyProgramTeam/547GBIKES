@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Book a Park</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+</head>
+<body>
+  <div class="container py-5">
+    <h1 class="mb-4 text-center">Book This Park</h1>
+    <div id="park-details" class="mb-5"></div>
+
+    <form id="booking-form" class="row g-3">
+      <div class="col-md-6">
+        <label for="adults" class="form-label">Number of Adults</label>
+        <input type="number" class="form-control" id="adults" min="0" required>
+      </div>
+      <div class="col-md-6">
+        <label for="children" class="form-label">Number of Children</label>
+        <input type="number" class="form-control" id="children" min="0" required>
+      </div>
+      <div class="col-md-6">
+        <label for="passType" class="form-label">Pass Type</label>
+        <select class="form-select" id="passType" required>
+          <option value="">Choose...</option>
+          <option value="day">Day Pass</option>
+          <option value="3day">3-Day Pass</option>
+          <option value="week">Week Pass</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input type="date" class="form-control" id="startDate" required>
+      </div>
+      <div class="col-md-6">
+        <label for="endDate" class="form-label">End Date</label>
+        <input type="date" class="form-control" id="endDate" required>
+      </div>
+      <div class="col-12">
+        <button type="submit" class="btn btn-success">Submit Booking</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      const params = new URLSearchParams(window.location.search);
+      const parkId = params.get("parkId");
+
+      if (!parkId) {
+        $("#park-details").html(`<div class="alert alert-danger">No parkId provided in URL.</div>`);
+        $("#booking-form").hide();
+        return;
+      }
+
+      $.ajax({
+        url: `http://localhost:6100/api/Parks/${parkId}`,
+        method: "GET",
+        success: function (park) {
+          console.log("✅ Park loaded:", park);
+          $("#park-details").html(`
+            <div class="card shadow-sm">
+              <div class="card-body">
+                <h3 class="card-title">${park.name}</h3>
+                <p><strong>Region:</strong> ${park.region}</p>
+                <p><strong>Address:</strong> ${park.address}</p>
+                <p><strong>Phone:</strong> ${park.phone}</p>
+                <p><strong>Trail Length:</strong> ${park.trailLengthMiles} miles</p>
+                <p><strong>Difficulty:</strong> ${park.difficulty}</p>
+                <p><strong>Day Pass:</strong> $${typeof park.dayPassPriceUsd === "number" ? park.dayPassPriceUsd.toFixed(2) : "N/A"}</p>
+                <p><strong>Description:</strong> ${park.description}</p>
+                <p><strong>GPS:</strong> ${park.latitude}, ${park.longitude}</p>
+                ${park.trailmapurl ? `<a href="${park.trailmapurl}" class="btn btn-primary btn-sm mt-2" target="_blank">Trail Map</a>` : `<span class="text-muted">No trail map available</span>`}
+              </div>
+            </div>
+          `);
+        },
+        error: function (xhr, status, error) {
+          console.error("❌ Error loading park:", status, error);
+          $("#park-details").html(`<div class="alert alert-danger">Error loading park details: ${error}</div>`);
+          $("#booking-form").hide();
+        }
+      });
+
+      $("#booking-form").on("submit", function (e) {
+        e.preventDefault();
+        const bookingData = {
+          parkId: parkId,
+          adults: $("#adults").val(),
+          children: $("#children").val(),
+          passType: $("#passType").val(),
+          startDate: $("#startDate").val(),
+          endDate: $("#endDate").val()
+        };
+        console.log("📅 Booking submitted:", bookingData);
+        alert("Booking submitted! (Check console for details)");
+      });
+    });
+  </script>
+</body>
+</html>

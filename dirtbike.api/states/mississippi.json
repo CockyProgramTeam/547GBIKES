@@ -1,0 +1,24 @@
+INSERT INTO parks (
+  name, address, phone, region, trailLengthMiles, difficulty,
+  description, dayPassPriceUsd, longitude, latitude, trailmapurl,
+  parklogourl, maxvisitors, currentvisitors, currentvisitorschildren,
+  currentvisitorsadults, maxcampsites, columns, state
+) VALUES
+(
+  'Roosevelt State Park', '2149 Hwy 13, Morton, MS 39117', '601-732-6316',
+  'Central Mississippi', 10, 'Moderate', 'Latitude: 32.3643\nLongitude: -89.5292',
+  4, -89.5292, 32.3643, 'https://www.mdwfp.com/media/roosevelt_trailmap.pdf',
+  'https://www.mdwfp.com/images/roosevelt_logo.png', 250, 0, 0, 0, 50, NULL, 'MS'
+),
+(
+  'Clarkco State Park', '386 Clarkco Rd, Quitman, MS 39355', '601-776-6651',
+  'East Mississippi', 8, 'Easy to Moderate', 'Latitude: 32.0452\nLongitude: -88.7334',
+  4, -88.7334, 32.0452, 'https://www.mdwfp.com/media/clarkco_trailmap.pdf',
+  'https://www.mdwfp.com/images/clarkco_logo.png', 200, 0, 0, 0, 40, NULL, 'MS'
+),
+(
+  'Trace State Park', '2139 Faulkner Rd, Belden, MS 38826', '662-489-2958',
+  'North Mississippi', 12, 'Intermediate', 'Latitude: 34.3142\nLongitude: -88.8543',
+  4, -88.8543, 34.3142, 'https://www.mdwfp.com/media/trace_trailmap.pdf',
+  'https://www.mdwfp.com/images/trace_logo.png', 300, 0, 0, 0, 60, NULL, 'MS'
+);

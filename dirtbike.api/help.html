@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<script src="./js/bikes.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MyLinkV25 Customer Care</title>
+ <style>
+           /* --- Overall Page Styles --- */
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+    }
+    /* --- Navigation Bar --- */
+    .navbar {
+      background-color: #1F3D7A;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .navbar .nav-left {
+      display: flex;
+      align-items: center;
+    }
+.navbar .nav-left a {
+  background-color: #3E5BA8; /* Slightly lighter blue than navbar */
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 15px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.navbar .nav-left a:hover {
+  background-color: #2e4a90;
+  color: #fff;
+}
+ 
+    .navbar .nav-right {
+      display: flex;
+      align-items: center;
+    }
+    .navbar .nav-right img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+    .navbar .nav-right span {
+      color: white;
+      font-weight: bold;
+      margin-right: 20px;
+    }
+    .navbar .nav-right #loginBtn {
+      background-color: #3cf436;
+      text-decoration: none;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .navbar .nav-right #loginBtn:hover {
+      background-color: #58d32f;
+    }
+    .navbar .nav-right #logoutBtn {
+      background-color: #f44336;
+      text-decoration: none;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .navbar .nav-right #logoutBtn:hover {
+      background-color: #d32f2f;
+    }
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin: 20px 0;
+}
+
+.feature {
+  background-color: #f2f2f2;
+  padding: 20px;
+  flex: 1 1 300px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.feature h3 {
+  margin-top: 0;
+  font-size: 1.2rem;
+}
+
+.feature ul {
+  padding-left: 20px;
+  margin: 10px 0 0;
+}
+
+.feature li {
+  margin-bottom: 6px;
+}
+
+.feature a {
+  color: #007acc;
+  text-decoration: none;
+}
+
+.feature a:hover {
+  text-decoration: underline;
+}
+
+/* Footer */
+.footer {
+    background-color: #1F3D7A;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: bold;
+    margin-top: auto;
+}
+
+  </style>
+  <script>
+    // API Endpoints
+    const usersApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Users";
+    const profilesApiUrl = "https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/api/Userprofile";
+
+    function checkUserStatus() {
+      var userId = localStorage.getItem("uid");
+      var fullName = localStorage.getItem("fullname");
+      var userRole = localStorage.getItem("role");
+
+      var loginBtn = document.getElementById("loginBtn");
+      var logoutBtn = document.getElementById("logoutBtn");
+
+      if (userId && userId !== "901") {
+        // Logged in
+        loginBtn.style.display = "none";
+        logoutBtn.style.display = "inline-block";
+        document.getElementById("userGreeting").innerHTML = "Welcome, " + fullName; // Display full name
+
+        if (userRole === "admin") {
+      adminHomeLink.style.display = "inline-block";
+    } else {
+      userHomeLink.style.display = "inline-block";
+    }
+
+      } else {
+        // Not logged in (guest)
+        loginBtn.style.display = "inline-block";
+        logoutBtn.style.display = "none";
+        document.getElementById("userGreeting").innerHTML = "Welcome, Guest"; // Display "Guest"
+      }
+    }
+
+    function handleHomeNavigation(event) {
+    event.preventDefault();
+    const uid = localStorage.getItem("uid");
+    const role = localStorage.getItem("role");
+
+    if (!uid || uid === "901") {
+      window.location.href = "index.html"; // Guest
+    } else if (role === "admin") {
+      window.location.href = "adminhome.html"; // Admin
+    } else {
+      window.location.href = "index.html"; // Normal user
+    }
+  }
+
+    function logoutUser(event) {
+      event.preventDefault();
+      console.log("Logging out user...");
+
+      localStorage.clear();
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("role", "guest");
+
+      console.log("Local storage after logout:", localStorage);
+      window.location.replace("login.html");
+    }
+
+    function loginUser(event) {
+      event.preventDefault();
+      console.log("Logging in user...");
+
+      localStorage.clear();
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "Guest");
+      localStorage.setItem("role", "guest");
+
+      window.open("login.html", "_self");
+    }
+
+    // Fetch the profile picture using the profiles API.
+    function fetchProfilePicture() {
+      var uid = localStorage.getItem('uid');
+      $.get(profilesApiUrl)
+        .done(function(profiles) {
+          var profile = profiles.find(p => p.userid == uid);
+          if(profile && profile.activepictureurl) {
+            $('.navbar .nav-right img').attr('src', profile.activepictureurl);
+          }
+        })
+        .fail(function(xhr, status, error) {
+          console.error("Error fetching profiles:", xhr.responseText);
+        });
+    }
+
+    // Fetch user data, then get the employeeid 
+    function fetchUser() {
+      var uid = localStorage.getItem('uid');
+      $.get(usersApiUrl)
+        .done(function(users) {
+          var user = users.find(u => u.id == uid);
+          if (!user) {
+            alert("User not found.");
+            return;
+          }
+          // Update navbar with full name from user data.
+          $('#H3UserBanner').text(user.fullname);
+        })
+        .fail(function(xhr, status, error) {
+          console.error("Error fetching user:", xhr.responseText);
+        });
+    }
+
+    // On page load, check uid, fetch user info
+    $(document).ready(function () {
+      var someuid = localStorage.getItem('uid');
+      console.log('UID:', someuid);
+      if (someuid && someuid !== '901') {
+        fetchUser();
+        fetchProfilePicture();
+      }
+    });
+  </script>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cartreview.html">MyCart</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;MyLinkv25 - Book Park</div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
+    </div>
+  </div>
+
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+
+
+<div align="center"><img src="https://www.sdccd.edu/_images/tech.support.png" width="100%" height="450px"></div>
+<div class="features">
+  <div class="feature" style="background-color:#aaa;">
+    <a href="careticket.html" target="_self" style="text-decoration: none;">
+    <h3>Login Problems</h3>
+    <ul>
+      <li style="color: black;">Open a New Ticket</li>
+    </ul>
+</a>
+  </div>
+
+  <div class="feature">
+    <h3>Github Repo Links</h3>
+    <ul>
+      <li><a href="https://github.com/CockyProgramTeam/590Team1UI.git" target="_blank">Front</a></li>
+      <li><a href="https://github.com/CockyProgramTeam/590Team1API.git" target="_blank">API</a></li>
+      <li><a href="https://github.com/CockyProgramTeam/590Manager.git" target="_blank">CLI/Manager</a></li>
+      <li><a href="https://github.com/CockyProgramTeam/590Team1Project.git" target="_blank">Program Team</a></li>
+      <li><a href="https://www.azure.com/" target="_blank">Azure DevOps</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; Cocky Consulting 2025
+    <br>
+    All rights reserved.
+  </footer>
+</html>

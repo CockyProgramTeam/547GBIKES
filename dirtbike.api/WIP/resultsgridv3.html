@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+  <link rel="stylesheet" href="dropmenu.css" />
+  <script src="./js/bikes.js"></script>
+  <title>Mountain Bike Parks</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/somebootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.columnproducts {
+  float: left;
+  width: 34%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Create three equal columns that floats next to each other */
+.columnselected {
+  float: left;
+  width: 34%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+/* Create three equal columns that floats next to each other */
+.column3 {
+  float: left;
+  width: 15%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+.columnactions {
+  float: left;
+  width: 13%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+  background-color: blue;
+  font: white;
+  text-align: center;
+  vertical-align: center;
+  margin: 0 auto;
+}
+
+/* Create three equal columns that floats next to each other */
+.column1 {
+  float: left;
+  width: 45%;
+  padding: 10px;
+  height: 300px;
+
+}
+
+/* Create three equal columns that floats next to each other */
+.column2 {
+  float: left;
+  width: 45%;
+  padding: 10px;
+  height: 300px;
+}
+
+
+#productstuff
+{
+background-color: lightblue;
+}
+
+#interiorpanel
+{
+margin-left: 50px;
+}
+
+button
+{
+width: 150px;
+height: 60px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+  height: 220px;
+}
+/* Clear floats after the columns */
+.row2:after {
+  content: "";
+  display: table;
+  clear: both;
+  height: 180px;
+}
+
+    #userGreeting {
+      text-align: center;
+      vertical-align: middle;
+      color: white;
+    }
+    #banner {
+      background-color: lightgrey;
+      height: 60px;
+      vertical-align: middle;
+      width: 100%;
+    }
+    #cancelBtn {
+      width: 400px;
+    }
+    #splash {
+      font-size: 12pt;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+    }
+    .panel {
+      width: 40%;
+    }
+    .panel h2 {
+      text-align: center;
+    }
+    select {
+      width: 100%;
+      height: 300px;
+    }
+    .controls {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+    }
+    button {
+      padding: 10px;
+      font-size: 16px;
+      width: 90px;
+    }
+  
+    #newcartbutton
+  {
+  width: 100%;
+  }
+  .compact-dropdown {
+  height: auto;
+  max-height: 38px;
+  overflow-y: hidden;
+}
+  
+  #currentParkId
+  {
+  float: right;
+  }
+  #someparkid
+  {
+  float: right:
+  }
+  
+  #productselector
+  {
+  background-color: lightgrey;
+  width: 100%;
+  }
+
+  #catalogue
+  {
+    min-width: 300px;
+    max-width: 300px;
+    font-size: 9pt;
+  }
+
+  #selected
+  {
+    min-width: 300px;
+    max-width: 300px;
+    font-size: 9pt;
+  }
+
+  .container
+  {
+  width: 1500px;
+  }
+
+
+
+
+</style>
+</head>
+<body>
+ <div class="row2">
+  		<div class="column1" style="background-color:#aaa;">
+   	 	<h3>ParkInfo</h3>
+		<HR>
+   <div class="card border-info" style="height: 155px; overflow-y: auto;">
+      <div class="card-header bg-info text-white py-2 px-3 small">
+        <span id="someparkid"><strong>Current Park ID:</strong></span>
+        <span id="currentParkId" class="fw-semibold"></span><br>
+      </div>
+    </div>
+  <div class="card-body" style="display: flex; align-items: center; gap: 10px;">
+  <label for="parkSelector" class="form-label small mb-0">Change Park:</label>
+  <select id="parkSelector" class="form-select form-select-sm"
+    style="max-width: 280px; max-height: 80px; font-size: 0.85rem; padding: 2px 8px;"
+    onchange="changePark()">
+    <option value="">Select a Park</option>
+  </select>
+  <div id="park-details" class="mb-2"></div> <span id="currentParkName"></span>
+</div>
+ 	   </div>
+	<div class="column2" style="background-color: #D3D3D3;">
+    		<h3>CartMaster</h3>
+		<HR>
+	   <div class="card text-white bg-primary mb-4" id="cartMasterCard" style="max-height:320px; overflow-y:auto; display:none;">
+	  <div class="card-header d-flex justify-content-between align-items-center">
+	    <div class="text-center w-100">
+	      Your Cart Master Summary For User: <span id="masterowner"></span>
+	    </div>
+	  </div>
+	  <div class="card-body">
+	    <p class="card-text">
+	      Loyalty ID: <span id="loyaltyid"></span><br>
+	      Carts Count: <span id="cmCartsCount"></span><br>
+	      Active Carts: <span id="cmCartsActive"></span><br>
+	      Cancelled Carts: <span id="cmCartsCancelled"></span><br>
+	      Active List: <span id="cmCartsActiveList" style="max-height:100px;"></span>
+	    </p>
+	    <br>
+	    <div>
+      <button id="newcartbutton" class="btn btn-light" onclick="createNewCart()">Add New Cart</button>
+    </div>
+  </div>
+</div>
+
+ </div>
+</div>
+	<HR>
+<div id="productstuff">
+	<div id="interiorpanel">
+	<h2>Product Selection</h2>
+     <div class="d-flex gap-2 mb-3">
+      <label for="globalStartDate">Start:</label>
+      <input type="date" id="someglobalStartDate" class="form-control form-control-sm" style="max-width: 140px;" />
+
+      <label for="globalEndDate">End:</label>
+      <input type="date" id="someglobalEndDate" class="someform-control form-control-sm" style="max-width: 140px;" />
+    </div><BR><BR>
+<div id="radios">
+<label for="globalInterests">Interests:</label>
+
+<!--Radio Buttons <form style="display:flex; gap:15px;">-->
+  <label>
+    <input type="checkbox" name="activities" value="dirtbikes">
+    Dirtbikes
+  </label>
+
+  <label>
+    <input type="checkbox" name="activities" value="mountain_biking" checked>
+    Mountain Biking
+  </label>
+
+  <label>
+    <input type="checkbox" name="activities" value="tentcamping">
+    Tent Camping
+  </label>
+
+  <label>
+    <input type="checkbox" name="activities" value="cabins">
+    Cabins
+  </label>
+
+  <label>
+    <input type="checkbox" name="activities" value="skiing">
+    Skiing
+  </label>
+
+  <label>
+    <input type="checkbox" name="activities" value="rafting">
+    Rafting
+  </label>
+  <label>
+    <input type="checkbox" name="activities" value="Other" checked>
+    Other Actions
+  </label>
+</div><BR><BR>
+	   <div class="row">
+  		<div class="columnproducts" style="background-color:#aaa;">
+   	 	<h3>Products</h3>
+		<HR>
+    	 	<p>Some text..</p>
+  	   </div>
+	<div class="columnactions" style="background-color: #D3D3D3;">
+    		<h3>Actions</h3><HR>
+		<button onclick="moveToSelected()">Add Item(s)</button><BR><BR> 
+		<button onclick="moveToCatalogue()">Remove Items(s)</button><BR><BR>
+		<button onclick="addSelectedToCart()">Save Items(s)</button><BR>
+       </div>
+	  <div class="columnselected" style="background-color:#bbb;">
+	        <h3>Selected</h3>
+		<HR>
+		<p>Some text..</p>
+         </div>
+  	<div class="column3" style="background-color:#ccc;">
+    		<h3>Quantities</h3>
+		<HR>
+		<p>Some text..</p>
+       </div>
+       </div>
+</div>
+</div>
+<HR>
+
+</body>
+</html>

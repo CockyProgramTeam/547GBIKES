@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="login.css" />
+<link rel="stylesheet" href="dropmenu.css" />
+<script src="./js/bikes.js"></script>
+    <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>  
+  <title>MyLinkV25 - Employee Maintenance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <style>
+
+ 
+.highlight {
+      background-color: #e0f3ff !important;
+    }
+    .selected {
+      border: 2px solid #198754;
+    }
+    .park-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+
+    .header-image {
+      height: 350px;
+      width: 100%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+          <div class="dropdown">
+                <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+                <div class="dropdown-content">
+                <a href="index.html">Site Home</a>
+                <a href="cartreview.html">MyCart</a>
+                <a href="parks5.html">Review Park Options</a>
+                <a href="parksreview5.html">Park Reviews</a>
+                <a href="mybookings5.html">MyReservations</a>
+                <a href="manager.html">Manager Utilities</a>
+          </div>
+  </div> 
+    <div class="logo"><H5>MyLinkv25 - Employees</H5></div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+              <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
+    </div>
+  </div>
+<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+  <div class="container">
+    <h1 class="mb-4">Customer Manager</h1>
+    <table class="table table-striped" id="customerTable">
+      <thead class="table-dark">
+        <tr>
+          <th>ID</th>
+          <th>UID</th>
+          <th>Full Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Billing Address</th>
+          <th>Login</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Update Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <form id="updateForm">
+          <div class="modal-header">
+            <h5 class="modal-title">Update Customer</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+          <div class="modal-body row g-3">
+            <input type="hidden" id="customerId" name="customerId">
+            <div class="col-md-6">
+              <label class="form-label">UID</label>
+              <input type="text" class="form-control" id="uid" name="uid">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Full Name</label>
+              <input type="text" class="form-control" id="fullName" name="fullName">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" name="email">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone</label>
+              <input type="text" class="form-control" id="phone" name="phone">
+            </div>
+            <div class="col-md-12">
+              <label class="form-label">Billing Address</label>
+              <input type="text" class="form-control" id="billingAddress" name="billingAddress">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Login</label>
+              <input type="text" class="form-control" id="login" name="login">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Status</label>
+              <select class="form-select" id="userStatus" name="userStatus">
+                <option>Active</option>
+                <option>Inactive</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS + Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const baseUrl = "https://parksapi.547bikes.info/api/Customer";
+    const tableBody = document.querySelector("#customerTable tbody");
+    const updateModal = new bootstrap.Modal(document.getElementById("updateModal"));
+    const updateForm = document.getElementById("updateForm");
+
+    async function loadCustomers() {
+      try {
+        const res = await fetch(baseUrl);
+        const customers = await res.json();
+        tableBody.innerHTML = "";
+        customers.forEach(c => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${c.customerId}</td>
+            <td>${c.uid}</td>
+            <td>${c.fullName}</td>
+            <td>${c.email}</td>
+            <td>${c.phone}</td>
+            <td>${c.billingAddress}</td>
+            <td>${c.login}</td>
+            <td>${c.userStatus}</td>
+            <td><button class="btn btn-sm btn-primary" onclick="editCustomer(${c.customerId})">Edit</button></td>
+          `;
+          tableBody.appendChild(row);
+        });
+      } catch (err) {
+        console.error("Error loading customers:", err);
+      }
+    }
+
+    async function editCustomer(id) {
+      const res = await fetch(`${baseUrl}/${id}`);
+      const c = await res.json();
+      document.getElementById("customerId").value = c.customerId;
+      document.getElementById("uid").value = c.uid;
+      document.getElementById("fullName").value = c.fullName;
+      document.getElementById("email").value = c.email;
+      document.getElementById("phone").value = c.phone;
+      document.getElementById("billingAddress").value = c.billingAddress;
+      document.getElementById("login").value = c.login;
+      document.getElementById("userStatus").value = c.userStatus;
+      updateModal.show();
+    }
+
+    updateForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("customerId").value;
+      const updated = {
+        customerId: id,
+        uid: document.getElementById("uid").value,
+        fullName: document.getElementById("fullName").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        billingAddress: document.getElementById("billingAddress").value,
+        login: document.getElementById("login").value,
+        userStatus: document.getElementById("userStatus").value
+      };
+      try {
+        await fetch(`${baseUrl}/${id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updated)
+        });
+        updateModal.hide();
+        loadCustomers();
+      } catch (err) {
+        console.error("Error updating customer:", err);
+      }
+    });
+
+    loadCustomers();
+  </script>
+</body>
+</html>

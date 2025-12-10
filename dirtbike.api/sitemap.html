@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sitemap</title>
+  <!-- your original login CSS -->
+  <link href="login.css" rel="stylesheet" />
+
+  <!-- jQuery (for AJAX logging) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    /* Features Section */
+.features {
+    flex-grow: 1;
+    padding: 40px 15px;
+    text-align: center;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.features .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.feature {
+    width: 250px;
+    padding: 20px;
+    background: #f1f1f1;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.feature:hover {
+    background-color: #1F3D7A;
+    color: white;
+}
+
+.feature a {
+    text-decoration: none;
+    color: black;
+}
+
+.feature a:hover,
+.feature a:visited,
+.feature a:active {
+    color: black;
+}
+
+.feature h3 {
+    font-size: 20px;
+}
+
+.feature p {
+    font-size: 14px;
+}
+ /* Hero Section */
+.hero {
+  position: relative;
+  background: url('https://source.unsplash.com/1600x800/?technology,abstract') center/cover no-repeat;
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+/* Dark Overlay for better contrast */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 600px;
+}
+
+.hero-content h2 {
+  font-size: 42px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.hero-content p {
+  font-size: 19px;
+  margin-bottom: 15px;
+}
+</style>
+
+</head>
+
+<body onload="callprofile(), checkpll()">
+       <!-- Navigation Bar -->
+       <div class="navbar">
+        <div class="nav-left">
+          <div class="logo">MyLink Sitemap</div>
+        </div>
+        <div class="nav-right">
+          <a id="button" href="index.html">Home</a>
+        </div>
+      </div>
+    <!-- Header Form -->
+    <div><p align="center"><img src="./images/DesignerSullivans4.jpeg" width=100% height=350px</p></div> <BR><BR>  
+ <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <p>Welcome to Your Source for BackOffice Information.</p>
+      <h3>Capitol Technology Solutions</h3>
+       <h5>Grid Enterprise Manager(GEM) - Executive Information System Module V1.0</h5>
+      </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features">
+    <div class="container">
+      <div class="feature">
+        <a href="employeehome.html">
+          <p><img src="./images/DesignerSullivans1.jpeg" width=40px height=40px></p>
+          <h3>Corporate Portal</h3>
+          <p>Events, News, Announcements, Travel, Forms, Policies</p>
+        </a>
+      </div>
+      <div class="feature">
+          <a href="itsm.html">
+        <p><img src="./images/DesignerSullivans2.jpeg" width=40px height=40px></p>
+            <h3>Personal Development</h3>
+          <p>Personal Development, Certifications, Employee Reviews, Goals, Progress.</p>
+        </a>
+      </div>
+      <div class="feature">
+         <a href="applications.html">
+          <p><img src="./images/DesignerSullivans3.jpeg" width=40px height=40px></p>
+           <h3>EIS Overview</h3>
+          <p>Inventory, Applications, Reporting</p>
+        </a>
+      </div>
+      <div class="feature">
+         <a href="adminhome.html">
+          <p><img src="./images/DesignerSullivans3.jpeg" width=40px height=40px></p>
+           <h3>Administrator and Manager Functions</h3>
+          <p>Add Users, Manage Profiles, Review logs</p>
+        </a>
+      </div>
+      <div class="feature">
+        <a href="inventory.html">
+        <p><img src="./images/DesignerSullivans4.jpeg" width=40px height=40px></p>
+          <h3>Inventory Information</h3>
+          <p>Review the Volume of Information Across Your Enterprise. Review Items, Items Under Management, Costs Per Service Layer.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+   
+
+  <script>
+    function callprofile()
+    {
+      if (!localStorage.getItem("uid") || localStorage.getItem("uid") === "901") {
+        localStorage.setItem("uid", "901");
+        localStorage.setItem("fullname", "590 Visitor");
+        localStorage.setItem("role", "guest");
+        localStorage.setItem("status", "loggedout");
+        localStorage.setItem("isemployee","0");
+      }
+    }
+    
+       
+  function callcare()
+    {
+    window.open("help.html", "_self");
+    }
+        
+  function cancellogin()
+    {
+      localStorage.setItem("uid", "901");
+      localStorage.setItem("fullname", "590 Visitor");
+      localStorage.setItem("role", "guest");
+      localStorage.setItem("status", "loggedout");
+    }
+  </script>
+<a href="help.html" class="help-button">
+  <img src="https://png.pngtree.com/element_our/png/20181205/question-mark-vector-icon-png_256683.jpg" alt="Help" />
+</a>
+</body>
+  <!-- Footer -->
+  <footer class="footer">
+    &copy; 2025 Capitol Technology Solutions - Raleigh, NC.
+    <br> All rights reserved.<br><span><a href="about.html" class="loadsitemap">About CockyEnterprises</a><a href="careers.html" class="loadsitemap">Careers</a></span>
+  </footer>
+</html>

@@ -1,0 +1,65 @@
+MapPost("/", async (User input) =>
+{
+	    using (var context = new DirtbikeContext())
+            {
+                
+		//STEP 1 ADD A NEW RECORD BASED ON THE NEW RECORD AND SAVE IT.
+
+		context.Users.Add(input);
+                await context.SaveChangesAsync();
+
+      		// 2) Insert UserProfile (FK uses input.Userid)
+        	var profile = new UserProfile
+	        {
+        	    UserId = input.Userid,
+	            FirstName = input.Firstname,
+        	    LastName = input.Lastname,
+	            Email = input.Email,
+        	    CreatedDate = DateTime.UtcNow
+	        };
+        	context.UserProfiles.Add(profile);
+	        await context.SaveChangesAsync(); // profile.Id populated
+
+        	// 3) Insert CartMaster (FK uses input.Userid)
+        	var cartMaster = new CartMaster
+	        {
+        	    UserId = input.Userid,
+	            CartsCount = 0,
+	            CartsCancelled = 0,
+        	    CartsActive = 0,
+	            CartsActiveList = string.Empty,
+        	    LoyaltyId = string.Empty,
+	            LoyaltyVendor = string.Empty
+        	};
+	        context.CartMasters.Add(cartMaster);
+        	await context.SaveChangesAsync(); // cartMaster.Id populated
+
+
+		//STEP 4 GET THE VERY LAST RECORD BASED ON THE CURRENT LIST OF USERS
+		var lastUser = users.LastOrDefault();
+		lastUser.userid = lastUser.id;
+
+		//STEP5 GENERATE THE NEW RANDOM PROFILE STRING
+     		const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	        string prefix = new string(Enumerable.Repeat(letters, 3)
+           	 .Select(s => s[rnd.Next(s.Length)]).ToArray());
+	        lastUser.Uidstring = prefix + input.Userid.ToString();
+		lastUser.Displayname = lastUser.Fullname;
+
+	        // 5) Second write: update User with indices
+	        lastUser.UserProfileIndex = profile.Id;
+        	lastUser.CartMasterIndex  = cartMaster.Id;
+	        context.Users.Update(lastUser);
+        	await context.SaveChangesAsync();
+
+
+
+
+  
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "DELETEWITHID",1, "TEST", "TEST");
+                await context.SaveChangesAsync();
+            }
+    
+})
+.WithName("CreateUser")
+.WithOpenApi();

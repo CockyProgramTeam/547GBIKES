@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="./js/bikes.js"></script>
+    <title>Update My Profile</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light" onload="checkpll(); checkUserStatus(); displayProfilePicture();">>
+<div align="center"><img src="./images/shamrock2.png" width="400"px height="200px"></div>
+    <div class="container mt-5">
+        <div class="card shadow p-4">
+            <h2 class="text-center mb-4">Update My Profile Image</h2>
+            <form id="uploadForm">
+                <div class="mb-3">
+                    <label for="idInput" class="form-label">Enter ID:</label>
+                    <input type="text" id="idInput" name="id" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="fileInput" class="form-label">Select File:</label>
+                    <input type="file" id="fileInput" name="file" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Upload</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS (optional, for certain components) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const storedId = localStorage.getItem("uid");
+            const idInput = document.getElementById("idInput");
+
+            if (storedId) {
+                idInput.value = storedId; // Prefill the input with stored ID
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const idInput = document.getElementById('idInput').value.trim();
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!idInput) {
+                alert('Please enter an ID.');
+                return;
+            }
+
+            if (!file) {
+                alert('Please select a file to upload.');
+                return;
+            }
+
+            localStorage.setItem("uid", idInput); // Update localStorage with entered ID
+
+            const formData = new FormData();
+            formData.append('file', file);
+
+            try {
+                const response = await fetch(`https://cockyapiv3-bugudue8akcsbacz.westus3-01.azurewebsites.net/Profile/uploadWithId?id=${encodeURIComponent(idInput)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'text/plain'
+                    },
+                    body: formData
+                });
+
+                const result = await response.text();
+                console.log(result);
+                alert(result.blobUrl);
+                localStorage.setItem("JohnsSpecialURL", result.blobURL);
+                alert(`Upload Response: ${result}`);
+            } catch (error) {
+                console.error('Error uploading file:', error);
+                alert('File upload failed.');
+            }
+        });
+    </script>
+</body>
+</html>
+
