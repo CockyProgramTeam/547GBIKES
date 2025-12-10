@@ -26,27 +26,31 @@ export default function RegisterPage() {
     username: "",
     email: "",
     plainpassword: "",
+    activepictureurl: "./images/bluecircle.png", // default required field
   });
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Build payload to match /api/User schema
+    // Generate a random userid (6-digit number)
+    const randomUserid = Math.floor(100000 + Math.random() * 900000);
+
+    // Build full payload with defaults
     const userPayload = {
       id: 0,
       firstname: formData.firstname,
       lastname: formData.lastname,
       username: formData.username,
       email: formData.email,
-      employee: null,
+      employee: 0,
       employeeid: null,
       microsoftid: null,
       ncrid: null,
@@ -54,25 +58,24 @@ export default function RegisterPage() {
       azureid: null,
       plainpassword: formData.plainpassword,
       hashedpassword: null,
-      passwordtype: null,
-      jid: null,
-      profileurl: "./images/bluecircle.png",
+      passwordtype: 0,
+      jid: 0,
       role: "registered",
       fullname: `${formData.firstname} ${formData.lastname}`,
       companyid: 0,
       resettoken: null,
-      userid: 0,
+      userid: randomUserid, // ✅ random number assigned here
       btn: null,
-      iscertified: null,
+      iscertified: 0,
       groupid1: null,
       groupid2: null,
       groupid3: null,
       groupid4: null,
       groupid5: null,
-      accountstatus: null,
+      accountstatus: "Active",
       accountactiondate: null,
       accountactiondescription: null,
-      usertwofactorenabled: null,
+      usertwofactorenabled: 0,
       usertwofactortype: null,
       usertwofactorkeysmsdestination: null,
       twofactorkeyemaildestination: null,
@@ -80,9 +83,12 @@ export default function RegisterPage() {
       twofactorprovidertoken: null,
       twofactorproviderauthstring: null,
       uidstring: "1",
-      activeprofileurl: "./images/bluecircle.png",
-      activepictureurl: "./images/bluecircle.png",
+      activepictureurl: formData.activepictureurl,
       resettokenexpiration: null,
+      displayname: `${formData.firstname} ${formData.lastname}`,
+      dateOfBirth: null,
+      cartMasterIndex: 0,
+      userProfileIndex: 0,
     };
 
     try {
@@ -93,7 +99,6 @@ export default function RegisterPage() {
       });
 
       if (response.ok) {
-        // Handle cases where API returns no JSON body
         const text = await response.text();
         let result = null;
         if (text) {
@@ -104,8 +109,7 @@ export default function RegisterPage() {
           }
         }
 
-        // Save login state
-        localStorage.setItem("userid", result?.userid || result?.id || "0");
+        localStorage.setItem("userid", result?.userid || result?.id || randomUserid.toString());
         localStorage.setItem("role", userPayload.role);
         localStorage.setItem("status", "loggedin");
 
