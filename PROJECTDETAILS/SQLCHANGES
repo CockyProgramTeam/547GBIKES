@@ -4,5 +4,7 @@ Changes 12/11 -> Support for Multiple UIs requires to colorize tranactions by OR
 sqlite> alter table booking add column POSSOURCE text;
 sqlite> alter table ParkReviews add column POSSOURCE text;
 sqlite> alter table Payment add column POSSOURCE text;
+sqlite> alter table Cart add column POSSOURCE text;
+sqlite> alter table CartItem add column POSSOURCE text;
 
 We didnt want to compile during a live review period due to corruption issues with SQLLITE a concern in a short period. The good news is we back it up everynight so its easy to go back 1 gen.
