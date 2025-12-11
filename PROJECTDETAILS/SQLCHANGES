@@ -1,4 +1,4 @@
-Changes 12/11 -> Support for Multiple UIs requires to colorize tranactions by ORIGIN or POSSOURCE
+Changes 12/11 -> Support for Multiple UIs requires to colorize tranactions by ORIGIN or POSSOURCE (Point of Sale Source).
 
 
 sqlite> alter table booking add column POSSOURCE text;
