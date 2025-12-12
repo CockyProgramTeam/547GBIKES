@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="login.css" />
+    <link rel="stylesheet" href="dropmenu.css" />
+    <script src="./js/bikes.js"></script>
+    <title>Customer Help Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Bootstrap & jQuery CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="home.css" />
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .btn-submit {
+            background-color: maroon;
+            color: white;
+        }
+        .btn-submit:hover {
+            background-color: darkred;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .jcolumn {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 300px;
+        }
+        .jrow:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    
+    	.spacer{
+        height: 30px;
+    	}
+    </style>
+</head>
+<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="./images/jsmenu4.png"></button> 
+        <div class="dropdown-content">
+          <a href="index.html">Site Home</a>
+          <a href="cartreview.html">MyCart</a>
+          <a href="parks5.html">Review Park Options</a>
+          <a href="parksreview5.html">Park Reviews</a>
+          <a href="mybookings5.html">MyReservations</a>
+          <a href="manager.html">Manager Utilities</a>
+        </div>
+      </div> 
+      <div class="logo">&nbsp;&nbsp;<h5>MyLinkv25</h5></div>
+    </div>
+    <div class="nav-right">
+      <img src="./images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cartreview.html" id="cartBtn3"><img src="./images/cart4.png" width="40px" height="40px"></a>
+    </div>
+  </div>
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+
+  <div class="container">
+    <h3 class="mb-4">SystemConsole Menu</h3>
+
+    <!-- Buttons for options -->
+    <div class="btn-group mb-3" role="group">
+      <button class="btn btn-danger" onclick="callSystemConsole(6)">Remove ZeroCarts (Option 6)</button>
+      <button class="btn btn-info" onclick="callSystemConsole(7)">Get Avgs (Option 7)</button>
+      <button class="btn btn-success" onclick="callSystemConsole(8)">Get All Park Avgs (Option 8)</button>
+    </div>
+
+    <!-- Output iframe -->
+    <h5>Response:</h5>
+    <iframe id="systemConsoleFrame" class="w-100" style="height:300px; border:1px solid #ccc;"></iframe>
+  </div>
+
+  <script>
+    async function callSystemConsole(option) {
+      let url = "";
+      let someint = null;
+
+      // Options 6 and 7 require an integer (user id or park id)
+      if (option === 6 || option === 7) {
+        someint = parseInt(localStorage.getItem("uid"), 10);
+        if (!someint) {
+          alert("No UID found in localStorage. Please set uid first.");
+          return;
+        }
+        url = `https://parksapi.547bikes.info/api/SystemConsole/${option}?someint=${someint}`;
+      } else if (option === 8) {
+        // Option 8 does not require someint
+        url = `https://parksapi.547bikes.info/api/SystemConsole/${option}`;
+      }
+
+      console.log("Calling SystemConsole:", url);
+
+      try {
+        const response = await fetch(url, { headers: { "Accept": "application/json" } });
+        if (!response.ok) throw new Error(`Error ${response.status}: ${response.statusText}`);
+        const data = await response.json();
+
+        // Format JSON nicely
+        const formatted = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+
+        // Show inside iframe
+        document.getElementById("systemConsoleFrame").srcdoc = formatted;
+      } catch (err) {
+        console.error("SystemConsole call failed:", err);
+        document.getElementById("systemConsoleFrame").srcdoc = `<p style="color:red;">Error: ${err.message}</p>`;
+      }
+    }
+  </script>
+</body>
+</html>
