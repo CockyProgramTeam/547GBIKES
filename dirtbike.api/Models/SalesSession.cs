@@ -22,4 +22,6 @@ public partial class SalesSession
     public int? CartId4 { get; set; }
 
     public int? CartId5 { get; set; }
+
+    public string? CartPayload { get; set; }
 }

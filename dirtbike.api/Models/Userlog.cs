@@ -14,4 +14,8 @@ public partial class Userlog
     public string? Hashedpassword { get; set; }
 
     public string? Loginstatus { get; set; }
+
+    public string? Description { get; set; }
+
+    public string? Uiorigin { get; set; }
 }

@@ -36,4 +36,8 @@ public partial class ParkReview
     public string? ParkName { get; set; }
 
     public string? ParkIdAsString { get; set; }
+
+    public string? Possource { get; set; }
+
+    public string? ParkGuid { get; set; }
 }

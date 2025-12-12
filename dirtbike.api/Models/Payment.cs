@@ -36,4 +36,6 @@ public partial class Payment
     public int? Userid { get; set; }
 
     public string? Useridassting { get; set; }
+
+    public string? Possource { get; set; }
 }

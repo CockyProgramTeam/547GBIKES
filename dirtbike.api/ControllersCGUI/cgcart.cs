@@ -19,12 +19,13 @@ namespace Enterprise.Controllers
                 var service = new CGCartService();
                 var cart = service.CreateCart(dto);
 
-                Enterpriseservices.ApiLogger.logapi("CGCartAPI", "005", "CGCREATE", 1, "Create", $"Cart {dto.Uid}");
-                return cart == null ? Results.BadRequest("User not found") : Results.Created($"/api/CGCart/{cart.Id}", cart);
+                //Enterpriseservices.ApiLogger.logapi("CGCartAPI", "005", "CGCREATE", 1, "Create", $"Cart {dto.Uid}"); //CHECK THIS LOG
+                return cart == null ? Results.BadRequest("User not found") : Results.Created($"/api/CGCart", cart); //CHECK THIS BEFORE SUBMISSION.
             })
             .WithName("CGCreateCart")
             .WithOpenApi();
 
+            /*
             // READ all carts for a user
             group.MapGet("/user/{userid}", (int userid) =>
             {
@@ -71,7 +72,7 @@ namespace Enterprise.Controllers
                 return deleted ? Results.Ok($"Deleted Cart {cartId}") : Results.NotFound();
             })
             .WithName("CGDeleteCart")
-            .WithOpenApi();
+            .WithOpenApi();*/
         }
     }
 }

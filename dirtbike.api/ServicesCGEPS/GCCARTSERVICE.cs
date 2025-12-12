@@ -155,7 +155,7 @@ namespace dirtbike.api.Services
                 Totalcartitems = dto.Items.Count,
                 CartDetailsJson = JsonSerializer.Serialize(dto),
                 Reservationstatus = "Confirmed",
-                Reservationtype = "Online",
+                Reservationtype = "Audit",
                 ResStart = dto.Items.Min(i => i.ResStart),
                 ResEnd = dto.Items.Max(i => i.ResEnd),
                 NumDays = dto.Items.Sum(i => i.NumDays)
@@ -170,7 +170,7 @@ namespace dirtbike.api.Services
                 AmountPaid = dto.TransactionTotal,
                 TransactionId = dto.PaymentId,
                 PaymentDate = DateTime.UtcNow.ToString("o"),
-                Transtype = "Sale"
+                Transtype = "Audit"
             };
             context.Payments.Add(payment);
             context.SaveChanges();

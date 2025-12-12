@@ -88,4 +88,8 @@ public partial class User
     public string? Displayname { get; set; }
 
     public DateOnly? DateOfBirth { get; set; }
+
+    public int? CartMasterIndex { get; set; }
+
+    public int? UserProfileIndex { get; set; }
 }

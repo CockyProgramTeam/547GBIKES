@@ -20,4 +20,6 @@ public partial class CartMaster
     public string? Loyaltyid { get; set; }
 
     public string? Loyaltyvendor { get; set; }
+
+    public string? Useridstring { get; set; }
 }

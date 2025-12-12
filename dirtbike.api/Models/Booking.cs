@@ -62,4 +62,6 @@ public partial class Booking
     public string? ParkGuid { get; set; }
 
     public int? NumDays { get; set; }
+
+    public string? Possource { get; set; }
 }
