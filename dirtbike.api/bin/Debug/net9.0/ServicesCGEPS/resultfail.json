@@ -1,0 +1,7 @@
+{
+  "overallResult": "Fail",
+  "items": [
+    { "itemNumber": 1, "result": "Success", "message": "Park Skyline MX Park booking accepted" },
+    { "itemNumber": 2, "result": "FailCapacity", "message": "Park Crossbar Parkway exceeded capacity for 2025-09-18 - 2025-09-19" }
+  ]
+}

@@ -1,0 +1,127 @@
+/*using System.Collections.Generic;
+using System.Linq;
+using dirtbike.api.Data;
+using dirtbike.api.Models;
+using dirtbike.api.DTOs;
+
+namespace dirtbike.api.Services
+{
+    public class CGPARKSService
+    {
+        // Get all motocross parks with reviews
+        public List<CGPARKS> GetAllParks()
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(
+                    Enterpriseservices.Globals.ControllerAPIName ?? string.Empty,
+                    Enterpriseservices.Globals.ControllerAPINumber ?? string.Empty,
+                    "CGGETALLPARKS", 1, "Fetch", "All motocross parks");
+
+                var parks = context.Parks
+                    .Where(p => p.Motocross == 1)
+                    .ToList();
+
+                var dtoList = parks.Select(p =>
+                {
+                    var reviewsWithUsers = (from r in context.ParkReviews
+                                            join u in context.Users on r.UserId equals u.Userid
+                                            where r.ParkId == p.ParkId
+                                            select new ReviewWithUser
+                                            {
+                                                Review = r,
+                                                User = u
+                                            }).ToList();
+
+                    return CGPARKS.FromPark(p, reviewsWithUsers);
+                }).ToList();
+
+                return dtoList;
+            }
+        }
+
+        // Get a single motocross park by UUID
+        public CGPARKS? GetParkByUuid(string uuid)
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(
+                    Enterpriseservices.Globals.ControllerAPIName ?? string.Empty,
+                    Enterpriseservices.Globals.ControllerAPINumber ?? string.Empty,
+                    "CGGETPARKBYUUID", 1, "Fetch", $"Park {uuid}");
+
+                var park = context.Parks
+                    .FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
+                if (park == null) return null;
+
+                var reviewsWithUsers = (from r in context.ParkReviews
+                                        join u in context.Users on r.UserId equals u.Userid
+                                        where r.ParkId == park.ParkId
+                                        select new ReviewWithUser
+                                        {
+                                            Review = r,
+                                            User = u
+                                        }).ToList();
+
+                return CGPARKS.FromPark(park, reviewsWithUsers);
+            }
+        }
+
+        // Create a new motocross park
+        public Park CreatePark(Park input)
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(
+                    Enterpriseservices.Globals.ControllerAPIName ?? string.Empty,
+                    Enterpriseservices.Globals.ControllerAPINumber ?? string.Empty,
+                    "CGCREATEPARK", 1, "Create", $"Park {input.Name}");
+
+                input.Motocross = 1; // force motocross flag
+                context.Parks.Add(input);
+                context.SaveChanges();
+                return input;
+            }
+        }
+
+        // Update an existing motocross park by UUID
+        public bool UpdatePark(string uuid, Park input)
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(
+                    Enterpriseservices.Globals.ControllerAPIName ?? string.Empty,
+                    Enterpriseservices.Globals.ControllerAPINumber ?? string.Empty,
+                    "CGUPDATEPARK", 1, "Update", $"Park {uuid}");
+
+                var park = context.Parks.FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
+                if (park == null) return false;
+
+                if (!string.IsNullOrEmpty(input.Description))
+                    park.Description = input.Description;
+
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        // Delete a motocross park by UUID
+        public bool DeletePark(string uuid)
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(
+                    Enterpriseservices.Globals.ControllerAPIName ?? string.Empty,
+                    Enterpriseservices.Globals.ControllerAPINumber ?? string.Empty,
+                    "CGDELETEPARK", 1, "Delete", $"Park {uuid}");
+
+                var park = context.Parks.FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
+                if (park == null) return false;
+
+                context.Parks.Remove(park);
+                context.SaveChanges();
+                return true;
+            }
+        }
+    }
+}*/

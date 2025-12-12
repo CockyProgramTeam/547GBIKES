@@ -1,0 +1,8 @@
+{
+  "overallResult": "Success",
+  "bookingId": 4567,
+  "items": [
+    { "itemNumber": 1, "result": "Success", "message": "Park Skyline MX Park booking accepted" },
+    { "itemNumber": 2, "result": "Success", "message": "Park Crossbar Parkway booking accepted" }
+  ]
+}
