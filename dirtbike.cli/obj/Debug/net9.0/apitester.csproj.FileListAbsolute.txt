@@ -1,0 +1,6 @@
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.csproj.AssemblyReference.cache
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.GeneratedMSBuildEditorConfig.editorconfig
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.AssemblyInfoInputs.cache
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.AssemblyInfo.cs
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.csproj.CoreCompileInputs.cache
+X:\G547\547Gcli\obj\Debug\net9.0\apitester.sourcelink.json
