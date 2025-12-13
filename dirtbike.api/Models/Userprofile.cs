@@ -77,5 +77,5 @@ public partial class Userprofile
 
     public string? Defaultshardid { get; set; }
 
-    public string? Useridasstring { get; set; }
+    public string? Useridstring { get; set; }
 }

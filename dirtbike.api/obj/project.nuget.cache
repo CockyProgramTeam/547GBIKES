@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "E3ZNxxAZFEA=",
+  "dgSpecHash": "FBot44uslb0=",
   "success": true,
-  "projectFilePath": "X:\\G547\\bikesapi\\dirtbike.api.csproj",
+  "projectFilePath": "C:\\Users\\stritzj\\source\\bikesapi\\dirtbike.api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\stritzj\\.nuget\\packages\\azure.ai.formrecognizer\\4.1.0\\azure.ai.formrecognizer.4.1.0.nupkg.sha512",
     "C:\\Users\\stritzj\\.nuget\\packages\\azure.ai.openai\\2.1.0\\azure.ai.openai.2.1.0.nupkg.sha512",

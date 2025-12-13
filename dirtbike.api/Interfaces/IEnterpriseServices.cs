@@ -55,10 +55,10 @@ namespace Enterpriseservices
     // 06 AdminLogs
     public interface IAdminLogsService06
     {
-        IEnumerable<AdminLogs> GetAll06();
-        IEnumerable<AdminLogs> GetById06(int id);
-        Task<IResult> Create06(AdminLogs input);
-        Task<IResult> Update06(int id, AdminLogs input);
+        IEnumerable<Adminlog> GetAll06();
+        IEnumerable<Adminlog> GetById06(int id);
+        Task<IResult> Create06(Adminlog input);
+        Task<IResult> Update06(int id, Adminlog input);
         Task<IResult> Delete06(int id);
     }
 
@@ -105,10 +105,10 @@ namespace Enterpriseservices
     // 11 Cards
     public interface ICardsService11
     {
-        IEnumerable<Cards> GetAll11();
-        IEnumerable<Cards> GetById11(int id);
-        Task<IResult> Create11(Cards input);
-        Task<IResult> Update11(int id, Cards input);
+        IEnumerable<Card> GetAll11();
+        IEnumerable<Card> GetById11(int id);
+        Task<IResult> Create11(Card input);
+        Task<IResult> Update11(int id, Card input);
         Task<IResult> Delete11(int id);
     }
 
@@ -125,10 +125,10 @@ namespace Enterpriseservices
     // 13 CartItem
     public interface ICartItemService13
     {
-        IEnumerable<CartItem> GetAll13();
-        IEnumerable<CartItem> GetById13(int id);
-        Task<IResult> Create13(CartItem input);
-        Task<IResult> Update13(int id, CartItem input);
+        IEnumerable<Cartitem> GetAll13();
+        IEnumerable<Cartitem> GetById13(int id);
+        Task<IResult> Create13(Cartitem input);
+        Task<IResult> Update13(int id, Cartitem input);
         Task<IResult> Delete13(int id);
     }
 
@@ -161,7 +161,7 @@ namespace Enterpriseservices
         Task<IResult> Update16(int id, Customer input);
         Task<IResult> Delete16(int id);
     }
-
+/*
     // 17 Emailgateway
     public interface IEmailgatewayService17
     {
@@ -171,7 +171,7 @@ namespace Enterpriseservices
         Task<IResult> Update17(int id, Emailgateway input);
         Task<IResult> Delete17(int id);
     }
-
+*/
     // 18 Employee
     public interface IEmployeeService18
     {
@@ -181,7 +181,7 @@ namespace Enterpriseservices
         Task<IResult> Update18(int id, Employee input);
         Task<IResult> Delete18(int id);
     }
-
+/*
     // 19 File
     public interface IFileService19
     {
@@ -191,14 +191,14 @@ namespace Enterpriseservices
         Task<IResult> Update19(int id, File input);
         Task<IResult> Delete19(int id);
     }
-
+*/
     // 20 LearnDetail
     public interface ILearnDetailService20
     {
-        IEnumerable<LearnDetail> GetAll20();
-        IEnumerable<LearnDetail> GetById20(int id);
-        Task<IResult> Create20(LearnDetail input);
-        Task<IResult> Update20(int id, LearnDetail input);
+        IEnumerable<Learnlog> GetAll20();
+        IEnumerable<Learnlog> GetById20(int id);
+        Task<IResult> Create20(Learnlog input);
+        Task<IResult> Update20(int id, Learnlog input);
         Task<IResult> Delete20(int id);
     }
 
@@ -213,42 +213,42 @@ namespace Enterpriseservices
     }
 
     // 22 Parkreviews
-    public interface IParkreviewsService22
+    public interface IParkreviewService22
     {
-        IEnumerable<Parkreviews> GetAll22();
-        IEnumerable<Parkreviews> GetById22(int id);
-        Task<IResult> Create22(Parkreviews input);
-        Task<IResult> Update22(int id, Parkreviews input);
+        IEnumerable<ParkReview> GetAll22();
+        IEnumerable<ParkReview> GetById22(int id);
+        Task<IResult> Create22(ParkReview input);
+        Task<IResult> Update22(int id, ParkReview input);
         Task<IResult> Delete22(int id);
     }
 
     // 23 Parks
-    public interface IParksService23
+    public interface IParkService23
     {
-        IEnumerable<Parks> GetAll23();
-        IEnumerable<Parks> GetById23(int id);
-        Task<IResult> Create23(Parks input);
-        Task<IResult> Update23(int id, Parks input);
+        IEnumerable<Park> GetAll23();
+        IEnumerable<Park> GetById23(int id);
+        Task<IResult> Create23(Park input);
+        Task<IResult> Update23(int id, Park input);
         Task<IResult> Delete23(int id);
     }
 
     // 24 Payments
-    public interface IPaymentsService24
+    public interface IPaymentService24
     {
-        IEnumerable<Payments> GetAll24();
-        IEnumerable<Payments> GetById24(int id);
-        Task<IResult> Create24(Payments input);
-        Task<IResult> Update24(int id, Payments input);
+        IEnumerable<Payment> GetAll24();
+        IEnumerable<Payment> GetById24(int id);
+        Task<IResult> Create24(Payment input);
+        Task<IResult> Update24(int id, Payment input);
         Task<IResult> Delete24(int id);
     }
 
     // 25 Refunds
-    public interface IRefundsService25
+    public interface IRefundService25
     {
-        IEnumerable<Refunds> GetAll25();
-        IEnumerable<Refunds> GetById25(int id);
-        Task<IResult> Create25(Refunds input);
-        Task<IResult> Update25(int id, Refunds input);
+        IEnumerable<Refund> GetAll25();
+        IEnumerable<Refund> GetById25(int id);
+        Task<IResult> Create25(Refund input);
+        Task<IResult> Update25(int id, Refund input);
         Task<IResult> Delete25(int id);
     }
 
@@ -283,12 +283,12 @@ namespace Enterpriseservices
     }
 
     // 29 SuperuserLogs
-    public interface ISuperuserLogsService29
+    public interface ISuperuserLogService29
     {
-        IEnumerable<SuperuserLogs> GetAll29();
-        IEnumerable<SuperuserLogs> GetById29(int id);
-        Task<IResult> Create29(SuperuserLogs input);
-        Task<IResult> Update29(int id, SuperuserLogs input);
+        IEnumerable<Superuserlog> GetAll29();
+        IEnumerable<Superuserlog> GetById29(int id);
+        Task<IResult> Create29(Superuserlog input);
+        Task<IResult> Update29(int id, Superuserlog input);
         Task<IResult> Delete29(int id);
     }
 
@@ -305,30 +305,30 @@ namespace Enterpriseservices
     // 31 TaxtableUS
     public interface ITaxtableUSService31
     {
-        IEnumerable<TaxtableUS> GetAll31();
-        IEnumerable<TaxtableUS> GetById31(int id);
-        Task<IResult> Create31(TaxtableUS input);
-        Task<IResult> Update31(int id, TaxtableUS input);
+        IEnumerable<TaxtableU> GetAll31();
+        IEnumerable<TaxtableU> GetById31(int id);
+        Task<IResult> Create31(TaxtableU input);
+        Task<IResult> Update31(int id, TaxtableU input);
         Task<IResult> Delete31(int id);
     }
 
     // 32 Techs
-    public interface ITechsService32
+    public interface INoctechService32
     {
-        IEnumerable<Techs> GetAll32();
-        IEnumerable<Techs> GetById32(int id);
-        Task<IResult> Create32(Techs input);
-        Task<IResult> Update32(int id, Techs input);
+        IEnumerable<Noctech> GetAll32();
+        IEnumerable<Noctech> GetById32(int id);
+        Task<IResult> Create32(Noctech input);
+        Task<IResult> Update32(int id, Noctech input);
         Task<IResult> Delete32(int id);
     }
 
     // 33 TestBooking
-    public interface ITestBookingService33
+    public interface IBookingService33
     {
-        IEnumerable<TestBooking> GetAll33();
-        IEnumerable<TestBooking> GetById33(int id);
-        Task<IResult> Create33(TestBooking input);
-        Task<IResult> Update33(int id, TestBooking input);
+        IEnumerable<Booking> GetAll33();
+        IEnumerable<Booking> GetById33(int id);
+        Task<IResult> Create33(Booking input);
+        Task<IResult> Update33(int id, Booking input);
         Task<IResult> Delete33(int id);
     }
 
@@ -355,10 +355,10 @@ namespace Enterpriseservices
     // 36 Usergroups
     public interface IUsergroupsService36
     {
-        IEnumerable<Usergroups> GetAll36();
-        IEnumerable<Usergroups> GetById36(int id);
-        Task<IResult> Create36(Usergroups input);
-        Task<IResult> Update36(int id, Usergroups input);
+        IEnumerable<Usergroup> GetAll36();
+        IEnumerable<Usergroup> GetById36(int id);
+        Task<IResult> Create36(Usergroup input);
+        Task<IResult> Update36(int id, Usergroup input);
         Task<IResult> Delete36(int id);
     }
 
@@ -393,12 +393,12 @@ namespace Enterpriseservices
     }
 
     // 40 V2Userprofile
-    public interface IV2UserprofileService40
+    public interface IUserprofileService40
     {
-        IEnumerable<V2Userprofile> GetAll40();
-        IEnumerable<V2Userprofile> GetById40(int id);
-        Task<IResult> Create40(V2Userprofile input);
-        Task<IResult> Update40(int id, V2Userprofile input);
+        IEnumerable<Userprofile> GetAll40();
+        IEnumerable<Userprofile> GetById40(int id);
+        Task<IResult> Create40(Userprofile input);
+        Task<IResult> Update40(int id, Userprofile input);
         Task<IResult> Delete40(int id);
     }
 

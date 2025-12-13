@@ -72,6 +72,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<User> Users { get; set; }
 
+    public virtual DbSet<UserPicture> UserPictures { get; set; }
+
     public virtual DbSet<Useraction> Useractions { get; set; }
 
     public virtual DbSet<Usergroup> Usergroups { get; set; }
@@ -412,16 +414,10 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.ChildPrice)
                 .HasColumnType("double")
                 .HasColumnName("childPrice");
-            entity.Property(e => e.Currentcampsites).HasColumnType("INT");
-            entity.Property(e => e.Currentvisitors)
-                .HasColumnType("INT")
-                .HasColumnName("currentvisitors");
-            entity.Property(e => e.Currentvisitorsadults)
-                .HasColumnType("INT")
-                .HasColumnName("currentvisitorsadults");
-            entity.Property(e => e.Currentvisitorschildren)
-                .HasColumnType("INT")
-                .HasColumnName("currentvisitorschildren");
+            entity.Property(e => e.Currentcampsites).HasColumnName("currentcampsites");
+            entity.Property(e => e.Currentvisitors).HasColumnName("currentvisitors");
+            entity.Property(e => e.Currentvisitorsadults).HasColumnName("currentvisitorsadults");
+            entity.Property(e => e.Currentvisitorschildren).HasColumnName("currentvisitorschildren");
             entity.Property(e => e.DayPassPriceUsd).HasColumnName("DayPassPriceUSD");
             entity.Property(e => e.Frisbee)
                 .HasColumnType("INT")
@@ -440,12 +436,8 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Isstatepark).HasColumnName("isstatepark");
             entity.Property(e => e.Latitude).HasColumnName("latitude");
             entity.Property(e => e.Longitude).HasColumnName("longitude");
-            entity.Property(e => e.Maxcampsites)
-                .HasColumnType("INT")
-                .HasColumnName("maxcampsites");
-            entity.Property(e => e.Maxvisitors)
-                .HasColumnType("INT")
-                .HasColumnName("maxvisitors");
+            entity.Property(e => e.Maxcampsites).HasColumnName("maxcampsites");
+            entity.Property(e => e.Maxvisitors).HasColumnName("maxvisitors");
             entity.Property(e => e.Motocross)
                 .HasColumnType("INT")
                 .HasColumnName("motocross");
@@ -718,6 +710,13 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Usertwofactortype).HasColumnName("usertwofactortype");
         });
 
+        modelBuilder.Entity<UserPicture>(entity =>
+        {
+            entity.ToTable("UserPicture");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
         modelBuilder.Entity<Useraction>(entity =>
         {
             entity.ToTable("useraction");
@@ -797,46 +796,7 @@ public partial class DirtbikeContext : DbContext
 
         modelBuilder.Entity<Userprofile>(entity =>
         {
-            entity.ToTable("userprofiles");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Activepictureurl).HasColumnName("activepictureurl");
-            entity.Property(e => e.Address1).HasColumnName("address1");
-            entity.Property(e => e.Address2).HasColumnName("address2");
-            entity.Property(e => e.Branchid).HasColumnName("branchid");
-            entity.Property(e => e.Buid).HasColumnName("buid");
-            entity.Property(e => e.Cellphone).HasColumnName("cellphone");
-            entity.Property(e => e.City).HasColumnName("city");
-            entity.Property(e => e.Companyid).HasColumnName("companyid");
-            entity.Property(e => e.Country).HasColumnName("country");
-            entity.Property(e => e.Defaultinstanceid).HasColumnName("defaultinstanceid");
-            entity.Property(e => e.Defaultshardid).HasColumnName("defaultshardid");
-            entity.Property(e => e.Email).HasColumnName("email");
-            entity.Property(e => e.Employeeid).HasColumnName("employeeid");
-            entity.Property(e => e.Facebookurl).HasColumnName("facebookurl");
-            entity.Property(e => e.Firstname).HasColumnName("firstname");
-            entity.Property(e => e.Fullname).HasColumnName("fullname");
-            entity.Property(e => e.Googleurl).HasColumnName("googleurl");
-            entity.Property(e => e.Instagramurl).HasColumnName("instagramurl");
-            entity.Property(e => e.Lastname).HasColumnName("lastname");
-            entity.Property(e => e.Linkedinurl).HasColumnName("linkedinurl");
-            entity.Property(e => e.Managerid).HasColumnName("managerid");
-            entity.Property(e => e.Maritalstatus).HasColumnName("maritalstatus");
-            entity.Property(e => e.Phone).HasColumnName("phone");
-            entity.Property(e => e.Postalzip).HasColumnName("postalzip");
-            entity.Property(e => e.Pronoun).HasColumnName("pronoun");
-            entity.Property(e => e.Regionid).HasColumnName("regionid");
-            entity.Property(e => e.Sms).HasColumnName("sms");
-            entity.Property(e => e.Stateregion).HasColumnName("stateregion");
-            entity.Property(e => e.Title).HasColumnName("title");
-            entity.Property(e => e.Title2).HasColumnName("title2");
-            entity.Property(e => e.University).HasColumnName("university");
-            entity.Property(e => e.University1).HasColumnName("university1");
-            entity.Property(e => e.University2).HasColumnName("university2");
-            entity.Property(e => e.Userid).HasColumnName("userid");
-            entity.Property(e => e.Vimeourl).HasColumnName("vimeourl");
+            entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
         modelBuilder.Entity<Usersession>(entity =>

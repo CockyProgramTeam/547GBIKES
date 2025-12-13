@@ -10154,11 +10154,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "X:\\G547\\bikesapi\\dirtbike.api.csproj",
+      "projectUniqueName": "C:\\Users\\stritzj\\source\\bikesapi\\dirtbike.api.csproj",
       "projectName": "dirtbike.api",
-      "projectPath": "X:\\G547\\bikesapi\\dirtbike.api.csproj",
+      "projectPath": "C:\\Users\\stritzj\\source\\bikesapi\\dirtbike.api.csproj",
       "packagesPath": "C:\\Users\\stritzj\\.nuget\\packages\\",
-      "outputPath": "X:\\G547\\bikesapi\\obj\\",
+      "outputPath": "C:\\Users\\stritzj\\source\\bikesapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\stritzj\\AppData\\Roaming\\NuGet\\NuGet.Config"

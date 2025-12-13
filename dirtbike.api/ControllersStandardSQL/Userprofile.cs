@@ -52,12 +52,12 @@ public static class UserprofileEndpoints
         .WithOpenApi();
     
             //[HttpGet]
-        group.MapGet("/user/{Useridastring}", (string Useridasstring) =>
+        group.MapGet("/user/{Useridstring}", (string Useridstring) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETUSERWITHID", 1, "Test", "Test"); 
-                return context.Userprofiles.Where(m => m.Useridasstring == Useridasstring).ToList();
+                return context.Userprofiles.Where(m => m.Useridstring == Useridstring).ToList();
             }
         })
         .WithName("GetUserprofileByUserIdAsString")
@@ -117,7 +117,7 @@ public static class UserprofileEndpoints
     if (!string.IsNullOrEmpty(input.Lastname)) existingProfile.Lastname = input.Lastname;
     if (!string.IsNullOrEmpty(input.Defaultinstanceid)) existingProfile.Defaultinstanceid = input.Defaultinstanceid;
     if (!string.IsNullOrEmpty(input.Defaultshardid)) existingProfile.Defaultshardid = input.Defaultshardid;
-    if (!string.IsNullOrEmpty(input.Useridasstring)) existingProfile.Useridasstring = input.Useridasstring;
+    if (!string.IsNullOrEmpty(input.Useridstring)) existingProfile.Useridstring = input.Useridstring;
 
     // Non-string fields (like ints) can be updated directly
     existingProfile.Sms = input.Sms;
@@ -135,11 +135,11 @@ public static class UserprofileEndpoints
 .WithName("UpdateUserprofileByUserid")
 .WithOpenApi();
 
-        group.MapPut("/profile/{useridasstring}", async (string Useridasstring, Userprofile input) =>
+        group.MapPut("/profile/{useridasstring}", async (string Useridstring, Userprofile input) =>
         {
             await using var context = new DirtbikeContext();
 
-            var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Useridasstring == Useridasstring);
+            var existingProfile = await context.Userprofiles.FirstOrDefaultAsync(m => m.Useridstring == Useridstring);
             if (existingProfile == null)
             {
                 return Results.NotFound();
@@ -175,7 +175,7 @@ public static class UserprofileEndpoints
             if (!string.IsNullOrEmpty(input.Lastname)) existingProfile.Lastname = input.Lastname;
             if (!string.IsNullOrEmpty(input.Defaultinstanceid)) existingProfile.Defaultinstanceid = input.Defaultinstanceid;
             if (!string.IsNullOrEmpty(input.Defaultshardid)) existingProfile.Defaultshardid = input.Defaultshardid;
-            if (!string.IsNullOrEmpty(input.Useridasstring)) existingProfile.Useridasstring = input.Useridasstring;
+            if (!string.IsNullOrEmpty(input.Useridstring)) existingProfile.Useridstring = input.Useridstring;
 
             // Non-string fields (like ints) can be updated directly
             existingProfile.Sms = input.Sms;
@@ -185,10 +185,10 @@ public static class UserprofileEndpoints
             Enterpriseservices.ApiLogger.logapi(
                 Enterpriseservices.Globals.ControllerAPIName,
                 Enterpriseservices.Globals.ControllerAPINumber,
-                "PUTWITHID", 1, "UpdateUserprofile", $"Updated UserIDasstring: {Useridasstring}"
+                "PUTWITHID", 1, "UpdateUserprofile", $"Updated UserIDasstring: {Useridstring}"
             );
 
-            return TypedResults.Accepted($"Updated UserIDasstring: {Useridasstring}");
+            return TypedResults.Accepted($"Updated UserIdstring: {Useridstring}");
         })
 .WithName("UpdateUserprofileByUseridassting")
 .WithOpenApi();
@@ -233,7 +233,7 @@ public static class UserprofileEndpoints
             if (!string.IsNullOrEmpty(input.Lastname)) existingProfile.Lastname = input.Lastname;
             if (!string.IsNullOrEmpty(input.Defaultinstanceid)) existingProfile.Defaultinstanceid = input.Defaultinstanceid;
             if (!string.IsNullOrEmpty(input.Defaultshardid)) existingProfile.Defaultshardid = input.Defaultshardid;
-            if (!string.IsNullOrEmpty(input.Useridasstring)) existingProfile.Useridasstring = input.Useridasstring;
+            if (!string.IsNullOrEmpty(input.Useridstring)) existingProfile.Useridstring = input.Useridstring;
 
             // Non-string fields (like ints) can be updated directly
             existingProfile.Sms = input.Sms;

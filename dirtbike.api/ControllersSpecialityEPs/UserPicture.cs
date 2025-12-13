@@ -15,13 +15,13 @@ using Microsoft.Extensions.WebEncoders.Testing;
 namespace Enterprise.Controllers;
 
 
-public static class TaxtableUEndpoints
+public static class UserPictureEndpoints
 {
     
-    public static void MapTaxtableUSEndpoints(this IEndpointRouteBuilder routes)
+    public static void MapUserPictureEndpoints(this IEndpointRouteBuilder routes)
     {
-        var group = routes.MapGroup("/api/TaxtableU").WithTags(nameof(TaxtableU));
-        Enterpriseservices.Globals.ControllerAPIName = "TaxtableUAPI";
+        var group = routes.MapGroup("/api/Userpicture").WithTags(nameof(UserPicture));
+        Enterpriseservices.Globals.ControllerAPIName = "UserPictureAPI";
         Enterpriseservices.Globals.ControllerAPINumber = "001";
         
         //[HttpGet]
@@ -32,11 +32,11 @@ public static class TaxtableUEndpoints
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET", 1, "Test", "Test");
-                return context.TaxtableUs.ToList();
+                return context.UserPictures.ToList();
             }
             
         })
-        .WithName("GetAllTaxtableU")
+        .WithName("GetAllUserPictures")
         .WithOpenApi();
 
         //[HttpGet]
@@ -45,20 +45,20 @@ public static class TaxtableUEndpoints
             using (var context = new DirtbikeContext())
             {
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
-                return context.TaxtableUs.Where(m => m.Id == id).ToList();
+                return context.UserPictures.Where(m => m.Id == id).ToList();
             }
         })
-        .WithName("GetTaxtableUById")
+        .WithName("GetUserPictureById")
         .WithOpenApi();
 
         //[HttpPut]
-        group.MapPut("/{id}", async (int id, TaxtableU input) =>
+        group.MapPut("/{id}", async (int id, UserPicture input) =>
         {
             using (var context = new DirtbikeContext())
             {
-                TaxtableU[] someTaxtableU = context.TaxtableUs.Where(m => m.Id == id).ToArray();
-                context.TaxtableUs.Attach(someTaxtableU[0]);
-                if (input.Uspersonallow != null) someTaxtableU[0].Uspersonallow = input.Uspersonallow;
+                UserPicture[] someUserPicture = context.UserPictures.Where(m => m.Id == id).ToArray();
+                context.UserPictures.Attach(someUserPicture[0]);
+                if (input.Activepictureurl != null) someUserPicture[0].Activepictureurl = input.Activepictureurl;
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "PUTWITHID", 1, "Test", "Test");
                 return TypedResults.Accepted("Updated ID:" + input.Id);
@@ -66,40 +66,40 @@ public static class TaxtableUEndpoints
 
 
         })
-        .WithName("UpdateTaxtableU")
+        .WithName("UpdateUserPicture")
         .WithOpenApi();
 
-        group.MapPost("/", async (TaxtableU input) =>
+        group.MapPost("/", async (UserPicture input) =>
         {
             using (var context = new DirtbikeContext())
             {
                 Random rnd = new Random();
                 int dice = rnd.Next(1000, 10000000);
                 //input.Id = dice;
-                context.TaxtableUs.Add(input);
+                context.UserPictures.Add(input);
                 await context.SaveChangesAsync();
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "NEWRECORD", 1, "TEST", "TEST");
                 return TypedResults.Created("Created ID:" + input.Id);
             }
 
         })
-        .WithName("CreateTaxtableU")
+        .WithName("CreateUserPicture")
         .WithOpenApi();
 
         group.MapDelete("/{id}", async (int id) =>
         {
             using (var context = new DirtbikeContext())
             {
-                //context.TaxtableU.Add(std);
-                TaxtableU[] someTaxtableU = context.TaxtableUs.Where(m => m.Id == id).ToArray();
-                context.TaxtableUs.Attach(someTaxtableU[0]);
-                context.TaxtableUs.Remove(someTaxtableU[0]);
+                //context.UserPictures.Add(std);
+                UserPicture[] someUserPictures = context.UserPictures.Where(m => m.Id == id).ToArray();
+                context.UserPictures.Attach(someUserPictures[0]);
+                context.UserPictures.Remove(someUserPictures[0]);
                 Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "DELETEWITHID",1, "TEST", "TEST");
                 await context.SaveChangesAsync();
             }
 
         })
-        .WithName("DeleteTaxtableU")
+        .WithName("DeleteUserPicture")
         .WithOpenApi();
     }
 }

@@ -229,6 +229,60 @@ public static class UserEndpoints
 .WithName("CreateUserWhenTriggersExistInSql")
 .WithOpenApi();
 
+ group.MapPost("/userfull", async (User input) =>
+{
+    using (var context = new DirtbikeContext())
+    {
+        // STEP 1: Add new User record
+        context.Users.Add(input);
+        await context.SaveChangesAsync(); // input.Id is now populated
+
+        int newId = input.Id;
+        input.Userid = newId;
+        input.Uidstring = newId.ToString(); 
+        // In complex systems Useridstring might be different, 
+        // but here we’re aligning them for simplicity.
+
+        // STEP 2: Create the UserProfile tied to this User
+        var someprofile = new Userprofile
+        {
+            Id = newId,
+            Userid = newId,
+            Useridstring = newId.ToString()
+        };
+        context.Userprofiles.Add(someprofile);
+
+        // STEP 3: Create the UserPicture tied to this User
+        var newpicturerecord = new UserPicture
+        {
+            Id = newId,
+            Userid = newId,
+            Useridstring = newId.ToString(),
+            Activepictureurl = null,   // set default or from input
+            Somepicture = null         // set default or from input
+        };
+        context.UserPictures.Add(newpicturerecord);
+
+        // STEP 4: Save related records
+        await context.SaveChangesAsync();
+
+        // Optional logging
+        Enterpriseservices.ApiLogger.logapi(
+            Enterpriseservices.Globals.ControllerAPIName,
+            Enterpriseservices.Globals.ControllerAPINumber,
+            "NEWRECORD", 1, "TEST", "TEST"
+        );
+
+        return Results.Created($"/userfull/{newId}", input);
+    }
+})
+.WithName("CreateUserFull")
+.WithOpenApi();
+
+
+
+
+
 
         group.MapDelete("/{id}", async (int id) =>
         {

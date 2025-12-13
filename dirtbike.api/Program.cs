@@ -111,6 +111,7 @@ app.MapTaxtableUSEndpoints();
 app.MapCGUIParksEndpoints();
 app.MapCGUICartEndpoints();
 app.MapAuthEndpoints();
+app.MapUserPictureEndpoints();
 app.MapParkInventoryEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.
