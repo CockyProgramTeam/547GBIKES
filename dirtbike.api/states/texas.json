@@ -1,0 +1,30 @@
+INSERT INTO parks (
+  name, address, phone, region, trailLengthMiles, difficulty,
+  description, dayPassPriceUsd, longitude, latitude, trailmapurl,
+  parklogourl, maxvisitors, currentvisitors, currentvisitorschildren,
+  currentvisitorsadults, maxcampsites, columns, state
+) VALUES
+(
+  'Palo Duro Canyon State Park', '11450 State Hwy Park Rd 5, Canyon, TX 79015', '806-488-2227',
+  'Panhandle Plains', 15, 'Intermediate to Advanced', 'Latitude: 34.9372\nLongitude: -101.6461',
+  8, -101.6461, 34.9372, 'https://tpwd.texas.gov/publications/pwdpubs/media/pwd_mp_p4502_0094p.pdf',
+  'https://tpwd.texas.gov/state-parks/palo-duro/media/logo.png', 500, 0, 0, 0, 100, NULL, 'TX'
+),
+(
+  'Franklin Mountains State Park', 'Tom Mays Park Access Rd, El Paso, TX 79930', '915-566-6441',
+  'West Texas', 27, 'Advanced', 'Latitude: 31.9066\nLongitude: -106.4865',
+  5, -106.4865, 31.9066, 'https://tpwd.texas.gov/publications/pwdpubs/media/pwd_mp_p4502_0094f.pdf',
+  'https://tpwd.texas.gov/state-parks/franklin-mountains/media/logo.png', 300, 0, 0, 0, 50, NULL, 'TX'
+),
+(
+  'Tyler State Park', '789 Park Road 16, Tyler, TX 75706', '903-597-5338',
+  'East Texas', 13, 'Beginner to Intermediate', 'Latitude: 32.5853\nLongitude: -95.2956',
+  6, -95.2956, 32.5853, 'https://tpwd.texas.gov/publications/pwdpubs/media/pwd_mp_p4502_0094t.pdf',
+  'https://tpwd.texas.gov/state-parks/tyler/media/logo.png', 400, 0, 0, 0, 80, NULL, 'TX'
+),
+(
+  'Bastrop State Park', '100 Park Road 1A, Bastrop, TX 78602', '512-321-2101',
+  'Central Texas', 12, 'Intermediate', 'Latitude: 30.1105\nLongitude: -97.2866',
+  5, -97.2866, 30.1105, 'https://tpwd.texas.gov/publications/pwdpubs/media/pwd_mp_p4502_0094b.pdf',
+  'https://tpwd.texas.gov/state-parks/bastrop/media/logo.png', 250, 0, 0, 0, 60, NULL, 'TX'
+);

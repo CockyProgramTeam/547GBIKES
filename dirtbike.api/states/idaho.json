@@ -1,0 +1,24 @@
+INSERT INTO parks (
+  name, address, phone, region, trailLengthMiles, difficulty,
+  description, dayPassPriceUsd, longitude, latitude, trailmapurl,
+  parklogourl, maxvisitors, currentvisitors, currentvisitorschildren,
+  currentvisitorsadults, maxcampsites, columns, state
+) VALUES
+(
+  'Ponderosa State Park', '1920 Davis Ave, McCall, ID 83638', '208-634-2164',
+  'Central Idaho', 15, 'Intermediate', 'Latitude: 44.9111\nLongitude: -116.0986',
+  5, -116.0986, 44.9111, 'https://parksandrecreation.idaho.gov/wp-content/uploads/Ponderosa-Trail-Map.pdf',
+  'https://parksandrecreation.idaho.gov/images/ponderosa_logo.png', 250, 0, 0, 0, 60, NULL, 'ID'
+),
+(
+  'Farragut State Park', '13550 ID-54, Athol, ID 83801', '208-683-2425',
+  'North Idaho', 20, 'Intermediate to Advanced', 'Latitude: 47.9422\nLongitude: -116.6133',
+  5, -116.6133, 47.9422, 'https://parksandrecreation.idaho.gov/wp-content/uploads/Farragut-Trail-Map.pdf',
+  'https://parksandrecreation.idaho.gov/images/farragut_logo.png', 300, 0, 0, 0, 80, NULL, 'ID'
+),
+(
+  'Castle Rocks State Park', '3035 S Elba-Almo Rd, Almo, ID 83312', '208-824-5901',
+  'Southern Idaho', 10, 'Intermediate', 'Latitude: 42.1336\nLongitude: -113.6372',
+  5, -113.6372, 42.1336, 'https://parksandrecreation.idaho.gov/wp-content/uploads/CastleRocks-Trail-Map.pdf',
+  'https://parksandrecreation.idaho.gov/images/castlerocks_logo.png', 200, 0, 0, 0, 40, NULL, 'ID'
+);

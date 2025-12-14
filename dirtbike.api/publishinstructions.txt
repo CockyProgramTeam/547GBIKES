@@ -1,0 +1,1 @@
+dotnet publish -c Release -o /opt/ga/547bikes/bin

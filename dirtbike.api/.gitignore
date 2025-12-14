@@ -1,0 +1,22 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/bikesapi/v17/.wsuo
+/.vs/bikesapi/v17/workspaceFileList.bin
+/.vs/dirtbike.api/FileContentIndex/ddccc212-da56-487e-b60c-b37ed1382975.vsidx
+/obj/Debug/net9.0/dirtbike.api.AssemblyInfo.cs
+/obj/Debug/net9.0/dirtbike.api.AssemblyInfoInputs.cache
+/.vs/bikesapi/FileContentIndex/5c08599f-7155-45cf-ace3-34f29870f869.vsidx
+/.vs/bikesapi/FileContentIndex/6ea757e4-fd78-4154-b15b-2756621868f6.vsidx
+/.vs/bikesapi/FileContentIndex/8fb86468-35d5-4edb-b1b0-39e7932ed5dd.vsidx
+/.vs/bikesapi/FileContentIndex/abaab24b-bd61-4cf9-b1f9-d7db585537b2.vsidx
+/.vs/bikesapi/FileContentIndex/ba1e2020-07d3-4463-94df-c8eae4e2b3d5.vsidx
+/.vs/bikesapi/v17/.wsuo
+/.vs/dirtbike.api/DesignTimeBuild/.dtbcache.v2
+*.vsidx
+/.vs/ProjectEvaluation/dirtbike.api.metadata.v9.bin
+/.vs/ProjectEvaluation/dirtbike.api.projects.v9.bin
+/.vs/ProjectEvaluation/dirtbike.api.strings.v9.bin
+/appsettings.json
+dirtbike.api.csproj

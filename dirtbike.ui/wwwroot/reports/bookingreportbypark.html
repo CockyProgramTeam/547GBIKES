@@ -2,118 +2,175 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../login.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="../login.css" />
 <link rel="stylesheet" href="../dropmenu.css" />
 <script src="../js/bikes.js"></script>
-    <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <title>Booking Report by Park</title>
-  <style>
-    body {
-      padding-top: 2rem;
-    }
-    .table-container {
-      max-width: 1200px;
-      margin: auto;
-    }
-    .park-header {
-      background-color: #f8f9fa;
-      font-weight: bold;
-      font-size: 1.2rem;
-      padding: 0.5rem;
-      margin-top: 2rem;
-      border-left: 5px solid #0d6efd;
-    }
-  </style>
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>Park Calendar Report</title>
+<style>
+  body { padding-top: 2rem; }
+  .table-container { max-width: 1200px; margin: auto; }
+  .park-header {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin-top: 2rem;
+    border-left: 5px solid #0d6efd;
+  }
+</style>
 </head>
-<body onload="checkpll(); checkUserStatus(); displayProfilePicture();">
-    <!-- Navigation Bar -->
-    <div class="navbar">
-      <div class="nav-left">
-            <div class="dropdown">
-                  <button class="jsmenu"><img src="../images/jsmenu4.png"></button> 
-                  <div class="dropdown-content">
-                  <a href="../index.html">Site Home</a>
-                  <a href="../cartreview.html">MyCart</a>
-                  <a href="../parks5.html">Review Park Options</a>
-                  <a href="../parksreview5.html">Park Reviews</a>
-                  <a href="../mybookings5.html">MyReservations</a>
-                  <a href="../manager.html">Manager Utilities</a>
-             </div>
-    </div> 
+<body onload="checkpll(); checkUserStatus();">
+  <!-- Navigation Bar -->
+  <div class="navbar">
+    <div class="nav-left">
+      <div class="dropdown">
+        <button class="jsmenu"><img src="../images/jsmenu4.png"></button>
+        <div class="dropdown-content">
+          <a href="../index.html">Site Home</a>
+          <a href="../cartreview.html">MyCart</a>
+          <a href="../parks5.html">Review Park Options</a>
+          <a href="../parksreview5.html">Park Reviews</a>
+          <a href="../mybookings5.html">MyReservations</a>
+          <a href="../manager.html">Manager Utilities</a>
+        </div>
+      </div>
       <div class="logo">&nbsp&nbsp<H5>MyLinkv25 - Review Parks</H5></div>
-      </div>
-      <div class="nav-right">
-        <img src="../images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
-        <span id="H3UserBanner"></span>
-        <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
-        <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
-                <a href="cartreview.html" id="cartBtn3"><img src="../images/cart4.png" width="40px" height="40px"></a>
-      </div>
     </div>
-<div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
-  <div class="container table-container">
-    <h2 class="text-center mb-4">Booking Report by Park</h2>
-    <div id="reportContent">
-      <!-- Tables will be inserted dynamically -->
+    <div class="nav-right">
+      <img src="../images/bluecircle.png" id="profilephototarget" alt="User" style="cursor:pointer;" onclick="window.location.href='profile.html'" />
+      <span id="H3UserBanner"></span>
+      <a href="login.html" id="loginBtn" class="btn secondary-btn" onclick="loginUser(event)">Login</a>
+      <a href="login.html" id="logoutBtn" class="btn secondary-btn" onclick="logoutUser(event)">Logout</a>
+      <a href="cartreview.html" id="cartBtn3"><img src="../images/cart4.png" width="40px" height="40px"></a>
     </div>
   </div>
 
+  <div align="center" id="banner"><span id="userGreeting">Welcome Guest</span></div>
+
+  <div class="container table-container">
+    <h2 class="text-center mb-4">Park Calendar Report By ParkId</h2>
+
+    <!-- Filters -->
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label for="stateFilter" class="form-label">Filter by State</label>
+        <select id="stateFilter" class="form-select">
+          <option value="">All States</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label for="parkFilter" class="form-label">Filter by Park</label>
+        <select id="parkFilter" class="form-select">
+          <option value="">All Parks</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="reportContent"></div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
     $(document).ready(function () {
-      fetch("https://parksapi.547bikes.info/api/Booking")
-        .then(response => response.json())
-        .then(data => {
-          if (!Array.isArray(data) || data.length === 0) {
-            $("#reportContent").html("<p class='text-center text-warning'>No booking records found.</p>");
-            return;
-          }
+      let parksList = [];
+      let calendarData = [];
 
-          // Group bookings by parkName
-          const grouped = {};
-          data.forEach(item => {
-            const park = item.parkName || "Unknown Park";
-            if (!grouped[park]) grouped[park] = [];
-            grouped[park].push(item);
+      // Load parks for filters
+      fetch("https://parksapi.547bikes.info/api/Parks")
+        .then(res => res.json())
+        .then(parks => {
+          parksList = parks;
+          const states = [...new Set(parks.map(p => p.state).filter(Boolean))].sort();
+          states.forEach(s => {
+            $("#stateFilter").append(`<option value="${s}">${s}</option>`);
           });
+          parks.forEach(p => {
+            $("#parkFilter").append(`<option value="${p.id}">${p.name}</option>`);
+          });
+        });
 
-          // Render each park group
-          Object.keys(grouped).sort().forEach(park => {
-            const bookings = grouped[park];
-            const headers = [
-              "bookingId", "uid", "customerBillingName", "billingTelephoneNumber",
-              "creditCardType", "creditCardLast4", "creditCardExpDate",
-              "quantityAdults", "quantityChildren", "totalAmount",
-              "transactionId", "reservationtype", "reservationstatus",
-              "reversetransactionid", "cancellationrefund", "cartid"
-            ];
+      // Load park calendar reservations
+      fetch("https://parksapi.547bikes.info/api/ParkCalendar")
+        .then(res => res.json())
+        .then(data => {
+          calendarData = Array.isArray(data) ? data : [];
+          renderReport(calendarData);
 
-            let tableHtml = `
-              <div class="mb-4">
-                <div class="park-header">${park}</div>
-                <div class="table-responsive">
-                  <table class="table table-bordered table-striped">
-                    <thead class="table-dark">
-                      <tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr>
-                    </thead>
-                    <tbody>
-                      ${bookings.map(row => {
-                        return `<tr>${headers.map(h => `<td>${row[h] ?? "—"}</td>`).join("")}</tr>`;
-                      }).join("")}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            `;
+          // Re-render when filters change
+          $("#stateFilter, #parkFilter").on("change", function () {
+            const stateVal = $("#stateFilter").val();
+            const parkVal = $("#parkFilter").val();
 
-            $("#reportContent").append(tableHtml);
+            let filtered = calendarData.filter(item => {
+              const park = parksList.find(p => p.id === item.parkId);
+              const matchState = stateVal ? (park && park.state === stateVal) : true;
+              const matchPark = parkVal ? item.parkId === parkVal : true;
+              return matchState && matchPark;
+            });
+
+            renderReport(filtered);
           });
         })
-        .catch(error => {
-          console.error("Error loading Booking data:", error);
-          $("#reportContent").html("<p class='text-danger text-center'>Failed to load booking data.</p>");
+        .catch(err => {
+          console.error("Error loading ParkCalendar:", err);
+          $("#reportContent").html("<p class='text-danger text-center'>Failed to load park calendar data.</p>");
         });
+
+      function formatDate(val) {
+        const d = new Date(val);
+        return isNaN(d) ? val : d.toLocaleDateString();
+      }
+
+      function renderReport(data) {
+        $("#reportContent").empty();
+        if (!Array.isArray(data) || data.length === 0) {
+          $("#reportContent").html("<p class='text-center text-warning'>No reservation records found.</p>");
+          return;
+        }
+
+        // Group by parkId
+        const grouped = {};
+        data.forEach(item => {
+          const park = parksList.find(p => p.id === item.parkId);
+          const parkName = park ? park.name : item.parkId || "Unknown Park";
+          if (!grouped[parkName]) grouped[parkName] = [];
+          grouped[parkName].push(item);
+        });
+
+        Object.keys(grouped).sort().forEach(parkName => {
+          const reservations = grouped[parkName];
+          const headers = [
+            "id","parkId","customerId","startDate","endDate",
+            "transactionId","bookId","qtyAdults","qtyChildren"
+          ];
+
+          let tableHtml = `
+            <div class="mb-4">
+              <div class="park-header">${parkName}</div>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                  <thead class="table-dark">
+                    <tr>${headers.map(h => `<th>${h}</th>`).join("")}</tr>
+                  </thead>
+                  <tbody>
+                    ${reservations.map(row => {
+                      return `<tr>${headers.map(h => {
+                        let val = row[h] ?? "—";
+                        if (h === "startDate" || h === "endDate") val = formatDate(val);
+                        return `<td>${val}</td>`;
+                      }).join("")}</tr>`;
+                    }).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          `;
+          $("#reportContent").append(tableHtml);
+        });
+      }
     });
   </script>
 </body>

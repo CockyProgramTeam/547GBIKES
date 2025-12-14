@@ -1,0 +1,9 @@
+//ON A CLEAN build
+
+dotnet ef dbcontext scaffold "Data Source=./SQLDATA/dirtbike.db" Microsoft.EntityFrameworkCore.Sqlite -o Models --context-dir Data --no-build
+
+// TO OVERWRITE THE EXISTING CODE
+dotnet ef dbcontext scaffold "Data Source=./SQLDATA/dirtbike.db" Microsoft.EntityFrameworkCore.Sqlite -o Models --context-dir Data --no-build --force
+
+//REVERSE JUST ONE TABLE
+dotnet ef dbcontext scaffold "Data Source=./SQLDATA/dirtbike.db" Microsoft.EntityFrameworkCore.Sqlite -o Models --context-dir Data --no-build --force --table Users

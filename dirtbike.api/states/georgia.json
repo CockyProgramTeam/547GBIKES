@@ -1,0 +1,24 @@
+INSERT INTO parks (
+  name, address, phone, region, trailLengthMiles, difficulty,
+  description, dayPassPriceUsd, longitude, latitude, trailmapurl,
+  parklogourl, maxvisitors, currentvisitors, currentvisitorschildren,
+  currentvisitorsadults, maxcampsites, columns, state
+) VALUES
+(
+  'Fort Yargo State Park', '210 S Broad St, Winder, GA 30680', '770-867-3489',
+  'North Georgia', 20, 'Intermediate', 'Latitude: 33.9856\nLongitude: -83.7360',
+  5, -83.7360, 33.9856, 'https://gastateparks.org/sites/default/files/parks/pdf/maps/FortYargo_TrailMap.pdf',
+  'https://gastateparks.org/images/fort_yargo_logo.png', 300, 0, 0, 0, 60, NULL, 'GA'
+),
+(
+  'Hard Labor Creek State Park', '5 Hard Labor Creek Rd, Rutledge, GA 30663', '706-557-3001',
+  'Central Georgia', 16, 'Intermediate to Advanced', 'Latitude: 33.6647\nLongitude: -83.6074',
+  5, -83.6074, 33.6647, 'https://gastateparks.org/sites/default/files/parks/pdf/maps/HardLaborCreek_TrailMap.pdf',
+  'https://gastateparks.org/images/hard_labor_logo.png', 250, 0, 0, 0, 50, NULL, 'GA'
+),
+(
+  'Unicoi State Park', '1788 Highway 356, Helen, GA 30545', '706-878-2201',
+  'North Georgia Mountains', 8, 'Intermediate', 'Latitude: 34.7236\nLongitude: -83.7102',
+  5, -83.7102, 34.7236, 'https://gastateparks.org/sites/default/files/parks/pdf/maps/Unicoi_TrailMap.pdf',
+  'https://gastateparks.org/images/unicoi_logo.png', 200, 0, 0, 0, 40, NULL, 'GA'
+);

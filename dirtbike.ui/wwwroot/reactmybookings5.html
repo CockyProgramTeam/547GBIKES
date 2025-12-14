@@ -78,8 +78,8 @@
                     <th>Park Name</th>
                     <th>Booking Start</th>
                     <th>Booking End</th>
-                    <th>Adult Items</th>
-                    <th>Jr. Items</th>
+                    <th>Adults</th>
+                    <th>Children</th>
                     <th>Total ($)</th>
                     <th>Transaction ID(s)</th>
                     <th>Booking Type</th>
@@ -105,64 +105,49 @@
     const cancelledBody = $("#cancelled-bookings-body");
 
     // Get the current user's ID from localStorage
-    const currentUid = localStorage.getItem("id");
-
+    //const currentUid = localStorage.getItem("id");
+    const currentUid = "1";
+  
     $.ajax({
       url: "https://parksapi.547bikes.info/api/Booking",
       method: "GET",
       success: function (bookings) {
-        // Filter bookings for the current user only
-        const userBookings = bookings.filter(b => b.uid === currentUid);
-
-        let pendingRequests = userBookings.length;
+        // Filter bookings for the current user only AND exclude Audit reservations
+        const userBookings = bookings.filter(
+          b => b.uid === currentUid && b.reservationtype.toLowerCase() !== "audit"
+        );
 
         userBookings.forEach(function (booking) {
-          $.ajax({
-            url: `https://parksapi.547bikes.info/api/Parks/${booking.parkId}`,
-            method: "GET",
-            success: function (park) {
-              const parkName = park && park[0] ? park[0].name : 'Test Park';
-              const row = `
-                <tr>
-                  <td>${booking.bookingId}</td>
-                  <td>${booking.uid}</td>
-                  <td>${booking.parkId}</td>
-                  <td>${booking.cartid}</td>
-                  <td>${parkName}</td>
-                  <td>${booking.resStart || 'N/A'}</td>
-                  <td>${booking.resEnd || 'N/A'}</td>
-                  <td>${booking.adults}</td>
-                  <td>${booking.children}</td>
-                  <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
-                  <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
-                  <td>${booking.reservationtype}</td>
-                  <td>${booking.reservationstatus}</td>
-                  <td>
-                    <button class="btn btn-sm btn-dark" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">Review Cart</button><br>
-                    <button class="btn btn-sm btn-danger mt-1" onclick="window.location.href='cartcancel.html?bookingid=${booking.bookingId}&cartid=${booking.cartid}'">Cancel</button>
-                  </td>
-                </tr>
-              `;
+          const row = `
+            <tr>
+              <td>${booking.bookingId}</td>
+              <td>${booking.uid}</td>
+              <td>${booking.parkId}</td>
+              <td>${booking.cartid}</td>
+              <td>${booking.parkName}</td>
+              <td>${booking.resStart || 'N/A'}</td>
+              <td>${booking.resEnd || 'N/A'}</td>
+              <td>${booking.adults}</td>
+              <td>${booking.children}</td>
+              <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
+              <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
+              <td>${booking.reservationtype}</td>
+              <td>${booking.reservationstatus}</td>
+              <td>
+                <button class="btn btn-sm btn-dark" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">Review Cart</button><br>
+                <button class="btn btn-sm btn-danger mt-1" onclick="window.location.href='cartcancel.html?bookingid=${booking.bookingId}&cartid=${booking.cartid}'">Cancel</button>
+              </td>
+            </tr>
+          `;
 
-              if (booking.reservationstatus.toLowerCase() === "cancelled") {
-                cancelledBody.append(row);
-              } else {
-                activeBody.append(row);
-              }
-
-              pendingRequests--;
-              if (pendingRequests === 0) {
-                initializeTables();
-              }
-            },
-            error: function () {
-              pendingRequests--;
-              if (pendingRequests === 0) {
-                initializeTables();
-              }
-            }
-          });
+          if (booking.reservationstatus.toLowerCase() === "cancelled") {
+            cancelledBody.append(row);
+          } else {
+            activeBody.append(row);
+          }
         });
+
+        initializeTables();
       },
       error: function (xhr, status, error) {
         activeBody.html(`<tr><td colspan="14" class="text-danger">Error loading bookings: ${error}</td></tr>`);
@@ -186,7 +171,4 @@
     }
   });
 </script>
-
-  <footer class="footer text-center mt-5">
-    &copy; Cocky Consulting 2025. <br> All rights reserved.<br>
-                                      </footer></html>
+</html>

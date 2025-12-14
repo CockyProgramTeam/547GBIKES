@@ -1,0 +1,24 @@
+INSERT INTO parks (
+  name, address, phone, region, trailLengthMiles, difficulty,
+  description, dayPassPriceUsd, longitude, latitude, trailmapurl,
+  parklogourl, maxvisitors, currentvisitors, currentvisitorschildren,
+  currentvisitorsadults, maxcampsites, columns, state
+) VALUES
+(
+  'Saint Edward State Park', '14445 Juanita Dr NE, Kenmore, WA 98028', '425-823-2992',
+  'Puget Sound', 10, 'Intermediate', 'Latitude: 47.7326\nLongitude: -122.2578',
+  10, -122.2578, 47.7326, 'https://parks.state.wa.us/DocumentCenter/View/1931/Saint-Edward-State-Park-Trail-Map',
+  'https://parks.state.wa.us/images/st_edward_logo.png', 250, 0, 0, 0, 40, NULL, 'WA'
+),
+(
+  'Dash Point State Park', '5700 SW Dash Point Rd, Federal Way, WA 98023', '253-661-4955',
+  'Puget Sound', 11, 'Beginner to Intermediate', 'Latitude: 47.3228\nLongitude: -122.3737',
+  10, -122.3737, 47.3228, 'https://parks.state.wa.us/DocumentCenter/View/1929/Dash-Point-State-Park-Trail-Map',
+  'https://parks.state.wa.us/images/dash_point_logo.png', 300, 0, 0, 0, 50, NULL, 'WA'
+),
+(
+  'Beacon Rock State Park', '34841 State Route 14, Skamania, WA 98648', '509-427-8265',
+  'Southwest Washington', 15, 'Intermediate to Advanced', 'Latitude: 45.6286\nLongitude: -122.0206',
+  10, -122.0206, 45.6286, 'https://parks.state.wa.us/DocumentCenter/View/1927/Beacon-Rock-State-Park-Trail-Map',
+  'https://parks.state.wa.us/images/beacon_rock_logo.png', 200, 0, 0, 0, 30, NULL, 'WA'
+);
