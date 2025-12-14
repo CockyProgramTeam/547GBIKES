@@ -1,6 +1,0 @@
-@dirtbike.api_HostAddress = http://localhost:5100
-
-GET {{dirtbike.api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
