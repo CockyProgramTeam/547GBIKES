@@ -14,11 +14,34 @@ using dirtbike.api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//AZURE SERVICES FROM 590 WITH DEPENDENCY INJECTION (COLIN SERVICE BUS, SAMBIT OCR)
+
+builder.Services.AddSingleton(sp =>
+{
+    var cfg = sp.GetRequiredService<IConfiguration>();
+
+    Console.WriteLine("Using OCR Endpoint: " + cfg["ComputerVision:Endpoint"]);
+    Console.WriteLine("Using OCR Key: " + cfg["ComputerVision:Key"]?.Substring(0, 4) + "...");
+
+    return new DocumentAnalysisClient(
+        new Uri(cfg["ComputerVision:Endpoint"]),
+        new AzureKeyCredential(cfg["ComputerVision:Key"])
+    );
+});
+
+// Register Service Bus Service
+builder.Services.AddSingleton<ServiceBusService>();
+
+
+//We Decided to start with an Elaborate CORS Policy. This is Ignored on Azure Cloud as they overwrite it.... but on Hosted Glcloud its required.
 // Load CORS settings from appsettings.json
 var corsSettings = builder.Configuration.GetSection("Cors");
 var allowedOrigins = corsSettings.GetSection("AllowedOrigins").Get<string[]>() ?? Array.Empty<string>();
 var allowedMethods = corsSettings.GetSection("AllowedMethods").Get<string[]>() ?? Array.Empty<string>();
 var allowedHeaders = corsSettings.GetSection("AllowedHeaders").Get<string[]>() ?? Array.Empty<string>();
+
+
+// JWT TOKEN IS USED IN AUTH CONTROLLER TO GENERATE 128 BIT KEY.
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>

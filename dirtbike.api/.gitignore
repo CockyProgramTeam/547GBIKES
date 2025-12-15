@@ -20,3 +20,5 @@
 /.vs/ProjectEvaluation/dirtbike.api.strings.v9.bin
 /appsettings.json
 dirtbike.api.csproj
+ServicesAzureCloud/AzureOCRController.cs
+ServicesAzureCloud/Certcalogue.cs
