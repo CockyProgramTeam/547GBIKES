@@ -13,7 +13,10 @@ namespace dirtbike.api.DTOs
         public required string Description { get; set; }     // Maps from Park.Description
         public required double AdultPrice { get; set; }      // Maps from Park.AdultPrice
         public required double ChildPrice { get; set; }      // Maps from Park.ChildPrice
-        public required string ImageUrl { get; set; }        // Maps from Park.Pic1url
+        public required decimal SomeLat { get; set; }        // Maps from Park.Pic1url
+    	public required decimal SomeLong { get; set; }        // Maps from Park.Pic1url
+    	public required double ParkId { get; set; }        // Maps from Park.Pic1url
+    	public required string ImageUrl { get; set; }        // Maps from Park.Pic1url
         public required List<ParkReviewDto> Reviews { get; set; } = new List<ParkReviewDto>();
 
         /// <summary>
@@ -29,6 +32,9 @@ namespace dirtbike.api.DTOs
                 Description = park.Description ?? string.Empty,
                 AdultPrice = park.AdultPrice ?? 0,
                 ChildPrice = park.ChildPrice ?? 0,
+                SomeLat = park.Latitude ?? 0,
+                SomeLong = park.Longitude ?? 0,
+                ParkId = park.ParkId,
                 ImageUrl = park.Pic1url ?? string.Empty,
                 Reviews = reviews.Select(r => new ParkReviewDto
                 {

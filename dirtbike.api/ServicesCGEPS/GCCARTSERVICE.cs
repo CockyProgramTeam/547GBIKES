@@ -38,12 +38,30 @@ namespace dirtbike.api.Services
                 return result;
             }
 
+            // ✅ Ensure CartMaster exists for this user
+            var cartMaster = context.CartMasters.FirstOrDefault(cm => cm.UserId == user.Userid);
+            if (cartMaster == null)
+            {
+                cartMaster = new CartMaster
+                {
+                    UserId = user.Userid,
+                    Useridstring = user.Uidstring,
+                    CartsCount = 0,
+                    CartsCancelled = 0,
+                    CartsActive = 0,
+                    CartsActiveList = string.Empty,
+                    Loyaltyid = null,
+                    Loyaltyvendor = null
+                };
+                context.CartMasters.Add(cartMaster);
+                context.SaveChanges();
+            }
+
             int itemIndex = 1;
             bool anyFailures = false;
 
             foreach (var itemDto in dto.Items)
             {
-                // Lookup by GUID string
                 var park = context.Parks.FirstOrDefault(p => p.Id == itemDto.Park.Id);
                 if (park == null)
                 {
@@ -113,11 +131,19 @@ namespace dirtbike.api.Services
                 Totalcartitems = dto.Items.Count,
                 Multipleitems = dto.Items.Count > 1 ? 1 : 0,
                 Parkname = dto.Items.Count == 1 ? dto.Items[0].Park.ParkName : null,
-                //NEW LINES FOR RESERVATION PARENT.
                 ResStart = dto.Items.Min(i => i.ResStart),
-    			ResEnd = dto.Items.Max(i => i.ResEnd)
+                ResEnd = dto.Items.Max(i => i.ResEnd)
             };
             context.Carts.Add(cart);
+            context.SaveChanges();
+
+            // 🔄 Update CartMaster stats
+            cartMaster.CartsCount = (cartMaster.CartsCount ?? 0) + 1;
+            cartMaster.CartsActive = (cartMaster.CartsActive ?? 0) + 1;
+            if (string.IsNullOrEmpty(cartMaster.CartsActiveList))
+                cartMaster.CartsActiveList = cart.Id.ToString();
+            else
+                cartMaster.CartsActiveList += $",{cart.Id}";
             context.SaveChanges();
 
             foreach (var itemDto in dto.Items)
@@ -130,7 +156,7 @@ namespace dirtbike.api.Services
                     Itemdescription = itemDto.Park.ParkName,
                     Itemqty = itemDto.NumAdults + itemDto.NumChildren,
                     Itemtotals = itemDto.TotalPrice,
-                    Parkid = park?.Id, // numeric FK
+                    Parkid = park?.Id,
                     Parkname = itemDto.Park.ParkName,
                     Adults = itemDto.NumAdults,
                     Children = itemDto.NumChildren,
@@ -147,7 +173,7 @@ namespace dirtbike.api.Services
             var booking = new Booking
             {
                 Uid = dto.Uid,
-                Cartid = cart.Id.ToString(), // safe conversion
+                Cartid = cart.Id.ToString(),
                 TransactionId = dto.PaymentId,
                 QuantityAdults = dto.Items.Sum(i => i.NumAdults),
                 QuantityChildren = dto.Items.Sum(i => i.NumChildren),
@@ -175,7 +201,6 @@ namespace dirtbike.api.Services
             context.Payments.Add(payment);
             context.SaveChanges();
 
-            // Add SalesSession for completed transaction
             var salesSession = new SalesSession
             {
                 Uid = dto.Uid,
