@@ -53,6 +53,20 @@ public static class BookingEndpoints
         .WithOpenApi();
     
     
+    	//SET TO RETURN BOOKINGS FOR A GIVEN USERID WHICH IS AN INT IN EF CORE.
+        //[HttpPOST]
+        group.MapPost("/parkbyuser/", (BookingRequest input) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GETWITHID", 1, "Test", "Test"); 
+                return context.Bookings.Where(m => int.Parse(m.Uid) == input.Userid).ToList();
+            }
+        })
+        .WithName("GetBookingByUserId")
+        .WithOpenApi();
+    
+    
     
     
     
@@ -158,3 +172,4 @@ public static class BookingEndpoints
     }
 }
 
+public class BookingRequest { public string Parkname { get; set; } public int Userid { get; set; } }

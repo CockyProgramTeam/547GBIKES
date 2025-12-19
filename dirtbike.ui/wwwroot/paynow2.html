@@ -339,6 +339,8 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bookingData)
       });
+    
+    await UpdateParkCalendar(bookingData);
     }
 
     alert("Transaction complete!");
@@ -456,6 +458,57 @@ async function fetchCartDetails(ids) {
   );
   return Promise.all(promises);
 }
+  
+//ADDED NEW FUNCTIONS TO UPDATE THE PARK CALENDAR
+  
+  async function UpdateParkCalendar(bookingInfo) {
+  const parkCalendarApi = `${baseUrl}/api/ParkCalendar`;
+  const parkInventoryApi = `${baseUrl}/api/ParkInventory/addguests`;
+
+  // Build the ParkCalendar payload
+  const parkCalendarEntry = {
+    id: 0,
+    parkId: bookingInfo.parkId?.toString() || "0",
+    customerId: parseInt(bookingInfo.uid) || 0,
+    startDate: bookingInfo.reservationStartDate || bookingInfo.resStart,
+    endDate: bookingInfo.reservationEndDate || bookingInfo.resEnd,
+    transactionId: bookingInfo.transactionId,
+    bookId: bookingInfo.cartid?.toString() || bookingInfo.transactionId,
+    qtyAdults: bookingInfo.quantityAdults || bookingInfo.adults || 0,
+    qtyChildren: bookingInfo.quantityChildren || bookingInfo.children || 0,
+    parkGuid: bookingInfo.parkGuid || ""
+  };
+  console.log("parkCalendarpayload", parkCalendarEntry);
+  try {
+    // 1️⃣ Update Park Calendar
+    const response = await fetch(parkCalendarApi, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify([parkCalendarEntry]) // API expects an array
+    });
+
+    if (!response.ok) {
+      throw new Error(`ParkCalendar update failed: ${response.statusText}`);
+    }
+    console.log("✅ Park calendar updated successfully");
+
+    // 2️⃣ Update Park Inventory capacity
+    const totalGuests =
+      (parkCalendarEntry.qtyAdults || 0) + (parkCalendarEntry.qtyChildren || 0);
+
+    const inventoryUrl = `${parkInventoryApi}?park=${parkCalendarEntry.parkId}&Addsomeguests=${totalGuests}`;
+
+    const invResponse = await fetch(inventoryUrl, { method: "POST" });
+
+    if (!invResponse.ok) {
+      throw new Error(`ParkInventory update failed: ${invResponse.statusText}`);
+    }
+    console.log("✅ Park inventory updated successfully");
+  } catch (err) {
+    console.error("❌ Error updating park calendar or inventory:", err);
+  }
+}
+
 
 </script>
 

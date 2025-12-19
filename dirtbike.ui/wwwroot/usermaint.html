@@ -199,6 +199,7 @@
  
   <script>
   const API_USER = "https://parksapi.547bikes.info/api/User";
+  const API_USER_ADD = "https://parksapi.547bikes.info/api/User/userfull";
   const API_PROFILE = "https://parksapi.547bikes.info/api/Userprofile";
 
   function loadUsers() {
@@ -277,7 +278,7 @@
       };
 
     $.ajax({
-      url: API_USER,
+      url: API_USER_ADD,
       method: "POST",
       contentType: "application/json",
       data: JSON.stringify(userPayload),

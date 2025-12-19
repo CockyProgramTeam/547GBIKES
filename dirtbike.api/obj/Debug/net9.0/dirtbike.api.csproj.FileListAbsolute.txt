@@ -1510,7 +1510,6 @@ X:/G547/bikesapi/obj/Debug/net9.0/ref/dirtbike.api.dll
 /home/547G/bikesapi/bin/Debug/net9.0/appsettings.Development.json
 /home/547G/bikesapi/bin/Debug/net9.0/appsettings.json
 /home/547G/bikesapi/bin/Debug/net9.0/SQLDATA/Publish.txt
-/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/CGCARTEXAMPLE.json
 /home/547G/bikesapi/bin/Debug/net9.0/SQLDATA/dirtbike.db
 /home/547G/bikesapi/bin/Debug/net9.0/dirtbike.api.staticwebassets.endpoints.json
 /home/547G/bikesapi/bin/Debug/net9.0/dirtbike.api
@@ -1811,8 +1810,6 @@ X:/G547/bikesapi/bin/Debug/net9.0/ControllersStandardSQL/Auth/userList.json
 /home/547G/bikesapi/bin/Debug/net9.0/ControllersStandardSQL/Auth/userCredential.json
 /home/547G/bikesapi/bin/Debug/net9.0/ControllersStandardSQL/Auth/userList.json
 /home/547G/bikesapi/bin/Debug/net9.0/DTO/examplepost.json
-/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/resultfail.json
-/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/resultsuccessexample.json
 X:/G547/bikesapi/bin/Debug/net9.0/DTO/examplepost.json
 X:/G547/bikesapi/bin/Debug/net9.0/ServicesCGEPS/resultfail.json
 X:/G547/bikesapi/bin/Debug/net9.0/ServicesCGEPS/resultsuccessexample.json
@@ -2132,4 +2129,7 @@ C:/Users/stritzj/source/bikesapi/obj/Debug/net9.0/staticwebassets.pack.json
 C:/Users/stritzj/source/bikesapi/obj/Debug/net9.0/dirtbike.48A9639E.Up2Date
 C:/Users/stritzj/source/bikesapi/obj/Debug/net9.0/dirtbike.api.genruntimeconfig.cache
 C:/Users/stritzj/source/bikesapi/obj/Debug/net9.0/ref/dirtbike.api.dll
-/home/547G/bikesapi/bin/Debug/net9.0/employee.json
+/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/WIP/CGCARTEXAMPLE.json
+/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/WIP/resultfail.json
+/home/547G/bikesapi/bin/Debug/net9.0/ServicesCGEPS/WIP/resultsuccessexample.json
+/home/547G/bikesapi/bin/Debug/net9.0/WIP/employee.json

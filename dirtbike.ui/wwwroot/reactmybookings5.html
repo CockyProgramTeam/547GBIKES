@@ -48,9 +48,9 @@
             <th>Children</th>
             <th>Total ($)</th>
             <th>Transaction ID(s)</th>
+            <th>Actions</th>
             <th>Booking Type</th>
             <th>Booking Status</th>
-            <th>Actions</th>
           </tr>
         </thead>
         <tbody id="active-bookings-body"></tbody>
@@ -82,9 +82,9 @@
                     <th>Children</th>
                     <th>Total ($)</th>
                     <th>Transaction ID(s)</th>
+                    <th>Actions</th>
                     <th>Booking Type</th>
                     <th>Booking Status</th>
-                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody id="cancelled-bookings-body"></tbody>
@@ -105,8 +105,9 @@
     const cancelledBody = $("#cancelled-bookings-body");
 
     // Get the current user's ID from localStorage
-    //const currentUid = localStorage.getItem("id");
-    const currentUid = "1";
+    const currentUid = localStorage.getItem("uid");
+    console.log("currentuid", currentUid);//UID is an integer in the user DB.
+    //const currentUid = "1";
   
     $.ajax({
       url: "https://parksapi.547bikes.info/api/Booking",
@@ -131,12 +132,12 @@
               <td>${booking.children}</td>
               <td>${typeof booking.totalAmount === "number" ? booking.totalAmount.toFixed(2) : "N/A"}</td>
               <td>${booking.transactionId}${booking.reversetransactionid ? '/<BR>' + booking.reversetransactionid : ''}</td>
-              <td>${booking.reservationtype}</td>
-              <td>${booking.reservationstatus}</td>
               <td>
                 <button class="btn btn-sm btn-dark" onclick="window.location.href='cartdetail.html?cartid=${booking.cartid}'">Review Cart</button><br>
                 <button class="btn btn-sm btn-danger mt-1" onclick="window.location.href='cartcancel.html?bookingid=${booking.bookingId}&cartid=${booking.cartid}'">Cancel</button>
               </td>
+              <td>${booking.reservationtype}</td>
+              <td>${booking.reservationstatus}</td>
             </tr>
           `;
 

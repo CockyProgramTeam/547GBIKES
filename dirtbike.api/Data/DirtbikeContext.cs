@@ -205,6 +205,7 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.CardId).HasColumnName("CardID");
             entity.Property(e => e.Cardbtn).HasColumnName("cardbtn");
             entity.Property(e => e.Fullname).HasColumnName("fullname");
+            entity.Property(e => e.Fullcardnumber).HasColumnName("fullcardnumber");
             entity.Property(e => e.IsActive).HasDefaultValue(1);
             entity.Property(e => e.Uid).HasColumnName("UID");
         });
@@ -799,35 +800,41 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
-        modelBuilder.Entity<Usersession>(entity =>
-        {
-            entity.ToTable("usersessions");
+       modelBuilder.Entity<Usersession>(entity =>
+{
+    entity.ToTable("usersessions");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
-            entity.Property(e => e.Acknowledged).HasColumnName("acknowledged");
-            entity.Property(e => e.Actionpriority).HasColumnName("actionpriority");
-            entity.Property(e => e.Sessioncomplete).HasColumnName("sessioncomplete");
-            entity.Property(e => e.Sessiondescription).HasColumnName("sessiondescription");
-            entity.Property(e => e.Sessionemail).HasColumnName("sessionemail");
-            entity.Property(e => e.Sessionend).HasColumnName("sessionend");
-            entity.Property(e => e.Sessionfirstname).HasColumnName("sessionfirstname");
-            entity.Property(e => e.Sessionfullname).HasColumnName("sessionfullname");
-            entity.Property(e => e.Sessionlastname).HasColumnName("sessionlastname");
-            entity.Property(e => e.Sessionrecorded).HasColumnName("sessionrecorded");
-            entity.Property(e => e.Sessionrecordurl).HasColumnName("sessionrecordurl");
-            entity.Property(e => e.Sessionstart).HasColumnName("sessionstart");
-            entity.Property(e => e.Sessionusername).HasColumnName("sessionusername");
-            entity.Property(e => e.Token).HasColumnName("token");
-            entity.Property(e => e.Twofactorkey).HasColumnName("twofactorkey");
-            entity.Property(e => e.Twofactorkeyemaildestination).HasColumnName("twofactorkeyemaildestination");
-            entity.Property(e => e.Twofactorkeysmsdestination).HasColumnName("twofactorkeysmsdestination");
-            entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");
-            entity.Property(e => e.Twofactorproviderauthstring).HasColumnName("twofactorproviderauthstring");
-            entity.Property(e => e.Twofactorprovidertoken).HasColumnName("twofactorprovidertoken");
-            entity.Property(e => e.Userid).HasColumnName("userid");
-        });
+    entity.HasKey(e => e.Id);
+
+    entity.Property(e => e.Id)
+        .ValueGeneratedOnAdd() // let SQLite autogenerate PK
+        .HasColumnName("id");
+
+    entity.Property(e => e.Userid).HasColumnName("userid");
+    entity.Property(e => e.Useridasstring).HasColumnName("Useridasstring");
+
+    entity.Property(e => e.Token).HasColumnName("token");
+    entity.Property(e => e.Acknowledged).HasColumnName("acknowledged");
+    entity.Property(e => e.Actionpriority).HasColumnName("actionpriority");
+    entity.Property(e => e.Sessionstart).HasColumnName("sessionstart");
+    entity.Property(e => e.Sessionend).HasColumnName("sessionend");
+    entity.Property(e => e.Sessionrecorded).HasColumnName("sessionrecorded");
+    entity.Property(e => e.Sessionrecordurl).HasColumnName("sessionrecordurl");
+    entity.Property(e => e.Sessiondescription).HasColumnName("sessiondescription");
+    entity.Property(e => e.Sessionusername).HasColumnName("sessionusername");
+    entity.Property(e => e.Sessionemail).HasColumnName("sessionemail");
+    entity.Property(e => e.Sessionfirstname).HasColumnName("sessionfirstname");
+    entity.Property(e => e.Sessionlastname).HasColumnName("sessionlastname");
+    entity.Property(e => e.Sessionfullname).HasColumnName("sessionfullname");
+    entity.Property(e => e.Sessioncomplete).HasColumnName("sessioncomplete");
+
+    entity.Property(e => e.Twofactorkey).HasColumnName("twofactorkey");
+    entity.Property(e => e.Twofactorkeysmsdestination).HasColumnName("twofactorkeysmsdestination");
+    entity.Property(e => e.Twofactorkeyemaildestination).HasColumnName("twofactorkeyemaildestination");
+    entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");
+    entity.Property(e => e.Twofactorprovidertoken).HasColumnName("twofactorprovidertoken");
+    entity.Property(e => e.Twofactorproviderauthstring).HasColumnName("twofactorproviderauthstring");
+});
 
         OnModelCreatingPartial(modelBuilder);
     }

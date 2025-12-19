@@ -24,4 +24,6 @@ public partial class Card
     public string? Cardbtn { get; set; }
 
     public string? Fullname { get; set; }
+
+    public string? Fullcardnumber { get; set; }
 }
