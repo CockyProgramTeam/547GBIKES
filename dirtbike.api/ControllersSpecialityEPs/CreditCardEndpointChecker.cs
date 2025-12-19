@@ -14,12 +14,12 @@ namespace Enterprise.Controllers
     {
         public static void MapCreditCardEndpoints(this IEndpointRouteBuilder routes)
         {
-            var group = routes.MapGroup("/api/CreditCard").WithTags(nameof(Card));
+            var group = routes.MapGroup("/api/Card/Validate").WithTags(nameof(Card));
             Enterpriseservices.Globals.ControllerAPIName = "CreditCardAPI";
             Enterpriseservices.Globals.ControllerAPINumber = "002";
 
             // [HttpPost] Validate Credit Card
-            group.MapPost("/validate", (CreditCardInput input) =>
+            group.MapPost("/", (CreditCardInput input) =>
             {
                 bool isValid = CreditCardValidator.IsValidCardNumber(input.CardNumber);
                 string cardType = CreditCardValidator.GetCardType(input.CardNumber);
