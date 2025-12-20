@@ -4,13 +4,13 @@ public static class EmailNotificationExtensions
 {
     public static void MapEmailNotificationEndpoints(this WebApplication app)
     {
-        app.MapPost("/api/notify", async (string to, string body) =>
+        app.MapPost("/api/sendmailnotify", async (string to, string body) =>
         {
             if (string.IsNullOrWhiteSpace(to) || string.IsNullOrWhiteSpace(body))
             {
                 return Results.Text("0, message failed");
             }
-
+            var notifier = new Enterpriseservices.EmailNotifiers();
             try
             {
                 // Construct the shell command using sendmail
@@ -33,14 +33,17 @@ public static class EmailNotificationExtensions
                 await process.StandardOutput.ReadToEndAsync();
                 await process.StandardError.ReadToEndAsync();
                 process.WaitForExit();
-
+                
+                await notifier.AddGuestNotice(app, to, body, "success");
                 return process.ExitCode == 0
                     ? Results.Text($"1, {to}")
                     : Results.Text("0, message failed");
             }
             catch
             {
+                await notifier.AddGuestNotice(app, to, body, "failed");
                 return Results.Text("0, message failed");
+                
             }
         });
     }

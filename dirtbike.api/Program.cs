@@ -137,6 +137,8 @@ app.MapAuthEndpoints();
 app.MapUserPictureEndpoints();
 app.MapParkInventoryEndpoints();
 app.MapCreditCardEndpoints();
+app.MapAllCGUserEndpoints();
+app.MapUserNoticeEndpoints();
 
 //THIS ROUTINE RUNS A PASSWORD HASHER AGAINST THE CURRENT USER TABLE.
 //IT WILL REBUILD THE PASSWORDS ALSO USING A RANDOM HASHER USING BCRYPT

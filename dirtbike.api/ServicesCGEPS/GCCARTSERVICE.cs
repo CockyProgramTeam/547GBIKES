@@ -187,7 +187,14 @@ namespace dirtbike.api.Services
                 NumDays = dto.Items.Sum(i => i.NumDays)
             };
             context.Bookings.Add(booking);
+            var notifier = new Enterpriseservices.EmailNotifiers();
+            // Build the email message
+            string emailmsg = $"547Bikes Reservation Created for Park {booking.Emailnoticeaddress} + {booking.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
+            // Call your Gmail notifier
+            notifier.gmailsendnotificationasync(booking.Userid.Value, booking.Emailnoticeaddress, emailmsg);
             context.SaveChanges();
+
+      
 
             var payment = new Payment
             {

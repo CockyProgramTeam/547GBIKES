@@ -54,4 +54,6 @@ public partial class Cart
     public string? ParkGuid { get; set; }
 
     public string? Possource { get; set; }
+
+    public int? Userid { get; set; }
 }

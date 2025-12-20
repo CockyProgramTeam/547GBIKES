@@ -10149,19 +10149,19 @@
     ]
   },
   "packageFolders": {
-    "/root/.nuget/packages/": {}
+    "C:\\Users\\stritzj\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/547G/bikesapi/dirtbike.api.csproj",
+      "projectUniqueName": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
       "projectName": "dirtbike.api",
-      "projectPath": "/home/547G/bikesapi/dirtbike.api.csproj",
-      "packagesPath": "/root/.nuget/packages/",
-      "outputPath": "/home/547G/bikesapi/obj/",
+      "projectPath": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
+      "packagesPath": "C:\\Users\\stritzj\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/root/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\stritzj\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net9.0"
@@ -10185,7 +10185,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net9.0": {
@@ -10299,7 +10299,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Users\\stritzj\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

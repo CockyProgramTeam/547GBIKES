@@ -39,6 +39,32 @@ namespace Enterpriseservices
 
             return $"Closed {zeroCarts.Count} zero‑item carts for user {uid}.";
         }
+
+       public string ZeroCartUpdateInt(int userid)
+        {
+            // Get all carts for this user where Quantity is 0 or null
+            var zeroCarts = _context.Carts
+                .Where(c => c.Userid == userid && (c.Quantity ?? 0) == 0)
+                .ToList();
+
+            if (zeroCarts.Count == 0)
+            {
+                return "No zero‑quantity carts found.";
+            }
+
+            // Update each cart
+            foreach (var cart in zeroCarts)
+            {
+                cart.IsCheckedOut = 2;   // 2 = closed
+            }
+
+            _context.SaveChanges();
+
+            return $"Closed {zeroCarts.Count} zero‑item carts for user {userid}.";
+        }
+
+
+
     }
 }
 

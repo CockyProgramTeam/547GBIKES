@@ -72,4 +72,6 @@ public partial class Cartitem
     public string? ParkGuid { get; set; }
 
     public string? Possource { get; set; }
+
+    public string? Useridstring { get; set; }
 }

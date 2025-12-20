@@ -64,4 +64,8 @@ public partial class Booking
     public int? NumDays { get; set; }
 
     public string? Possource { get; set; }
+
+    public int? Userid { get; set; }
+
+    public string? Emailnoticeaddress {get; set;}
 }

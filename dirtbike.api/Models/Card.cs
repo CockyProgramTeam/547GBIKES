@@ -26,4 +26,6 @@ public partial class Card
     public string? Fullname { get; set; }
 
     public string? Fullcardnumber { get; set; }
+
+    public int? Userid { get; set; }
 }

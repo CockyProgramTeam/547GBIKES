@@ -40,6 +40,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<Employee> Employees { get; set; }
 
+    public virtual DbSet<EmployeeProfile> EmployeeProfiles { get; set; }
+
     public virtual DbSet<Learnlog> Learnlogs { get; set; }
 
     public virtual DbSet<Noctech> Noctechs { get; set; }
@@ -194,6 +196,9 @@ public partial class DirtbikeContext : DbContext
                 .HasColumnName("totalcartitems");
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
             entity.Property(e => e.Uid).HasColumnName("UID");
+            entity.Property(e => e.Userid)
+                .HasColumnType("INT")
+                .HasColumnName("userid");
         });
 
         modelBuilder.Entity<Card>(entity =>
@@ -204,10 +209,13 @@ public partial class DirtbikeContext : DbContext
 
             entity.Property(e => e.CardId).HasColumnName("CardID");
             entity.Property(e => e.Cardbtn).HasColumnName("cardbtn");
-            entity.Property(e => e.Fullname).HasColumnName("fullname");
             entity.Property(e => e.Fullcardnumber).HasColumnName("fullcardnumber");
+            entity.Property(e => e.Fullname).HasColumnName("fullname");
             entity.Property(e => e.IsActive).HasDefaultValue(1);
             entity.Property(e => e.Uid).HasColumnName("UID");
+            entity.Property(e => e.Userid)
+                .HasColumnType("INT")
+                .HasColumnName("userid");
         });
 
         modelBuilder.Entity<Cart>(entity =>
@@ -248,6 +256,9 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Transactiontotal).HasColumnName("transactiontotal");
             entity.Property(e => e.Uid).HasColumnName("uid");
             entity.Property(e => e.UnitPrice).HasColumnName("unitPrice");
+            entity.Property(e => e.Userid)
+                .HasColumnType("INT")
+                .HasColumnName("userid");
         });
 
         modelBuilder.Entity<CartMaster>(entity =>
@@ -320,6 +331,9 @@ public partial class DirtbikeContext : DbContext
                 .HasColumnName("statetaxtotal");
             entity.Property(e => e.Subtotal).HasColumnName("subtotal");
             entity.Property(e => e.Userid).HasColumnType("INT");
+            entity.Property(e => e.Useridstring)
+                .HasColumnType("string")
+                .HasColumnName("useridstring");
             entity.Property(e => e.Ustaxpercent)
                 .HasColumnType("float")
                 .HasColumnName("ustaxpercent");
@@ -347,6 +361,13 @@ public partial class DirtbikeContext : DbContext
         modelBuilder.Entity<Employee>(entity =>
         {
             entity.ToTable("Employee");
+
+            entity.Property(e => e.Id).ValueGeneratedNever();
+        });
+
+        modelBuilder.Entity<EmployeeProfile>(entity =>
+        {
+            entity.ToTable("EmployeeProfile");
 
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
@@ -517,7 +538,6 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Userid)
                 .HasColumnType("INT")
                 .HasColumnName("userid");
-            entity.Property(e => e.Useridassting).HasColumnName("useridassting");
         });
 
         modelBuilder.Entity<Refund>(entity =>
@@ -800,41 +820,35 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Id).ValueGeneratedNever();
         });
 
-       modelBuilder.Entity<Usersession>(entity =>
-{
-    entity.ToTable("usersessions");
+        modelBuilder.Entity<Usersession>(entity =>
+        {
+            entity.ToTable("usersessions");
 
-    entity.HasKey(e => e.Id);
-
-    entity.Property(e => e.Id)
-        .ValueGeneratedOnAdd() // let SQLite autogenerate PK
-        .HasColumnName("id");
-
-    entity.Property(e => e.Userid).HasColumnName("userid");
-    entity.Property(e => e.Useridasstring).HasColumnName("Useridasstring");
-
-    entity.Property(e => e.Token).HasColumnName("token");
-    entity.Property(e => e.Acknowledged).HasColumnName("acknowledged");
-    entity.Property(e => e.Actionpriority).HasColumnName("actionpriority");
-    entity.Property(e => e.Sessionstart).HasColumnName("sessionstart");
-    entity.Property(e => e.Sessionend).HasColumnName("sessionend");
-    entity.Property(e => e.Sessionrecorded).HasColumnName("sessionrecorded");
-    entity.Property(e => e.Sessionrecordurl).HasColumnName("sessionrecordurl");
-    entity.Property(e => e.Sessiondescription).HasColumnName("sessiondescription");
-    entity.Property(e => e.Sessionusername).HasColumnName("sessionusername");
-    entity.Property(e => e.Sessionemail).HasColumnName("sessionemail");
-    entity.Property(e => e.Sessionfirstname).HasColumnName("sessionfirstname");
-    entity.Property(e => e.Sessionlastname).HasColumnName("sessionlastname");
-    entity.Property(e => e.Sessionfullname).HasColumnName("sessionfullname");
-    entity.Property(e => e.Sessioncomplete).HasColumnName("sessioncomplete");
-
-    entity.Property(e => e.Twofactorkey).HasColumnName("twofactorkey");
-    entity.Property(e => e.Twofactorkeysmsdestination).HasColumnName("twofactorkeysmsdestination");
-    entity.Property(e => e.Twofactorkeyemaildestination).HasColumnName("twofactorkeyemaildestination");
-    entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");
-    entity.Property(e => e.Twofactorprovidertoken).HasColumnName("twofactorprovidertoken");
-    entity.Property(e => e.Twofactorproviderauthstring).HasColumnName("twofactorproviderauthstring");
-});
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.Acknowledged).HasColumnName("acknowledged");
+            entity.Property(e => e.Actionpriority).HasColumnName("actionpriority");
+            entity.Property(e => e.Sessioncomplete).HasColumnName("sessioncomplete");
+            entity.Property(e => e.Sessiondescription).HasColumnName("sessiondescription");
+            entity.Property(e => e.Sessionemail).HasColumnName("sessionemail");
+            entity.Property(e => e.Sessionend).HasColumnName("sessionend");
+            entity.Property(e => e.Sessionfirstname).HasColumnName("sessionfirstname");
+            entity.Property(e => e.Sessionfullname).HasColumnName("sessionfullname");
+            entity.Property(e => e.Sessionlastname).HasColumnName("sessionlastname");
+            entity.Property(e => e.Sessionrecorded).HasColumnName("sessionrecorded");
+            entity.Property(e => e.Sessionrecordurl).HasColumnName("sessionrecordurl");
+            entity.Property(e => e.Sessionstart).HasColumnName("sessionstart");
+            entity.Property(e => e.Sessionusername).HasColumnName("sessionusername");
+            entity.Property(e => e.Token).HasColumnName("token");
+            entity.Property(e => e.Twofactorkey).HasColumnName("twofactorkey");
+            entity.Property(e => e.Twofactorkeyemaildestination).HasColumnName("twofactorkeyemaildestination");
+            entity.Property(e => e.Twofactorkeysmsdestination).HasColumnName("twofactorkeysmsdestination");
+            entity.Property(e => e.Twofactorprovider).HasColumnName("twofactorprovider");
+            entity.Property(e => e.Twofactorproviderauthstring).HasColumnName("twofactorproviderauthstring");
+            entity.Property(e => e.Twofactorprovidertoken).HasColumnName("twofactorprovidertoken");
+            entity.Property(e => e.Userid).HasColumnName("userid");
+        });
 
         OnModelCreatingPartial(modelBuilder);
     }
