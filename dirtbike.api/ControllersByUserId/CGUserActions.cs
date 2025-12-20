@@ -49,7 +49,7 @@ public static class AllCGUserEndpoints
 
 
         //[HttpGet]
-        group.MapGet("/cart}", (int userid) =>
+        group.MapGet("/cart", (int userid) =>
         {
             using (var context = new DirtbikeContext())
             {
@@ -127,7 +127,7 @@ public static class AllCGUserEndpoints
 
 
         //[HttpGet]
-        group.MapGet("/cartstring}", (string userid) =>
+        group.MapGet("/cartstring", (string userid) =>
         {
             using (var context = new DirtbikeContext())
             {
