@@ -31,8 +31,7 @@ public void linuxsendnotification(int uid, string emailAddress, string message)
             Description = message,
             Noticetype = "email",
             Emailgwtype = "sendmail",
-            NoticeDatetime = DateTime.UtcNow,
-            uid = uid
+            NoticeDatetime = DateTime.UtcNow
         };
 
         db.Usernotices.Add(notice);
@@ -75,8 +74,7 @@ public async Task azuresendnotificationasync(int uid, string emailAddress, strin
             Noticetype = "email",
             Emailgwtype = "servicebus",
             NoticeDatetime = DateTime.UtcNow,
-            uid = uid
-        };
+           };
 
         db.Usernotices.Add(notice);
         db.SaveChanges();
@@ -122,7 +120,7 @@ public async Task gmailsendnotificationasync(int uid, string emailAddress, strin
             Noticetype = "email",
             Emailgwtype = "gmail",
             NoticeDatetime = DateTime.UtcNow,
-            uid = uid
+            Emailaddress = emailAddress
         };
 
         db.Usernotices.Add(notice);
@@ -131,7 +129,7 @@ public async Task gmailsendnotificationasync(int uid, string emailAddress, strin
 
     // 2. Build the email
     var mail = new MailMessage();
-    mail.From = new MailAddress("support547bikes@gmail.com");
+    mail.From = new MailAddress("547bikes.info@gmail.com");
     mail.To.Add(emailAddress);
     mail.Subject = "Notification";
     mail.Body = message;
@@ -141,7 +139,7 @@ public async Task gmailsendnotificationasync(int uid, string emailAddress, strin
     {
         EnableSsl = true,
         Credentials = new NetworkCredential(
-            "547bikes@gmail.com",
+            "547bikes.info@gmail.com",
             "*Columbia5"   // <-- replace with secure storage
         )
     };
@@ -158,12 +156,12 @@ public async Task AddGuestNotice(WebApplication app, string to, string body, str
     var notice = new Usernotice
     {
         Userid = 901,
-        Useridstring = to,
+        Useridstring = "901",
         Description = body,
         Noticetype = "email",
         Emailgwtype = status,
         NoticeDatetime = DateTime.UtcNow,
-        uid = 901 // hardcoded guest UID
+        Emailaddress = to,
     };
 
     db.Usernotices.Add(notice);

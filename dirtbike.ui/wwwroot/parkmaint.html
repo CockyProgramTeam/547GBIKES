@@ -131,11 +131,8 @@
             <th>CurrentChildren/th>
             <th>CurrentAdults</th>
             <th>Logo</th>
-             <td>${park.maxvisitors}</td>
-        <td>${park.currentvisitors}</td>
-        <td>${park.currentvisitorschildren}</td>
-        <td>${park.currentvisitorsadults}</td>
-        <td>${park.maxcampsites}</td>
+            <th>Actions</th>
+          
           </tr>
         </thead>
         <tbody id="park-table-body"></tbody>
@@ -362,6 +359,11 @@ $(document).ready(function () {
         <td>${park.currentvisitorschildren}</td>
         <td>${park.currentvisitorsadults}</td>
         <td>${park.maxcampsites}</td>
+        <td>
+      <button class="btn btn-sm btn-primary update-row-btn" data-id="${park.parkId}">
+        Update
+      </button>
+    </td>
       </tr>
     `;
 
@@ -496,6 +498,14 @@ $(document).on("change", "input[name='selectedPark']", function () {
   selectedPark = $(this).val();
   $("#updateParkBtn").prop("disabled", !selectedPark);
   $("#deleteParkBtn").prop("disabled", !selectedPark); // Enable delete button
+});
+
+$(document).on("click", ".update-row-btn", function () {
+  const parkId = $(this).data("id");
+  selectedPark = parkId; // set global selected park
+  $("input[name='selectedPark'][value='" + parkId + "']").prop("checked", true);
+
+  $("#updateParkBtn").click(); // trigger the SAME update logic
 });
 
 </script>

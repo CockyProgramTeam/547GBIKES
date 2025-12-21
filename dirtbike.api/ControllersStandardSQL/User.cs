@@ -263,7 +263,17 @@ public static class UserEndpoints
         };
         context.UserPictures.Add(newpicturerecord);
 
-        // STEP 4: Save related records
+     // STEP 4: Create the UserPicture tied to this User
+        var newcartmaster = new CartMaster
+        {
+            Id = newId,
+            UserId = newId,
+            Useridstring = newId.ToString(),
+        };
+        context.CartMasters.Add(newcartmaster);
+
+
+        // STEP 5: Save related records
         await context.SaveChangesAsync();
 
         // Optional logging

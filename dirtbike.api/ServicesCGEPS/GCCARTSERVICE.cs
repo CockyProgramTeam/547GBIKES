@@ -132,9 +132,19 @@ namespace dirtbike.api.Services
                 Multipleitems = dto.Items.Count > 1 ? 1 : 0,
                 Parkname = dto.Items.Count == 1 ? dto.Items[0].Park.ParkName : null,
                 ResStart = dto.Items.Min(i => i.ResStart),
-                ResEnd = dto.Items.Max(i => i.ResEnd)
+                ResEnd = dto.Items.Max(i => i.ResEnd),
+                Adults = dto.Items[0].NumAdults,
+                Children = dto.Items[0].NumChildren,
+                ParkId = dto.ParkId
             };
+            // First save — generates cart.Id
             context.Carts.Add(cart);
+            context.SaveChanges();
+
+            // Now set CartId to the generated ID
+            int tempcart = cart.Id;
+            int tempparkId = cart.ParkId ?? 1001;
+            cart.CartId = cart.Id;
             context.SaveChanges();
 
             // 🔄 Update CartMaster stats
@@ -151,12 +161,12 @@ namespace dirtbike.api.Services
                 var park = context.Parks.FirstOrDefault(p => p.Id == itemDto.Park.Id);
                 var item = new Cartitem
                 {
-                    Cartid = cart.Id,
+                    Cartid = tempcart,
                     Cartitemdate = DateTime.UtcNow,
                     Itemdescription = itemDto.Park.ParkName,
                     Itemqty = itemDto.NumAdults + itemDto.NumChildren,
                     Itemtotals = itemDto.TotalPrice,
-                    Parkid = park?.Id,
+                    Parkid = tempparkId.ToString(),
                     Parkname = itemDto.Park.ParkName,
                     Adults = itemDto.NumAdults,
                     Children = itemDto.NumChildren,
@@ -164,7 +174,8 @@ namespace dirtbike.api.Services
                     ResStart = itemDto.ResStart,
                     ResEnd = itemDto.ResEnd,
                     CreatedDate = DateTime.UtcNow,
-                    Userid = dto.UserId
+                    Userid = dto.UserId,
+                    ParkGuid = park?.Id
                 };
                 context.Cartitems.Add(item);
             }
@@ -177,24 +188,39 @@ namespace dirtbike.api.Services
                 TransactionId = dto.PaymentId,
                 QuantityAdults = dto.Items.Sum(i => i.NumAdults),
                 QuantityChildren = dto.Items.Sum(i => i.NumChildren),
+                Adults = dto.Items.Sum(i => i.NumAdults),
+                Children = dto.Items.Sum(i => i.NumChildren),
+                Tentsites = 0,
                 TotalAmount = dto.TransactionTotal,
                 Totalcartitems = dto.Items.Count,
                 CartDetailsJson = JsonSerializer.Serialize(dto),
-                Reservationstatus = "Confirmed",
-                Reservationtype = "Audit",
+                Reservationstatus = "Active",
+                Reservationtype = "Biking",
                 ResStart = dto.Items.Min(i => i.ResStart),
                 ResEnd = dto.Items.Max(i => i.ResEnd),
-                NumDays = dto.Items.Sum(i => i.NumDays)
-            };
-            context.Bookings.Add(booking);
+                NumDays = dto.Items.Sum(i => i.NumDays),
+                Emailnoticeaddress = dto.useremail,
+                ParkName = dto.Items[0].Park.ParkName,
+                ParkId = tempparkId
+                };
+             context.Bookings.Add(booking);
+             context.SaveChanges();
+            
+            //MAKE AN EFFORT TO NOTIFY BUT PROCEED IF IT FAILS WITH GC POST
+            try
+            {
+            string emailNoticeAddress = "stritzj@email.sc.edu";
             var notifier = new Enterpriseservices.EmailNotifiers();
-            // Build the email message
-            string emailmsg = $"547Bikes Reservation Created for Park {booking.Emailnoticeaddress} + {booking.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
-            // Call your Gmail notifier
-            notifier.gmailsendnotificationasync(booking.Userid.Value, booking.Emailnoticeaddress, emailmsg);
-            context.SaveChanges();
 
-      
+            string emailMsg = $"547Bikes Reservation Created for Park {booking.Emailnoticeaddress} + {booking.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
+            notifier.gmailsendnotificationasync(booking.Userid.Value,booking.Emailnoticeaddress,emailMsg);
+            }
+            catch (Exception ex)
+            {
+            // Log the error but DO NOT stop the process
+            // Example: log to file, DB, or console
+            Console.WriteLine($"Email notification failed: {ex.Message}");
+            }
 
             var payment = new Payment
             {

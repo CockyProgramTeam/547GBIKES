@@ -19,6 +19,8 @@ namespace dirtbike.api.Services
     	public DateTime? ResStart { get; set; }   // ✅ add here
     	public DateTime? ResEnd { get; set; }     // ✅ add here
         public List<CGCompletedCartItemDto> Items { get; set; } = new();
+        public string? useremail {get; set;} = "stritzj@email.sc.edu";
+        public int? ParkId {get; set;} = 1001;
     }
 
     public class CGCompletedCartItemDto
@@ -30,6 +32,7 @@ namespace dirtbike.api.Services
         public DateTime? ResStart { get; set; }
         public DateTime? ResEnd { get; set; }
         public double TotalPrice { get; set; }
+        
     }
 
     public class ParkInboundDto

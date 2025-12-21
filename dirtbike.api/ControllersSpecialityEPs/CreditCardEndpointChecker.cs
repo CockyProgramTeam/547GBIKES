@@ -50,6 +50,10 @@ namespace Enterprise.Controllers
     // DTO for input
     public class CreditCardInput
     {
-        public string CardNumber { get; set; }
+        public required string  CardNumber { get; set; }
+        public required string? CardFullname { get; set; }
+        public required string? ExpDate { get; set; }
+        public required string? SecurityCode { get; set; }
+
     }
 }

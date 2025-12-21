@@ -110,6 +110,31 @@ public static class AllCGUserEndpoints
         .WithName("GCGetReservationsByUserIdInt")
         .WithOpenApi();
 
+        //[HttpGet]
+        group.MapGet("/user", (int userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET_user_BY_USERID_int", 1, "Test", "Test"); 
+                return context.Users.Where(m => m.Userid == userid).ToList();
+            }
+        })
+        .WithName("GCGetUserId")
+        .WithOpenApi();
+
+      //[HttpGet]
+        group.MapGet("/userprofile", (int userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET_profile_BY_USERID_int", 1, "Test", "Test"); 
+                return context.Userprofiles.Where(m => m.Userid == userid).ToList();
+            }
+        })
+        .WithName("GCGetUserProfileId")
+        .WithOpenApi();
+
+
 
 	//SUPPORTING CHARACTER BASED USER MODELS
 
@@ -188,6 +213,29 @@ public static class AllCGUserEndpoints
         .WithName("GCGetReservationsByUserIdString")
         .WithOpenApi();
 
+        //[HttpGet]
+        group.MapGet("/userstring", (string userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET_USER_BY_USERID_STRING", 1, "Test", "Test"); 
+                return context.Users.Where(m => m.Uidstring == userid).ToList();
+            }
+        })
+        .WithName("GCGetUserIdString")
+        .WithOpenApi();
+
+      //[HttpGet]
+        group.MapGet("/userprofilestring", (string userid) =>
+        {
+            using (var context = new DirtbikeContext())
+            {
+                Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "GET_PROFILE_BY_USERID_STRING", 1, "Test", "Test"); 
+                return context.Userprofiles.Where(m => m.Useridstring == userid).ToList();
+            }
+        })
+        .WithName("GCGetUserProfileIdString")
+        .WithOpenApi();
 
     }
 }

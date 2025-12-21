@@ -50,6 +50,8 @@ public partial class DirtbikeContext : DbContext
 
     public virtual DbSet<ParkCalendar> ParkCalendars { get; set; }
 
+    public virtual DbSet<ParkCalendarDay> ParkCalendarDays { get; set; }
+
     public virtual DbSet<ParkReview> ParkReviews { get; set; }
 
     public virtual DbSet<Payment> Payments { get; set; }
@@ -160,46 +162,114 @@ public partial class DirtbikeContext : DbContext
         });
 
         modelBuilder.Entity<Booking>(entity =>
-        {
-            entity.ToTable("Booking");
+{
+    entity.ToTable("Booking");
 
-            entity.Property(e => e.BookingId).HasColumnName("BookingID");
-            entity.Property(e => e.Adults)
-                .HasColumnType("INT")
-                .HasColumnName("adults");
-            entity.Property(e => e.Cancellationrefund)
-                .HasColumnType("float")
-                .HasColumnName("cancellationrefund");
-            entity.Property(e => e.CartDetailsJson).HasColumnName("cartDetailsJson");
-            entity.Property(e => e.Children)
-                .HasColumnType("INT")
-                .HasColumnName("children");
-            entity.Property(e => e.NumDays)
-                .HasColumnType("INT")
-                .HasColumnName("numDays");
-            entity.Property(e => e.ParkId).HasColumnName("ParkID");
-            entity.Property(e => e.Possource).HasColumnName("POSSOURCE");
-            entity.Property(e => e.ResEnd)
-                .HasColumnType("date")
-                .HasColumnName("resEnd");
-            entity.Property(e => e.ResStart)
-                .HasColumnType("date")
-                .HasColumnName("resStart");
-            entity.Property(e => e.Reservationstatus).HasColumnName("reservationstatus");
-            entity.Property(e => e.Reservationtype).HasColumnName("reservationtype");
-            entity.Property(e => e.Reversetransactionid).HasColumnName("reversetransactionid");
-            entity.Property(e => e.Tentsites)
-                .HasColumnType("INT")
-                .HasColumnName("tentsites");
-            entity.Property(e => e.Totalcartitems)
-                .HasColumnType("INT")
-                .HasColumnName("totalcartitems");
-            entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
-            entity.Property(e => e.Uid).HasColumnName("UID");
-            entity.Property(e => e.Userid)
-                .HasColumnType("INT")
-                .HasColumnName("userid");
-        });
+    entity.Property(e => e.BookingId)
+        .HasColumnName("BookingID");
+
+    entity.Property(e => e.Uid)
+        .HasColumnName("UID");
+
+    entity.Property(e => e.BillingTelephoneNumber)
+        .HasColumnName("BillingTelephoneNumber");
+
+    entity.Property(e => e.CreditCardType)
+        .HasColumnName("CreditCardType");
+
+    entity.Property(e => e.CreditCardLast4)
+        .HasColumnName("CreditCardLast4");
+
+    entity.Property(e => e.CreditCardExpDate)
+        .HasColumnName("CreditCardExpDate");
+
+    entity.Property(e => e.QuantityAdults)
+        .HasColumnName("QuantityAdults");
+
+    entity.Property(e => e.QuantityChildren)
+        .HasColumnName("QuantityChildren");
+
+    entity.Property(e => e.CustomerBillingName)
+        .HasColumnName("CustomerBillingName");
+
+    entity.Property(e => e.TotalAmount)
+        .HasColumnName("TotalAmount");
+
+    entity.Property(e => e.TransactionId)
+        .HasColumnName("TransactionID");
+
+    entity.Property(e => e.ParkId)
+        .HasColumnName("ParkID");
+
+    entity.Property(e => e.ParkName)
+        .HasColumnName("ParkName");
+
+    entity.Property(e => e.Cartid)
+        .HasColumnName("Cartid");
+
+    entity.Property(e => e.Reservationtype)
+        .HasColumnName("reservationtype");
+
+    entity.Property(e => e.Reservationstatus)
+        .HasColumnName("reservationstatus");
+
+    entity.Property(e => e.Reversetransactionid)
+        .HasColumnName("reversetransactionid");
+
+    entity.Property(e => e.Cancellationrefund)
+        .HasColumnType("float")
+        .HasColumnName("cancellationrefund");
+
+    entity.Property(e => e.CartDetailsJson)
+        .HasColumnName("cartDetailsJson");
+
+    entity.Property(e => e.Totalcartitems)
+        .HasColumnType("INT")
+        .HasColumnName("totalcartitems");
+
+    entity.Property(e => e.Reference)
+        .HasColumnName("Reference");
+
+    entity.Property(e => e.SubReference)
+        .HasColumnName("SubReference");
+
+    entity.Property(e => e.Adults)
+        .HasColumnType("INT")
+        .HasColumnName("adults");
+
+    entity.Property(e => e.Children)
+        .HasColumnType("INT")
+        .HasColumnName("children");
+
+    entity.Property(e => e.ResStart)
+        .HasColumnType("date")
+        .HasColumnName("resStart");
+
+    entity.Property(e => e.ResEnd)
+        .HasColumnType("date")
+        .HasColumnName("resEnd");
+
+    entity.Property(e => e.Tentsites)
+        .HasColumnType("INT")
+        .HasColumnName("tentsites");
+
+    entity.Property(e => e.ParkGuid)
+        .HasColumnName("ParkGuid");
+
+    entity.Property(e => e.NumDays)
+        .HasColumnType("INT")
+        .HasColumnName("numDays");
+
+    entity.Property(e => e.Possource)
+        .HasColumnName("POSSOURCE");
+
+    entity.Property(e => e.Userid)
+        .HasColumnType("INT")
+        .HasColumnName("userid");
+
+    entity.Property(e => e.Emailnoticeaddress)
+        .HasColumnName("Emailnoticeaddress");
+});
 
         modelBuilder.Entity<Card>(entity =>
         {
@@ -505,6 +575,38 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.TransactionId).HasColumnName("TransactionID");
         });
 
+        modelBuilder.Entity<ParkCalendarDay>(entity =>
+        {
+            entity.ToTable("ParkCalendarDay");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnType("int identity")
+                .HasColumnName("id");
+            entity.Property(e => e.Adults)
+                .HasColumnType("INT")
+                .HasColumnName("adults");
+            entity.Property(e => e.Children)
+                .HasColumnType("INT")
+                .HasColumnName("children");
+            entity.Property(e => e.Day)
+                .HasColumnType("INT")
+                .HasColumnName("day");
+            entity.Property(e => e.Month)
+                .HasColumnType("INT")
+                .HasColumnName("month");
+            entity.Property(e => e.Parkguid).HasColumnName("parkguid");
+            entity.Property(e => e.Parkid)
+                .HasColumnType("INT")
+                .HasColumnName("parkid");
+            entity.Property(e => e.Userid)
+                .HasColumnType("INT")
+                .HasColumnName("userid");
+            entity.Property(e => e.Year)
+                .HasColumnType("INT")
+                .HasColumnName("year");
+        });
+
         modelBuilder.Entity<ParkReview>(entity =>
         {
             entity.Property(e => e.Active)
@@ -806,13 +908,18 @@ public partial class DirtbikeContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Description).HasColumnName("description");
+            entity.Property(e => e.Emailaddress).HasColumnName("emailaddress");
+            entity.Property(e => e.Emailgwtype)
+                .HasColumnType("string")
+                .HasColumnName("emailgwtype");
             entity.Property(e => e.NoticeDatetime)
                 .HasDefaultValueSql("DATETIME('now')")
                 .HasColumnType("DATETIME")
                 .HasColumnName("notice_datetime");
-            entity.Property(e => e.Userid)
-                .HasColumnType("VARCHAR(255)")
-                .HasColumnName("userid");
+            entity.Property(e => e.Noticetype)
+                .HasColumnType("string")
+                .HasColumnName("noticetype");
+            entity.Property(e => e.Userid).HasColumnType("INT");
         });
 
         modelBuilder.Entity<Userprofile>(entity =>

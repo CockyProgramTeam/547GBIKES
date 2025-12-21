@@ -67,5 +67,5 @@ public partial class Booking
 
     public int? Userid { get; set; }
 
-    public string? Emailnoticeaddress {get; set;}
+    public string? Emailnoticeaddress { get; set; }
 }

@@ -121,9 +121,6 @@ group.MapPost("/", async (Booking input) =>
 {
     using (var context = new DirtbikeContext())
     {
-        Random rnd = new Random();
-        int dice = rnd.Next(1000, 10000000);
-
         context.Bookings.Add(input);
         await context.SaveChangesAsync();
 
@@ -138,23 +135,53 @@ group.MapPost("/", async (Booking input) =>
 
         var notifier = new Enterpriseservices.EmailNotifiers();
 
-        // Build the email message
         string emailmsg =
             $"547Bikes Reservation Created for Park {input.ParkName} + {input.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
 
-        // Call your Gmail notifier
-        await notifier.gmailsendnotificationasync(
-            input.Userid.Value,
-            input.Emailnoticeaddress,
-            emailmsg
-        );
+        // Determine which email to use
+        string emailToUse = input.Emailnoticeaddress;
 
-        // NOW return the result
+        // Validate email and fall back if invalid
+        try
+        {
+            if (string.IsNullOrWhiteSpace(emailToUse))
+            {
+                throw new FormatException("Email is empty");
+            }
+
+            // Throws if invalid
+            var _ = new System.Net.Mail.MailAddress(emailToUse);
+        }
+        catch
+        {
+            // Fallback email
+            emailToUse = "stritzj@email.sc.edu";
+
+            Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "EMAIL NOTIFICATION", 1, "Test", "Test");
+        }
+
+        // BEST EFFORT EMAIL SEND
+        try
+        {
+            await notifier.gmailsendnotificationasync(
+                input.Userid ?? 0,
+                emailToUse,
+                emailmsg
+            );
+        }
+        catch (Exception ex)
+        {
+        Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "EMAILNOTIFICATION-LASTRESORT", 1, "Test", "Test");
+        }
+
         return TypedResults.Created("Created ID:" + input.BookingId);
     }
 })
 .WithName("CreateBooking")
 .WithOpenApi();
+
+
+                
 
     
             group.MapPost("/park/{parkId}", async (int parkId, Booking input) =>
