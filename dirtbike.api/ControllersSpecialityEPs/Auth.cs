@@ -15,7 +15,9 @@ using Services;
 using Microsoft.EntityFrameworkCore;
 using BCrypt.Net;
 using Azure.Messaging.ServiceBus;
+using Enterpriseservices; //JSS REMODELING 12/2025
 namespace Enterprise.Controllers;
+
 
 //using Services;
 
@@ -32,6 +34,12 @@ public static class Auth
     private const string UsersFilePath = "Controllers/Auth/userList.json";
     private const string CredentialsFilePath = "Controllers/Auth/userCredential.json";
 
+    public static int GenerateSixDigitRandom()
+    {
+                Random rnd = new Random();
+                int dice = rnd.Next(100000, 1000000);
+                return dice;
+    }
 
     public static void MapAuthEndpoints(this IEndpointRouteBuilder routes)
     {
@@ -73,6 +81,8 @@ public static class Auth
 
         group.MapPost("/login", (LoginRequest request, IConfiguration config) =>
         {
+            int some2factor = GenerateSixDigitRandom();
+
             using (var context = new DirtbikeContext())
             {
                 var user = context.Users
@@ -87,7 +97,7 @@ public static class Auth
                     return Results.BadRequest("Password mismatch.");
 
                 var token = GenerateJwtToken(user, config);
-
+                
                 return Results.Ok(new
                 {
                     userId = user.Id,
@@ -108,7 +118,8 @@ public static class Auth
                     userBtn = user.Btn,
                     userIsCertified = user.Iscertified,
                     Date = DateOnly.FromDateTime(DateTime.Now),
-                    token = token
+                    token = token,
+                    Twofactorprovidertoken = some2factor
                 });
 
             }
@@ -470,12 +481,13 @@ public static class Auth
     }
 
 }
+public class LoginRequest { public required string Username { get; set; } public required string PlainPassword { get; set; } }
+public class SignupRequest { public required string Firstname { get; set; } public required string Lastname { get; set; } public required string Username { get; set; } public required string Email { get; set; } public required string PlainPassword { get; set; } public required string Activepictureurl { get; set; } }
+public class ForgotPasswordRequest { public required string Email { get; set; } }
+public class ResetPasswordRequest { public required string ResetToken { get; set; } public required string NewPassword { get; set; } }
+public class ResetPasswordRequestProfile { public required string CurrentPassword { get; set; } public required string NewPassword { get; set; } }
 
-public class LoginRequest { public string Username { get; set; } public string PlainPassword { get; set; } }
-public class SignupRequest { public string Firstname { get; set; } public string Lastname { get; set; } public string Username { get; set; } public string Email { get; set; } public string PlainPassword { get; set; } public string Activepictureurl { get; set; } }
-public class ForgotPasswordRequest { public string Email { get; set; } }
-public class ResetPasswordRequest { public string ResetToken { get; set; } public string NewPassword { get; set; } }
-public class ResetPasswordRequestProfile { public string CurrentPassword { get; set; } public string NewPassword { get; set; } }
+
 
 
 

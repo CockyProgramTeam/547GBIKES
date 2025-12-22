@@ -2148,8 +2148,6 @@ C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\refint\dirtbike.api.d
 C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\dirtbike.api.pdb
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\appsettings.json
-C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\ControllersStandardSQL\Auth\userCredential.json
-C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\ControllersStandardSQL\Auth\userList.json
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\DTO\examplepost.json
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\ServicesCGEPS\WIP\CGCARTEXAMPLE.json
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\ServicesCGEPS\WIP\resultfail.json
@@ -2448,3 +2446,5 @@ C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\staticwebassets.pack.
 C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\dirtbike.48A9639E.Up2Date
 C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\dirtbike.api.genruntimeconfig.cache
 C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\ref\dirtbike.api.dll
+C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\SQLDATA\schemadump.txt
+C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\SQLDATA\initial.sql

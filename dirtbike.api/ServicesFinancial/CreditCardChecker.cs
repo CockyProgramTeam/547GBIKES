@@ -1,8 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
+namespace Enterpriseservices;
 
-namespace Enterpriseservices
-{
     public static class CreditCardValidator
     {
         // Regex for basic format (Visa, MasterCard, Amex, Discover)
@@ -72,7 +71,7 @@ namespace Enterpriseservices
         }
     }
 
-    // Example usage
+    /*// Example usage
     class Program
     {
         static void Main()
@@ -85,5 +84,5 @@ namespace Enterpriseservices
                 ? $"Credit card number is valid ({cardType})."
                 : "Credit card number is invalid.");
         }
-    }
-}
+    }*/
+

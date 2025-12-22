@@ -1,0 +1,624 @@
+-- INDEX: idx_parks_name_address
+CREATE UNIQUE INDEX idx_parks_name_address
+ON Parks(Name, Address)
+
+-- TABLE: Booking
+CREATE TABLE Booking (
+    BookingID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UID TEXT NOT NULL,
+    BillingTelephoneNumber TEXT,
+    CreditCardType TEXT,
+    CreditCardLast4 TEXT CHECK (LENGTH(CreditCardLast4) = 4),
+    CreditCardExpDate TEXT, -- Use TEXT for DATE in SQLite
+    QuantityAdults INTEGER,
+    QuantityChildren INTEGER,
+    CustomerBillingName TEXT,
+    TotalAmount REAL, -- SQLite uses REAL for decimal values
+    TransactionID TEXT,
+    ParkID INTEGER,
+    ParkName TEXT
+, Cartid text, reservationtype text, reservationstatus text, reversetransactionid text, cancellationrefund float, cartDetailsJson text, totalcartitems int, Reference text, SubReference text, adults int, children int, resStart date, resEnd date, tentsites int, ParkGuid text, numDays int, POSSOURCE text, userid int, Emailnoticeaddress text)
+
+-- TABLE: CARTITEM
+CREATE TABLE CARTITEM (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cartid INTEGER,
+    cartitemdate DATETIME,
+    itemvendor TEXT,
+    itemdescription TEXT,
+    itemextendedprice REAL,
+    itemqty INTEGER,
+    itemtotals REAL
+, salescatid INTEGER, productid TEXT, shopid text, parkid text, subtotal real, created_date DATE, res_start DATE, res_end DATE, qrcodeurl TEXT, reservationcode TEXT, memberid TEXT, rewardsprovider TEXT, adults int, children int, statetaxpercent float, statetaxauth text, ustaxpercent float, ustaxtotal float, statetaxtotal float, itemsubtotal float, parkname text, Userid int, numDays int, Parkidasstring string, parkGuid text, POSSOURCE text, useridstring string)
+
+-- TABLE: Card
+CREATE TABLE Card (
+    CardID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UID TEXT NOT NULL,
+    CardType TEXT,
+    CardVendor TEXT,
+    CardLast4 TEXT CHECK (LENGTH(CardLast4) = 4),
+    CardExpDate TEXT, -- Store DATE as ISO 8601 string (e.g., 'YYYY-MM-DD')
+    BillingZip TEXT,
+    IsActive INTEGER DEFAULT 1, cardbtn text, fullname text, fullcardnumber text, userid int,
+    UNIQUE (CardLast4, CardExpDate)
+    -- FOREIGN KEY (UID) REFERENCES Customers(UID)
+)
+
+-- TABLE: Cart
+CREATE TABLE Cart (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    cartId INTEGER,
+    uid TEXT,
+    parkId INTEGER,
+    itemType TEXT,
+    itemDescription TEXT,
+    quantity INTEGER,
+    unitPrice REAL,
+    totalPrice REAL,
+    dateAdded TEXT,
+    isCheckedOut INTEGER,
+    paymentid TEXT,
+    bookinginfo TEXT,
+    totalcartitems INTEGER,
+    multipleitems INTEGER,
+    johnstotals REAL,
+    transactiontotal REAL
+, parkname text, resStart date, resEnd date, adults int, children int, tentsites int, parkGuid text, POSSOURCE text, userid int)
+
+-- TABLE: CartMaster
+CREATE TABLE CartMaster (
+    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+    UserID INTEGER NOT NULL,
+    CartsCount INTEGER DEFAULT 0,
+    CartsCancelled INTEGER DEFAULT 0,
+    CartsActive INTEGER DEFAULT 0,
+    CartsActiveList TEXT DEFAULT '{}'
+, loyaltyid text, loyaltyvendor text, useridstring text)
+
+-- TABLE: Company
+CREATE TABLE Company (
+    Id INTEGER PRIMARY KEY,
+    Companyname TEXT NOT NULL,
+    Address1 TEXT,
+    Address2 TEXT,
+    City TEXT,
+    State TEXT,
+    Postalzip TEXT,
+    Tfnumber TEXT,
+    Localnumber TEXT,
+    Emailfrontdesk TEXT,
+    Emailsupport TEXT,
+    Faxhr TEXT,
+    Faxsecurity TEXT,
+    Faxcorp TEXT,
+    Dynamicsid TEXT,
+    Oracleid TEXT,
+    Alohaid TEXT
+)
+
+-- TABLE: Customer
+CREATE TABLE Customer (
+    CustomerID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UID TEXT NOT NULL,
+    FullName TEXT,
+    Email TEXT,
+    Phone TEXT,
+    BillingAddress TEXT,
+    Login TEXT NOT NULL,
+    PasswordHash TEXT NOT NULL,
+    UserStatus TEXT DEFAULT 'active'
+)
+
+-- TABLE: Employee
+CREATE TABLE Employee (
+    Id INTEGER PRIMARY KEY,
+    EmployeeId TEXT,
+    EmployeeTenure TEXT,
+    EmployeeStartDate TEXT,
+    EmployeeReturnDate TEXT,
+    HrId TEXT,
+    HrSystemConString TEXT,
+    FullName TEXT,
+    UserId INTEGER,
+    UserProfileId INTEGER,
+    ManagerId INTEGER,
+    RegionId INTEGER,
+    BuId INTEGER,
+    StoreId INTEGER,
+    CompanyId INTEGER,
+    EmployeeIdAsInt INTEGER,
+    EmployeeEmail TEXT,
+    Employee1 INTEGER,
+    PlainPassword TEXT,
+    HashedPassword TEXT,
+    PasswordType INTEGER,
+    Token TEXT,
+    TokenProvider TEXT,
+    ResetToken TEXT,
+    TokenExpiration TEXT,
+    Role TEXT,
+    Btn TEXT,
+    NcrId TEXT,
+    AlohaId TEXT,
+    OracleId TEXT,
+    AzureId TEXT,
+    ProfileUrl TEXT,
+    IsCertified INTEGER,
+    GroupId1 TEXT,
+    GroupId2 TEXT,
+    GroupId3 TEXT,
+    GroupId4 TEXT,
+    GroupId5 TEXT,
+    FirstName TEXT,
+    LastName TEXT,
+    UserName TEXT
+)
+
+-- TABLE: EmployeeProfile
+CREATE TABLE EmployeeProfile (
+    Id                INTEGER PRIMARY KEY,
+    Address1          TEXT,
+    Address2          TEXT,
+    City              TEXT,
+    Stateregion       TEXT,
+    Country           TEXT,
+    Phone             TEXT,
+    Cellphone         TEXT,
+    Sms               INTEGER,
+    Email             TEXT,
+    Maritalstatus     TEXT,
+    University1       TEXT,
+    University2       TEXT,
+    Linkedinurl       TEXT,
+    Instagramurl      TEXT,
+    Vimeourl          TEXT,
+    Facebookurl       TEXT,
+    Googleurl         TEXT,
+    University        TEXT,
+    Title             TEXT,
+    Pronoun           TEXT,
+    Title2            TEXT,
+    Activepictureurl  TEXT,
+    Userid            INTEGER,
+    Employeeid        TEXT,
+    Postalzip         TEXT,
+    Companyid         TEXT,
+    Buid              INTEGER,
+    Managerid         INTEGER,
+    Regionid          INTEGER,
+    Branchid          INTEGER,
+    Fullname          TEXT,
+    Firstname         TEXT,
+    Lastname          TEXT,
+    Defaultinstanceid TEXT,
+    Defaultshardid    TEXT
+)
+
+-- TABLE: ParkCalendar
+CREATE TABLE ParkCalendar (
+    ID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ParkId TEXT NOT NULL,
+    CustomerId INTEGER NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    TransactionID TEXT,
+    BookID TEXT,
+    QtyAdults INTEGER DEFAULT 0,
+    QtyChildren INTEGER DEFAULT 0
+, ParkGuid text)
+
+-- TABLE: ParkCalendarDay
+CREATE TABLE ParkCalendarDay (id int identity primary key, userid int, month int, day int, year int, adults int, children int, parkid int, parkguid text)
+
+-- TABLE: ParkReviews
+CREATE TABLE ParkReviews (
+  Id INTEGER PRIMARY KEY AUTOINCREMENT,
+  parkId INTEGER NOT NULL,
+  userId INTEGER NOT NULL,
+  description TEXT NOT NULL,
+  stars INTEGER NOT NULL CHECK (stars BETWEEN 1 AND 5),
+  datePosted TEXT NOT NULL,
+  dateApproved TEXT,
+  dateDenied TEXT,
+  reasonDescription TEXT,
+  reviewManagerId INTEGER
+ , Useridasstring text, active Boolean, displayname text, Fullname text, ParkName text, ParkIdAsString text, POSSOURCE text, ParkGUID text)
+
+-- TABLE: Parks
+CREATE TABLE Parks (
+    ParkID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Name TEXT,
+    Address TEXT,
+    Phone TEXT,
+    Region TEXT,
+    TrailLengthMiles REAL,
+    Difficulty TEXT,
+    Description TEXT
+, DayPassPriceUSD REAL, longitude text, latitude text, trailmapurl string, Parklogourl string, state text, pic1url text, pic2url text, pic3url text, pic4url text, pic5url text, pic6url text, pic7url text, pic8url text, pic9url text, isnationalpark text, isstatepark text, hqbranchid text, mountainbikes int, camping int, rafting int, canoeing int, frisbee int, iscanadian int, ismexican int, motocross int, cabins int, tents int, skiing int, AverageRating float, id string, reviews text, childPrice double, adultPrice double, maxvisitors INTEGER NOT NULL DEFAULT 0, currentvisitors INTEGER NOT NULL DEFAULT 0, currentvisitorschildren INTEGER NOT NULL DEFAULT 0, currentvisitorsadults INTEGER NOT NULL DEFAULT 0, maxcampsites INTEGER NOT NULL DEFAULT 0, currentcampsites INTEGER NOT NULL DEFAULT 0)
+
+-- TABLE: Payment
+CREATE TABLE Payment (
+    PaymentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    BookingID INTEGER NOT NULL,
+    PaymentMethod TEXT,
+    CardType TEXT,
+    CardLast4 TEXT CHECK (LENGTH(CardLast4) = 4),
+    CardExpDate TEXT, -- Store DATE as ISO 8601 string (e.g., 'YYYY-MM-DD')
+    AmountPaid REAL,
+    PaymentDate TEXT, -- Store DATETIME as ISO 8601 string (e.g., 'YYYY-MM-DD HH:MM:SS')
+    TransactionID TEXT
+, Useridasstring text, transtype text, RefundTransactionId text, AmountRefunded double, fullname text, userid int, POSSOURCE text)
+
+-- TABLE: SalesCatalogue
+CREATE TABLE SalesCatalogue (
+    SalesCatalogueID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ParkID INTEGER NOT NULL,
+    ServiceType TEXT,
+    ServiceName TEXT,
+    Description TEXT,
+    Price REAL NOT NULL,
+    IsActive INTEGER DEFAULT 1
+    -- FOREIGN KEY (ParkID) REFERENCES MountainBikeParks(ParkID)
+, SiteId text, State int, Global int, qtyadults int, qtychildren int, National int, StartDate date, EndDate date, productclass text)
+
+-- TABLE: SalesSession
+CREATE TABLE SalesSession (
+    SalesSessionID INTEGER PRIMARY KEY AUTOINCREMENT,
+    UID TEXT NOT NULL,
+    SessionStart TEXT NOT NULL,  -- Store DATETIME as ISO 8601 string (e.g., 'YYYY-MM-DD HH:MM:SS')
+    SessionEnd TEXT,
+    CartID1 INTEGER,
+    CartID2 INTEGER,
+    CartID3 INTEGER,
+    CartID4 INTEGER,
+    CartID5 INTEGER
+    -- FOREIGN KEY (UID) REFERENCES Customers(UID),
+    -- FOREIGN KEY (CartID1) REFERENCES Cart(CartID),
+    -- FOREIGN KEY (CartID2) REFERENCES Cart(CartID),
+    -- FOREIGN KEY (CartID3) REFERENCES Cart(CartID),
+    -- FOREIGN KEY (CartID4) REFERENCES Cart(CartID),
+    -- FOREIGN KEY (CartID5) REFERENCES Cart(CartID)
+, CartPayload text)
+
+-- TABLE: TaxtableState
+CREATE TABLE TaxtableState (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    state TEXT NOT NULL,
+    corporate_tax_rate REAL,
+    individual_tax_rate REAL
+)
+
+-- TABLE: TaxtableUS
+CREATE TABLE TaxtableUS (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    uscorporateratetop REAL,
+    uscorporateratemiddle REAL,
+    uscorporateratelow REAL,
+    uspersonallow REAL,
+    uspersonalmiddle REAL,
+    uspersonalhigh REAL
+)
+
+-- TABLE: Template
+CREATE TABLE Template (
+    TemplateID INTEGER PRIMARY KEY AUTOINCREMENT,
+    Description TEXT
+)
+
+-- TABLE: UserPicture
+CREATE TABLE UserPicture (
+    Id INTEGER PRIMARY KEY,
+    Userid INTEGER,
+    Useridstring TEXT,
+    Activepictureurl TEXT,
+    Somepicture BLOB
+)
+
+-- TABLE: Userprofiles
+CREATE TABLE Userprofiles (
+    Id INTEGER PRIMARY KEY,
+    Address1 TEXT,
+    Address2 TEXT,
+    City TEXT,
+    Stateregion TEXT,
+    Country TEXT,
+    Phone TEXT,
+    Cellphone TEXT,
+    Sms INTEGER,
+    Email TEXT,
+    Maritalstatus TEXT,
+    University1 TEXT,
+    University2 TEXT,
+    Linkedinurl TEXT,
+    Instagramurl TEXT,
+    Vimeourl TEXT,
+    Facebookurl TEXT,
+    Googleurl TEXT,
+    University TEXT,
+    Title TEXT,
+    Pronoun TEXT,
+    Title2 TEXT,
+    Activepictureurl TEXT,
+    Userid INTEGER,
+    Employeeid TEXT,
+    Postalzip TEXT,
+    Companyid TEXT,
+    Buid INTEGER,
+    Managerid INTEGER,
+    Regionid INTEGER,
+    Branchid INTEGER,
+    Fullname TEXT,
+    Firstname TEXT,
+    Lastname TEXT,
+    Defaultinstanceid TEXT,
+    Defaultshardid TEXT,
+    Useridstring TEXT
+)
+
+-- TABLE: Users
+CREATE TABLE Users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    firstname TEXT,
+    lastname TEXT,
+    username TEXT NOT NULL,
+    email TEXT NOT NULL,
+    employee INTEGER,
+    employeeid TEXT,
+    microsoftid TEXT,
+    ncrid TEXT,
+    oracleid TEXT,
+    azureid TEXT,
+    plainpassword TEXT,
+    hashedpassword TEXT,
+    passwordtype INTEGER,
+    jid INTEGER,
+    role TEXT,
+    fullname TEXT NOT NULL,
+    companyid INTEGER,
+    resettoken TEXT,
+    userid INTEGER NOT NULL,
+    BTN TEXT,
+    iscertified INTEGER,
+    groupid1 TEXT,
+    groupid2 TEXT,
+    groupid3 TEXT,
+    groupid4 TEXT,
+    groupid5 TEXT,
+    accountstatus TEXT,
+    accountactiondate TEXT,
+    accountactiondescription TEXT,
+    usertwofactorenabled INTEGER,
+    usertwofactortype TEXT,
+    usertwofactorkeysmsdestination TEXT,
+    twofactorkeyemaildestination TEXT,
+    twofactorprovider TEXT,
+    twofactorprovidertoken TEXT,
+    twofactorproviderauthstring TEXT,
+    uidstring TEXT,
+    activepictureurl TEXT NOT NULL
+, resettokenexpiration datetime, displayname text, dateOfBirth DateOnly, CartMasterIndex int, UserProfileIndex int)
+
+-- TABLE: adminlogs
+CREATE TABLE adminlogs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid TEXT NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    description TEXT,
+    acknowledged TEXT,
+    techid INTEGER,
+    managerescid INTEGER,
+    threatlevel TEXT
+)
+
+-- TABLE: apilog
+CREATE TABLE apilog (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    apiname TEXT,
+    apinumber TEXT,
+    eptype TEXT,
+    hashid INTEGER,
+    parameterlist TEXT,
+    apiresult TEXT
+, Description text)
+
+-- TABLE: batches
+CREATE TABLE batches (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    batchname TEXT NOT NULL,
+    filelocationpath TEXT NOT NULL,
+    batchtype INTEGER,
+    batchstatus INTEGER,
+    batchstart DATE,
+    batchend DATE,
+    qtystart INTEGER,
+    qtyend INTEGER,
+    qtyexpected INTEGER,
+    qtyactual INTEGER,
+    qtyerror INTEGER,
+    qty INTEGER
+)
+
+-- TABLE: batchtype
+CREATE TABLE batchtype (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    batchtypename TEXT NOT NULL,
+    region TEXT,
+    instance TEXT
+)
+
+-- TABLE: learnlog
+CREATE TABLE learnlog (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    description TEXT,
+    category TEXT,
+    startdate TEXT,
+    enddate TEXT,
+    certauthority TEXT,
+    status TEXT,
+    userid INTEGER,
+    employeeidasint INTEGER,
+    employeeid TEXT,
+    employee INTEGER,
+    learningmodulesid INTEGER,
+    cataloguesku TEXT,
+    fullname TEXT,
+    emplid TEXT
+)
+
+-- TABLE: noctechs
+CREATE TABLE noctechs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid TEXT NOT NULL,
+    employeeid TEXT,
+    email TEXT,
+    phone TEXT,
+    sms INTEGER DEFAULT 1 CHECK (sms IN (0, 1)),
+    techaddress1 TEXT,
+    techaddress2 TEXT,
+    techcity TEXT,
+    techstate TEXT,
+    techzip TEXT
+, fullname text)
+
+-- TABLE: refund
+CREATE TABLE refund (
+    refundId        INTEGER PRIMARY KEY AUTOINCREMENT,
+    bookingId       INTEGER NOT NULL,
+    paymentMethod   TEXT,
+    cardType        TEXT,
+    cardLast4       TEXT,
+    cardExpDate     TEXT,
+    amountPaid      REAL NOT NULL,
+    paymentDate     TEXT,          -- store as ISO 8601 string (YYYY-MM-DD or full timestamp)
+    transactionId   TEXT,
+    useridasstring  TEXT,
+    transtype       TEXT,
+    fullname        TEXT,
+    parkName        TEXT,
+    state           TEXT,
+    parkId          INTEGER
+, AmountRefunded double, RefundTransactionId text)
+
+-- TABLE: sessionlogs
+CREATE TABLE sessionlogs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    hashid INTEGER,
+    sessionstart DATETIME,
+    sessionend DATETIME,
+    moduleid TEXT,
+    description TEXT
+)
+
+-- TABLE: site
+CREATE TABLE site (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  branchid TEXT,
+  address1 TEXT,
+  address2 TEXT,
+  city TEXT,
+  state TEXT,
+  postalzip TEXT,
+  fax TEXT,
+  phone TEXT,
+  email TEXT,
+  region TEXT,
+  instanceid TEXT
+, parkid text)
+
+-- TABLE: sqlite_sequence
+CREATE TABLE sqlite_sequence(name,seq)
+
+-- TABLE: superuserlogs
+CREATE TABLE superuserlogs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid TEXT NOT NULL,
+    date DATETIME DEFAULT CURRENT_TIMESTAMP,
+    description TEXT,
+    acknowledged TEXT,
+    techid INTEGER,
+    managerescid INTEGER,
+    threatlevel TEXT
+)
+
+-- TABLE: useraction
+CREATE TABLE useraction (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    userid INTEGER,
+    description TEXT,
+    acknowledged INTEGER,
+    actionpriority INTEGER,
+    actiondate TEXT
+)
+
+-- TABLE: usergroup
+CREATE TABLE usergroup (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  groupid TEXT,
+  groupdescription TEXT,
+  groupownerid INTEGER,
+  groupcompanyid TEXT
+)
+
+-- TABLE: userhelp
+CREATE TABLE userhelp(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticketid TEXT,
+    emplid INTEGER,
+    descr TEXT,
+    severity INTEGER,
+    userid INTEGER,
+    email TEXT,
+    fullname TEXT,
+    bestcontactnumber TEXT,
+    replied TEXT,
+    repliedmanagerid TEXT,
+    repliedmanagerphone TEXT,
+    repliedmanageremail TEXT,
+    ticketdate DATE,
+    responsedate DATE
+, ticketstatus text)
+
+-- TABLE: userlogs
+CREATE TABLE userlogs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT,
+    hashid INTEGER,
+    hashedpassword TEXT,
+    loginstatus TEXT
+, description text, uiorigin text)
+
+-- TABLE: usernotices
+CREATE TABLE usernotices (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    description TEXT,
+    notice_datetime DATETIME DEFAULT (DATETIME('now'))
+, noticetype string, emailgwtype string, Userid int, Useridstring text, emailaddress text)
+
+-- TABLE: usersessions
+CREATE TABLE usersessions (
+    id INTEGER NOT NULL PRIMARY KEY,
+    userid INTEGER,
+    token TEXT,
+    acknowledged INTEGER,
+    actionpriority INTEGER,
+    sessionstart TEXT, -- SQLite stores datetime as TEXT
+    sessionend TEXT,
+    sessionrecorded INTEGER,
+    sessionrecordurl TEXT,
+    sessiondescription TEXT,
+    sessionusername TEXT,
+    sessionemail TEXT,
+    sessionfirstname TEXT,
+    sessionlastname TEXT,
+    sessionfullname TEXT,
+    sessioncomplete INTEGER,
+    twofactorkey TEXT,
+    twofactorkeysmsdestination TEXT,
+    twofactorkeyemaildestination TEXT,
+    twofactorprovider TEXT,
+    twofactorprovidertoken TEXT,
+    twofactorproviderauthstring TEXT
+, Useridasstring text)
+
