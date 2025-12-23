@@ -311,47 +311,7 @@ public static class UserEndpoints
         .WithOpenApi();
     
 
-        //WE BUILT A NEW CONTROLLER TO A DTO WHICH SHOULD TAKE A BASIC FORM AND BUILD A WORKING PROFILE WITH MINIMAL FIELDS
-
-    	group.MapPost("/quickadd", async ([FromBody] QuickUserAdd dto) =>
-        {
-    Console.WriteLine($"QuickUserAdd DTO received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}");
-
-    string logPath = "/opt/ga/547bikes/logs/quickusers.log";
-    string logEntry = $"[{DateTime.Now}] QuickUserAdd received: Username={dto.Username}, Fullname={dto.Fullname}, Email={dto.Email}, Role={dto.Role}{Environment.NewLine}";
-
-    try
-    {
-        string? directoryPath = Path.GetDirectoryName(logPath);
-        if (!string.IsNullOrWhiteSpace(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-        File.AppendAllText(logPath, logEntry);
-    }
-    catch (Exception ex)
-    {
-        File.AppendAllText("/opt/ga/547bikes/logs/error.log", $"[{DateTime.Now}] Error: {ex.Message}{Environment.NewLine}");
-    }
-
-    using (var context = new DirtbikeContext())
-    {
-        var user = dto.ToUser();   // 👈 use the DTO’s mapper
-
-        context.Users.Add(user);
-        await context.SaveChangesAsync();
-
-        Enterpriseservices.ApiLogger.logapi(
-            Enterpriseservices.Globals.ControllerAPIName,
-            Enterpriseservices.Globals.ControllerAPINumber,
-            "QUICKADD", 1, "QuickUserAdd", "Created");
-
-        return TypedResults.Created($"Created User Successfully");
-    }
-})
-.WithName("QuickAddUser")
-.WithOpenApi();
-
+        
     
     
     

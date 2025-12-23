@@ -19,7 +19,7 @@ namespace dirtbike.api.Services
                     "CGGETALLPARKS", 1, "Fetch", "All motocross parks");
 
                 var parks = context.Parks
-                    .Where(p => p.Motocross == 1)
+                    .Where(p => p.Motocross == 1 && p.ParkId >= 1000)
                     .ToList();
 
                 var dtoList = parks.Select(p =>
