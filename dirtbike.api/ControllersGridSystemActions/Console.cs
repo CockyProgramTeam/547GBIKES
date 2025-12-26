@@ -17,112 +17,83 @@ namespace EnterpriseControllers;
 //OPTIONS 6 REMOVES ZERO CARTS FOR A USER WHICH IS REQUIRED IN SOME SCREENS TO REVIEW PENDING CART ITEMS ON PARKS UI.
 //OPTIONS 7/8 IMPACT THE PROCESSING OF PARK REVIEWS WHICH MAY NEED TO BE TRIGGERED FROM THE UI.
 
-
+//12-26 UPDATED CONTROLLER TO ADD ALL CLI COMMANDS - EXAMPLES ARE BELOW
+/*
+GET /SystemConsole/1
+GET /SystemConsole/2
+GET /SystemConsole/3
+GET /SystemConsole/4
+GET /SystemConsole/5
+GET /SystemConsole/6?value=123
+GET /SystemConsole/7?value=55
+GET /SystemConsole/8
+GET /SystemConsole/9
+*/
 
 [ApiController]
 [Route("[controller]")]
 public class SystemConsoleController : ControllerBase
 {
-    private readonly string[] databaseNodes = { "10.144.0.100", "10.144.1.100", "10.144.2.100", "10.144.3.100", "10.144.4.100" };
-    private readonly string[] webServerNodes = { "10.144.0.152", "10.144.1.151", "10.144.2.151", "10.144.3.151", "10.144.4.151" };
-  
-    private DirtbikeContext _context;
+    private readonly DirtbikeContext _context;
+
+    public SystemConsoleController(DirtbikeContext context)
+    {
+        _context = context;
+    }
 
     [HttpGet("{option}")]
-    public IActionResult GetSystemInfo(int option, int someint)
+    public IActionResult GetSystemInfo(int option, [FromQuery] int value)
     {
         Enterpriseservices.Globals.ControllerAPIName = "ActionsController";
         Enterpriseservices.Globals.ControllerAPINumber = "001";
 
         switch (option)
         {
-            case 1: return GetSchema();  //DUMPS the CURRENT SCHEMA TO /SQLDATA DIRECTORY
-            case 2: return ProcessNCParks(); //Returns Sample Hub Data - Demo Only
-            case 3: return ProcessVAParks(); //Returns Sample Hub Data - Demo Only
-            case 4: return ProcessAllParks();   //Returns the Exact list of Data Files in the /DATA Directory
-            case 5: return GetFileList(); //Runs all the I/O Functions and Imports all the Required Data.
-            case 6: return RemoveZerocarts(someint); //Removes the ZeroCarts for a Userid which is an integer.
-            case 7: return GetAvgs(someint); //Update Averages for a specific park
-            case 8: return GetAllParkAvgs(); //Update Averages for all parks
+            case 1:
+                Enterpriseservices.SystemCLISupport.DumpSchema();
+                return Ok("Schema dumped");
+
+            case 2:
+                Enterpriseservices.SystemCLISupport.ProcessNCParks();
+                return Ok("NC parks processed");
+
+            case 3:
+                Enterpriseservices.SystemCLISupport.ProcessVAParks();
+                return Ok("VA parks processed");
+
+            case 4:
+                Enterpriseservices.SystemCLISupport.ProcessAllParks();
+                return Ok("All parks processed");
+
+            case 5:
+                Enterpriseservices.SystemCLISupport.ShowFileList();
+                return Ok("File list displayed");
+
+            case 6:
+                var zeroCartService = new ZeroCartService(_context);
+                var zeroResult = zeroCartService.ZeroCartUpdate(value.ToString());
+                return Ok($"Zero carts removed for user {value}: {zeroResult}");
+
+            case 7:
+                var ratingService = new ParkRatingService(_context);
+                var avgResult = ratingService.UpdateAverageParkRating(value);
+                return Ok($"Average updated for park {value}: {avgResult}");
+
+            case 8:
+                var ratingServiceAll = new ParkRatingService(_context);
+                var avgAllResult = ratingServiceAll.UpdateAverageRatingsForFirst500();
+                return Ok($"Average updated for first 500 parks: {avgAllResult}");
+
+            case 9:
+                Enterpriseservices.DatabaseTools.LoadInitData();
+                return Ok("Initial SQL data loaded");
 
             default:
-                return BadRequest(new { Error = "Invalid option. Use 1 for hubs, 2 for history, 3 for branches, 4 for file list, 5 for full pipeline, 6 for 1-2-4, 7 for 1-2-5." });
+                return BadRequest("Invalid option");
         }
     }
-
-    // -------------------------------
-    // OPTION #4
-    // -------------------------------
-    private IActionResult GetFileList()
-    {
-        return Ok(1);
-    }
-
-    private IActionResult GetSchema()
-    {
-        
-        Enterpriseservices.DirtbikeSchemaTools.SchemaDump();
-        return Ok(1);
-
-    }
-
-    private IActionResult ProcessNCParks()
-    {
-        return Ok(1);
-    }
-
-    private IActionResult ProcessVAParks()
-    {
-        return Ok(1);
-    }
-
-    // -------------------------------
-    // OPTION #5: Full Pipeline
-    // -------------------------------
-    private IActionResult ProcessAllParks()
-    {
-        return Ok(1);
-    }
-
-    // -------------------------------
-    // OPTION #6: Allows for the Zeroing of Carts for a Specific User
-    // -------------------------------
-    private IActionResult RemoveZerocarts(int someint)
-    {
-        string somestring = someint.ToString();
-        var service = new ZeroCartService(_context);  // use the injected DbContext
-        string result = service.ZeroCartUpdate(somestring);
-
-        return Ok(new { Message = $"ZeroCarts removed for User {someint}," + result });
-
-    }
-
-    // -------------------------------
-    // OPTION #7: Updates the Avg Park Rating for a single park
-    // -------------------------------
-    private IActionResult GetAvgs(int someint)
-    {
-        int parkId = someint;
-        var service = new ParkRatingService(_context);  // use the injected DbContext
-        string result = service.UpdateAverageParkRating(parkId);
-
-        return Ok(new { Message = $"Average rating updated for Park {parkId}," + result });
-    }
-
-// -------------------------------
-    // OPTION #8: Updates the Avg Park Rating for the first 500 parks (Bigger than current DB)
-    // -------------------------------
-
-    private IActionResult GetAllParkAvgs()
-    {
-
-        var service = new ParkRatingService(_context);  // use the injected DbContext
-        string result = service.UpdateAverageRatingsForFirst500();
-
-        return Ok(new { Message = $"Average ratings updated for First 500Parks" + result });
-    }
-
 }
+
 
 public class ControlBlock 
 { 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj": {}
+    "C:\\users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj": {}
   },
   "projects": {
-    "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj": {
+    "C:\\users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
+        "projectUniqueName": "C:\\users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
         "projectName": "dirtbike.api",
-        "projectPath": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
+        "projectPath": "C:\\users\\stritzj\\source\\bikesapi\\bikesapi\\dirtbike.api.csproj",
         "packagesPath": "C:\\Users\\stritzj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\stritzj\\source\\bikesapi\\bikesapi\\obj\\",
+        "outputPath": "C:\\users\\stritzj\\source\\bikesapi\\bikesapi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\stritzj\\AppData\\Roaming\\NuGet\\NuGet.Config"

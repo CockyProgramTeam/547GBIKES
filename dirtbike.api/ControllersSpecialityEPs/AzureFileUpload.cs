@@ -13,10 +13,10 @@ using dirtbike.api.Models;
 using Enterpriseservices;
 
 
-namespace somecontrollers.Controllers
+namespace Enterprise.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("azureapi/[controller]")]
     public class AzureFileController : ControllerBase
     {
         private readonly BlobServiceClient _blobServiceClient;

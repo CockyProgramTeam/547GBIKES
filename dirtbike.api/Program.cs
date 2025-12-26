@@ -26,7 +26,7 @@ class Program
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>
         {
-            c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParksAPI", Version = "42" });
+            c.SwaggerDoc("v1", new OpenApiInfo { Title = "ParksAPI", Version = "45" });
         });
 
 //AZURE SERVICES FROM 590 WITH DEPENDENCY INJECTION (COLIN SERVICE BUS, SAMBIT OCR)

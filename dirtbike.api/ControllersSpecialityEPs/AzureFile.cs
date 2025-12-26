@@ -16,23 +16,23 @@ using Enterpriseservices;
 
     [ApiController]
     [Route("[controller]")]
-    public class FileOpsController : ControllerBase
+    public class AzureFileOpsController : ControllerBase
     {
-        private readonly ILogger<FileOpsController> _logger;
+        private readonly ILogger<AzureFileOpsController> _logger;
 
-        public FileOpsController(ILogger<FileOpsController> logger)
+        public AzureFileOpsController(ILogger<AzureFileOpsController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetFileOps")]
-        public IEnumerable<FileMenu> Get()
+        [HttpGet(Name = "AzureGetFileOps")]
+        public IEnumerable<AzureFileMenu> Get()
         {
             Random rnd = new Random();
             int dice = rnd.Next(1000, 10000000);
             string somePath = new string(dice + "profilepicture.png");
             string somexconstring1 = new string("DefaultEndpointsProtocol=https;AccountName=590team1storage;AccountKey=Z1iryneyXo7RKOlBJNJFenF4zMxXrCyDLyCWaOjhCZa5DMsrvSnaUUzZT2RljrI/92bnCSA8xd/E+AStSTk9iQ==;EndpointSuffix=core.windows.net");
-            return Enumerable.Range(1, 1).Select(index => new FileMenu
+            return Enumerable.Range(1, 1).Select(index => new AzureFileMenu
             {
                 Date = DateOnly.FromDateTime(DateTime.Now),
                 Filename = index + somePath,
@@ -44,7 +44,7 @@ using Enterpriseservices;
             })
             .ToArray();
         }
-public class FileMenu
+public class AzureFileMenu
 {
     public DateOnly Date { get; set; }
     public required string Filename { get; set; }

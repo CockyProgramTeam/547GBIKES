@@ -8,17 +8,17 @@ namespace Enterprise.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class FileOpsController : ControllerBase
+    public class CTSFileOpsController : ControllerBase
     {
-        private readonly ILogger<FileOpsController> _logger;
+        private readonly ILogger<CTSFileOpsController> _logger;
         private readonly string _localProfilePath = "/home/wwwroot/profiles";
 
-        public FileOpsController(ILogger<FileOpsController> logger)
+        public CTSFileOpsController(ILogger<CTSFileOpsController> logger)
         {
             _logger = logger;
         }
 
-        [HttpGet(Name = "GetFileOps")]
+        [HttpGet(Name = "CTSGetFileOps")]
         public IEnumerable<FileMenu> Get()
         {
             var files = Directory.Exists(_localProfilePath)
