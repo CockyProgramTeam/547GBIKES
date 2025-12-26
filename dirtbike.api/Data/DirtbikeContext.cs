@@ -922,10 +922,23 @@ public partial class DirtbikeContext : DbContext
             entity.Property(e => e.Userid).HasColumnType("INT");
         });
 
-        modelBuilder.Entity<Userprofile>(entity =>
-        {
-            entity.Property(e => e.Id).ValueGeneratedNever();
-        });
+  modelBuilder.Entity<Userprofile>(entity =>
+{
+    // Primary key is not auto-generated
+    entity.Property(e => e.Id)
+        .ValueGeneratedNever();
+
+    // Required fields
+    entity.Property(e => e.Userid)
+        .IsRequired();
+
+    entity.Property(e => e.Useridstring)
+        .IsRequired()
+        .HasDefaultValue(string.Empty);
+
+    // All other fields are optional by default, so no extra config needed
+});
+
 
         modelBuilder.Entity<Usersession>(entity =>
         {

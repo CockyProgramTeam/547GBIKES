@@ -51,7 +51,7 @@ public partial class Userprofile
 
     public string? Activepictureurl { get; set; }
 
-    public int? Userid { get; set; }
+    public int Userid { get; set; }
 
     public string? Employeeid { get; set; }
 
@@ -77,5 +77,5 @@ public partial class Userprofile
 
     public string? Defaultshardid { get; set; }
 
-    public string? Useridstring { get; set; }
+    public string Useridstring { get; set; }
 }

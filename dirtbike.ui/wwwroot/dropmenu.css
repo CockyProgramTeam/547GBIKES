@@ -96,6 +96,8 @@ body, button { /* Apply Roboto to body and button */
 .feature {
     width: 250px;
     padding: 20px;
+    height: 130px;
+    font-size: 9pt;
     background: #f1f1f1;
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -105,6 +107,8 @@ body, button { /* Apply Roboto to body and button */
 .feature2 {
   width: 250px;
   padding: 20px;
+  font-size: 9pt;
+  height: 130px;
   background: yellow;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -114,6 +118,8 @@ body, button { /* Apply Roboto to body and button */
 .feature3 {
   width: 250px;
   padding: 20px;
+  font-size: 9pt;
+  height: 130px;
   background: lightblue;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -123,6 +129,8 @@ body, button { /* Apply Roboto to body and button */
 .feature4 {
   width: 250px;
   padding: 20px;
+  height: 130px;
+  font-size: 9pt;
   background: lightgreen;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
@@ -249,9 +257,83 @@ body, button { /* Apply Roboto to body and button */
       font-size: 20px;
     }
 
-    .feature p {
+    .feature2 p {
       font-size: 14px;
     }
+
+    .feature2:hover {
+      background-color: #1F3D7A;
+      color: white;
+    }
+
+    .feature2 a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .feature2 a:hover,
+    .feature2 a:visited,
+    .feature2 a:active {
+      color: black;
+    }
+
+    .feature3:hover {
+      background-color: #1F3D7A;
+      color: white;
+    }
+
+    .feature3 a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .feature3 a:hover,
+    .feature3 a:visited,
+    .feature3 a:active {
+      color: black;
+    }
+    
+    .feature4:hover {
+      background-color: #1F3D7A;
+      color: white;
+    }
+
+    .feature4 a {
+      text-decoration: none;
+      color: black;
+    }
+
+    .feature4 a:hover,
+    .feature4 a:visited,
+    .feature4 a:active {
+      color: black;
+    }
+
+    .feature2 h3 {
+      font-size: 20px;
+    }
+
+    .feature2 p {
+      font-size: 14px;
+    }
+
+    .feature3 h3 {
+      font-size: 20px;
+    }
+
+    .feature3 p {
+      font-size: 14px;
+    }
+
+    .feature4 h3 {
+      font-size: 20px;
+    }
+
+    .feature4 p {
+      font-size: 14px;
+    }
+
+
 
     .hero {
       position: relative;

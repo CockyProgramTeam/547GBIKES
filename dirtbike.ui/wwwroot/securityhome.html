@@ -154,6 +154,7 @@ gap: 15px;
     </div>
   
   <!-- Logs Section 
+8- User Notifications
 7 - /api/Usersession (User SSO, Password Resets, 2 Factor)
 6 - /api/Userlog (User Login/Logout)
 5 - /api/Useraction (User GUI Actions)
@@ -234,13 +235,21 @@ gap: 15px;
         <p id="usersessionlogDisplay">User SSO Communications Will Be Displayed Here</p>
       </div>
     </div>
+    <div class="jcolumn">
+      <button class="accordion2" onclick="fetchUsernoticeslog()">
+        8-UserNotifications (+/-)
+      </button>
+      <div class="panel" style="background-color:#ccc;">
+        <p id="usernoticeslogDisplay">User Notifications Will Be Displayed Here</p>
+      </div>
+    </div>
    </div>
 <HR>
   <p>Legend: Blue(UserSecurity), Pink(AdminSecurity), Grey(Api/System Security)</p>
 <HR>
 <div class="features">
     <div class="feature">
-    <a href="./reports/usersessions.html">
+    <a href="./reports/SessionReportByUserId.html">
     <H3>UserSessionsReport</H3>
     <p>Current Logged In Users</p>
     </a>
@@ -339,6 +348,12 @@ gap: 15px;
       $.get("https://parksapi.547bikes.info/api/Usersession")
         .done((data) => $("#usersessionlogDisplay").text(JSON.stringify(data, null, 2)))
         .fail(() => $("#usersessionlogDisplay").text("Error fetching usersessionlog"));
+    }
+    //#8 USER SESSION & SSO LOGS (IE USER AUTHENTICATION DETAILS)
+    function fetchUsernoticeslog() {
+      $.get("https://parksapi.547bikes.info/api/Usernotices")
+        .done((data) => $("#usernoticeslogDisplay").text(JSON.stringify(data, null, 2)))
+        .fail(() => $("#usernoticeslogDisplay").text("Error fetching usersessionlog"));
     }
           
     //JOHNS ACCORDIAN SCRIPTS DO NOT TOUCH OR THIS WONT WORK.... 

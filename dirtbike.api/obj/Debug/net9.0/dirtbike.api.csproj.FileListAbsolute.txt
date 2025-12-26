@@ -2448,3 +2448,6 @@ C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\dirtbike.api.genrunti
 C:\Users\stritzj\source\bikesapi\bikesapi\obj\Debug\net9.0\ref\dirtbike.api.dll
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\SQLDATA\schemadump.txt
 C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\SQLDATA\initial.sql
+C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\Azure.Storage.Blobs.dll
+C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\Azure.Storage.Common.dll
+C:\Users\stritzj\source\bikesapi\bikesapi\bin\Debug\net9.0\System.IO.Hashing.dll
