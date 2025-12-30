@@ -40,7 +40,7 @@ public class OcrController : ControllerBase
 
             var allLines = result.Value.Pages
                 .SelectMany(p => p.Lines)
-                .Select(l => l.Content.Trim())
+                .Select(l => (l.Content ?? "").Trim())
                 .Where(l => !string.IsNullOrEmpty(l))
                 .ToList();
 
@@ -72,8 +72,8 @@ public class OcrController : ControllerBase
             }
 
             // 4) dates — scan line-by-line with multiple keywords
-            string issueDate  = null;
-            string expiryDate = null;
+            string issueDate  = "";
+            string expiryDate = "";
 
             var issueRegex = new Regex(
                 @"(?i)^(?:earned on|earned:)[:\s]*(\w+\s+\d{1,2},\s+\d{4})",
@@ -107,12 +107,12 @@ public class OcrController : ControllerBase
             var catalog = await _http.GetFromJsonAsync<List<CertCatalogueItem>>(catalogueUrl);
 
             // 6) Matching
-            string matchedCert = null;
+            string matchedCert = "";
             if (catalog != null && catalog.Any())
             {
                 var cleaned = catalog.Select(c =>
                 {
-                    var desc = c.Description.Trim();
+                    var desc = c.Description.Trim() ?? "";
                     var noPrefix = Regex.Replace(desc,
                         @"^Microsoft Certified:\s*", "",
                         RegexOptions.IgnoreCase);
@@ -158,7 +158,10 @@ public class OcrController : ControllerBase
         }
         catch (RequestFailedException)  { throw; }
         catch (UriFormatException)       { throw; }
-        catch (Exception ex)             { throw; }
+        catch (Exception )             
+        { 
+            throw; 
+        }
     }
 
     private static double Similarity(string a, string b)
@@ -192,6 +195,6 @@ public class OcrController : ControllerBase
     private class CertCatalogueItem
     {
         public int    Id          { get; set; }
-        public string Description { get; set; }
+        public required string Description { get; set; }
     }
 }

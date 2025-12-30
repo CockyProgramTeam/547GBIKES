@@ -3,20 +3,21 @@ using System.Linq;
 using dirtbike.api.Data;
 using dirtbike.api.Models;
 using dirtbike.api.DTOs;
+using Enterpriseservices;
 
 namespace dirtbike.api.Services
 {
+        
     public class CGPARKSService
     {
+        string servicename = "GCPARKSERVICE";
+        string apinumber = "501";
         // Get all motocross parks with reviews
         public List<CGPARKS> GetAllParks()
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(
-                    Enterpriseservices.Globals.ControllerAPIName,
-                    Enterpriseservices.Globals.ControllerAPINumber,
-                    "CGGETALLPARKS", 1, "Fetch", "All motocross parks");
+                Enterpriseservices.ApiLogger.logapi(servicename,apinumber,"CGGETALLPARKS", 1, "Fetch", "All motocross parks");
 
                 var parks = context.Parks
                     .Where(p => p.Motocross == 1 && p.ParkId >= 1000)
@@ -40,10 +41,7 @@ namespace dirtbike.api.Services
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(
-                    Enterpriseservices.Globals.ControllerAPIName,
-                    Enterpriseservices.Globals.ControllerAPINumber,
-                    "CGGETPARKBYUUID", 1, "Fetch", $"Park {uuid}");
+                Enterpriseservices.ApiLogger.logapi(servicename,apinumber,"CGGETPARKBYUUID", 1, "Fetch", $"Park {uuid}");
 
                 var park = context.Parks
                     .FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
@@ -62,10 +60,7 @@ namespace dirtbike.api.Services
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(
-                    Enterpriseservices.Globals.ControllerAPIName,
-                    Enterpriseservices.Globals.ControllerAPINumber,
-                    "CGCREATEPARK", 1, "Create", $"Park {input.Name}");
+                Enterpriseservices.ApiLogger.logapi(servicename,apinumber,"CGCREATEPARK", 1, "Create", $"Park {input.Name}");
 
                 input.Motocross = 1; // force motocross flag
                 context.Parks.Add(input);
@@ -79,10 +74,7 @@ namespace dirtbike.api.Services
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(
-                    Enterpriseservices.Globals.ControllerAPIName,
-                    Enterpriseservices.Globals.ControllerAPINumber,
-                    "CGUPDATEPARK", 1, "Update", $"Park {uuid}");
+                Enterpriseservices.ApiLogger.logapi(servicename,apinumber,"CGUPDATEPARK", 1, "Update", $"Park {uuid}");
 
                 var park = context.Parks.FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
                 if (park == null) return false;
@@ -100,10 +92,7 @@ namespace dirtbike.api.Services
         {
             using (var context = new DirtbikeContext())
             {
-                Enterpriseservices.ApiLogger.logapi(
-                    Enterpriseservices.Globals.ControllerAPIName,
-                    Enterpriseservices.Globals.ControllerAPINumber,
-                    "CGDELETEPARK", 1, "Delete", $"Park {uuid}");
+                Enterpriseservices.ApiLogger.logapi(servicename,apinumber,"CGDELETEPARK", 1, "Delete", $"Park {uuid}");
 
                 var park = context.Parks.FirstOrDefault(p => p.Id == uuid && p.Motocross == 1);
                 if (park == null) return false;

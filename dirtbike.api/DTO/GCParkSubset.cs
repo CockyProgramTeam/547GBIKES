@@ -42,12 +42,12 @@ namespace dirtbike.api.DTOs
                     {
                         Id = r.Useridasstring ?? string.Empty,
                         DisplayName = r.Displayname ?? string.Empty, // already in review
-                        FullName = r.Fullname,                     
+                        FullName = r.Fullname ?? "SomeName",                     
                         DateOfBirth = new DateOnly(2001, 1, 1).ToDateTime(TimeOnly.MinValue).ToString("o")      // fixed default
                     },
                     Rating = r.Stars,
                     DateWritten = r.DatePosted,
-                    DateVisited = r.DateApproved, // adjust if another field better represents "visited"
+                    DateVisited = r.DateApproved ?? "", // adjust if another field better represents "visited"
                     Review = r.Description
                 }).ToList()
             };

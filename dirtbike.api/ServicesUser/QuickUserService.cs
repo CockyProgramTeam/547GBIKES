@@ -8,6 +8,9 @@ public class QuickUserAddService
 {
     public async Task<bool> CreateQuickUserAsync(QuickUserAdd dto)
     {
+        Enterpriseservices.Globals.ControllerAPIName = "QuickUserAdd";
+        Enterpriseservices.Globals.ControllerAPINumber = "601";
+    
         try
         {
             using var context = new DirtbikeContext();

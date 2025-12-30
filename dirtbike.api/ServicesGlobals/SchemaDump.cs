@@ -45,9 +45,10 @@ namespace Enterpriseservices
 
                 while (reader.Read())
                 {
-                    string type = reader["type"].ToString();
-                    string name = reader["name"].ToString();
-                    string sql = reader["sql"].ToString();
+                    
+                    string type = reader["type"]?.ToString() ?? ""; 
+                    string name = reader["name"]?.ToString() ?? ""; 
+                    string sql = reader["sql"]?.ToString() ?? "";
 
                     writer.WriteLine($"-- {type.ToUpper()}: {name}");
                     writer.WriteLine(sql);

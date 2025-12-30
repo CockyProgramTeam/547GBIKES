@@ -99,7 +99,7 @@ namespace Enterprise.Controllers
         }
 
     // Normalize null visitor count to zero
-        if (parkEntity.Currentvisitors == null)
+        if ((parkEntity.Currentvisitors > 10000) || (parkEntity.Currentvisitors <= 0))
         {
         parkEntity.Currentvisitors = 0;
         }
@@ -132,7 +132,7 @@ namespace Enterprise.Controllers
                 using var context = new DirtbikeContext();
                 var parkEntity = context.Parks.FirstOrDefault(m => m.ParkId == park);
                 if (parkEntity == null) return "-99";
-                if (parkEntity.Currentvisitors == null) parkEntity.Currentvisitors = 0;
+                if (parkEntity.Currentvisitors < 0) parkEntity.Currentvisitors = 0;
 
                 Enterpriseservices.ApiLogger.logapi(Globals.ControllerAPIName, Globals.ControllerAPINumber, "ADDGUESTS_CAPACITY", 1, "TEST", "TEST");
                 return $"{parkEntity.Maxvisitors} / {parkEntity.Currentvisitors}";
@@ -145,7 +145,7 @@ namespace Enterprise.Controllers
                 using var context = new DirtbikeContext();
                 var parkEntity = context.Parks.FirstOrDefault(m => m.Id == ParkGuid);
                 if (parkEntity == null) return "-99";
-                if (parkEntity.Currentvisitors == null) parkEntity.Currentvisitors = 0;
+                if (parkEntity.Currentvisitors < 0) parkEntity.Currentvisitors = 0;
 
                 Enterpriseservices.ApiLogger.logapi(Globals.ControllerAPIName, Globals.ControllerAPINumber, "ADDGUESTS_CAPACITY", 1, "TEST", "TEST");
                 return $"{parkEntity.Maxvisitors} / {parkEntity.Currentvisitors}";
@@ -157,7 +157,7 @@ namespace Enterprise.Controllers
         public class ParkCapacityPayload
         {
             public int ParkId { get; set; }
-            public string Id { get; set; }
+            public string? Id { get; set; }
             public int Maxvisitors { get; set; }
             public int Maxcampsites { get; set; }
             public int Currentvisitors { get; set; }

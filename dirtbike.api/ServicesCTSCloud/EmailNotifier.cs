@@ -168,4 +168,47 @@ public async Task AddGuestNotice(WebApplication app, string to, string body, str
     await db.SaveChangesAsync();
 }
 
+//REGULAR SEND WITHOUT ASYNCH METHODS SEND AND FORGET
+public void gmailsendnotification(int uid, string emailAddress, string message)
+{
+    // 1. Log the notification to the database
+    using (var db = new DirtbikeContext())
+    {
+        var notice = new Usernotice
+        {
+            Userid = uid,
+            Useridstring = uid.ToString(),
+            Description = message,
+            Noticetype = "email",
+            Emailgwtype = "gmail",
+            NoticeDatetime = DateTime.UtcNow,
+            Emailaddress = emailAddress
+        };
+
+        db.Usernotices.Add(notice);
+        db.SaveChanges();
+    }
+
+    // 2. Build the email
+    var mail = new MailMessage();
+    mail.From = new MailAddress("547bikes.info@gmail.com");
+    mail.To.Add(emailAddress);
+    mail.Subject = "Notification";
+    mail.Body = message;
+
+    // 3. Configure Gmail SMTP
+    var smtp = new SmtpClient("smtp.gmail.com", 587)
+    {
+        EnableSsl = true,
+        Credentials = new NetworkCredential(
+            "547bikes.info@gmail.com",
+            "*Columbia5"   // <-- replace with secure storage
+        )
+    };
+
+    // 4. Send email synchronously
+    smtp.Send(mail);
+}
+
+
 }}

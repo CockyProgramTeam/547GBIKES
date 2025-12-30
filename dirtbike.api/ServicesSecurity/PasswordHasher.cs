@@ -23,7 +23,7 @@ public class MyPasswords
                 {
                     u.Hashedpassword = null;
                 }
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 // Now loop through and hash
                 var users = context.Users.ToList();

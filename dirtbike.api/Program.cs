@@ -34,14 +34,13 @@ class Program
 builder.Services.AddSingleton(sp =>
 {
     var cfg = sp.GetRequiredService<IConfiguration>();
-
+    var endpoint = cfg["ComputerVision:Endpoint"] ?? throw new InvalidOperationException("ComputerVision:Endpoint is missing in configuration.");
+    var key = cfg["ComputerVision:Key"] ?? throw new InvalidOperationException("ComputerVision:Key is missing in configuration."); 
+  
     Console.WriteLine("Using OCR Endpoint: " + cfg["ComputerVision:Endpoint"]);
     Console.WriteLine("Using OCR Key: " + cfg["ComputerVision:Key"]?.Substring(0, 4) + "...");
-
-    return new DocumentAnalysisClient(
-        new Uri(cfg["ComputerVision:Endpoint"]),
-        new AzureKeyCredential(cfg["ComputerVision:Key"])
-    );
+    return new DocumentAnalysisClient( new Uri(endpoint), new AzureKeyCredential(key) );
+    
 });
 
 // Register Service Bus Service
@@ -69,8 +68,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateIssuerSigningKey = true,
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key" ] ?? ""))
         };
     });
 

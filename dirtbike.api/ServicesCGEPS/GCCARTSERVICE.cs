@@ -211,9 +211,9 @@ namespace dirtbike.api.Services
             {
             string emailNoticeAddress = "stritzj@email.sc.edu";
             var notifier = new Enterpriseservices.EmailNotifiers();
-
-            string emailMsg = $"547Bikes Reservation Created for Park {booking.Emailnoticeaddress} + {booking.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
-            notifier.gmailsendnotificationasync(booking.Userid.Value,booking.Emailnoticeaddress,emailMsg);
+            var someuserid = int.Parse(booking.Uid);
+            string emailMsg = $"547Bikes Reservation Created for Park {booking.Emailnoticeaddress} + {booking.TransactionId} + {DateTime.Today:MM/dd/yyyy}" ?? "";
+            notifier.gmailsendnotification(someuserid, emailNoticeAddress, emailMsg);
             }
             catch (Exception ex)
             {

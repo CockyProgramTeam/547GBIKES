@@ -311,7 +311,7 @@ public static class Auth
                 return Results.Unauthorized();
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var jwtKey = config["Jwt:Key"];
+            var jwtKey = config["Jwt:Key"] ?? "";
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey));
 
             try
@@ -362,10 +362,7 @@ public static class Auth
                     return Results.Ok(new { message = "Password successfully updated.\n\nNew password: " + request.NewPassword});
                 }
             }
-            catch (Exception ex)
-            {
-                return Results.Unauthorized();
-            }
+         catch (Exception) { return Results.Unauthorized(); }
         })
         .WithName("resetPasswordProfile")
         .WithOpenApi();
@@ -454,11 +451,14 @@ public static class Auth
     private static string GenerateJwtToken(User user, IConfiguration config)
     {
         //  In production should load from appSettings
-        var jwtkey = config["Jwt:Key"];
+        //var jwtkey = config["Jwt:Key"];
         var issuer = config["Jwt:Issuer"];
         var audience = config["Jwt:Audience"];
 
+        var jwtkey = config["Jwt:Key"] ?? throw new InvalidOperationException("JWT key is missing in configuration.");
+
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtkey));
+
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
         var claims = new[]
@@ -466,7 +466,7 @@ public static class Auth
             new Claim(JwtRegisteredClaimNames.Sub, user.Username),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-            new Claim("role", user.Role) // Add user role claim
+            new Claim("role", user.Role ?? "") // Add user role claim
         };
 
         var token = new JwtSecurityToken(

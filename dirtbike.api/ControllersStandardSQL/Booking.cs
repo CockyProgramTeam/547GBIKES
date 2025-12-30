@@ -139,7 +139,7 @@ group.MapPost("/", async (Booking input) =>
             $"547Bikes Reservation Created for Park {input.ParkName} + {input.TransactionId} + {DateTime.Today:MM/dd/yyyy}";
 
         // Determine which email to use
-        string emailToUse = input.Emailnoticeaddress;
+        string emailToUse = input.Emailnoticeaddress ?? "";
 
         // Validate email and fall back if invalid
         try
@@ -169,7 +169,7 @@ group.MapPost("/", async (Booking input) =>
                 emailmsg
             );
         }
-        catch (Exception ex)
+        catch (Exception)
         {
         Enterpriseservices.ApiLogger.logapi(Enterpriseservices.Globals.ControllerAPIName, Enterpriseservices.Globals.ControllerAPINumber, "EMAILNOTIFICATION-LASTRESORT", 1, "Test", "Test");
         }
@@ -220,4 +220,4 @@ group.MapPost("/", async (Booking input) =>
     }
 }
 
-public class BookingRequest { public string Parkname { get; set; } public int Userid { get; set; } }
+public class BookingRequest { public required string Parkname { get; set; } public int Userid { get; set; } }

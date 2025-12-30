@@ -76,7 +76,7 @@ public static class CartMasterEndpoints
                 CartMaster[] someCartMaster = context.CartMasters.Where(m => m.Id == id).ToArray();
                 context.CartMasters.Attach(someCartMaster[0]);
               // Integers (nullable int? checks)
-				if (input.UserId != null) someCartMaster[0].UserId = input.UserId;
+				if (input.UserId > 0) someCartMaster[0].UserId = input.UserId;
 				if (input.CartsCount != null) someCartMaster[0].CartsCount = input.CartsCount;
 				if (input.CartsCancelled != null) someCartMaster[0].CartsCancelled = input.CartsCancelled;
 				if (input.CartsActive != null) someCartMaster[0].CartsActive = input.CartsActive;
