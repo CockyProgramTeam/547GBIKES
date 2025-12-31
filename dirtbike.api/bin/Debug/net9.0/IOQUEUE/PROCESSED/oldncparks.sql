@@ -1,0 +1,12 @@
+INSERT INTO Parks (Name, Address, Phone, Region, TrailLengthMiles, Difficulty, Latitude, Longitude, DayPassPriceUSD, Description)
+VALUES
+('Lake Norman State Park', '759 State Park Rd, Troutman, NC 28166', '704-528-6350', 'Piedmont', 30, 'Intermediate', '35.6770', '-80.9320', 0.00, 'Home to the popular Itusi Trail system with fast, flowing singletrack'),
+('Hanging Rock State Park', '1790 Hanging Rock Park Rd, Danbury, NC 27016', '336-593-8480', 'Piedmont', 8, 'Intermediate', '36.4114', '-80.2547', 0.00, 'Moore’s Wall and surrounding loops offer rocky, technical terrain'),
+('Kerr Lake State Recreation Area', '6254 Satterwhite Point Rd, Henderson, NC 27537', '252-438-7791', 'Piedmont', 7, 'Easy to Intermediate', '36.4410', '-78.3640', 0.00, 'Features rolling lakeside singletrack suitable for most riders'),
+('Rendezvous Mountain Educational State Forest', '1956 Rendezvous Mountain Rd, Purlear, NC 28665', '336-667-5072', 'Foothills', 6, 'Intermediate', '36.1830', '-81.3470', 0.00, 'Wooded mountain trails with moderate elevation and scenic overlooks'),
+('DuPont State Recreational Forest', 'Staton Rd, Cedar Mountain, NC 28718', '828-877-6527', 'Mountains', 80, 'Intermediate to Advanced', '35.2020', '-82.6160', 0.00, 'World‑class MTB destination with slickrock, waterfalls, and iconic trails like Ridgeline'),
+('Pisgah National Forest – Bent Creek', 'Bent Creek Experimental Forest, Asheville, NC 28806', '828-667-5261', 'Mountains', 30, 'Intermediate to Advanced', '35.4980', '-82.6080', 0.00, 'Popular Asheville trail system with climbs, flow trails, and technical descents'),
+('Pisgah National Forest – Mills River', 'Mills River Rd, Mills River, NC 28759', '828-877-3265', 'Mountains', 40, 'Advanced', '35.4090', '-82.6400', 0.00, 'Steep, rooty, and rocky backcountry riding including Laurel Mountain and Pilot Cove'),
+('Uwharrie National Forest – Wood Run Trails', '789 NC-24, Troy, NC 27371', '910-576-6391', 'Piedmont', 20, 'Intermediate to Advanced', '35.3720', '-79.9940', 0.00, 'Features the Supertree and Keyauwee loops with punchy climbs and rugged terrain'),
+('Beaver Lake Trail System', '1960 Weaver Rd, Asheville, NC 28804', '828-251-4080', 'Mountains', 5, 'Easy to Intermediate', '35.6450', '-82.5480', 0.00, 'Shorter loops ideal for beginners and warm‑up rides'),
+('Whitewater Center', '5000 Whitewater Center Pkwy, Charlotte, NC 28214', '704-391-3900', 'Piedmont', 40, 'Intermediate', '35.2670', '-80.9940', 12.00, 'Extensive singletrack network with flow, jumps, and technical features');

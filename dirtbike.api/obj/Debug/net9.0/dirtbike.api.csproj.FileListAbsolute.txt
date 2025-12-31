@@ -2769,3 +2769,10 @@ X:\G547\547GBIKES\dirtbike.api\obj\Debug\net9.0\refint\dirtbike.api.dll
 X:\G547\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.api.pdb
 X:\G547\547GBIKES\dirtbike.api\obj\Debug\net9.0\dirtbike.api.genruntimeconfig.cache
 X:\G547\547GBIKES\dirtbike.api\obj\Debug\net9.0\ref\dirtbike.api.dll
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PENDING\readme.txt
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PROCESSED\ncparkswithguids.sql
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PROCESSED\oldncparks.sql
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PROCESSED\paparkswithguids.sql
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PROCESSED\readme.txt
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\PROCESSED\vaparkswithguids.sql
+X:\G547\547GBIKES\dirtbike.api\bin\Debug\net9.0\IOQUEUE\readme.txt

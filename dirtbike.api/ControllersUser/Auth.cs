@@ -238,7 +238,7 @@ public static class Auth
         .WithName("signupUser")
         .WithOpenApi();
 
-
+/*
         //  Forgot Password Route
         group.MapPost("/forgotPasswordLocal", async (ForgotPasswordRequest request, ServiceBusSender sender, IConfiguration config) =>
         {
@@ -303,7 +303,7 @@ public static class Auth
         })
 .WithName("forgotPassword")
 .WithOpenApi();
-
+*/
         group.MapPost("/resetPasswordProfile", async (ResetPasswordRequestProfile request, HttpContext httpContext, IConfiguration config) =>
         {
             var token = httpContext.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
