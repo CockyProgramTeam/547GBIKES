@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
@@ -130,5 +130,5 @@ public static class PaymentsEndpoints
         .WithName("DeletePayments")
         .WithOpenApi();
     }
-}
+}*/
 

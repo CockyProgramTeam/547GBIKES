@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
@@ -221,3 +221,4 @@ group.MapPost("/", async (Booking input) =>
 }
 
 public class BookingRequest { public required string Parkname { get; set; } public int Userid { get; set; } }
+*/
