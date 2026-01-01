@@ -30,8 +30,8 @@ class Program
         });
 
 //AZURE SERVICES FROM 590 WITH DEPENDENCY INJECTION (COLIN SERVICE BUS, SAMBIT OCR)
-
-builder.Services.AddSingleton(sp =>
+//THESE FAIL ON AZURE IF THE STRINGS DONT EXIST.
+/*builder.Services.AddSingleton(sp =>
 {
     var cfg = sp.GetRequiredService<IConfiguration>();
     var endpoint = cfg["ComputerVision:Endpoint"] ?? throw new InvalidOperationException("ComputerVision:Endpoint is missing in configuration.");
@@ -45,7 +45,7 @@ builder.Services.AddSingleton(sp =>
 
 // Register Service Bus Service
 builder.Services.AddSingleton<ServiceBusService>();
-
+*/
 
 //We Decided to start with an Elaborate CORS Policy. This is Ignored on Azure Cloud as they overwrite it.... but on Hosted Glcloud its required.
 // Load CORS settings from appsettings.json
@@ -77,7 +77,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration["ServiceBus:ConnectionString"];
+/*var connectionString = builder.Configuration["ServiceBus:ConnectionString"];
 var queueName = builder.Configuration["ServiceBus:QueueName"];
 
 builder.Services.AddSingleton(new ServiceBusClient(connectionString));
@@ -85,7 +85,7 @@ builder.Services.AddSingleton(sp =>
 {
     var client = sp.GetRequiredService<ServiceBusClient>();
     return client.CreateSender(queueName);
-});
+});*/
 
 // Register CORS policy
 builder.Services.AddCors(options =>

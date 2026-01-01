@@ -1,4 +1,4 @@
-using System;
+/*using System;
 using System.Linq;
 using System.Text.Json;
 using System.Collections.Generic;
@@ -206,8 +206,57 @@ namespace dirtbike.api.Services
              context.Bookings.Add(booking);
              context.SaveChanges();
 
-  
-            
+             // ===============================
+            // CREATE PARK CALENDAR ENTRY
+            // ===============================
+
+            // Generate a unique ParkGuid for this reservation
+            string parkGuid = Guid.NewGuid().ToString();
+
+            // Insert the overall reservation header (StartDate → EndDate)
+            var parkCalendar = new ParkCalendar
+            {
+            ParkId = dto.ParkId?.ToString() ?? "0",
+            CustomerId = dto.UserId,
+            StartDate = booking.ResStart!.Value,
+            EndDate = booking.ResEnd!.Value,
+            TransactionId = booking.TransactionId,
+            BookId = booking.BookingId.ToString(),
+            QtyAdults = booking.Adults,
+            QtyChildren = booking.Children,
+            ParkGuid = parkGuid
+            };
+
+            context.ParkCalendars.Add(parkCalendar);
+            context.SaveChanges();
+
+            // ===============================
+            // CREATE DAILY ENTRIES
+            // ===============================
+
+            DateTime day = booking.ResStart!.Value.Date;
+            DateTime end = booking.ResEnd!.Value.Date;
+
+            while (day <= end)
+            {
+            var dayEntry = new ParkCalendarDay
+            {
+            Userid = dto.UserId,
+            Month = day.Month,
+            Day = day.Day,
+            Year = day.Year,
+            Adults = booking.Adults,
+            Children = booking.Children,
+            Parkid = dto.ParkId,
+            Parkguid = parkGuid
+            };
+
+            context.ParkCalendarDays.Add(dayEntry);
+            day = day.AddDays(1);
+            }
+
+            context.SaveChanges();
+
             
             //MAKE AN EFFORT TO NOTIFY BUT PROCEED IF IT FAILS WITH GC POST
             try
@@ -248,7 +297,9 @@ namespace dirtbike.api.Services
             context.SalesSessions.Add(salesSession);
             context.SaveChanges();
 
-         
+            result.BookingId = booking.BookingId;
+            result.OverallResult = "Success";
+
             var successJson = JsonSerializer.Serialize(result);
             SessionsLogger.SessionLog(
                 user.Username,
@@ -258,20 +309,6 @@ namespace dirtbike.api.Services
                 "CartService",
                 successJson);
 
-            //UPDATE THE CALENDAR
-            try
-            {
-            // NEW: call the calendar service 
-            var calendarService = new ParkCalendarService(); 
-            calendarService.SaveCalendarForBooking(context, booking, dto);
-            }
-            catch
-            {
-                Console.WriteLine("CalendarUpdateFailed");
-
-            }
-            result.BookingId = booking.BookingId;
-            result.OverallResult = "Success";
             return result;
         }
 
@@ -312,3 +349,4 @@ namespace dirtbike.api.Services
         }
     }
 }
+*/

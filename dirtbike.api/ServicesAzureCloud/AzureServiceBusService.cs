@@ -6,7 +6,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Services
 {
-    public class ServiceBusService
+ /*   public class ServiceBusService
     {
         private readonly string _connectionString;
         private readonly string _queueName;
@@ -30,6 +30,6 @@ namespace Services
             var busMessage = new ServiceBusMessage(Encoding.UTF8.GetBytes(message));
             await _sender.SendMessageAsync(busMessage);
         }
-    }
+    }*/
 }
 
